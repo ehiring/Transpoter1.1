@@ -175,11 +175,17 @@
     <Content Include="assets\css\custom.css" />
     <Content Include="assets\css\demo.css" />
     <Content Include="assets\css\font-awesome.min.css" />
+    <Content Include="assets\css\font1.css" />
+    <Content Include="assets\css\font2.css" />
+    <Content Include="assets\css\font3.css" />
+    <Content Include="assets\css\home.css" />
     <Content Include="assets\css\jquery-ui-1.10.4.custom.min.css" />
     <Content Include="assets\css\owl.carousel.css" />
     <Content Include="assets\css\owl.theme.css" />
     <Content Include="assets\css\prettyPhoto.css" />
+    <Content Include="assets\css\reg.css" />
     <Content Include="assets\css\responsive.css" />
+    <Content Include="assets\css\signup.css" />
     <Content Include="assets\css\smoothness\jquery-ui-1.10.4.custom.min.css" />
     <Content Include="assets\css\theme.css" />
     <Content Include="assets\js\bootstrap-hover-dropdown.min.js" />

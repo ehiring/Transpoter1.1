@@ -8,46 +8,81 @@
 @using GridMvc.Html
 
 
-<div class="col-sm-12">
-    <div class="row Tr_Label">
-        <div class="col-sm-2">Source</div>
-        <div class="col-sm-1">Destination</div>
-        <div class="col-sm-1">From date</div>
-        <div class="col-sm-1">To Date</div>
-        <div class="col-sm-2">Vehical Type</div>
-        <div class="col-sm-1">Route</div>
-        <div class="col-sm-1">Staus</div>
-        <div class="col-sm-1">Details</div>
-        <div class="col-sm-1" style="margin-left: 25px;">Quotation</div>
-    </div>
+<div class="col-sm-12">   
 
     @foreach (var item1 in Model.TransDetails)
     {
-        <div class="row SearchBG2" align="center" style="padding:10px;">
-            <div class="col-sm-2" style="height:50px;">@item1.Source</div>
-            <div class="col-sm-1">
-                <span>@item1.Destination</span>
-            </div>
-            <div class="col-sm-2">@item1.StartDate</div>
-            <div class="col-sm-2">@item1.EndDate</div>
-            <div class="col-sm-1">@item1.VehicleType</div>
-            @*<div class="col-sm-1">
-                    @item1.Route_Details
-                </div>*@
-            <div class="col-sm-2">@item1.TripStatus</div>
+        <div>
+            <div>
+                <div class="sc-fYxtnH cPxaEJ">
+                    <div class="sc-tilXH ipziHM">
+                        <div class="sc-kTUwUJ dmMRtR">
 
-            <div class="col-sm-1 ">
-                <a data-toggle="modal" data-target="#myModal" class="btn btn-system btn-small" onclick="lrytripprv(3260)">view Details</a>
-            </div>
-            <div class="col-sm-1">
-                <a data-toggle="modal" data-target="#loginForm" class="btn btn-system1 btn-small">Get Quoate </a>
+                            <div class="sc-kTUwUJ dmMRtR">
+                                <div class="sc-dnqmqq bDsesi">
+                                    <div class="BusViewContainer">
+                                        <div class="sc-iwsKbI gTUxim">
+                                            <div class="sc-gZMcBi gkRcqz">
+                                                <span class="sc-gqjmRU izTLmu">@item1.Source&nbsp;</span>
+                                                <span class="sc-jzJRlG btSGRi"> 15h 58m</span>
+                                                <span class="sc-fjdhpX laKnSQ">@item1.Destination&nbsp;</span>
+                                            </div>
+
+                                            <div class="sc-cSHVUG kBaSPa">
+                                                <p class="sc-kAzzGY eVnWFt">
+                                                    <span class="sc-chPdSV glJpds" title="!9 Feet Container" style="color: darkgray;">@item1.VehicleType</span>
+                                                    <span class="sc-kgoBCf cQRYis">| 16/12/2019</span>
+                                                </p>
+
+                                                <ul class="sc-kGXeez sOzzB">
+                                                    <ul class="sc-kpOJdX bFqegh">
+                                                        <span class="sc-jKJlTe jhvond sc-ckVGcZ fYVOJz"></span> 3 Ton Available
+                                                    </ul>
+                                                    <ul class="sc-kpOJdX bFqegh">
+                                                        <span>@item1.Route_Details</span>
+                                                    </ul>
+                                                </ul>
+
+                                                <ul class="sc-eNQAEJ bFIowg">
+                                                    <p class="sc-kkGfuU dfuvAZ">
+                                                        <span class="sc-iAyFgw krClWy" high="true">
+                                                            <span class="sc-hSdWYo eXbDWv">4.7</span>/5
+                                                        </span>
+                                                    </p>
+
+                                                    <li class="sc-hMqMXs kEmCaG">Policies</li>
+                                                    <li class="sc-hMqMXs kEmCaG">Pickups &amp; Drops</li>
+                                                    <li class="sc-hMqMXs kEmCaG">5 Photos</li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="sc-eHgmQL qdAhs">
+                                                <div>
+                                                    <div>
+                                                        <span data-placeholder="true" class="sc-brqgnP bKUXLW">1285</span>
+                                                    </div>
+                                                    <p class="sc-csuQGl dKyclB">
+                                                        <span class="sc-Rmtcm gnTLhn sc-ckVGcZ kvMNaU"></span>
+                                                    </p>
+                                                </div>
+                                                <ul class="sc-kGXeez sOzzB">
+                                                    <ul class="sc-dxgOiQ BhRgU">
+                                                        <span class="sc-jKJlTe jhvond sc-ckVGcZ gYzbWd"></span> @item1.TripStatus
+                                                    </ul>
+                                                </ul>
+                                                <a class="sc-cMljjf drsecP">Select Seats</a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-12 getloaddetail" align="center" id="loadet-3247"></div>
-        </div>
-
-
     }
 
 </div>
