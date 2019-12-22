@@ -1,0 +1,104 @@
+﻿
+
+
+@model  TransportService.Web.Models.Transpoter
+
+@using PagedList;
+@using PagedList.Mvc;
+@using GridMvc.Html
+
+
+<div class="col-sm-12">
+    <div class="row Tr_Label">
+        <div class="col-sm-2">Source</div>
+        <div class="col-sm-1">Destination</div>
+        <div class="col-sm-1">From date</div>
+        <div class="col-sm-1">To Date</div>
+        <div class="col-sm-2">Vehical Type</div>
+        <div class="col-sm-1">Route</div>
+        <div class="col-sm-1">Staus</div>
+        <div class="col-sm-1">Details</div>
+        <div class="col-sm-1" style="margin-left: 25px;">Quotation</div>
+    </div>
+
+    @foreach (var item1 in Model.TransDetails)
+    {
+        <div class="row SearchBG2" align="center" style="padding:10px;">
+            <div class="col-sm-2" style="height:50px;">@item1.Source</div>
+            <div class="col-sm-1">
+                <span>@item1.Destination</span>
+            </div>
+            <div class="col-sm-2">@item1.StartDate</div>
+            <div class="col-sm-2">@item1.EndDate</div>
+            <div class="col-sm-1">@item1.VehicleType</div>
+            @*<div class="col-sm-1">
+                    @item1.Route_Details
+                </div>*@
+            <div class="col-sm-2">@item1.TripStatus</div>
+
+            <div class="col-sm-1 ">
+                <a data-toggle="modal" data-target="#myModal" class="btn btn-system btn-small" onclick="lrytripprv(3260)">view Details</a>
+            </div>
+            <div class="col-sm-1">
+                <a data-toggle="modal" data-target="#loginForm" class="btn btn-system1 btn-small">Get Quoate </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 getloaddetail" align="center" id="loadet-3247"></div>
+        </div>
+
+
+    }
+
+</div>
+
+<div class="row" >
+    <div class="col-sm-12 ">
+        <div class="pnl-pagination m-b-md1">
+            <div class="pull-right">
+
+                @Html.PagedListPager((IPagedList)Model.TransDetails, page => Url.Action("", "", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions() { MaximumPageNumbersToDisplay = 4, DisplayPageCountAndCurrentLocation = true }, new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "mgrid", OnComplete = "PagedOnComplete" }))
+
+                @if (Model.TransDetails.Count() == 0)
+                {
+                    <ul class="pagination pull-right"></ul>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+      $('#SearchShipmentTruck .pagination li a').on('click', function (e) { 
+            e.preventDefault();
+            e.stopImmediatePropagation();    
+                if ($("#SourceID option:selected").text() == "Select Source") {
+                    var S = ""
+                }
+                if ($("#DestinationID option:selected").text() == "Select Source") {
+                    var D = ""
+                }
+            var temp = $(this).attr('href');           
+            var pageid = temp.replace('/?page=', '');
+            $.ajax({
+                url: "@Url.Action("SearchTrips", "TLoader")",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    page: pageid,
+                    Source: S,
+                    Destination: D, 
+                }),
+                dataType: "text",
+                type: "POST",
+                async: true,
+                success: function (data) {
+                    $('#SearchShipmentTruck').html(data);                    
+                },
+                error: function (data) {
+                },
+                complete: function () {
+                }
+            });
+         });
+</script>

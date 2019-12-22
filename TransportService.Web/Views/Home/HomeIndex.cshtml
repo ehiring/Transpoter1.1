@@ -1,0 +1,118 @@
+﻿@model  TransportService.Web.Models.Transpoter
+
+@using PagedList;
+@using PagedList.Mvc;
+@using GridMvc.Html
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+<div style="margin-top: 25px;">
+    <div></div>
+    <h2>
+        Load List
+        @Html.ActionLink("Add Trip", "AddTrip", "Home", new { @class = "btn btn-primary pull-right", @style = "width: 100px;" })
+        @Html.DropDownList("model.DestinationId", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select Destination", new { @class = "form-control pull-right", @id = "DestinationId", Title = "DestinationId", @style = "margin-right: 10px;width: 165px;" })
+        @Html.DropDownList("model.SourceID", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select Source", new { @class = "form-control pull-right", @id = "SourceID", Title = "SourceID", @style = "margin-right: 10px;width: 165px;" })
+    </h2>
+    <hr />
+    <div id="grid">
+        @Html.Partial("_LoadGrid")
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12 ">
+        <div class="pnl-pagination m-b-md1">
+            <div class="pull-right">
+                @Html.PagedListPager((IPagedList)Model.TransDetails, page => Url.Action("Index", "Home", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions() { MaximumPageNumbersToDisplay = 4, DisplayPageCountAndCurrentLocation = true }, new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "mgrid", OnComplete = "PagedOnComplete" }))
+                @if (Model.TransDetails.Count() == 0)
+                {
+                    <ul class="pagination pull-right"></ul>
+
+                }
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<script>
+    $('#SourceID').change(function () {
+
+        var Desti = $("#DestinationId option:selected").text();
+        if (Desti == 'Select Destination') {
+            Desti = '';
+        }
+
+        var Sour = $("#SourceID option:selected").text();
+        if (Sour == 'Select Source') {
+            Sour = '';
+        }
+                $.ajax({
+                    url: "@Url.Action("LoadLoadGrid", "Home")",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        page: 1,
+                        Source: Sour,
+                        Destination: Desti,
+
+                    }),
+                    dataType: "text",
+                    type: "POST",
+                    async: true,
+                    success: function (data) {
+                        $('#grid').html(data);
+
+
+                    },
+                    error: function (data) {
+
+                    },
+                    complete: function () {
+
+                    }
+                });
+
+    });
+
+    $('#DestinationId').change(function () {
+
+        var Desti = $("#DestinationId option:selected").text();
+        if (Desti == 'Select Destination')
+        {
+            Desti = '';
+        }
+
+        var Sour = $("#SourceId option:selected").text();
+        if (Sour == 'Select Source') {
+            Sour = '';
+        }
+
+                $.ajax({
+                    url: "@Url.Action("LoadLoadGrid", "Home")",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        page: 1,
+                        Source: Sour,
+                        Destination: Desti,
+
+                    }),
+                    dataType: "text",
+                    type: "POST",
+                    async: true,
+                    success: function (data) {
+                        $('#grid').html(data);
+
+
+                    },
+                    error: function (data) {
+
+                    },
+                    complete: function () {
+
+                    }
+                });
+
+            });
+</script>

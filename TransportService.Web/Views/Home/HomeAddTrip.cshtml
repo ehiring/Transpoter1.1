@@ -1,0 +1,453 @@
+﻿
+@model TransportService.Web.Models.Transpoter
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+<style>
+    .LabelMargin {
+        margin-bottom: 5px;
+    }
+
+    .ArrowMargin {
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+
+    .dropwidth {
+        max-width: 96%;
+    }
+</style>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row">
+            <div class="col-lg-7">
+                <h3>Add Trip</h3>
+                <hr />
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="LabelMargin"><b>Select Source</b></div>
+                            <div>
+                                @Html.DropDownList("model.SourceID", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select Source", new { @class = "form-control dropwidth", @id = "SourceID", Title = "SourceID" })
+                                @Html.ValidationMessageFor(model => model.Source, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="LabelMargin"><b>Select Destination</b></div>
+                            <div>
+                                @Html.DropDownList("model.DestinationID", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select Destination", new { @class = "form-control dropwidth", @id = "DestinationID", Title = "DestinationID" })
+                                @Html.ValidationMessageFor(model => model.Destination, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="col-sm-2">
+                            <div class="form-group">
+                                <div class="LabelMargin"><b>Total Ton</b></div>
+                                <div>
+                                    <input type="text" id="TotalTon" placeholder="TON" class="form-control" />
+                                </div>
+                            </div>
+                        </div>*@
+
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="LabelMargin"><b>Start Date</b></div>
+                            <div>
+                                <input type="date" id="StartDate" class="form-control dropwidth" />
+                                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="LabelMargin"><b>End Date</b></div>
+                            <div>
+                                <input type="date" id="EndDate" class="form-control dropwidth" />
+                                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="LabelMargin"><b>Trip Status</b></div>
+                            <div>
+                                <select class="form-control dropwidth" id="TripStatus">
+                                    <option value="0">In Process</option>
+                                    <option value="1">Complted</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="LabelMargin"><b>Vehical Type</b></div>
+                            <div>
+                                @Html.DropDownList("model.VehicleTypeID", new SelectList((System.Collections.IEnumerable)ViewData["VehicalTypeList"], "Value", "Text"), "Select Source", new { @class = "form-control dropwidth", @id = "VehicleTypeID", Title = "VehicleTypeID" })
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group route">
+                            <div class="LabelMargin"><b>Add City Route</b></div>
+                            <div style="display: flex;">
+                                @Html.DropDownList("model.SourceID", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select City", new { @class = "form-control dropwidth", @id = "CityRootId", Title = "CityRootId" })
+                                <i class="fa fa-plus" id="addRoute" aria-hidden="true" style="margin-top: 10px;margin-left: 10px;margin-right:12px;"></i>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group ">
+                            <h4>Route Details</h4>
+                            <hr style="margin-top:0px;margin-bottom:-20px;" />
+                        </div>
+                        <div class="form-group">
+                            <div id="showrootdetails" style="margin-top: 12px;">
+                                <span class="Rootmgs" style="color:#939393;font-size:small;">Add Route From Source To Destination</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row Goodsbtn">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <div>
+                                <button type="button" id="ShowGoodsTable" class="btn btn-group-sm"><i class="fa fa-plus" aria-hidden="true"></i> Add Good Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row goodstable">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <h4>Goods Details</h4>
+                            <hr style="margin-top:0px;margin-bottom:0px;" />
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                <table class="table" id="root">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Cargo type</th>
+                                            <th>Height</th>
+                                            <th>Width</th>
+                                            <th>Length</th>
+                                            <th>Weight(Tonn)</th>
+                                            <th>Quantity</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <tr>
+                                            <td><i class="fa fa-plus addgoods" aria-hidden="true" style="margin-top: 7px;"></i></td>
+                                            <td>
+                                                <select class="form-control" id="CargoType">
+                                                    <option value="0">Select Cargo Type</option>
+                                                    <option value="1">Box</option>
+                                                    <option value="2">Big Bags</option>
+                                                    <option value="3">Barrels</option>
+                                                    <option value="4">Sacks</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control ClsHeigh " style="width: 80px;" />
+                                            </td>
+                                            <td><input type="text" class="form-control ClsWidth" style="width: 80px;" /></td>
+                                            <td><input type="text" class="form-control ClsLength" style="width: 80px;" /></td>
+                                            <td><input type="text" class="form-control ClsWeight" style="width: 80px;" /></td>
+                                            <td><input type="text" class="form-control ClsQty" style="width: 80px;" /></td>
+                                            <td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true" style="margin-top: 7px;"></i></td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row route">
+                    <div class="col-sm-12">
+
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <div class="pull-right">
+                        <input type="button" id="BtnSubmit" value="Create" class="btn btn-default" />
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-5">
+                @*<h3>Add Sub Trip</h3>
+                    <hr />*@
+
+                @*<div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <div class="LabelMargin"><b>Select Source</b></div>
+                                <div>
+                                    @Html.DropDownList("model.SourceId", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select Source", new { @class = "form-control dropwidth", @id = "SourceId", Title = "SourceId" })
+                                    @Html.ValidationMessageFor(model => model.Source, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <div class="LabelMargin"><b>Select Destination</b></div>
+                                <div>
+                                    @Html.DropDownList("model.DestinationId", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select Destination", new { @class = "form-control dropwidth", @id = "DestinationId", Title = "DestinationId" })
+                                    @Html.ValidationMessageFor(model => model.destination, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <h4>Goods Details</h4>
+                                <hr style="margin-top:0px;margin-bottom:0px;" />
+                            </div>
+                            <div class="form-group">
+                                <div>
+                                    <table class="table" >
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>Cargo</th>
+                                                <th>Height</th>
+                                                <th>Width</th>
+                                                <th>Length</th>
+                                                <th>Weight(Tonn)</th>
+                                                <th>Quantity</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <tr>
+                                                <td><i class="fa fa-plus" aria-hidden="true" style="margin-top: 7px;"></i></td>
+                                                <td>
+                                                    <select class="form-control ClsCargo" id="CargoType" style="max-width: 552px;width: 105px;">
+                                                        <option value="0">Select Cargo Type</option>
+                                                        <option value="1">Box</option>
+                                                        <option value="2">Big Bags</option>
+                                                        <option value="3">Barrels</option>
+                                                        <option value="3">Sacks</option>
+
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control ClsHeight" value="" id ="idHeight" style="width: 80px;" />
+                                                </td>
+                                                <td><input type="text" class="form-control ClsWidth" /></td>
+                                                <td><input type="text" class="form-control ClsLength" /></td>
+                                                <td><input type="text" class="form-control ClsWeight" /></td>
+                                                <td><input type="text" class="form-control ClsQty" /></td>
+                                                <td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true" style="margin-top: 7px;"></i></td>
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>*@
+
+            </div>
+        </div>
+
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+<script>
+
+    $(document).ready(function () {
+                                     //$('.route').hide();
+        $('.goodstable').hide();
+
+    });
+
+
+    /*...Shows added Rout..*/
+    $('#ShowRoute').on("click", function (e) {
+        $('.route').show();
+    });
+
+
+    /*......Shows The Material Table......*/
+    $('#ShowGoodsTable').on("click", function (e) {
+        $('.Goodsbtn').hide();
+        $('.goodstable').show();
+    });
+
+    /*......Add the  City to the Route.....*/
+    $('#addRoute').on("click", function (e) {
+        $('.Rootmgs').remove();
+        var CityRootText = $("#CityRootId option:selected").text();
+        var CityRootId = $("#CityRootId option:selected").val();
+        var bindrow;
+
+        //This code is for removing last arrow from root details
+        if (CityRootText == $("#DestinationId option:selected").text()) {
+            bindrow = '<span id=' + CityRootId + ' class="RootId"><i class="fa fa-times deleterootcity" aria-hidden="true" style="margin-right:3px;color: #f95555;"></i>' + CityRootText + '</span>';
+            $('#addRoute').hide();
+        }
+        else
+        {
+            bindrow = '<span id=' + CityRootId + ' class="RootId"><i class="fa fa-times deleterootcity" aria-hidden="true" style="margin-right:3px;color: #f95555;"></i>' + CityRootText + '<i class="fa fa-arrow-right ArrowMargin" aria-hidden="true"></span>';
+        }
+
+        $('#showrootdetails').append(bindrow);
+
+    });
+
+    /*.......Removes the city from the route when close button clicks......*/
+    $(document).on('click', 'i.deleterootcity', function (e) {
+        e.preventDefault();
+        $(this).closest('span').remove();
+        $('#addRoute').show();
+    });
+
+    /*..........Adds new row containing input controls for Material inputs is  to UI........*/
+    $(document).on('click', 'i.addgoods', function (e) {
+         e.preventDefault();
+         var CityRootText = $("#CityRootId option:selected").text();
+         var CityRootId = $("#CityRootId option:selected").val();
+         var bindrow = '<tr><td><i class="fa fa-plus addgoods" id="temp"  aria-hidden="true" style="margin-top: 7px;"></i></td><td>'+
+                 '<select class="form-control" id="CargoType">'+
+             '<option value="0">Select Cargo Type</option>' +
+             '<option value="1">Box</option>              ' +
+             '<option value="2">Big Bags</option>         ' +
+             '<option value="3">Barrels</option>          ' +
+                     '<option value="4">Sacks</option></select></td>'+
+             ' <td><input type="text" class="form-control ClsHeight fieldset" style="width: 80px;" /></td>'+
+             '<td><input type="text" class="form-control ClsWidth fieldset" style="width: 80px;" /></td>'+
+             '<td><input type="text" class="form-control" style="width: 80px;" /></td>'+
+             '<td><input type="text" class="form-control" style="width: 80px;" /></td>' +
+             ' <td><input type="text" class="form-control ClsQty" style="width: 80px;"/></td>'+
+         '<td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true" style="margin-top: 7px;"></i></td></tr>'
+
+         $('#root tbody').append(bindrow);
+
+        });
+
+    /*...........Delete material row of controls..........*/
+    $(document).on('click', 'i.deleterow', function (e) {
+        e.preventDefault();
+        $(this).parents('tr').remove();
+
+    });
+
+
+
+
+    /*............Click of Create button and Calls SaveTrip Action method ..........*/
+    $(document).on('click', '#BtnSubmit', function (e) {
+
+        e.preventDefault();
+    
+        //adding Load Grid Details In Array
+        var idArrLoadDetails = [];
+       
+
+        $('#root tbody tr').each(function (k, v) {
+            var trElement = $(this);
+            var tdVals = trElement.find('td:eq(1) #CargoType option:selected').val() + "~" +
+                         trElement.find('td:eq(2) input').val() + "~" +
+                         trElement.find('td:eq(3) input').val() + "~" +
+                         trElement.find('td:eq(4) input').val() + "~" +
+                         trElement.find('td:eq(5) input').val() + "~" +
+                         trElement.find('td:eq(6) input').val()
+            idArrLoadDetails.push(tdVals);
+        });
+
+        var SaveLoadDetails = [];
+
+        for (var i = 0; i < idArrLoadDetails.length; i++) {
+            var arrElement = idArrLoadDetails[i].split("~");
+            item = {}
+            item["CargoTypeId"] = arrElement[0];
+            item["Height"] = arrElement[1];
+            item["Width"] = arrElement[2];
+            item["Length"] = arrElement[3];
+            item["Weight"] = arrElement[4];
+            item["Qty"] = arrElement[5];
+            SaveLoadDetails.push(item);
+        }
+
+
+
+         // Adding City Root into array
+        var idArrRoot = [];
+        $('.RootId').each(function (k, v) {
+            var tdVals = $(this).attr("id");
+            idArrRoot.push(tdVals);
+        });
+
+        var SaveRoot = [];
+        for (var i = 0; i < idArrRoot.length; i++) {
+            var arrElement = idArrRoot[i].split("~");
+            item = {}
+            item["CityId"] = arrElement[0];
+            SaveRoot.push(item);
+        }
+        //alert(JSON.stringify(SaveRoot));
+
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/Home/SaveTrip',
+            data:
+            {
+                sourceId: $("#SourceID option:selected").val(),
+                destinationId: $("#DestinationID option:selected").val(),
+                VehicalType: $("#VehicleTypeID option:selected").val(),
+                enddate: $("#EndDate").val(),
+                stratdate: $("#StartDate").val(),
+                TripStatus: $("#TripStatus option:selected").val(),
+                CityRootId: SaveRoot,
+                SaveLoadDetails, SaveLoadDetails
+
+            },
+            success: function (da) {
+                alert(da);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        });
+
+    });
+
+
+</script>

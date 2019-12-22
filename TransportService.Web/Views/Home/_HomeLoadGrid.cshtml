@@ -1,0 +1,52 @@
+﻿
+@model TransportService.Web.Models.Transpoter
+
+@using PagedList;
+@using PagedList.Mvc;
+@using GridMvc.Html
+
+
+
+@foreach (var item1 in Model.TransDetails)
+{
+    <div class="row card-block">
+        <div class="col-md-11" style="overflow-x:auto;">
+            <span style="font-size: x-small;color: #7b7b7b;">@item1.StartDate To @item1.EndDate</span><br />
+            <span style="font-size: large;color:#444444;">@item1.Source >> @item1.Destination </span> <a href="#" id ="@item1.TripID" name="@item1.SourceID" value="@item1.DestinationID" class="AddSubtrip"><span style="font-size: inherit;"> Book Now</span></a><br />
+             <span style="font-size: small;color: #656161;">@item1.VehicleType</span>
+            <span style="font-size: small;color: #656161;">@item1.Route_Details</span><br />
+          
+        </div>
+        <div class="col-md-1">
+            <a href="#">@item1.TripStatus</a>
+        </div>
+    </div>
+    <hr style="margin-top:19px;" />
+}
+    <span id="openmodal" class="popupTrigger" data-toggle="modal" data-target="#mdladdsubtrip"></span>
+    <div id="mdladdsubtrip" class="modal fade" data-backdrop="static" data-keyboard="false" role="dialog">
+    </div>
+
+<script>
+    
+        $('.AddSubtrip').on('click', function () {
+            var tid = $(this).attr('id');
+            var sid = $(this).attr('name');
+            var did = $(this).attr('value');
+             $.ajax({
+            url: "@Url.Action("AddSubTrip", "Home")",
+                 data:
+                 {                    
+                     Source: sid,   
+                     TripId: tid,
+                 },
+                 success: function (data) {
+
+                $('#mdladdsubtrip').html(data);
+                $(".popupTrigger").click();
+            }
+
+        });
+    });
+
+ </script>

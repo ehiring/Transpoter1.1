@@ -1,0 +1,76 @@
+﻿
+
+@model  TransportService.Web.Models.Transpoter
+
+@using PagedList;
+@using PagedList.Mvc;
+@using GridMvc.Html
+
+@*<script src="~/Scripts/jquery-3.3.1.min.js"></script>*@
+
+    @foreach (var item1 in Model.TransDetails)
+    {
+        <div class="row card-block">
+            <div class="col-md-11" style="overflow-x:auto;">
+                <span style="font-size: x-small;color: #7b7b7b;">@item1.StartDate To @item1.EndDate</span><br />
+                <span style="font-size: large;color:#444444;"><i class="fa fa-truck" aria-hidden="true" style="color:#999292"></i> @item1.Source <i class="fa fa-long-arrow-right" aria-hidden="true" style="color:#999292"></i> @item1.Destination </span>
+                @*<a href="#" tid="@item1.TripID" name="@item1.SourceID" value="@item1.DestinationID" class="AddSubtrip label theme-bg text-white f-12" style="margin-left: 10px;">  Book Now </a><br />*@
+                  @Html.ActionLink("Book Now","AddSubTrip",new  { Source=item1.SourceID, TripId=item1.TripID },new { @Class= "label theme-bg text-white f-12" }) <br/>
+                <span style="font-size: small;color: #656161;">@item1.VehicleType </span><br />
+                <span style="font-size: small;color: #656161;">@item1.Route_Details</span>
+            </div>
+
+            <div class="col-md-1">
+                <span style="font-size: small;color: #656161;">@item1.TripStatus</span>
+            </div>
+
+            </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="accordion" id="accordionExample">
+                    <div class="card">
+                        <div class="card-header" id="headingTwo">
+                            <h6 class="mb-0"><a href="#!" class="collapsed showTripdetails" name="@item1.TripID" data-toggle="collapse" data-target="#@item1.TripID" aria-expanded="false" aria-controls="@item1.TripID">Trip Details</a></h6>
+                        </div>
+                        <div id="@item1.TripID" class="collapse card-body" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                            <div class="row">
+                                <div class="col-sm-4">
+
+                                    @foreach (var item in Model.SubTDetails)
+                                    {
+                                        if (item1.TripID == item.TripID)
+                                        {
+                                            <i class="fa fa-truck" aria-hidden="true"></i>
+                                            <span style="font-size: inherit;color:#444444;">@item.SourceName <i class="fa fa-long-arrow-right" aria-hidden="true"></i> @item.DestinationName</span><br />
+                                            <span style="font-size: x-small;color: #656161;">Booked Tonage @item.Weight</span><br />
+                                            <hr style="margin-bottom: 5px; margin-top: 5px;" />
+                                        }
+
+                                    }
+                                </div>
+                                <div class="col-sm-4">
+                                    @foreach (var item2 in Model.RouteList)
+                                    {
+                                        if (item1.TripID == item2.TripID)
+                                        {
+                                            <span style="font-size: inherit;color:#444444;">Available Spaces</span><br />
+                                            <hr style="margin-bottom: 5px; margin-top: 5px;" />
+                                            <span style="font-size: small;color:#444444;">Height : @Convert.ToInt32(item2.FreeHeight) &nbsp; Width: @Convert.ToInt32(item2.FreeWidth)</span><br />
+                                            <span style="font-size: small;color:#444444;">Length : @Convert.ToInt32(item2.FreeLength) &nbsp; Tonage: @Convert.ToInt32(item2.FreeWeight)</span><br />
+
+                                        }
+
+                                    }
+
+                                </div>
+                                <div class="col-sm-4"> </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr style="margin-top:19px;" />
+    }
+

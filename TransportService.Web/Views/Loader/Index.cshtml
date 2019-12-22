@@ -1,0 +1,113 @@
+﻿@model TransportService.Web.Models.Transpoter
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+
+}
+@using PagedList;
+@using PagedList.Mvc;
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+    <div class="pcoded-main-container">
+        <div class="pcoded-wrapper">
+            <div class="pcoded-content">
+                <div class="pcode-inner-content">
+                    <div class="main-body">
+                        <div class="page-wrapper">
+                            <div class="row">
+
+                                <div class="col-sm-12" style="color: #656161;">
+
+                                    <span style="font-size: x-small;color: #7b7b7b;">
+                                        @Html.DropDownList("model.SourceId", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select Source", new { @class = "form-control pull-left", @id = "SourceID", Title = "SourceId", @style = "margin-right: 10px;width: 165px;" })
+                                    </span>
+                                    <span style="font-size: x-small;color: #7b7b7b;">
+                                        @Html.DropDownList("model.DestinationId", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select Destination", new { @class = "form-control pull-left", @id = "DestinationID", Title = "DestinationId", @style = "margin-right: 10px;width: 165px;" })
+                                    </span>
+                                    @*@Html.ActionLink("Search Trip", "SearchTrip", new { @class = "form-control pull-right" })*@
+                                    <span style="font-size: x-small;color: #7b7b7b;">
+                                        @*@Html.ActionLink("Search Trip",null,null, new { @Class = "label theme-bg text-white f-12 ",@id="btnSearch",@onclick="SearchClick()" }) <br />*@
+                                      <input type="button" value="Search" id="btnSearch" class="label theme-bg text-white f-12" />    <br />
+                                    </span>
+                                </div>
+                                </div>
+                                    <!--[Main content start]-->
+                                    <div class="row">
+
+                                        <div class="col-sm-12">
+
+                                            <div class="card">
+
+
+                                                <div class="card-header">
+                                                    <h5>Trip List</h5>
+                                                </div>
+                                                <div id="LGrid">
+                                                    @Html.Partial("_LoadGrid")
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-sm-12 ">
+                                                        <div class="pnl-pagination m-b-md1">
+                                                            <div class="pull-right">
+                                                              
+                                                                
+                                                                    @Html.PagedListPager((IPagedList)Model.TransDetails, page => Url.Action("", "", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions() { MaximumPageNumbersToDisplay = 4, DisplayPageCountAndCurrentLocation = true }, new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "mgrid", OnComplete = "PagedOnComplete" }))
+                                                                
+
+                                                                @if (Model.TransDetails.Count() == 0)
+                                                                {
+                                                                    <ul class="pagination pull-right"></ul>
+
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+<script>
+    $(document).ready(function () {
+       
+    });
+    $('#DestinationID').on("change", function (e) {
+        e.preventDefault();
+         $.ajax({
+                    url: "@Url.Action("SearchTrips", "Loader")",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+
+                        Source: $("#SourceID option:selected").text(),
+                        Destination: $("#DestinationID option:selected").text(),                       
+                    }),
+                    dataType: "text",
+                    type: "POST",
+                    async: true,
+                        success: function (data) {
+                        $("LGrid").html("hghfghgfhfghfgh");
+                        alert(data);                        
+                       
+                    },
+                    error: function (data) {
+                       
+                    },
+                    complete: function () {
+                      
+                    }
+                });
+ 
+    });
+
+</script>
+
