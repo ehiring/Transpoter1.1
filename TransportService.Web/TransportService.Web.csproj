@@ -260,6 +260,12 @@
     <Content Include="Views\Shared\NoPageFound.cshtml" />
     <Content Include="Views\TLoader\Index.cshtml" />
     <Content Include="Views\TLoader\_TripList.cshtml" />
+    <Content Include="Views\TLoader\New_LoaderIndex.cshtml" />
+    <Content Include="Views\TLoader\_LoadList.cshtml" />
+    <Content Include="Views\Shared\_Layout2.cshtml" />
+    <Content Include="Views\TLoader\Old_EditLoad.cshtml" />
+    <Content Include="Views\TLoader\EditLoad.cshtml" />
+    <Content Include="Views\TLoader\Test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -22,5 +22,9 @@ namespace TransportService.Web.BusinessLayer
         public DbSet<RouteDetails> DBRouteDetails { get; set; }
         public DbSet<AvalableSpace> DBAvalableSpace { get; set; }
         public DbSet<subtripDetails>  DBsubtripDetails { get; set; }
+        public DbSet<Loader> DBLoader { get; set; }
+        public DbSet<LoadDetail> DBLoadDetails { get; set; }
+        public DbSet<MaterialList> DBMaterialList { get; set; }
+        public DbSet<LoaderEdit> DBLoaderEdit { get; set; }
     }
 }
