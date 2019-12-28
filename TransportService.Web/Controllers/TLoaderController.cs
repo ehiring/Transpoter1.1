@@ -173,7 +173,7 @@ namespace TransportService.Web.Controllers
             ViewData["TripWiseCityList"] = _tripBusinessLayer.GetDropDownData("TripWiseCityList", 0, TripId);
             ViewBag.tripid = TripId;
             ViewBag.Source = Source;
-            return View();
+            return View(); 
         }
 
         public JsonResult GetCityAgainstTheSource(int TripID = 0, int SourceID = 0)
