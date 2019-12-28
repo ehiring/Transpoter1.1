@@ -121,15 +121,25 @@
                         <li class="dropdown">
                             <a href="#" data-toggle="dropdown" class="dropdown-toggle js-activated">Load<b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="findload.html">Find A Load</a></li>
-                                <li><a href="postload.html">Post A Load</a></li>
+                                <li>
+                                   
+                                    @Html.ActionLink("Find A Load", "New_LoaderIndex", "TLoader", new { @class = "nav-link", @style = "width: 100px;" })
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Post A Load", "AddLoad", "TLoader", new { @class = "nav-link", @style = "width: 100px;" })
+                                </li>
                             </ul>
                         </li>
                         <li class="dropdown">
                             <a href="#" data-toggle="dropdown" class="dropdown-toggle js-activated">Truck<b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="findload.html">Find A Truck</a></li>
-                                <li><a href="postload.html">Post A Truck</a></li>
+                                <li>
+                                    
+                                    @Html.ActionLink("Find A Truck", "Index", "TLoader", new { @class = "nav-link", @style = "width: 100px;" })
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Post A Truck", "AddTrip", "TLoader", new { @class = "nav-link", @style = "width: 100px;" })
+                                </li>
                             </ul>
                         </li>
                         <li class="dropdown">

@@ -47,13 +47,24 @@ namespace TransportService.Web.Controllers
             ViewData["SearchApplied"] = 1;
             return Request.IsAjaxRequest() ? (ActionResult)PartialView("_TripList", _transpoter) : View("_TripList", _transpoter);
         }
+        public ActionResult SearchLoads(int? page, string Source, string Destination)
+        {
+            Loader _loader = new Loader();
+            _loader.Loaders = _tripBusinessLayer.GetLoaderList(page, Source,Destination);
+            _loader.LoadDetails = _tripBusinessLayer.GetLoadeDetails();
+            _loader.MaterialList = _tripBusinessLayer.GetMaterialList();
+
+            ViewData["CityList"] = _tripBusinessLayer.GetDropDownData("CityList", 0);
+            ViewData["SearchApplied"] = 0;
+
+            // return View();
+            return Request.IsAjaxRequest() ? (ActionResult)PartialView("_LoadList", _loader) : View("_LoadList", _loader);
+        }
 
 
-        
 
         public ActionResult New_LoaderIndex(int? page)
         {
-
             Loader _loader = new Loader();
             _loader.Loaders = _tripBusinessLayer.GetLoaderList(page, "", "");
             _loader.LoadDetails = _tripBusinessLayer.GetLoadeDetails();

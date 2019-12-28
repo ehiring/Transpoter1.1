@@ -108,4 +108,38 @@
     </div>
 </div>
 
+<script>
+      $('#SearchShipmentTruck .pagination li a').on('click', function (e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+                if ($("#SourceID option:selected").text() == "Select Source") {
+                    var S = ""
+                }
+                if ($("#DestinationID option:selected").text() == "Select Source") {
+                    var D = ""
+                }
+            var temp = $(this).attr('href');
+            var pageid = temp.replace('/?page=', '');
+            $.ajax({
+                url: "@Url.Action("SearchLoads", "TLoader")",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    page: pageid,
+                    Source: S,
+                    Destination: D,
+                }),
+                dataType: "text",
+                type: "POST",
+                async: true,
+                success: function (data) {
+                    $('#SearchShipmentTruck').html(data);
+                },
+                error: function (data) {
+                },
+                complete: function () {
+                }
+            });
+         });
+</script>
+
 

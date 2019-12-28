@@ -392,7 +392,7 @@
             $.ajax({
                 type: 'POST',
                 dataType: 'json',
-                url: '/Loader/AddLoad',
+                url: '/TLoader/AddLoad',
                 data:
                 {
                     SourceID: $("#SourceID option:selected").val(),
@@ -410,7 +410,7 @@
                     alert(da);
                     $('#tblGoodsDetail').empty();
                     $("#RowCount").val(0);
-                    window.location.href = "/Loader/LoaderIndex";
+                    window.location.href = "/TLoader/New_LoaderIndex";
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("Error " + errorThrown);

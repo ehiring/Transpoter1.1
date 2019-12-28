@@ -16,7 +16,7 @@ namespace TransportService.Web
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "TLoader", action = "New_LoaderIndex", id = UrlParameter.Optional }
+                defaults: new { controller = "TLoader", action = "Index", id = UrlParameter.Optional }
             );
         }
     }
