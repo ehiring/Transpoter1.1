@@ -3,256 +3,263 @@
     ViewBag.Title = "EditLoad";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
 
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-<div class="form-horizontal" style="margin-left:5%;">
-    <div id="divValidationSummary" class="row text-danger">
-
-    </div>
-
-    <div class="row ">
-        <div class="col-lg-12">
-            <h3>Edit Load</h3>
-            <div class="signup-block-form">
-
-                <div class="col-sm-5 form-group">
-                    <label><i class="red">*</i> Source  </label>
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
-                        @Html.DropDownList("Source", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text", Model.SourceID), "Select Source", new { @class = "form-control", @id = "SourceID", Title = "SourceID" })
-                    </div>
-                </div>
-
-                <div class="col-sm-5 form-group">
-                    <label><i class="red">*</i> Destination </label>
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
-                        @Html.DropDownList("Destination", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text", Model.DestinationID), "Select Destination", new { @class = "form-control", @id = "DestinationID", Title = "DestinationID" })
-
-                    </div>
-                </div>
-
-                <div class="col-sm-5 form-group">
-                    <label>Pick Up Date:</label>
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                        @Html.TextBoxFor(Model => Model.PickUpDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date", @id="PickUpDate" })
-                        @*<input type="date" id="PickUpDate" class="form-control dropwidth" placeholder="YYYY-MM-DD" value="@Model.PickUpDate" />*@
-                        @*<input type="text" id="dp2" data-date-format="yyyy-mm-dd" placeholder="YYYY-MM-DD" class="form-control select_date" name="truck_insurestartdate" value="" autocomplete="off" onkeypress="return checkdate(event);">*@
-                    </div>
-                </div>
-
-                <div class="col-sm-5 form-group">
-                    <label><i class="red">*</i>Load Type:</label>
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fas fa-shopping-cart"></i></span>
-                        <select id="ddlLoadType" class="form-control">
-                            <option value="0"> Select Load Type </option>
-                            <option value="Full Truck Load(Above 3000 Kg)"> Full Truck Load(Above 3000 Kg) </option>
-                            <option value="Part Truck Load(500-3000 Kg)">Part Truck Load(500-3000 Kg) </option>
-                            <option value="Parcel (Less than 500 Kg)">Parcel (Less than 500 Kg) </option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="col-sm-5 form-group">
-                    <label><i class="red">*</i>Sub Service:</label>
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fas fa-users"></i></span>
-                        <select id="ddlSubService" class="form-control">
-                            <option> Select Sub Service</option>
-                            <option value="Commercial"> Commercial </option>
-                            <option value="NonCommercial_Business">Non Commercial(Business) </option>
-                            <option value="NonCommercial_Household">Non Commercial(Household) </option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="col-sm-5 form-group">
-                    <label>Reciever Name:</label>
-                    <div class="input-group">
-
-                        <span class="input-group-addon"><i class="fas fa-user"></i></span>
-                        <input id="txt_Receiver" type="text" class="form-control" name="altr_name" value="@Model.Receiver" placeholder="Contact Name">
-                    </div>
-                </div>
-
-                <div class="col-sm-5 form-group">
-                    <label>Phone:</label>
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                        <input id="txt_Phone" type="number" class="form-control" name="truck_phone" value="@Model.ContactNo" placeholder="Phone" maxlength="10">
-                    </div>
-                </div>
-
-                <div class="col-sm-5 form-group">
-                    <label>Email:</label>
-                    <div class="input-group">
-
-                        <span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
-                        <input id="txt_Mail" type="text" class="form-control" name="truck_phone" value="@Model.Email" placeholder="Email">
-                    </div>
-                </div>
-
-                <div class="col-sm-5 form-group">
-                    <label>Address:</label>
-                    <div class="input-group">
-
-                        <span class="input-group-addon"><i class="far fa-address-card"></i></span>
-                        @*<input id="truck_phone" type="text" class="form-control" name="truck_phone" value="" placeholder="Email" onkeypress="return isNumberKey(event);">*@
-                        @*<textarea id="txt_Address" class="form-control" name="Adress" placeholder="Address" rows="2" cols="150"></textarea>*@
-                        @Html.TextArea("Address", Model.Address, new { @class = "form-control",@id= "txt_Address" })
-                    </div>
-                </div>
-
+    <div class="container-fluid">
+        <hr />
+        <div class="row">
+            <div class="col-lg-12 pull-left">
+                @*<input id="btnSubmit" type="submit" class="btn btn-primary" name="regform" value="Create Truck">*@
+                <input type="button" id="btnUpdate" class="btn btn-primary" name="regform" value="Update Load">
             </div>
         </div>
 
-    </div>
+        <div class="row ">
+            <div class="col-lg-6">
+                <hr />
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h5 class="panel-title"><b>Edit Load</b> </h5>
+                    </div>
 
-    <div class="row col-lg-9">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h5 class="panel-title"><b>Good Details</b> </h5>
+                    <div class="panel-body">
+
+                        <div class="col-sm-6 form-group">
+                            <label><i class="red">*</i> Source  </label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+                                @Html.DropDownList("Source", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text", Model.SourceID), "Select Source", new { @class = "form-control", @id = "SourceID", Title = "SourceID" })
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 form-group">
+                            <label><i class="red">*</i> Destination </label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+                                @Html.DropDownList("Destination", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text", Model.DestinationID), "Select Destination", new { @class = "form-control", @id = "DestinationID", Title = "DestinationID" })
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 form-group">
+                            <label>Pick Up Date:</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                @Html.TextBoxFor(Model => Model.PickUpDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date", @id = "PickUpDate" })
+                                @*<input type="date" id="PickUpDate" class="form-control dropwidth" placeholder="YYYY-MM-DD" value="@Model.PickUpDate" />*@
+                                @*<input type="text" id="dp2" data-date-format="yyyy-mm-dd" placeholder="YYYY-MM-DD" class="form-control select_date" name="truck_insurestartdate" value="" autocomplete="off" onkeypress="return checkdate(event);">*@
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 form-group">
+                            <label><i class="red">*</i>Load Type:</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fas fa-shopping-cart"></i></span>
+                                <select id="ddlLoadType" class="form-control">
+                                    <option value="0"> Select Load Type </option>
+                                    <option value="Full Truck Load(Above 3000 Kg)"> Full Truck Load(Above 3000 Kg) </option>
+                                    <option value="Part Truck Load(500-3000 Kg)">Part Truck Load(500-3000 Kg) </option>
+                                    <option value="Parcel (Less than 500 Kg)">Parcel (Less than 500 Kg) </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 form-group">
+                            <label><i class="red">*</i>Sub Service:</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fas fa-users"></i></span>
+                                <select id="ddlSubService" class="form-control">
+                                    <option> Select Sub Service</option>
+                                    <option value="Commercial"> Commercial </option>
+                                    <option value="NonCommercial_Business">Non Commercial(Business) </option>
+                                    <option value="NonCommercial_Household">Non Commercial(Household) </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 form-group">
+                            <label>Reciever Name:</label>
+                            <div class="input-group">
+
+                                <span class="input-group-addon"><i class="fas fa-user"></i></span>
+                                <input id="txt_Receiver" type="text" class="form-control" name="altr_name" value="@Model.Receiver" placeholder="Contact Name">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 form-group">
+                            <label>Phone:</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                <input id="txt_Phone" type="number" class="form-control" name="truck_phone" value="@Model.ContactNo" placeholder="Phone" maxlength="10">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 form-group">
+                            <label>Email:</label>
+                            <div class="input-group">
+
+                                <span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
+                                <input id="txt_Mail" type="text" class="form-control" name="truck_phone" value="@Model.Email" placeholder="Email">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 form-group">
+                            <label>Address:</label>
+                            <div class="input-group">
+
+                                <span class="input-group-addon"><i class="far fa-address-card"></i></span>
+                                @*<input id="truck_phone" type="text" class="form-control" name="truck_phone" value="" placeholder="Email" onkeypress="return isNumberKey(event);">*@
+                                @*<textarea id="txt_Address" class="form-control" name="Adress" placeholder="Address" rows="2" cols="150"></textarea>*@
+                                @Html.TextArea("Address", Model.Address, new { @class = "form-control", @id = "txt_Address" })
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
 
-            <div class="panel-body">
 
-                <div class="col-sm-6 form-group">
-                    <label><i class="red">*</i> Material</label>
-                    <div>
-                        @Html.DropDownList("Material", new SelectList((System.Collections.IEnumerable)ViewData["MaterialList"], "Value", "Text"), "Select Material", new { @class = "form-control", @id = "ddlMaterial", Title = "Material" })
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h5 class="panel-title"><b>Good Details</b> </h5>
                     </div>
 
-                </div>
+                    <div class="panel-body">
 
-                <div class="col-sm-6 form-group">
-                    <label><i class="red">*</i> Unit</label>
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-balance-scale" aria-hidden="true"></i></span>
-                        <select id="ddlUnit" class="form-control">
-                            <option> Select Unit </option>
-                            <option value="inch">inch</option>
-                            <option value="mm">mm</option>
-                            <option value="cm">cm</option>
-                            <option value="ft">ft</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-sm-6 form-group">
-                    <label>Heigth</label>
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-up"></i></span>
-                        <input id="txt_Height" type="number" class="form-control" name="altr_name" value="" placeholder="Height">
-                    </div>
-                </div>
-                <div class="col-sm-6 form-group">
-                    <label>Width</label>
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-right"></i></span>
-                        <input id="txt_Width" type="number" class="form-control" name="altr_name" value="" placeholder="Width">
-                    </div>
-                </div>
-
-                <div class="col-sm-6 form-group">
-                    <label>Length</label>
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-down"></i></span>
-                        <input id="txt_Length" type="number" class="form-control" name="altr_name" value="" placeholder="Length">
-                    </div>
-                </div>
-                <div class="col-sm-6 form-group">
-                    <label>Weight(Tonn)</label>
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-glass"></i></span>
-                        <input id="txt_Weight" type="number" class="form-control" name="altr_name" value="" placeholder="Weigtht">
-                    </div>
-                </div>
-                <div class="col-sm-6 form-group">
-                    <label>Quantity</label>
-                    <div class="input-group">
-
-                        <input id="txt_Quantity" type="number" class="form-control" name="altr_name" value="" placeholder="Quantity">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-3">
-                        <div class="form-group">
+                        <div class="col-sm-6 form-group">
+                            <label><i class="red">*</i> Material</label>
                             <div>
-                                <input type="hidden" id="hdnOperationType" value="I" />
-                                <input type="hidden" id="hdnUpdateSrNo" value="" />
-                                <input type="hidden" id="hdnRowNo" value="" />
-                                <button type="button" id="btnAddGoods" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Add Good Details</button>
+                                @Html.DropDownList("Material", new SelectList((System.Collections.IEnumerable)ViewData["MaterialList"], "Value", "Text"), "Select Material", new { @class = "form-control", @id = "ddlMaterial", Title = "Material" })
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-6 form-group">
+                            <label><i class="red">*</i> Unit</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-balance-scale" aria-hidden="true"></i></span>
+                                <select id="ddlUnit" class="form-control">
+                                    <option> Select Unit </option>
+                                    <option value="inch">inch</option>
+                                    <option value="mm">mm</option>
+                                    <option value="cm">cm</option>
+                                    <option value="ft">ft</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <label>Heigth</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-up"></i></span>
+                                <input id="txt_Height" type="number" class="form-control" name="altr_name" value="" placeholder="Height">
+                            </div>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <label>Width</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-right"></i></span>
+                                <input id="txt_Width" type="number" class="form-control" name="altr_name" value="" placeholder="Width">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 form-group">
+                            <label>Length</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-down"></i></span>
+                                <input id="txt_Length" type="number" class="form-control" name="altr_name" value="" placeholder="Length">
+                            </div>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <label>Weight(Tonn)</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-glass"></i></span>
+                                <input id="txt_Weight" type="number" class="form-control" name="altr_name" value="" placeholder="Weigtht">
+                            </div>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <label>Quantity</label>
+                            <div class="input-group">
+
+                                <input id="txt_Quantity" type="number" class="form-control" name="altr_name" value="" placeholder="Quantity">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <div>
+                                        <input type="hidden" id="hdnOperationType" value="I" />
+                                        <input type="hidden" id="hdnUpdateSrNo" value="" />
+                                        <input type="hidden" id="hdnRowNo" value="" />
+                                        <button type="button" id="btnAddGoods" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Add Good Details</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="hidden" id="idLastSrNo" name="LastSrNo" value="">
+                            <div>
+                                <table class="table table-bordered" id="tblGoodsDetail">
+                                    <thead>
+                                        <tr>
+                                            <th>Sr.</th>
+                                            <th style="display:none"></th>
+                                            <th>Material</th>
+                                            <th>Unit</th>
+                                            <th>Height</th>
+                                            <th>Width</th>
+                                            <th>Length</th>
+                                            <th>Weight(Tonn)</th>
+                                            <th>Quantity</th>
+                                            <th></th>
+                                            <th>IsDeleted</th>
+                                            <th>Operation</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.LoadDetails)
+                                        {
+                                            <tr>
+                                                <td class="SrNo">@item.LoadDetailID</td>
+                                                <td style="display:none" class="MaterialID"> @item.MaterialID</td>
+                                                <td class="MaterialName">@item.MaterialName</td>
+                                                <td class="UnitOfMeasure">@item.UnitOfMeasure </td>
+                                                <td class="Height">@item.Height</td>
+                                                <td class="Width">@item.Width</td>
+                                                <td class="Length">@item.Length</td>
+                                                <td class="Weight">@item.Weight</td>
+                                                <td class="Qty">@item.Qty</td>
+                                                <td>
+                                                    @Html.ActionLink("Edit", null, null, new { @class = "clsEditRow" }) |
+                                                    @Html.ActionLink("Delete", null, null, new { @class = "clsDeleteRow" })
+                                                </td>
+                                                <td class="IsDeleted">@item.IsDeleted</td>
+                                                <td class="Operation">U</td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <input type="hidden" id="idLastSrNo" name="LastSrNo" value="">
-                    <div>
-                        <table class="table table-bordered" id="tblGoodsDetail">
-                            <thead>
-                                <tr>
-                                    <th>Sr.</th>
-                                    <th style="display:none"></th>
-                                    <th>Material</th>
-                                    <th>Unit</th>
-                                    <th>Height</th>
-                                    <th>Width</th>
-                                    <th>Length</th>
-                                    <th>Weight(Tonn)</th>
-                                    <th>Quantity</th>
-                                    <th></th>
-                                    <th>IsDeleted</th>
-                                    <th>Operation</th>
 
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model.LoadDetails)
-                                {
-                                    <tr>
-                                        <td class="SrNo">@item.LoadDetailID</td>
-                                        <td style="display:none" class="MaterialID"> @item.MaterialID</td>
-                                        <td class="MaterialName">@item.MaterialName</td>
-                                        <td class="UnitOfMeasure">@item.UnitOfMeasure </td>
-                                        <td class="Height">@item.Height</td>
-                                        <td class="Width">@item.Width</td>
-                                        <td class="Length">@item.Length</td>
-                                        <td class="Weight">@item.Weight</td>
-                                        <td class="Qty">@item.Qty</td>
-                                        <td >
-                                            @Html.ActionLink("Edit", null, null, new { @class = "clsEditRow" }) |
-                                            @Html.ActionLink("Delete", null, null, new { @class = "clsDeleteRow" })
-                                        </td>
-                                        <td class="IsDeleted">@item.IsDeleted</td>
-                                        <td class="Operation">U</td>
-                                    </tr>
-                                }
-
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
             </div>
+        </div>
 
 
+        <div class="row">
+            @Html.ActionLink("Back to List", "New_LoaderIndex")
         </div>
     </div>
-
-    <div class="row">
-        <div class="col-sm-6 pull-left">
-            @*<input id="btnSubmit" type="submit" class="btn btn-primary" name="regform" value="Create Truck">*@
-            <input type="button" id="btnUpdate" class="btn btn-primary" name="regform" value="Update Load">
-        </div>
-    </div>
-    <div class="row">
-        @Html.ActionLink("Back to List", "New_LoaderIndex")
-    </div>
-</div>
 
 }
 
@@ -262,7 +269,7 @@
     $("#ddlSubService option[value = '" + "@Model.SubService" + "']").attr("selected", "selected");
         var lastSrNo =$ ('#tblGoodsDetail tr:last td:first').text();
         $('#idLastSrNo').val(lastSrNo);
-        
+
     });
 
     $(document).on('click', '#btnAddGoods', function (e) {
@@ -277,8 +284,8 @@
         else {
             //SrNo = editRecordSrNo
         }
-        
-        
+
+
         var materialID = $("#ddlMaterial option:selected").val();
         var material = $("#ddlMaterial option:selected").text();
         var unit = $("#ddlUnit option:selected").val();
@@ -315,7 +322,7 @@
             '@Html.ActionLink("Edit", null, null, new { @class = "clsEditRow" }) | @Html.ActionLink("Delete", null, null, new { @class = "clsDeleteRow" })' +
             '</td >' +
             '<td class="IsDeleted">0</td>';
-        
+
             bindRow = bindRow + '<td class="Operation">I</td></tr>'
             $('#tblGoodsDetail  tbody').append(bindRow);
             $("#idLastSrNo").val(SrNo);
@@ -325,8 +332,8 @@
             //$('#tblGoodsDetail').find('tr#' + rowindex).find('td.MaterialName').html(material);
             $('#tblGoodsDetail tbody tr:eq(' + rowindex + ') ').children('td.MaterialName').text(material);
             }
-        
-        
+
+
         $('#ddlMaterial').prop('selectedIndex', 0);
         $('#ddlUnit').prop('selectedIndex', 0);
         $("#txt_Height").val('');
@@ -344,7 +351,7 @@
     $(document).on('click', '.clsEditRow', function (e) {
         e.preventDefault();
         alert("Edit");
-        
+
         var srNo = $(this).closest('tr').children('td.SrNo').text();
         var materialID = $(this).closest('tr').children('td.MaterialID').text();
         var unit = $(this).closest('tr').children('td.UnitOfMeasure').text();
@@ -354,7 +361,7 @@
         var weight = $(this).closest('tr').children('td.Weight').text();
         var quantity = $(this).closest('tr').children('td.Qty').text();
         alert(materialID);
-        
+
         $('#hdnOperationType').val('U');
         $('#hdnUpdateSrNo').val(srNo);
         $("#ddlMaterial option[value = '"+ materialID +"']").attr("selected", "selected");
@@ -366,9 +373,9 @@
         $("#txt_Weight").val(weight);
         $("#txt_Quantity").val(quantity);
         var row = $(this).closest('tr').index();
-        
+
         $('#hdnRowNo').val(row);
-     
+
 
     });
     $(document).on('click', '#btnUpdate', function (e) {
