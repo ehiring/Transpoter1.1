@@ -49,21 +49,22 @@ namespace TransportService.Web.Controllers
         }
 
 
-        public ActionResult LoaderIndex(int? page)
+        
+
+        public ActionResult New_LoaderIndex(int? page)
         {
 
-            Transpoter _transpoter = new Transpoter();
-            _transpoter.TransDetails = _tripBusinessLayer.GetTripDetails(page, "", "");
-            _transpoter.SubTDetails = _tripBusinessLayer.GetSubTripDetails();
-            _transpoter.RouteList = _tripBusinessLayer.GetTripRouteDetails();
+            Loader _loader = new Loader();
+            _loader.Loaders = _tripBusinessLayer.GetLoaderList(page, "", "");
+            _loader.LoadDetails = _tripBusinessLayer.GetLoadeDetails();
+            _loader.MaterialList = _tripBusinessLayer.GetMaterialList();
 
             ViewData["CityList"] = _tripBusinessLayer.GetDropDownData("CityList", 0);
             ViewData["SearchApplied"] = 0;
 
             // return View();
-            return Request.IsAjaxRequest() ? (ActionResult)PartialView("Index", _transpoter) : View("Index", _transpoter);
+            return Request.IsAjaxRequest() ? (ActionResult)PartialView("New_LoaderIndex", _loader) : View("New_LoaderIndex", _loader);
         }
-
         public ActionResult AddTrip()
         {
             ViewData["CityList"] = _tripBusinessLayer.GetDropDownData("CityList", 0);
@@ -382,7 +383,99 @@ namespace TransportService.Web.Controllers
 
         }
 
+        public ActionResult EditLoad(int LoadID)
+        {
+            ViewData["CityList"] = _tripBusinessLayer.GetDropDownData("CityList", 0);
+            ViewData["MaterialList"] = _tripBusinessLayer.GetDropDownData("MaterialList", 0);
+            IEnumerable<LoaderEdit> LE = _tripBusinessLayer.GetLoaderByID(LoadID);
+            LoaderEdit data = new LoaderEdit();
+           
+            
+            data = LE.FirstOrDefault();
+            data.LoadDetails = _tripBusinessLayer.GetLoadDetailsByID(LoadID);
+            ViewData["LoadDetailCount"] = data.LoadDetails.Count<LoadDetail>();
+            return View(data);
 
+        }
+
+        [HttpPost]
+        public ActionResult EditLoad(Loader _loader, List<LoadDetail> _loadDetails=null)
+        {
+
+            //Adding Load Details In DT
+
+            DataTable dtLoadDetail = new DataTable();
+
+            dtLoadDetail.Columns.Add("MaterialID", typeof(int));
+            dtLoadDetail.Columns.Add("UnitOfMeasure", typeof(string));
+            dtLoadDetail.Columns.Add("Height", typeof(decimal));
+            dtLoadDetail.Columns.Add("Width", typeof(decimal));
+            dtLoadDetail.Columns.Add("Length", typeof(decimal));
+            dtLoadDetail.Columns.Add("Weight", typeof(decimal));
+            dtLoadDetail.Columns.Add("Qty", typeof(int));
+
+            if (_loadDetails != null)
+            {
+                if (_loadDetails.Count > 0)
+                {
+                    foreach (var item in _loadDetails)
+                    {
+                        DataRow dr_LoadDetail = dtLoadDetail.NewRow();
+                        dr_LoadDetail["MaterialID"] = item.MaterialID;
+                        dr_LoadDetail["UnitOfMeasure"] = item.UnitOfMeasure;
+                        dr_LoadDetail["Height"] = item.Height;
+                        dr_LoadDetail["Width"] = item.Width;
+                        dr_LoadDetail["Length"] = item.Length;
+                        dr_LoadDetail["Weight"] = item.Weight;
+                        dr_LoadDetail["Qty"] = item.Qty;
+                        dtLoadDetail.Rows.Add(dr_LoadDetail);
+                    }
+                }
+            }
+
+            SqlParameter tvpParamLoadDetails = new SqlParameter();
+            tvpParamLoadDetails.ParameterName = "@UDTable_LoadDetails";
+            tvpParamLoadDetails.SqlDbType = System.Data.SqlDbType.Structured;
+            tvpParamLoadDetails.Value = dtLoadDetail;
+            tvpParamLoadDetails.TypeName = "UDTable_LoadDetails";
+            //@PickUpDate,
+            JobDbContext _jobDbContext = new JobDbContext();
+            var result = _jobDbContext.Database.ExecuteSqlCommand(@"exec USP_UpdateLoadWhereID
+                        @LoadID,
+                        @SourceID ,
+                        @DestinationID, 
+                        @PickUpDate,
+                        @LoadType ,
+                        @SubService ,
+                        @ContactNo ,
+                        @Email ,
+                        @Address ,
+                        @Status ,
+                        @AddedBy ,
+                        @Receiver,
+                        @UDTable_LoadDetails",
+          new SqlParameter("@LoadID", _loader.LoadID),
+          new SqlParameter("@SourceID", _loader.SourceID),
+          new SqlParameter("@DestinationID", _loader.DestinationID),
+          new SqlParameter("@PickUpDate", _loader.PickUpDate),
+          new SqlParameter("@LoadType", _loader.LoadType),
+          new SqlParameter("@SubService", _loader.SubService),
+          new SqlParameter("@ContactNo", _loader.ContactNo),
+          new SqlParameter("@Email", _loader.Email),
+          new SqlParameter("@Address", _loader.Address),
+           new SqlParameter("@Status", _loader.Status == null ? 0:_loader.Status),
+          new SqlParameter("@AddedBy", 1),/*.....UserID 1 is Loader*/
+          new SqlParameter("@Receiver", _loader.Receiver),
+          tvpParamLoadDetails);
+            return Json("Load Updated Sucessfully");
+
+        }
+
+
+        public ActionResult test()
+        {            
+            return View();
+        }
         #endregion
 
     }

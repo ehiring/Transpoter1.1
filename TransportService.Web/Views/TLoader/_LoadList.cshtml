@@ -1,0 +1,111 @@
+﻿
+
+
+@model  TransportService.Web.Models.Activity.Loader
+
+@using PagedList;
+@using PagedList.Mvc;
+@using GridMvc.Html
+
+
+<div class="col-sm-12">
+
+    @foreach (var item1 in Model.Loaders)
+    {
+        <div>
+            <div>
+                <div class="sc-fYxtnH cPxaEJ">
+                    <div class="sc-tilXH ipziHM">
+                        <div class="sc-kTUwUJ dmMRtR">
+
+                            <div class="sc-kTUwUJ dmMRtR">
+                                <div class="sc-dnqmqq bDsesi">
+                                    <div class="BusViewContainer">
+                                        <div class="sc-iwsKbI gTUxim">
+                                            <div class="sc-gZMcBi gkRcqz">
+                                                <span class="sc-gqjmRU izTLmu">@item1.Source&nbsp;</span>
+                                                <span class="sc-jzJRlG btSGRi"> 15h 58m</span>
+                                                <span class="sc-fjdhpX laKnSQ">@item1.Destination&nbsp;</span>
+                                            </div>
+
+                                            <div class="sc-cSHVUG kBaSPa">
+                                                <p class="sc-kAzzGY eVnWFt">
+                                                    <span class="sc-chPdSV glJpds" title="!9 Feet Container" style="color: darkgray;">@item1.LoadType</span>
+                                                    @*<span class="sc-kgoBCf cQRYis">| 16/12/2019</span>*@
+                                                    <span class="sc-kgoBCf cQRYis" style="font-family:sans-serif">| @item1.PickUpDate</span>
+                                                    <span class="sc-kgoBCf cQRYis">@Html.ActionLink("Edit Load", "EditLoad", new { LoadID = item1.LoadID }) <br /></span>
+                                                </p>
+
+                                                <ul class="sc-kGXeez sOzzB">
+                                                    <ul class="sc-kpOJdX bFqegh">
+                                                        @*<span class="sc-jKJlTe jhvond sc-ckVGcZ fYVOJz"></span>3 Ton Booked*@
+                                                    </ul>
+                                                    <ul class="sc-kpOJdX bFqegh">
+                                                        @*<span>@item1.LoadType</span>*@
+                                                    </ul>
+                                                </ul>
+
+                                                <ul class="sc-eNQAEJ bFIowg">
+                                                    <p class="sc-kkGfuU dfuvAZ">
+                                                        <span class="sc-iAyFgw krClWy" high="true">
+                                                            <span class="sc-hSdWYo eXbDWv">4.7</span>/5
+                                                        </span>
+                                                    </p>
+
+                                                    <li class="sc-hMqMXs kEmCaG">Policies</li>
+                                                    <li class="sc-hMqMXs kEmCaG">Pickups &amp; Drops</li>
+                                                    <li class="sc-hMqMXs kEmCaG">5 Photos</li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="sc-eHgmQL qdAhs">
+                                                <div>
+                                                    <div>
+                                                        <span data-placeholder="true" class="sc-brqgnP bKUXLW">1285</span>
+                                                    </div>
+                                                    <p class="sc-csuQGl dKyclB">
+                                                        <span class="sc-Rmtcm gnTLhn sc-ckVGcZ kvMNaU"></span>
+                                                    </p>
+                                                </div>
+                                                <ul class="sc-kGXeez sOzzB">
+                                                    <ul class="sc-dxgOiQ BhRgU">
+                                                        <span class="sc-jKJlTe jhvond sc-ckVGcZ gYzbWd"></span> @item1.LoadStatus
+                                                    </ul>
+                                                </ul>
+                                                @*<a class="sc-cMljjf drsecP pull-left">Edit Load</a>*@
+                                                
+                                                <a class="sc-cMljjf drsecP pull-right">Book Now</a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+
+<div class="row">
+    <div class="col-sm-12 ">
+        <div class="pnl-pagination m-b-md1">
+            <div class="pull-right">
+
+                @Html.PagedListPager((IPagedList)Model.Loaders, page => Url.Action("", "", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions() { MaximumPageNumbersToDisplay = 4, DisplayPageCountAndCurrentLocation = true }, new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "mgrid", OnComplete = "PagedOnComplete" }))
+
+                @if (Model.Loaders.Count() == 0)
+                {
+                    <ul class="pagination pull-right"></ul>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
