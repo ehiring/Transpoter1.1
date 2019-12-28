@@ -40,6 +40,7 @@ namespace TransportService.Web.Models.Activity
         public int? DestinationID { get; set; }
         public string Receiver { get; set; }
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? PickUpDate { get; set; }
         public string LoadType { get; set; }
         public string SubService { get; set; }

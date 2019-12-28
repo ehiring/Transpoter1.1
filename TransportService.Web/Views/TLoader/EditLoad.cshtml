@@ -38,7 +38,8 @@
                     <label>Pick Up Date:</label>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                        <input type="date" id="PickUpDate" class="form-control dropwidth" placeholder="YYYY-MM-DD" value="@Model.PickUpDate" />
+                        @Html.TextBoxFor(Model => Model.PickUpDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date", @id="PickUpDate" })
+                        @*<input type="date" id="PickUpDate" class="form-control dropwidth" placeholder="YYYY-MM-DD" value="@Model.PickUpDate" />*@
                         @*<input type="text" id="dp2" data-date-format="yyyy-mm-dd" placeholder="YYYY-MM-DD" class="form-control select_date" name="truck_insurestartdate" value="" autocomplete="off" onkeypress="return checkdate(event);">*@
                     </div>
                 </div>
