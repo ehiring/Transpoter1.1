@@ -1,0 +1,424 @@
+﻿
+@{
+    ViewBag.Title = "AddLoad";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+@using (Html.BeginForm())
+{
+    
+
+
+
+<div class="container-fluid">
+    <hr />
+    <div class="row">
+        <div class="col-sm-12 pull-left">
+            @*<input id="btnSubmit" type="submit" class="btn btn-primary" name="regform" value="Create Truck">*@
+            <input type="button" id="btnSubmit" class="btn btn-primary" name="regform" value="Add Load">
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-lg-6">
+            <hr />
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h5 class="panel-title"><b>Good Details</b> </h5>
+                </div>
+                <div class="panel-body">
+
+                    <div class="col-sm-6 form-group">
+                        <label><i class="red">*</i> Source  </label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+                            @Html.DropDownList("Source", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select Source", new { @class = "form-control", @id = "SourceID", Title = "SourceID" })
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 form-group">
+                        <label><i class="red">*</i> Destination </label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+                            @Html.DropDownList("Destination", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select Destination", new { @class = "form-control", @id = "DestinationID", Title = "DestinationID" })
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 form-group">
+                        <label>Pick Up Date:</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                            <input type="date" id="PickUpDate" class="form-control dropwidth" placeholder="YYYY-MM-DD" />
+                            @*<input type="text" id="dp2" data-date-format="yyyy-mm-dd" placeholder="YYYY-MM-DD" class="form-control select_date" name="truck_insurestartdate" value="" autocomplete="off" onkeypress="return checkdate(event);">*@
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 form-group">
+                        <label><i class="red">*</i>Load Type:</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fas fa-shopping-cart"></i></span>
+                            <select id="ddlLoadType" class="form-control">
+                                <option> Select Load Type </option>
+                                <option> Full Truck Load(Above 3000 Kg) </option>
+                                <option>Part Truck Load(500-3000 Kg) </option>
+                                <option>Parcel (Less than 500 Kg) </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 form-group">
+                        <label><i class="red">*</i>Sub Service:</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fas fa-users"></i></span>
+                            <select id="ddlSubService" class="form-control">
+                                <option> Select Sub Service</option>
+                                <option value="Commercial"> Commercial </option>
+                                <option value="NonCommercial_Business">Non Commercial(Business) </option>
+                                <option value="NonCommercial_Household">Non Commercial(Household) </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 form-group">
+                        <label>Reciever Name:</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fas fa-user"></i></span>
+                            <input id="txt_Receiver" type="text" class="form-control" name="altr_name" value="" placeholder="Contact Name">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 form-group">
+                        <label>Phone:</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                            <input id="txt_Phone" type="text" class="form-control" name="truck_phone" value="" placeholder="Phone">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 form-group">
+                        <label>Email:</label>
+                        <div class="input-group">
+
+                            <span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
+                            <input id="txt_Mail" type="text" class="form-control" name="truck_phone" value="" placeholder="Email">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 form-group">
+                        <label>Address:</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="far fa-address-card"></i></span>
+                            @*<input id="truck_phone" type="text" class="form-control" name="truck_phone" value="" placeholder="Email" onkeypress="return isNumberKey(event);">*@
+                            <textarea id="txt_Address" class="form-control" name="Adress" placeholder="Address" rows="2" cols="150"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-lg-6">
+            <hr />
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h5 class="panel-title"><b>Good Details</b> </h5>
+                </div>
+
+                <div class="panel-body">
+                    <div class="col-sm-6 form-group">
+                        <label><i class="red">*</i> Material</label>
+                        <div>
+                            @Html.DropDownList("Material", new SelectList((System.Collections.IEnumerable)ViewData["MaterialList"], "Value", "Text"), "Select Material", new { @class = "form-control", @id = "ddlMaterial", Title = "Material" })
+                        </div>
+
+                    </div>
+
+                    <div class="col-sm-6 form-group">
+                        <label><i class="red">*</i> Unit</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-balance-scale" aria-hidden="true"></i></span>
+                            <select id="ddlUnit" class="form-control">
+                                <option> Select Unit </option>
+                                <option value="inch">inch</option>
+                                <option value="mm">mm</option>
+                                <option value="cm">cm</option>
+                                <option value="ft">ft</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <label>Heigth</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-up"></i></span>
+                            <input id="txt_Height" type="text" class="form-control" name="altr_name" value="" placeholder="Height">
+                        </div>
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <label>Width</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-right"></i></span>
+                            <input id="txt_Width" type="text" class="form-control" name="altr_name" value="" placeholder="Width">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 form-group">
+                        <label>Length</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-down"></i></span>
+                            <input id="txt_Length" type="text" class="form-control" name="altr_name" value="" placeholder="Length">
+                        </div>
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <label>Weight(Tonn)</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-glass"></i></span>
+                            <input id="txt_Weight" type="text" class="form-control" name="altr_name" value="" placeholder="Weigtht">
+                        </div>
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <label>Quantity</label>
+                        <div class="input-group">
+
+                            <input id="txt_Quantity" type="text" class="form-control" name="altr_name" value="" placeholder="Quantity">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <div>
+                                    <button type="button" id="btnAddGoods" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Add Good Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="hidden" id="RowCount" name="RowCount" value="0">
+                        <div>
+                            <table class="table table-bordered" id="tblGoodsDetail">
+                                <thead>
+                                    <tr>
+                                        <th>Sr.</th>
+                                        <th style="display:none"></th>
+                                        <th>Material</th>
+                                        <th>Unit</th>
+                                        <th>Height</th>
+                                        <th>Width</th>
+                                        <th>Length</th>
+                                        <th>Weight(Tonn)</th>
+                                        <th>Quantity</th>
+                                        <th></th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+</div>
+
+    }
+    <script>
+        $(document).ready(function () {
+            $('.goodstable').hide();
+        });
+
+
+        $(document).on('click', 'i.deleterow', function (e) {
+            e.preventDefault();
+            $(this).parents('tr').remove();
+            var rowCount = parseInt($("#RowCount").val());
+            rowCount = rowCount - 1;
+            $("#RowCount").val(rowCount);
+
+        });
+
+
+        $(document).on('click', '#btnAddGoods', function (e) {
+            var htmlValidation = "";
+
+            var rowCount = parseInt($("#RowCount").val());
+
+            rowCount = rowCount + 1;
+            $("#RowCount").val(rowCount);
+            var materialID = $("#ddlMaterial option:selected").val();
+            var material = $("#ddlMaterial option:selected").text();
+            var unit = $("#ddlUnit option:selected").val();
+            var height = $("#txt_Height").val();
+            var width = $("#txt_Width").val();
+            var length = $("#txt_Length").val();
+            var weight = $("#txt_Weight").val();
+            var quantity = $("#txt_Quantity").val();
+
+            htmlValidation = (materialID == 0 ? "CargoType/" : "");
+            htmlValidation = htmlValidation + (unit == 0 ? "Unit/" : "");
+            htmlValidation = htmlValidation + ((height == null || height == "") ? "Height/" : "");
+            htmlValidation = htmlValidation + ((width == null || width == "") ? "Width/" : "");
+            htmlValidation = htmlValidation + ((length == null || length == "") ? "Length/" : "");
+            htmlValidation = htmlValidation + ((weight == null || weight == "") ? "Weight/" : "");
+            htmlValidation = htmlValidation + ((quantity == null || quantity == "") ? "Quantity" : "");
+
+            if (htmlValidation.length != 0) {
+                alert("Please fill the fields (" + htmlValidation + ")");
+                return;
+            }
+
+            var bindRow = '<tr>' +
+                '<td>' + rowCount + '</td>' +
+                '<td style="display:none">' + materialID + '</td>' +
+                '<td>' + material + '</td>' +
+                '<td>' + unit + '</td>' +
+                '<td>' + height + '</td>' +
+                '<td>' + width + '</td>' +
+                '<td>' + length + '</td>' +
+                '<td>' + weight + '</td>' +
+                '<td>' + quantity + '</td>' +
+                '<td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true" style="margin-top: 7px;"></i></td>' +
+
+                '</tr>'
+            $('#tblGoodsDetail  tbody').append(bindRow);
+            $('#ddlMaterial').prop('selectedIndex', 0);
+            $('#ddlUnit').prop('selectedIndex', 0);
+            $("#txt_Height").val('');
+            $("#txt_Width").val('');
+            $("#txt_Length").val('');
+            $("#txt_Weight").val('');
+            $("#txt_Quantity").val('')
+        });
+        $(document).on('click', '#btnSubmit', function (e) {
+            e.preventDefault();
+
+            var htmlValidationSummary = "";
+            if ($("#PickUpDate").val() == null || $("#PickUpDate").val() == "") {
+                htmlValidationSummary = htmlValidationSummary + "<li> Please Select Pick Up Date  </li>";
+            }
+
+
+            //adding Load Grid Details In Array
+            var idArrLoadDetails = [];
+            $('#tblGoodsDetail tbody tr').each(function (k, v) {
+                var trElement = $(this);
+
+                var tdVals = trElement.find('td:eq(0)').text() + "~" +
+                    trElement.find('td:eq(1)').text() + "~" +
+                    trElement.find('td:eq(3)').text() + "~" +
+                    trElement.find('td:eq(4)').text() + "~" +
+                    trElement.find('td:eq(5)').text() + "~" +
+                    trElement.find('td:eq(6)').text() + "~" +
+                    trElement.find('td:eq(7)').text() + "~" +
+                    trElement.find('td:eq(8)').text();
+                alert(tdVals);
+                idArrLoadDetails.push(tdVals);
+
+            });
+
+
+            if ($("#SourceID option:selected").val() == null || $("#SourceID option:selected").val() == "") {
+                htmlValidationSummary = "<li> Please Select Source </li>";
+            }
+            if ($("#DestinationID option:selected").val() == null || $("#DestinationID option:selected").val() == "") {
+                htmlValidationSummary = htmlValidationSummary + "<li> Please Select Destination </li>";
+            }
+            if ($("#PickUpDate").val() == null || $("#PickUpDate").val() == "") {
+                htmlValidationSummary = htmlValidationSummary + "<li> Please Select Pick Up Date  </li>";
+            }
+            if ($("#ddlLoadType option:selected").val() == null || $("#ddlLoadType option:selected").val() == "") {
+                htmlValidationSummary = htmlValidationSummary + "<li> Please Select Load Type </li>";
+            }
+
+            if ($("#ddlSubService option:selected").val() == null || $("#ddlSubService option:selected").val() == "") {
+                htmlValidationSummary = htmlValidationSummary + "<li> Please Select Sub Service  </li>";
+            }
+
+            if ($("#txt_Receiver").val() == null || $("#txt_Receiver").val() == "") {
+                htmlValidationSummary = htmlValidationSummary + "<li> Please Enter Reciever Name</li>";
+            }
+            if ($("#txt_Phone").val() == null || $("#txt_Phone").val() == "") {
+                htmlValidationSummary = htmlValidationSummary + "<li> Please Enter Phone No.</li>";
+            }
+            if ($("#txt_Mail").val() == null || $("#txt_Mail").val() == "") {
+                htmlValidationSummary = htmlValidationSummary + "<li> Please Enter Email.</li>";
+            }
+            if ($("#txt_Address").val() == null || $("#txt_Address").val() == "") {
+                htmlValidationSummary = htmlValidationSummary + "<li> Please Enter Address.</li>";
+            }
+
+
+            if ($('#tblGoodsDetail >tbody>tr').length == 0) {
+                htmlValidationSummary = htmlValidationSummary + "<li> Please add Good Details </li>";
+            }
+
+            if (htmlValidationSummary.length != 0) {
+                htmlValidationSummary = "<ul>" + htmlValidationSummary + "</ul>";
+                $('#divValidationSummary').html(htmlValidationSummary);
+                return 0;
+            }
+            else {
+                $('#divValidationSummary').html('');
+            }
+
+            var LoadDetails = [];
+            for (var i = 0; i < idArrLoadDetails.length; i++) {
+                var arrElement = idArrLoadDetails[i].split("~");
+                item = {}
+                item["LoadDetailID"] = arrElement[0];
+                item["MaterialID"] = arrElement[1];
+                item["UnitOfMeasure"] = arrElement[2];
+                item["Height"] = arrElement[3];
+                item["Width"] = arrElement[4];
+                item["Length"] = arrElement[5];
+                item["Weight"] = arrElement[6];
+                item["Qty"] = arrElement[7];
+                LoadDetails.push(item);
+            }
+
+
+
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/Loader/AddLoad',
+                data:
+                {
+                    SourceID: $("#SourceID option:selected").val(),
+                    DestinationID: $("#DestinationID option:selected").val(),
+                    PickUpDate: $("#PickUpDate").val(),
+                    LoadType: $("#ddlLoadType option:selected").text(),
+                    SubService: $("#ddlSubService option:selected").val(),
+                    Receiver: $("#txt_Receiver").val(),
+                    ContactNo: $("#txt_Phone").val(),
+                    Email: $("#txt_Mail").val(),
+                    Address: $("#txt_Address").val(),
+                    _loadDetails: LoadDetails
+                },
+                success: function (da) {
+                    alert(da);
+                    $('#tblGoodsDetail').empty();
+                    $("#RowCount").val(0);
+                    window.location.href = "/Loader/LoaderIndex";
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Error " + errorThrown);
+                }
+            });
+
+
+
+        });
+    </script>
+

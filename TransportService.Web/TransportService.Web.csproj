@@ -266,6 +266,7 @@
     <Content Include="Views\TLoader\Old_EditLoad.cshtml" />
     <Content Include="Views\TLoader\EditLoad.cshtml" />
     <Content Include="Views\TLoader\Test.cshtml" />
+    <Content Include="Views\TLoader\AddLoad.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
