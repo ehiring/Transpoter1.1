@@ -98,7 +98,11 @@ namespace TransportService.Web.Controllers
 
         #region "New Code"
 
+        public ActionResult Test()
+        {
 
+            return View();
+        }
         public ActionResult Index(int? page)
         {
             Transpoter _transpoter = new Transpoter();

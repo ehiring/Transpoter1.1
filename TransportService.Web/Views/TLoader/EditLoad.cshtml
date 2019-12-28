@@ -18,9 +18,10 @@
             </div>
         </div>
 
-        <div class="row ">
+        <div class="row">
+            <hr />
             <div class="col-lg-6">
-                <hr />
+               
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h5 class="panel-title"><b>Edit Load</b> </h5>
@@ -45,6 +46,13 @@
                             </div>
                         </div>
 
+                        <div class="col-sm-6 form-group " id="divValidationSource">
+                            <label class="text-danger">Select Souce</label>
+                        </div>
+                        <div class="col-sm-6 form-group " id="divValidationDestination">
+                            <label class="text-danger">Select Destination</label>
+                        </div>
+
                         <div class="col-sm-6 form-group">
                             <label>Pick Up Date:</label>
                             <div class="input-group">
@@ -67,7 +75,12 @@
                                 </select>
                             </div>
                         </div>
-
+                        <div class="col-sm-6 form-group " id="divValidationPickUpDate">
+                            <label class="text-danger">Select Pick Up Date</label>
+                        </div>
+                        <div class="col-sm-6 form-group " id="divValidationLoadType">
+                            <label class="text-danger">Select Load Type</label>
+                        </div>
                         <div class="col-sm-6 form-group">
                             <label><i class="red">*</i>Sub Service:</label>
                             <div class="input-group">
@@ -84,12 +97,16 @@
                         <div class="col-sm-6 form-group">
                             <label>Reciever Name:</label>
                             <div class="input-group">
-
                                 <span class="input-group-addon"><i class="fas fa-user"></i></span>
                                 <input id="txt_Receiver" type="text" class="form-control" name="altr_name" value="@Model.Receiver" placeholder="Contact Name">
                             </div>
                         </div>
-
+                        <div class="col-sm-6 form-group " id="divValidationSubService">
+                            <label class="text-danger">Select Sub Service</label>
+                        </div>
+                        <div class="col-sm-6 form-group " id="divValidationReciever">
+                            <label class="text-danger">Enter Reciever Name</label>
+                        </div>
                         <div class="col-sm-6 form-group">
                             <label>Phone:</label>
                             <div class="input-group">
@@ -106,8 +123,14 @@
                                 <input id="txt_Mail" type="text" class="form-control" name="truck_phone" value="@Model.Email" placeholder="Email">
                             </div>
                         </div>
+                        <div class="col-sm-6 form-group " id="divValidationPhone">
+                            <label class="text-danger">Enter Phone</label>
+                        </div>
+                        <div class="col-sm-6 form-group " id="divValidationEmail">
+                            <label class="text-danger">Enter Email</label>
+                        </div>
 
-                        <div class="col-sm-6 form-group">
+                        <div class="col-sm-12 form-group">
                             <label>Address:</label>
                             <div class="input-group">
 
@@ -124,6 +147,7 @@
 
 
             <div class="col-lg-6">
+
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h5 class="panel-title"><b>Good Details</b> </h5>
