@@ -1,4 +1,4 @@
-﻿
+﻿@model TransportService.Web.Models.Activity.Loader
 @{
     ViewBag.Title = "AddLoad";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,6 +6,11 @@
 
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<style>
+    .borderValidation{
+        border-color:red;
+    }
+</style>
 @using (Html.BeginForm())
 {
     
@@ -35,8 +40,8 @@
                         <label><i class="red">*</i> Source  </label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
-                            @Html.DropDownList("Source", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select Source", new { @class = "form-control", @id = "SourceID", Title = "SourceID" })
-
+                            @Html.DropDownList("Source", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select Source", new { @class = "form-control", @id = "SourceID", Title = "Select Source" })
+                            
                         </div>
 
                     </div>
@@ -45,24 +50,19 @@
                         <label><i class="red">*</i> Destination </label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
-                            @Html.DropDownList("Destination", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select Destination", new { @class = "form-control", @id = "DestinationID", Title = "DestinationID" })
-
+                            @Html.DropDownList("Destination", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select Destination", new { @class = "form-control", @id = "DestinationID", Title = "Select Destination" })
+                            
                         </div>
                     </div>
 
-                    @*<div class="col-sm-6 form-group hidden" id="divValidationSource">
-                        <label class="text-danger" >Select Souce</label>
-                    </div>
-                    <div class="col-sm-6 form-group hidden" id="divValidationDestination">
-                        <label class="text-danger" >Select Destination</label>
-                    </div>*@
+                    
 
                     <div class="col-sm-6 form-group" >
                         <label>Pick Up Date:</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                            <input type="date" id="PickUpDate" class="form-control dropwidth" placeholder="YYYY-MM-DD" />
-                            @*<input type="text" id="dp2" data-date-format="yyyy-mm-dd" placeholder="YYYY-MM-DD" class="form-control select_date" name="truck_insurestartdate" value="" autocomplete="off" onkeypress="return checkdate(event);">*@
+                            <input type="date" id="PickUpDate" class="form-control dropwidth" placeholder="YYYY-MM-DD" title="Select Pick Up Date" />
+                            
                         </div>
                     </div>
 
@@ -70,7 +70,7 @@
                         <label><i class="red">*</i>Load Type:</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fas fa-shopping-cart"></i></span>
-                            <select id="ddlLoadType" class="form-control">
+                            <select id="ddlLoadType" class="form-control" title="Select Load Type">
                                 <option value="0"> Select Load Type </option>
                                 <option value="Full Truck Load(Above 3000 Kg)"> Full Truck Load(Above 3000 Kg) </option>
                                 <option value="Part Truck Load(500-3000 Kg)">Part Truck Load(500-3000 Kg) </option>
@@ -78,18 +78,13 @@
                             </select>
                         </div>
                     </div>
-                    @*<div class="col-sm-6 form-group hidden" id="divValidationPickUpDate">
-                        <label class="text-danger">Select Pick Up Date</label>
-                    </div>
-                    <div class="col-sm-6 form-group hidden" id="divValidationLoadType">
-                        <label class="text-danger">Select Load Type</label>
-                    </div>*@
+                   
 
                     <div class="col-sm-6 form-group">
                         <label><i class="red">*</i>Sub Service:</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fas fa-users"></i></span>
-                            <select id="ddlSubService" class="form-control">
+                            <select id="ddlSubService" class="form-control" title="Select Sub Service">
                                 <option value="0"> Select Sub Service</option>
                                 <option value="Commercial"> Commercial </option>
                                 <option value="NonCommercial_Business">Non Commercial(Business) </option>
@@ -102,21 +97,17 @@
                         <label>Reciever Name:</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fas fa-user"></i></span>
-                            <input id="txt_Receiver" type="text" class="form-control" name="altr_name" value="" placeholder="Contact Name" required>
+                            <input id="txt_Receiver" type="text" class="form-control" name="altr_name" value="" placeholder="Contact Name" title="Enter Reciever" >
+                           
                         </div>
                     </div>
-                    @*<div class="col-sm-6 form-group hidden" id="divValidationSubService">
-                        <label class="text-danger">Select Sub Service</label>
-                    </div>
-                    <div class="col-sm-6 form-group hidden" id="divValidationReciever">
-                        <label class="text-danger">Enter Reciever Name</label>
-                    </div>*@
+                    
 
                     <div class="col-sm-6 form-group">
                         <label>Phone:</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                            <input id="txt_Phone" type="text" class="form-control" name="truck_phone" value="" placeholder="Phone">
+                            <input id="txt_Phone" type="text" class="form-control" name="truck_phone" value="" placeholder="Phone" title="Enter Phone">
                         </div>
                     </div>
 
@@ -125,28 +116,21 @@
                         <div class="input-group">
 
                             <span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
-                            <input id="txt_Mail" type="text" class="form-control" name="truck_phone" value="" placeholder="Email">
+                            <input id="txt_Mail" type="text" class="form-control" name="truck_phone" value="" placeholder="Email" title="Enter Proper Email">
                         </div>
                     </div>
 
-                    @*<div class="col-sm-6 form-group hidden" id="divValidationPhone">
-                        <label class="text-danger">Enter Phone</label>
-                    </div>
-                    <div class="col-sm-6 form-group hidden" id="divValidationEmail">
-                        <label class="text-danger">Enter Email</label>
-                    </div>*@
+                    
                     <div class="col-sm-12 form-group">
                         <label>Address:</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="far fa-address-card"></i></span>
                             @*<input id="truck_phone" type="text" class="form-control" name="truck_phone" value="" placeholder="Email" onkeypress="return isNumberKey(event);">*@
-                            <textarea id="txt_Address" class="form-control" name="Adress" placeholder="Address" rows="2" cols="150"></textarea>
+                            <textarea id="txt_Address" class="form-control" name="Adress" placeholder="Address" rows="2" cols="150" title="Enter Address"></textarea>
                         </div>
                     </div>
                     
-                    @*<div class="col-sm-6 form-group hidden" id="divValidationAddress">
-                        <label class="text-danger">Enter Address</label>
-                    </div>*@
+                   
                 </div>
             </div>
 
@@ -230,7 +214,7 @@
                     <div class="form-group">
                         <input type="hidden" id="RowCount" name="RowCount" value="0">
                         <div>
-                            <table class="table table-bordered" id="tblGoodsDetail">
+                            <table class="table table-bordered" id="tblGoodsDetail" title="Enter Good Details">
                                 <thead>
                                     <tr>
                                         <th>Sr.</th>
@@ -251,9 +235,7 @@
                             </table>
                         </div>
                     </div>
-                    <div class="col-sm-6 form-group hidden" id="divValidationTable">
-                        <label class="text-danger">Enter Goods Detail</label>
-                    </div>
+                   
                 </div>
 
                
@@ -363,53 +345,51 @@
             });
 
 
-            //if ($("#SourceID option:selected").val() == null || $("#SourceID option:selected").val() == "") {
-            //    bflagValid = 0;
-            //    $('#divValidationSource').removeClass('hidden');
-            //}
-            //if ($("#DestinationID option:selected").val() == null || $("#DestinationID option:selected").val() == "") {
-            //    bflagValid = 0;
-            //    $('#divValidationDestination').removeClass('hidden');
-            //}
-            //if ($("#PickUpDate").val() == null || $("#PickUpDate").val() == "") {
-            //    bflagValid = 0;
-            //    $('#divValidationPickUpDate').removeClass('hidden');
-            //}
-            //if ($("#ddlLoadType option:selected").val() == 0 || $("#ddlLoadType option:selected").val() == "") {
-            //    bflagValid = 0;
+            if ($("#SourceID option:selected").val() == null || $("#SourceID option:selected").val() == "") {
+                bflagValid = 0;
+                $("#SourceID").addClass('borderValidation');
                 
-            //    $('#divValidationLoadType').removeClass('hidden');
-            //}
+            }
+            if ($("#DestinationID option:selected").val() == null || $("#DestinationID option:selected").val() == "") {
+                bflagValid = 0;
+                $("#DestinationID").addClass('borderValidation');
+            }
+            if ($("#PickUpDate").val() == null || $("#PickUpDate").val() == "") {
+                bflagValid = 0;
+                $("#PickUpDate").addClass('borderValidation');
+            }
+            if ($("#ddlLoadType option:selected").val() == 0 || $("#ddlLoadType option:selected").val() == "") {
+                bflagValid = 0;
+                $("#ddlLoadType").addClass('borderValidation');
+            }
 
-            //if ($("#ddlSubService option:selected").val() == 0 || $("#ddlSubService option:selected").val() == "") {
-            //    bflagValid = 0;
-            //    alert("hi");
-            //    $('#divValidationSubService').removeClass('hidden');
-            //}
+            if ($("#ddlSubService option:selected").val() == 0 || $("#ddlSubService option:selected").val() == "") {
+                bflagValid = 0;
+                $("#ddlSubService").addClass('borderValidation');
+            }
 
-            //if ($("#txt_Receiver").val() == null || $("#txt_Receiver").val() == "") {
-            //    bflagValid = 0;
-                
-            //    $('#divValidationReciever').removeClass('hidden');
-            //}
-            //if ($("#txt_Phone").val() == null || $("#txt_Phone").val() == "") {
-            //    bflagValid = 0;
-            //    $('#divValidationPhone').removeClass('hidden');
-            //}
-            //if ($("#txt_Mail").val() == null || $("#txt_Mail").val() == "") {
-            //    bflagValid = 0;
-            //    $('#divValidationEmail').removeClass('hidden');
-            //}
-            //if ($("#txt_Address").val() == null || $("#txt_Address").val() == "") {
-            //    bflagValid = 0;
-            //    $('#divValidationAddress').removeClass('hidden');
-            //}
+            if ($("#txt_Receiver").val() == null || $("#txt_Receiver").val() == "") {
+                bflagValid = 0;
+                $("#txt_Receiver").addClass('borderValidation');
+            }
+            if ($("#txt_Phone").val() == null || $("#txt_Phone").val() == "") {
+                bflagValid = 0;
+                $("#txt_Phone").addClass('borderValidation');
+            }
+            if ($("#txt_Mail").val() == null || $("#txt_Mail").val() == "") {
+                bflagValid = 0;
+                $("#txt_Mail").addClass('borderValidation');
+            }
+            if ($("#txt_Address").val() == null || $("#txt_Address").val() == "") {
+                bflagValid = 0;
+                $("#txt_Address").addClass('borderValidation');
+            }
 
 
-            //if ($('#tblGoodsDetail >tbody>tr').length == 0) {
-            //    bflagValid = 0;
-            //    $('#divValidationTable').removeClass('hidden');
-            //}
+            if ($('#tblGoodsDetail >tbody>tr').length == 0) {
+                bflagValid = 0;
+                $("#tblGoodsDetail").addClass('borderValidation');
+            }
 
             if (bflagValid == 0) {
                

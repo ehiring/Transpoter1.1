@@ -11,13 +11,27 @@ namespace TransportService.Web.Models.Activity
     {
         [Key]
         public int LoadID { get; set; }
+
+        [Required]
+        [Display(Name ="Source")]
         public int SourceID { get; set; }
+
+        [Required]
+        [Display(Name = "Destination")]
         public int? DestinationID { get; set; }
+
         public string Source { get; set; }
         public string Destination { get; set; }
-        public string Receiver { get; set; }
+
+            [Required]
+            [Display(Name = "Receiver")]
+            public string Receiver { get; set; }
+
         [DataType(DataType.Date)]
+        [Required]
+        [Display(Name = "Pick Up Date")]
         public DateTime? PickUpDate { get; set; }
+
         public string LoadType { get; set; }
         public string SubService { get; set; }
         public int? Status { get; set; }

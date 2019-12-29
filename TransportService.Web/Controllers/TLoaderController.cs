@@ -320,6 +320,18 @@ namespace TransportService.Web.Controllers
             ViewData["CityList"] = _tripBusinessLayer.GetDropDownData("CityList", 0);
             //MaterialList
             ViewData["MaterialList"] = _tripBusinessLayer.GetDropDownData("MaterialList", 0);
+            Loader loader = new Loader();
+
+            return View(loader);
+        }
+
+
+
+        public ActionResult trail_load()
+        {
+            ViewData["CityList"] = _tripBusinessLayer.GetDropDownData("CityList", 0);
+            //MaterialList
+            ViewData["MaterialList"] = _tripBusinessLayer.GetDropDownData("MaterialList", 0);
             return View();
         }
 
@@ -327,45 +339,51 @@ namespace TransportService.Web.Controllers
         public ActionResult AddLoad(Loader _loader, List<LoadDetail> _loadDetails)
         {
 
-            //Adding Load Details In DT
 
-            DataTable dtLoadDetail = new DataTable();
 
-            dtLoadDetail.Columns.Add("MaterialID", typeof(int));
-            dtLoadDetail.Columns.Add("UnitOfMeasure", typeof(string));
-            dtLoadDetail.Columns.Add("Height", typeof(decimal));
-            dtLoadDetail.Columns.Add("Width", typeof(decimal));
-            dtLoadDetail.Columns.Add("Length", typeof(decimal));
-            dtLoadDetail.Columns.Add("Weight", typeof(decimal));
-            dtLoadDetail.Columns.Add("Qty", typeof(int));
 
-            if (_loadDetails != null)
-            {
-                if (_loadDetails.Count > 0)
-                {
-                    foreach (var item in _loadDetails)
+            
+                //Adding Load Details In DT
+                
+
+                    DataTable dtLoadDetail = new DataTable();
+                    dtLoadDetail.Columns.Add("LoadDetailID", typeof(int));
+                    dtLoadDetail.Columns.Add("MaterialID", typeof(int));
+                    dtLoadDetail.Columns.Add("UnitOfMeasure", typeof(string));
+                    dtLoadDetail.Columns.Add("Height", typeof(decimal));
+                    dtLoadDetail.Columns.Add("Width", typeof(decimal));
+                    dtLoadDetail.Columns.Add("Length", typeof(decimal));
+                    dtLoadDetail.Columns.Add("Weight", typeof(decimal));
+                    dtLoadDetail.Columns.Add("Qty", typeof(int));
+
+                    if (_loadDetails != null)
                     {
-                        DataRow dr_LoadDetail = dtLoadDetail.NewRow();
-                        dr_LoadDetail["MaterialID"] = item.MaterialID;
-                        dr_LoadDetail["UnitOfMeasure"] = item.UnitOfMeasure;
-                        dr_LoadDetail["Height"] = item.Height;
-                        dr_LoadDetail["Width"] = item.Width;
-                        dr_LoadDetail["Length"] = item.Length;
-                        dr_LoadDetail["Weight"] = item.Weight;
-                        dr_LoadDetail["Qty"] = item.Qty;
-                        dtLoadDetail.Rows.Add(dr_LoadDetail);
+                        if (_loadDetails.Count > 0)
+                        {
+                            foreach (var item in _loadDetails)
+                            {
+                                DataRow dr_LoadDetail = dtLoadDetail.NewRow();
+                                dr_LoadDetail["LoadDetailID"] = item.LoadDetailID;
+                                dr_LoadDetail["MaterialID"] = item.MaterialID;
+                                dr_LoadDetail["UnitOfMeasure"] = item.UnitOfMeasure;
+                                dr_LoadDetail["Height"] = item.Height;
+                                dr_LoadDetail["Width"] = item.Width;
+                                dr_LoadDetail["Length"] = item.Length;
+                                dr_LoadDetail["Weight"] = item.Weight;
+                                dr_LoadDetail["Qty"] = item.Qty;
+                                dtLoadDetail.Rows.Add(dr_LoadDetail);
+                            }
+                        }
                     }
-                }
-            }
 
-            SqlParameter tvpParamLoadDetails = new SqlParameter();
-            tvpParamLoadDetails.ParameterName = "@UDTable_LoadDetails";
-            tvpParamLoadDetails.SqlDbType = System.Data.SqlDbType.Structured;
-            tvpParamLoadDetails.Value = dtLoadDetail;
-            tvpParamLoadDetails.TypeName = "UDTable_LoadDetails";
-            //@PickUpDate,
-            JobDbContext _jobDbContext = new JobDbContext();
-            var result = _jobDbContext.Database.ExecuteSqlCommand(@"exec USP_SaveLoad
+                    SqlParameter tvpParamLoadDetails = new SqlParameter();
+                    tvpParamLoadDetails.ParameterName = "@UDTable_LoadDetails";
+                    tvpParamLoadDetails.SqlDbType = System.Data.SqlDbType.Structured;
+                    tvpParamLoadDetails.Value = dtLoadDetail;
+                    tvpParamLoadDetails.TypeName = "UDTable_LoadDetails";
+                    //@PickUpDate,
+                    JobDbContext _jobDbContext = new JobDbContext();
+                    var result = _jobDbContext.Database.ExecuteSqlCommand(@"exec USP_SaveLoad
                         @SourceID ,
                         @DestinationID, 
                         @PickUpDate,
@@ -378,20 +396,117 @@ namespace TransportService.Web.Controllers
                         @AddedBy ,
                         @Receiver,
                         @UDTable_LoadDetails",
-          new SqlParameter("@SourceID", _loader.SourceID),
-          new SqlParameter("@DestinationID", _loader.DestinationID),
-          new SqlParameter("@PickUpDate", _loader.PickUpDate),
-          new SqlParameter("@LoadType", _loader.LoadType),
-          new SqlParameter("@SubService", _loader.SubService),
-          new SqlParameter("@ContactNo", _loader.ContactNo),
-          new SqlParameter("@Email", _loader.Email),
-          new SqlParameter("@Address", _loader.Address),
-           new SqlParameter("@Status", 1),
-          new SqlParameter("@AddedBy", 1),/*.....UserID 1 is Loader*/
-          new SqlParameter("@Receiver", _loader.Receiver),
-          tvpParamLoadDetails);
-            return Json("Load Added Sucessfully");
+                  new SqlParameter("@SourceID", _loader.SourceID),
+                  new SqlParameter("@DestinationID", _loader.DestinationID),
+                  new SqlParameter("@PickUpDate", _loader.PickUpDate),
+                  new SqlParameter("@LoadType", _loader.LoadType),
+                  new SqlParameter("@SubService", _loader.SubService),
+                  new SqlParameter("@ContactNo", _loader.ContactNo),
+                  new SqlParameter("@Email", _loader.Email),
+                  new SqlParameter("@Address", _loader.Address),
+                   new SqlParameter("@Status", 1),
+                  new SqlParameter("@AddedBy", 1),/*.....UserID 1 is Loader*/
+                  new SqlParameter("@Receiver", _loader.Receiver),
+                  tvpParamLoadDetails);
+                    return Json("Load Added Sucessfully");
+                
+            
+        }
 
+        [HttpPost]
+        public ActionResult AddLoad_trial(Loader _loader, List<LoadDetail> _loadDetails)
+        {
+
+
+
+
+            if (HttpContext.Request.IsAjaxRequest())
+            {
+
+                //Adding Load Details In DT
+                if (ModelState.IsValid)
+                {
+
+                    DataTable dtLoadDetail = new DataTable();
+                    dtLoadDetail.Columns.Add("LoadDetailID", typeof(int));
+                    dtLoadDetail.Columns.Add("MaterialID", typeof(int));
+                    dtLoadDetail.Columns.Add("UnitOfMeasure", typeof(string));
+                    dtLoadDetail.Columns.Add("Height", typeof(decimal));
+                    dtLoadDetail.Columns.Add("Width", typeof(decimal));
+                    dtLoadDetail.Columns.Add("Length", typeof(decimal));
+                    dtLoadDetail.Columns.Add("Weight", typeof(decimal));
+                    dtLoadDetail.Columns.Add("Qty", typeof(int));
+
+                    if (_loadDetails != null)
+                    {
+                        if (_loadDetails.Count > 0)
+                        {
+                            foreach (var item in _loadDetails)
+                            {
+                                DataRow dr_LoadDetail = dtLoadDetail.NewRow();
+                                dr_LoadDetail["LoadDetailID"] = item.LoadDetailID;
+                                dr_LoadDetail["MaterialID"] = item.MaterialID;
+                                dr_LoadDetail["UnitOfMeasure"] = item.UnitOfMeasure;
+                                dr_LoadDetail["Height"] = item.Height;
+                                dr_LoadDetail["Width"] = item.Width;
+                                dr_LoadDetail["Length"] = item.Length;
+                                dr_LoadDetail["Weight"] = item.Weight;
+                                dr_LoadDetail["Qty"] = item.Qty;
+                                dtLoadDetail.Rows.Add(dr_LoadDetail);
+                            }
+                        }
+                    }
+
+                    SqlParameter tvpParamLoadDetails = new SqlParameter();
+                    tvpParamLoadDetails.ParameterName = "@UDTable_LoadDetails";
+                    tvpParamLoadDetails.SqlDbType = System.Data.SqlDbType.Structured;
+                    tvpParamLoadDetails.Value = dtLoadDetail;
+                    tvpParamLoadDetails.TypeName = "UDTable_LoadDetails";
+                    //@PickUpDate,
+                    JobDbContext _jobDbContext = new JobDbContext();
+                    var result = _jobDbContext.Database.ExecuteSqlCommand(@"exec USP_SaveLoad
+                        @SourceID ,
+                        @DestinationID, 
+                        @PickUpDate,
+                        @LoadType ,
+                        @SubService ,
+                        @ContactNo ,
+                        @Email ,
+                        @Address ,
+                        @Status ,
+                        @AddedBy ,
+                        @Receiver,
+                        @UDTable_LoadDetails",
+                  new SqlParameter("@SourceID", _loader.SourceID),
+                  new SqlParameter("@DestinationID", _loader.DestinationID),
+                  new SqlParameter("@PickUpDate", _loader.PickUpDate),
+                  new SqlParameter("@LoadType", _loader.LoadType),
+                  new SqlParameter("@SubService", _loader.SubService),
+                  new SqlParameter("@ContactNo", _loader.ContactNo),
+                  new SqlParameter("@Email", _loader.Email),
+                  new SqlParameter("@Address", _loader.Address),
+                   new SqlParameter("@Status", 1),
+                  new SqlParameter("@AddedBy", 1),/*.....UserID 1 is Loader*/
+                  new SqlParameter("@Receiver", _loader.Receiver),
+                  tvpParamLoadDetails);
+                    return Json("Load Added Sucessfully");
+                }
+                else
+                {
+                    //foreach (var modelStateValue in ViewData.ModelState.Values)
+                    //{
+
+                    //    foreach (var error in modelStateValue.Errors)
+                    //    {
+                    //        var errorMessage = error.ErrorMessage;
+                    //        var exception = error.Exception;
+                    //    }
+
+                    //}
+                    
+                }
+            }
+            return View("Error");
         }
 
         public ActionResult EditLoad(int LoadID)

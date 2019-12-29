@@ -271,6 +271,7 @@
     <Content Include="Views\TLoader\AddSubTrip.cshtml" />
     <Content Include="Views\Home\Test.cshtml" />
     <Content Include="Views\Home\TestNew.cshtml" />
+    <Content Include="Views\TLoader\trail_load.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
