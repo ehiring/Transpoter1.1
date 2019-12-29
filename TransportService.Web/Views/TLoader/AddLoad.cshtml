@@ -50,12 +50,12 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-6 form-group hidden" id="divValidationSource">
+                    @*<div class="col-sm-6 form-group hidden" id="divValidationSource">
                         <label class="text-danger" >Select Souce</label>
                     </div>
                     <div class="col-sm-6 form-group hidden" id="divValidationDestination">
                         <label class="text-danger" >Select Destination</label>
-                    </div>
+                    </div>*@
 
                     <div class="col-sm-6 form-group" >
                         <label>Pick Up Date:</label>
@@ -78,12 +78,12 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-sm-6 form-group hidden" id="divValidationPickUpDate">
+                    @*<div class="col-sm-6 form-group hidden" id="divValidationPickUpDate">
                         <label class="text-danger">Select Pick Up Date</label>
                     </div>
                     <div class="col-sm-6 form-group hidden" id="divValidationLoadType">
                         <label class="text-danger">Select Load Type</label>
-                    </div>
+                    </div>*@
 
                     <div class="col-sm-6 form-group">
                         <label><i class="red">*</i>Sub Service:</label>
@@ -105,12 +105,12 @@
                             <input id="txt_Receiver" type="text" class="form-control" name="altr_name" value="" placeholder="Contact Name" required>
                         </div>
                     </div>
-                    <div class="col-sm-6 form-group hidden" id="divValidationSubService">
+                    @*<div class="col-sm-6 form-group hidden" id="divValidationSubService">
                         <label class="text-danger">Select Sub Service</label>
                     </div>
                     <div class="col-sm-6 form-group hidden" id="divValidationReciever">
                         <label class="text-danger">Enter Reciever Name</label>
-                    </div>
+                    </div>*@
 
                     <div class="col-sm-6 form-group">
                         <label>Phone:</label>
@@ -129,12 +129,12 @@
                         </div>
                     </div>
 
-                    <div class="col-sm-6 form-group hidden" id="divValidationPhone">
+                    @*<div class="col-sm-6 form-group hidden" id="divValidationPhone">
                         <label class="text-danger">Enter Phone</label>
                     </div>
                     <div class="col-sm-6 form-group hidden" id="divValidationEmail">
                         <label class="text-danger">Enter Email</label>
-                    </div>
+                    </div>*@
                     <div class="col-sm-12 form-group">
                         <label>Address:</label>
                         <div class="input-group">
@@ -144,9 +144,9 @@
                         </div>
                     </div>
                     
-                    <div class="col-sm-6 form-group hidden" id="divValidationAddress">
+                    @*<div class="col-sm-6 form-group hidden" id="divValidationAddress">
                         <label class="text-danger">Enter Address</label>
-                    </div>
+                    </div>*@
                 </div>
             </div>
 
@@ -363,53 +363,53 @@
             });
 
 
-            if ($("#SourceID option:selected").val() == null || $("#SourceID option:selected").val() == "") {
-                bflagValid = 0;
-                $('#divValidationSource').removeClass('hidden');
-            }
-            if ($("#DestinationID option:selected").val() == null || $("#DestinationID option:selected").val() == "") {
-                bflagValid = 0;
-                $('#divValidationDestination').removeClass('hidden');
-            }
-            if ($("#PickUpDate").val() == null || $("#PickUpDate").val() == "") {
-                bflagValid = 0;
-                $('#divValidationPickUpDate').removeClass('hidden');
-            }
-            if ($("#ddlLoadType option:selected").val() == 0 || $("#ddlLoadType option:selected").val() == "") {
-                bflagValid = 0;
+            //if ($("#SourceID option:selected").val() == null || $("#SourceID option:selected").val() == "") {
+            //    bflagValid = 0;
+            //    $('#divValidationSource').removeClass('hidden');
+            //}
+            //if ($("#DestinationID option:selected").val() == null || $("#DestinationID option:selected").val() == "") {
+            //    bflagValid = 0;
+            //    $('#divValidationDestination').removeClass('hidden');
+            //}
+            //if ($("#PickUpDate").val() == null || $("#PickUpDate").val() == "") {
+            //    bflagValid = 0;
+            //    $('#divValidationPickUpDate').removeClass('hidden');
+            //}
+            //if ($("#ddlLoadType option:selected").val() == 0 || $("#ddlLoadType option:selected").val() == "") {
+            //    bflagValid = 0;
                 
-                $('#divValidationLoadType').removeClass('hidden');
-            }
+            //    $('#divValidationLoadType').removeClass('hidden');
+            //}
 
-            if ($("#ddlSubService option:selected").val() == 0 || $("#ddlSubService option:selected").val() == "") {
-                bflagValid = 0;
-                alert("hi");
-                $('#divValidationSubService').removeClass('hidden');
-            }
+            //if ($("#ddlSubService option:selected").val() == 0 || $("#ddlSubService option:selected").val() == "") {
+            //    bflagValid = 0;
+            //    alert("hi");
+            //    $('#divValidationSubService').removeClass('hidden');
+            //}
 
-            if ($("#txt_Receiver").val() == null || $("#txt_Receiver").val() == "") {
-                bflagValid = 0;
+            //if ($("#txt_Receiver").val() == null || $("#txt_Receiver").val() == "") {
+            //    bflagValid = 0;
                 
-                $('#divValidationReciever').removeClass('hidden');
-            }
-            if ($("#txt_Phone").val() == null || $("#txt_Phone").val() == "") {
-                bflagValid = 0;
-                $('#divValidationPhone').removeClass('hidden');
-            }
-            if ($("#txt_Mail").val() == null || $("#txt_Mail").val() == "") {
-                bflagValid = 0;
-                $('#divValidationEmail').removeClass('hidden');
-            }
-            if ($("#txt_Address").val() == null || $("#txt_Address").val() == "") {
-                bflagValid = 0;
-                $('#divValidationAddress').removeClass('hidden');
-            }
+            //    $('#divValidationReciever').removeClass('hidden');
+            //}
+            //if ($("#txt_Phone").val() == null || $("#txt_Phone").val() == "") {
+            //    bflagValid = 0;
+            //    $('#divValidationPhone').removeClass('hidden');
+            //}
+            //if ($("#txt_Mail").val() == null || $("#txt_Mail").val() == "") {
+            //    bflagValid = 0;
+            //    $('#divValidationEmail').removeClass('hidden');
+            //}
+            //if ($("#txt_Address").val() == null || $("#txt_Address").val() == "") {
+            //    bflagValid = 0;
+            //    $('#divValidationAddress').removeClass('hidden');
+            //}
 
 
-            if ($('#tblGoodsDetail >tbody>tr').length == 0) {
-                bflagValid = 0;
-                $('#divValidationTable').removeClass('hidden');
-            }
+            //if ($('#tblGoodsDetail >tbody>tr').length == 0) {
+            //    bflagValid = 0;
+            //    $('#divValidationTable').removeClass('hidden');
+            //}
 
             if (bflagValid == 0) {
                
