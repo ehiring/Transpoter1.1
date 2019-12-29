@@ -267,11 +267,12 @@
     <Content Include="Views\TLoader\EditLoad.cshtml" />
     <Content Include="Views\TLoader\Test.cshtml" />
     <Content Include="Views\TLoader\AddLoad.cshtml" />
-    <Content Include="Views\TLoader\AddTrip.cshtml" />
+    <Content Include="Views\TLoader\Old_AddTrip.cshtml" />
     <Content Include="Views\TLoader\AddSubTrip.cshtml" />
     <Content Include="Views\Home\Test.cshtml" />
     <Content Include="Views\Home\TestNew.cshtml" />
     <Content Include="Views\TLoader\trail_load.cshtml" />
+    <Content Include="Views\TLoader\AddTrip.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
