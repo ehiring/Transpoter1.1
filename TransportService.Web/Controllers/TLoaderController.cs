@@ -79,8 +79,9 @@ namespace TransportService.Web.Controllers
         public ActionResult AddTrip()
         {
             ViewData["CityList"] = _tripBusinessLayer.GetDropDownData("CityList", 0);
-            ViewData["VehicalTypeList"] = _tripBusinessLayer.GetDropDownData("VehicalTypeList", 0);
+            ViewData["VehicleList"] = _tripBusinessLayer.GetDropDownData("VehicleList", 1); //pass @val= ownerID i.e. Login ClientID
             ViewData["MaterialList"] = _tripBusinessLayer.GetDropDownData("MaterialList", 0);
+            ViewData["UOMList"] = _tripBusinessLayer.GetDropDownData("UOMList", 0);
             return View();
         }
 
@@ -123,6 +124,8 @@ namespace TransportService.Web.Controllers
             dtTripDetail.Columns.Add("Length", typeof(decimal));
             dtTripDetail.Columns.Add("Weight", typeof(decimal));
             dtTripDetail.Columns.Add("Qty", typeof(int));
+            dtTripDetail.Columns.Add("ConversionFactor", typeof(decimal));
+            
 
             if (_tripDetail != null)
             {
@@ -133,6 +136,7 @@ namespace TransportService.Web.Controllers
                         DataRow dr_LoadDetail = dtTripDetail.NewRow();
                         dr_LoadDetail["TripDetailID"] = item.TripDetailID;
                         dr_LoadDetail["MaterialID"] = item.MaterialID;
+                        dr_LoadDetail["ConversionFactor"] = item.ConversionFactor;
                         dr_LoadDetail["UnitOfMeasure"] = item.UnitOfMeasure;
                         dr_LoadDetail["Height"] = item.Height;
                         dr_LoadDetail["Width"] = item.Width;
@@ -154,7 +158,7 @@ namespace TransportService.Web.Controllers
             var result = _jobDbContext.Database.ExecuteSqlCommand(@"exec USP_SaveTrip
                   @SourceID 
                  ,@DestinationID 
-                 ,@VehicleTypeID 
+                 ,@VehicleID 
                  ,@TripStartDate
                  ,@TripEndDate 
                  ,@Status 
@@ -163,7 +167,7 @@ namespace TransportService.Web.Controllers
                  ,@UDTable_TripDetails",
           new SqlParameter("@SourceID", T.SourceID == null ? (object)DBNull.Value : T.SourceID),
           new SqlParameter("@DestinationID", T.DestinationID == null ? (object)DBNull.Value : T.DestinationID),
-          new SqlParameter("@VehicleTypeID", T.VehicleTypeID == null ? (object)DBNull.Value : T.VehicleTypeID),
+          new SqlParameter("@VehicleID", T.VehicleID == null ? (object)DBNull.Value : T.VehicleID),
           new SqlParameter("@TripStartDate", T.StartDate == null ? (object)DBNull.Value : T.StartDate),
           new SqlParameter("@TripEndDate", T.EndDate == null ? (object)DBNull.Value : T.EndDate),
           new SqlParameter("@Status", T.TripStatus),

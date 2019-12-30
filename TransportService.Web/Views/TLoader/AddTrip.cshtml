@@ -76,10 +76,10 @@
 
 
                     <div class="col-sm-6 form-group">
-                        <label><i class="red">*</i>Vehical Type</label>
+                        <label><i class="red">*</i>Vehicle </label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
-                            @Html.DropDownList("model.VehiclTypeID", new SelectList((System.Collections.IEnumerable)ViewData["VehicalTypeList"], "Value", "Text"), "Select Source", new { @class = "form-control dropwidth", @id = "VehicleTypeID", Title = "Select VehicleType" })
+                            @Html.DropDownList("model.VehicleID", new SelectList((System.Collections.IEnumerable)ViewData["VehicleList"], "Value", "Text"), "Select Source", new { @class = "form-control dropwidth", @id = "VehicleID", Title = "Select VehicleType" })
                         </div>
                     </div>
 
@@ -133,13 +133,8 @@
                         <label><i class="red">*</i> Unit</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-balance-scale" aria-hidden="true"></i></span>
-                            <select id="ddlUnit" class="form-control" title="Select Unit">
-                                <option value="0"> Select Unit </option>
-                                <option value="inch">inch</option>
-                                <option value="mm">mm</option>
-                                <option value="cm">cm</option>
-                                <option value="ft">ft</option>
-                            </select>
+                            @Html.DropDownList("Unit", new SelectList((System.Collections.IEnumerable)ViewData["UOMList"], "Value", "Text"), "Select Unit", new { @class = "form-control", @id = "ddlUnit", Title = "Select Unit" })
+
                         </div>
                     </div>
                     <div class="col-sm-6 form-group">
@@ -165,19 +160,20 @@
                         </div>
                     </div>
                     <div class="col-sm-6 form-group">
-                        <label>Weight(Tonn)</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-glass"></i></span>
-                            <input id="txt_Weight" type="number" class="form-control" name="altr_name" value="" placeholder="Weigtht" title="Enter Weight">
-                        </div>
-                    </div>
-                    <div class="col-sm-6 form-group">
                         <label>Quantity</label>
                         <div class="input-group">
 
                             <input id="txt_Quantity" type="number" class="form-control" name="altr_name" value="" placeholder="Quantity" title="Enter Quantity">
                         </div>
                     </div>
+                    <div class="col-sm-6 form-group">
+                        <label>Total Weight(Tonn)</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-glass"></i></span>
+                            <input id="txt_Weight" type="number" class="form-control" name="altr_name" value="" placeholder="Weigtht" title="Enter Weight">
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-sm-3">
                             <div class="form-group">
@@ -197,6 +193,7 @@
                                         <th>Sr.</th>
                                         <th style="display:none"></th>
                                         <th>Material</th>
+                                        <th style="display:none"></th>
                                         <th>Unit</th>
                                         <th>Height</th>
                                         <th>Width</th>
@@ -290,7 +287,8 @@
         $("#RowCount").val(rowCount);
         var materialID = $("#ddlMaterial option:selected").val();
         var material = $("#ddlMaterial option:selected").text();
-        var unit = $("#ddlUnit option:selected").val();
+        var conversionFactor = $("#ddlUnit option:selected").val();
+        var unit = $("#ddlUnit option:selected").text();
         var height = $("#txt_Height").val();
         var width = $("#txt_Width").val();
         var length = $("#txt_Length").val();
@@ -301,7 +299,7 @@
             bFlagValid = 0;
             $("#ddlMaterial").addClass('borderValidation');
         }
-        if (unit == 0) {
+        if (conversionFactor == 0) {
             bFlagValid = 0;
             $("#ddlUnit").addClass('borderValidation');
         }
@@ -340,6 +338,7 @@
             '<td class="clsSrNo">' + rowCount + '</td>' +
             '<td style="display:none" class="clsMaterialID">' + materialID + '</td>' +
             '<td class="clsMaterial">' + material + '</td>' +
+            '<td style="display:none" class="clsConversionFactor">' + conversionFactor + '</td>' +
             '<td class="clsUnit">' + unit + '</td>' +
             '<td class="clsHeight">' + height + '</td>' +
             '<td class="clsWidth">' + width + '</td>' +
@@ -398,8 +397,8 @@
         }
         
         
-        if ($("#VehicleTypeID option:selected").val() == null || $("#VehicleTypeID option:selected").val() == "") {
-            $("#VehicleTypeID").addClass('borderValidation');
+        if ($("#VehicleID option:selected").val() == null || $("#VehicleID option:selected").val() == "") {
+            $("#VehicleID").addClass('borderValidation');
             
         }
 
@@ -439,6 +438,7 @@
 
             var tdVals = trElement.find('td.clsSrNo').text() + "~" +
                 trElement.find('td.clsMaterialID').text() + "~" +
+                trElement.find('td.clsConversionFactor').text() + "~" +
                 trElement.find('td.clsUnit').text() + "~" +
                 trElement.find('td.clsHeight').text() + "~" +
                 trElement.find('td.clsWidth').text() + "~" +
@@ -456,12 +456,13 @@
             item = {}
             item["TripDetailID"] = arrElement[0];
             item["MaterialID"] = arrElement[1];
-            item["UnitOfMeasure"] = arrElement[2];
-            item["Height"] = arrElement[3];
-            item["Width"] = arrElement[4];
-            item["Length"] = arrElement[5];
-            item["Weight"] = arrElement[6];
-            item["Qty"] = arrElement[7];
+            item["ConversionFactor"] = arrElement[2];
+            item["UnitOfMeasure"] = arrElement[3];
+            item["Height"] = arrElement[4];
+            item["Width"] = arrElement[5];
+            item["Length"] = arrElement[6];
+            item["Weight"] = arrElement[7];
+            item["Qty"] = arrElement[8];
             TripDetails.push(item);
         }
         
@@ -473,7 +474,7 @@
             {
                 SourceID: $("#SourceID option:selected").val(),
                 DestinationID: $("#DestinationID option:selected").val(),
-                VehicleTypeID: $("#VehicleTypeID option:selected").val(),
+                VehicleID: $("#VehicleID option:selected").val(),
                 EndDate: $("#EndDate").val(),
                 StartDate: $("#StartDate").val(),
                 TripStatus: $("#TripStatus option:selected").val(),

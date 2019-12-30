@@ -70,8 +70,9 @@
                                                         <span class="sc-jKJlTe jhvond sc-ckVGcZ gYzbWd"></span> @item1.TripStatus
                                                     </ul>
                                                 </ul>
-                                               
-                                                @Html.ActionLink("BOOK NOW", "AddSubTrip", "TLoader", new { @class = "sc-cMljjf drsecP" })
+
+                                                @Html.ActionLink("Book Now", "AddSubTrip", new { Source = item1.SourceID, TripId = item1.TripID }, new { @Class = "sc-cMljjf drsecP" }) <br />
+                                                
                                             </div>
 
                                         </div>
