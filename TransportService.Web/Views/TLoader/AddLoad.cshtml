@@ -6,11 +6,7 @@
 
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-<style>
-    .borderValidation{
-        border-color:red;
-    }
-</style>
+
 @using (Html.BeginForm())
 {
     
@@ -169,14 +165,14 @@
                         <label>Heigth</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-up"></i></span>
-                            <input id="txt_Height" type="text" class="form-control" name="altr_name" value="" placeholder="Height">
+                            <input id="txt_Height" type="number" class="form-control" name="altr_name" value="" placeholder="Height">
                         </div>
                     </div>
                     <div class="col-sm-6 form-group">
                         <label>Width</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-right"></i></span>
-                            <input id="txt_Width" type="text" class="form-control" name="altr_name" value="" placeholder="Width">
+                            <input id="txt_Width" type="number" class="form-control" name="altr_name" value="" placeholder="Width">
                         </div>
                     </div>
 
@@ -184,21 +180,21 @@
                         <label>Length</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-down"></i></span>
-                            <input id="txt_Length" type="text" class="form-control" name="altr_name" value="" placeholder="Length">
+                            <input id="txt_Length" type="number" class="form-control" name="altr_name" value="" placeholder="Length">
                         </div>
                     </div>
                     <div class="col-sm-6 form-group">
                         <label>Weight(Tonn)</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-glass"></i></span>
-                            <input id="txt_Weight" type="text" class="form-control" name="altr_name" value="" placeholder="Weigtht">
+                            <input id="txt_Weight" type="number" class="form-control" name="altr_name" value="" placeholder="Weigtht">
                         </div>
                     </div>
                     <div class="col-sm-6 form-group">
                         <label>Quantity</label>
                         <div class="input-group">
 
-                            <input id="txt_Quantity" type="text" class="form-control" name="altr_name" value="" placeholder="Quantity">
+                            <input id="txt_Quantity" type="number" class="form-control" name="altr_name" value="" placeholder="Quantity">
                         </div>
                     </div>
                     <div class="row">
@@ -298,15 +294,15 @@
             }
 
             var bindRow = '<tr>' +
-                '<td>' + rowCount + '</td>' +
-                '<td style="display:none">' + materialID + '</td>' +
-                '<td>' + material + '</td>' +
-                '<td>' + unit + '</td>' +
-                '<td>' + height + '</td>' +
-                '<td>' + width + '</td>' +
-                '<td>' + length + '</td>' +
-                '<td>' + weight + '</td>' +
-                '<td>' + quantity + '</td>' +
+                '<td class="clsSrNo">' + rowCount + '</td>' +
+                '<td style="display:none" class="clsMaterialID">' + materialID + '</td>' +
+                '<td class="clsMaterial">' + material + '</td>' +
+                '<td class="clsUnit">' + unit + '</td>' +
+                '<td class="clsHeight">' + height + '</td>' +
+                '<td class="clsWidth">' + width + '</td>' +
+                '<td class="clslength">' + length + '</td>' +
+                '<td class="clsWeight">' + weight + '</td>' +
+                '<td class="clsQuantity">' + quantity + '</td>' +
                 '<td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true" style="margin-top: 7px;"></i></td>' +
 
                 '</tr>'
@@ -331,14 +327,14 @@
             $('#tblGoodsDetail tbody tr').each(function (k, v) {
                 var trElement = $(this);
 
-                var tdVals = trElement.find('td:eq(0)').text() + "~" +
-                    trElement.find('td:eq(1)').text() + "~" +
-                    trElement.find('td:eq(3)').text() + "~" +
-                    trElement.find('td:eq(4)').text() + "~" +
-                    trElement.find('td:eq(5)').text() + "~" +
-                    trElement.find('td:eq(6)').text() + "~" +
-                    trElement.find('td:eq(7)').text() + "~" +
-                    trElement.find('td:eq(8)').text();
+                var tdVals = trElement.find('td.clsSrNo').text() + "~" +
+                    trElement.find('td.clsMaterialID').text() + "~" +
+                    trElement.find('td.clsUnit').text() + "~" +
+                    trElement.find('td.clsHeight').text() + "~" +
+                    trElement.find('td.clsWidth').text() + "~" +
+                    trElement.find('td.clslength').text() + "~" +
+                    trElement.find('td.clsWeight').text() + "~" +
+                    trElement.find('td.clsQuantity').text();
                 alert(tdVals);
                 idArrLoadDetails.push(tdVals);
 

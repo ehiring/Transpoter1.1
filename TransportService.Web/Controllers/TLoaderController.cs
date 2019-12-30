@@ -80,20 +80,18 @@ namespace TransportService.Web.Controllers
         {
             ViewData["CityList"] = _tripBusinessLayer.GetDropDownData("CityList", 0);
             ViewData["VehicalTypeList"] = _tripBusinessLayer.GetDropDownData("VehicalTypeList", 0);
+            ViewData["MaterialList"] = _tripBusinessLayer.GetDropDownData("MaterialList", 0);
             return View();
         }
 
 
         [HttpPost]
-        public ActionResult SaveTrip(Transpoter T, List<CityArray> CityRootId, List<CargoDetails> CargoDetails)
+        public ActionResult SaveTrip(Transpoter T, List<CityArray> CityRootId, List<TripDetail> _tripDetail)
         {
-
-
             DataTable dtCityRoot = new DataTable();
 
             dtCityRoot.Columns.Add("CityId", typeof(int));
             dtCityRoot.Columns.Add("SequenceNo", typeof(int));
-
 
             // Adding Contact Person In DT
             if (CityRootId != null)
@@ -116,40 +114,41 @@ namespace TransportService.Web.Controllers
             tvpParamCityRoot.Value = dtCityRoot;
             tvpParamCityRoot.TypeName = "UDTable_RootCityIDs";
 
-            //Adding Load Details In DT
+            DataTable dtTripDetail = new DataTable();
+            dtTripDetail.Columns.Add("TripDetailID", typeof(int));
+            dtTripDetail.Columns.Add("MaterialID", typeof(int));
+            dtTripDetail.Columns.Add("UnitOfMeasure", typeof(string));
+            dtTripDetail.Columns.Add("Height", typeof(decimal));
+            dtTripDetail.Columns.Add("Width", typeof(decimal));
+            dtTripDetail.Columns.Add("Length", typeof(decimal));
+            dtTripDetail.Columns.Add("Weight", typeof(decimal));
+            dtTripDetail.Columns.Add("Qty", typeof(int));
 
-            DataTable dtLoad = new DataTable();
-
-            dtLoad.Columns.Add("CargoTypeId", typeof(int));
-            dtLoad.Columns.Add("Height", typeof(decimal));
-            dtLoad.Columns.Add("Width", typeof(decimal));
-            dtLoad.Columns.Add("Length", typeof(decimal));
-            dtLoad.Columns.Add("Weight", typeof(decimal));
-            dtLoad.Columns.Add("Qty", typeof(int));
-
-            if (CargoDetails != null)
+            if (_tripDetail != null)
             {
-                if (CargoDetails.Count > 0)
+                if (_tripDetail.Count > 0)
                 {
-                    foreach (var item in CargoDetails)
+                    foreach (var item in _tripDetail)
                     {
-                        DataRow dr_Load = dtLoad.NewRow();
-                        dr_Load["CargoTypeId"] = item.CargoTypeID;
-                        dr_Load["Height"] = item.Height;
-                        dr_Load["Width"] = item.Width;
-                        dr_Load["Length"] = item.Length;
-                        dr_Load["Weight"] = item.Weight;
-                        dr_Load["Qty"] = item.Qty;
-                        dtLoad.Rows.Add(dr_Load);
+                        DataRow dr_LoadDetail = dtTripDetail.NewRow();
+                        dr_LoadDetail["TripDetailID"] = item.TripDetailID;
+                        dr_LoadDetail["MaterialID"] = item.MaterialID;
+                        dr_LoadDetail["UnitOfMeasure"] = item.UnitOfMeasure;
+                        dr_LoadDetail["Height"] = item.Height;
+                        dr_LoadDetail["Width"] = item.Width;
+                        dr_LoadDetail["Length"] = item.Length;
+                        dr_LoadDetail["Weight"] = item.Weight;
+                        dr_LoadDetail["Qty"] = item.Qty;
+                        dtTripDetail.Rows.Add(dr_LoadDetail);
                     }
                 }
             }
 
-            SqlParameter tvpParamLoadDetails = new SqlParameter();
-            tvpParamLoadDetails.ParameterName = "@CargoDetails";
-            tvpParamLoadDetails.SqlDbType = System.Data.SqlDbType.Structured;
-            tvpParamLoadDetails.Value = dtLoad;
-            tvpParamLoadDetails.TypeName = "UDTable_CargoDetails";
+            SqlParameter tvpParamTripDetails = new SqlParameter();
+            tvpParamTripDetails.ParameterName = "@UDTable_TripDetails";
+            tvpParamTripDetails.SqlDbType = System.Data.SqlDbType.Structured;
+            tvpParamTripDetails.Value = dtTripDetail;
+            tvpParamTripDetails.TypeName = "UDTable_TripDetails";
 
             JobDbContext _jobDbContext = new JobDbContext();
             var result = _jobDbContext.Database.ExecuteSqlCommand(@"exec USP_SaveTrip
@@ -161,7 +160,7 @@ namespace TransportService.Web.Controllers
                  ,@Status 
                  ,@AddedBy
                  ,@RouteCityIDs
-                 ,@CargoDetails",
+                 ,@UDTable_TripDetails",
           new SqlParameter("@SourceID", T.SourceID == null ? (object)DBNull.Value : T.SourceID),
           new SqlParameter("@DestinationID", T.DestinationID == null ? (object)DBNull.Value : T.DestinationID),
           new SqlParameter("@VehicleTypeID", T.VehicleTypeID == null ? (object)DBNull.Value : T.VehicleTypeID),
@@ -170,11 +169,9 @@ namespace TransportService.Web.Controllers
           new SqlParameter("@Status", T.TripStatus),
           new SqlParameter("@AddedBy", 1),
           tvpParamCityRoot,
-          tvpParamLoadDetails);
-
-
+          tvpParamTripDetails);
             return Json("Trip Posted Sucessfull");
-
+        
 
         }
 
@@ -327,14 +324,7 @@ namespace TransportService.Web.Controllers
 
 
 
-        public ActionResult trail_load()
-        {
-            ViewData["CityList"] = _tripBusinessLayer.GetDropDownData("CityList", 0);
-            //MaterialList
-            ViewData["MaterialList"] = _tripBusinessLayer.GetDropDownData("MaterialList", 0);
-            return View();
-        }
-
+      
         [HttpPost]
         public ActionResult AddLoad(Loader _loader, List<LoadDetail> _loadDetails)
         {

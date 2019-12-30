@@ -5,7 +5,7 @@
                 ViewBag.Title = "AddTrip";
                 Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
 @using (Html.BeginForm())
 {
 
@@ -14,13 +14,14 @@
     <div class="row">
         <div class="col-sm-12 pull-left">
             @*<input id="btnSubmit" type="submit" class="btn btn-primary" name="regform" value="Create Truck">*@
-            <input type="button" id="btnSubmit" class="btn btn-primary" name="regform" value="Add Load">
+            <input type="button" id="btnSubmit" class="btn btn-primary" name="regform" value="Add Trip">
         </div>
     </div>
 
     <div class="row">
+        <hr />
         <div class="col-lg-6">
-            <hr />
+            
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h5 class="panel-title"><b>Trip Details</b> </h5>
@@ -46,79 +47,64 @@
                         </div>
                     </div>
 
-
-
                     <div class="col-sm-6 form-group">
-                        <label>Pick Up Date:</label>
+                        <label>Start Date</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                            <input type="date" id="PickUpDate" class="form-control dropwidth" placeholder="YYYY-MM-DD" title="Select Pick Up Date" />
-
+                            <input type="date" id="StartDate" class="form-control dropwidth" placeholder="YYYY-MM-DD" title="Select Pick Up Date" />
                         </div>
                     </div>
 
                     <div class="col-sm-6 form-group">
-                        <label><i class="red">*</i>Load Type:</label>
+                        <label>End Date</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                            <input type="date" id="EndDate" class="form-control dropwidth" placeholder="YYYY-MM-DD" title="Select Pick Up Date" />
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 form-group">
+                        <label><i class="red">*</i>Trip Status </label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fas fa-shopping-cart"></i></span>
-                            <select id="ddlLoadType" class="form-control" title="Select Load Type">
-                                <option value="0"> Select Load Type </option>
-                                <option value="Full Truck Load(Above 3000 Kg)"> Full Truck Load(Above 3000 Kg) </option>
-                                <option value="Part Truck Load(500-3000 Kg)">Part Truck Load(500-3000 Kg) </option>
-                                <option value="Parcel (Less than 500 Kg)">Parcel (Less than 500 Kg) </option>
+                            <select id="TripStatus" class="form-control" title="Select Load Type">
+                                <option value="0">In Process</option>
+                                <option value="1">Complted</option>
                             </select>
                         </div>
                     </div>
 
 
                     <div class="col-sm-6 form-group">
-                        <label><i class="red">*</i>Sub Service:</label>
+                        <label><i class="red">*</i>Vehical Type</label>
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="fas fa-users"></i></span>
-                            <select id="ddlSubService" class="form-control" title="Select Sub Service">
-                                <option value="0"> Select Sub Service</option>
-                                <option value="Commercial"> Commercial </option>
-                                <option value="NonCommercial_Business">Non Commercial(Business) </option>
-                                <option value="NonCommercial_Household">Non Commercial(Household) </option>
-                            </select>
+                            <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+                            @Html.DropDownList("model.VehiclTypeID", new SelectList((System.Collections.IEnumerable)ViewData["VehicalTypeList"], "Value", "Text"), "Select Source", new { @class = "form-control dropwidth", @id = "VehicleTypeID", Title = "Select VehicleType" })
                         </div>
                     </div>
 
                     <div class="col-sm-6 form-group">
-                        <label>Reciever Name:</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fas fa-user"></i></span>
-                            <input id="txt_Receiver" type="text" class="form-control" name="altr_name" value="" placeholder="Contact Name" title="Enter Reciever">
+                        <label>Add City Route</label>
+                        <div style="display:flex;">
+                            @Html.DropDownList("model.SourceID", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select City", new { @class = "form-control dropwidth", @id = "CityRootID", Title = "Add Cities To The Root" })
+                            <i class="fa fa-plus" id="addRoute" aria-hidden="true" style="margin-top: 10px;margin-left: 10px;margin-right:12px;"></i>
 
                         </div>
                     </div>
-
-
-                    <div class="col-sm-6 form-group">
-                        <label>Phone:</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                            <input id="txt_Phone" type="text" class="form-control" name="truck_phone" value="" placeholder="Phone" title="Enter Phone">
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 form-group">
-                        <label>Email:</label>
-                        <div class="input-group">
-
-                            <span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
-                            <input id="txt_Mail" type="text" class="form-control" name="truck_phone" value="" placeholder="Email" title="Enter Proper Email">
-                        </div>
-                    </div>
-
 
                     <div class="col-sm-12 form-group">
-                        <label>Address:</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="far fa-address-card"></i></span>
-                            @*<input id="truck_phone" type="text" class="form-control" name="truck_phone" value="" placeholder="Email" onkeypress="return isNumberKey(event);">*@
-                            <textarea id="txt_Address" class="form-control" name="Adress" placeholder="Address" rows="2" cols="150" title="Enter Address"></textarea>
+                        <label>Route Details</label>
+                        <div class="form-group">
+                            <div id="showrootdetails" style="margin-top: 12px;" SeqNo="0">
+                                <span class="Rootmgs" style="color:#939393;font-size:small;">Add Route From Source To Destination</span>
+                            </div>
                         </div>
+                    </div>
+                    <div class="row route">
+                        <div class="col-sm-12">
+
+                        </div>
+
                     </div>
 
 
@@ -126,6 +112,384 @@
             </div>
 
         </div>
+
+        <div class="col-lg-6">
+           
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h5 class="panel-title"><b>Good Details</b> </h5>
+                </div>
+
+                <div class="panel-body">
+                    <div class="col-sm-6 form-group">
+                        <label><i class="red">*</i> Material</label>
+                        <div>
+                            @Html.DropDownList("Material", new SelectList((System.Collections.IEnumerable)ViewData["MaterialList"], "Value", "Text"), "Select Material", new { @class = "form-control", @id = "ddlMaterial", Title = "Select Material" })
+                        </div>
+
+                    </div>
+
+                    <div class="col-sm-6 form-group">
+                        <label><i class="red">*</i> Unit</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-balance-scale" aria-hidden="true"></i></span>
+                            <select id="ddlUnit" class="form-control" title="Select Unit">
+                                <option value="0"> Select Unit </option>
+                                <option value="inch">inch</option>
+                                <option value="mm">mm</option>
+                                <option value="cm">cm</option>
+                                <option value="ft">ft</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <label>Heigth</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-up"></i></span>
+                            <input id="txt_Height" type="number" class="form-control" name="altr_name" value="" placeholder="Height" title="Enter Height">
+                        </div>
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <label>Width</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-right"></i></span>
+                            <input id="txt_Width" type="number" class="form-control" name="altr_name" value="" placeholder="Width" title="Enter Width">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 form-group">
+                        <label>Length</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-down"></i></span>
+                            <input id="txt_Length" type="number" class="form-control" name="altr_name" value="" placeholder="Length" title="Enter Length">
+                        </div>
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <label>Weight(Tonn)</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-glass"></i></span>
+                            <input id="txt_Weight" type="number" class="form-control" name="altr_name" value="" placeholder="Weigtht" title="Enter Weight">
+                        </div>
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <label>Quantity</label>
+                        <div class="input-group">
+
+                            <input id="txt_Quantity" type="number" class="form-control" name="altr_name" value="" placeholder="Quantity" title="Enter Quantity">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <div>
+                                    <button type="button" id="btnAddGoods" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Add Good Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="hidden" id="RowCount" name="RowCount" value="0">
+                        <div>
+                            <table class="table table-bordered" id="tblGoodsDetail" title="Enter Good Details">
+                                <thead>
+                                    <tr>
+                                        <th>Sr.</th>
+                                        <th style="display:none"></th>
+                                        <th>Material</th>
+                                        <th>Unit</th>
+                                        <th>Height</th>
+                                        <th>Width</th>
+                                        <th>Length</th>
+                                        <th>Weight(Tonn)</th>
+                                        <th>Quantity</th>
+                                        <th></th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
     </div>
 </div>
 }
+<script>
+    $(document).on('change', '#SourceID', function (e) {
+        //$('.Rootmgs').remove();
+        $('#showrootdetails').find('span').remove()
+        var CityRootText = $("#SourceID option:selected").text();
+        var CityRootID = $("#SourceID option:selected").val();
+        var SeqNo = 1;
+        bindrow = '<span id=' + CityRootID + ' SeqNo=' + SeqNo + ' class="RootID"><i class="fa fa-times deleterootcity" aria-hidden="true" style="margin-right:3px;color: #f95555;"></i>' + CityRootText + '<i class="fa fa-arrow-right ArrowMargin" aria-hidden="true"></span>';
+        $('#showrootdetails').attr('SeqNo', SeqNo);
+        $('#showrootdetails').append(bindrow);
+       
+    });
+    $('#ShowRoute').on("click", function (e) {
+        $('.route').show();
+    });
+    $('#addRoute').on("click", function (e) {
+        $('.Rootmgs').remove();
+        var CityRootText = $("#CityRootID option:selected").text();
+        var CityRootID = $("#CityRootID option:selected").val();
+        var bindrow;
+        var SeqNo = parseInt($('#showrootdetails').attr('SeqNo'));
+
+
+        if ($("#SourceID option:selected").val() == 0) {
+            alert("Please select Source");
+            return 0;
+        }
+        if (CityRootID == 0) {
+            alert("Please Select City for Route");
+            return 0;
+        }
+        //if (SeqNo == 0 && CityRootID != $("#SourceID option:selected").val()) {
+        //    alert("Please Select Source As First City in Route");
+        //    return 0;
+
+        //}
+        SeqNo = SeqNo + 1;
+        //This code is for removing last arrow from root details
+        if (CityRootText == $("#DestinationID option:selected").text()) {
+
+            bindrow = '<span id=' + CityRootID + ' SeqNo=' + SeqNo + ' class="RootID"><i class="fa fa-times deleterootcity" aria-hidden="true" style="margin-right:3px;color: #f95555;"></i>' + CityRootText + '</span>';
+            $('#addRoute').hide();
+        }
+        else {
+
+            bindrow = '<span id=' + CityRootID + ' SeqNo=' + SeqNo + ' class="RootID"><i class="fa fa-times deleterootcity" aria-hidden="true" style="margin-right:3px;color: #f95555;"></i>' + CityRootText + '<i class="fa fa-arrow-right ArrowMargin" aria-hidden="true"></span>';
+        }
+        $('#showrootdetails').attr('SeqNo', SeqNo);
+        $('#showrootdetails').append(bindrow);
+
+    });
+
+    $(document).on('click', 'i.deleterootcity', function (e) {
+        e.preventDefault();
+        $(this).closest('span').remove();
+        var SeqNo = parseInt($('#showrootdetails').attr('SeqNo'));
+        SeqNo = SeqNo - 1;
+        $('#showrootdetails').attr('SeqNo', SeqNo);
+        $('#addRoute').show();
+    });
+    $(document).on('click', '#btnAddGoods', function (e) {
+        
+        var bFlagValid = 1;
+        var rowCount = parseInt($("#RowCount").val());
+
+        rowCount = rowCount + 1;
+        $("#RowCount").val(rowCount);
+        var materialID = $("#ddlMaterial option:selected").val();
+        var material = $("#ddlMaterial option:selected").text();
+        var unit = $("#ddlUnit option:selected").val();
+        var height = $("#txt_Height").val();
+        var width = $("#txt_Width").val();
+        var length = $("#txt_Length").val();
+        var weight = $("#txt_Weight").val();
+        var quantity = $("#txt_Quantity").val();
+
+        if (materialID == 0) {
+            bFlagValid = 0;
+            $("#ddlMaterial").addClass('borderValidation');
+        }
+        if (unit == 0) {
+            bFlagValid = 0;
+            $("#ddlUnit").addClass('borderValidation');
+        }
+        if (height == null || height == "") {
+
+            bFlagValid = 0;
+            $("#txt_Height").addClass('borderValidation');
+        }
+
+        if(width == null || width == "")
+        {
+            bFlagValid = 0;
+            $("#txt_Width").addClass('borderValidation');
+        }
+        if (length == null || length == "") {
+
+            bFlagValid = 0;
+            $("#txt_Length").addClass('borderValidation');
+        }
+        if (weight == null || weight == "") {
+
+            bFlagValid = 0;
+            $("#txt_Weight").addClass('borderValidation');
+        }
+        if (quantity == null || quantity == "") {
+            bFlagValid = 0;
+            $("#txt_Quantity").addClass('borderValidation');
+        }
+
+        if (bFlagValid == 0) {
+            
+            return;
+        }
+
+        var bindRow = '<tr>' +
+            '<td class="clsSrNo">' + rowCount + '</td>' +
+            '<td style="display:none" class="clsMaterialID">' + materialID + '</td>' +
+            '<td class="clsMaterial">' + material + '</td>' +
+            '<td class="clsUnit">' + unit + '</td>' +
+            '<td class="clsHeight">' + height + '</td>' +
+            '<td class="clsWidth">' + width + '</td>' +
+            '<td class="clslength">' + length + '</td>' +
+            '<td class="clsWeight">' + weight + '</td>' +
+            '<td class="clsQuantity">' + quantity + '</td>' +
+            '<td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true" style="margin-top: 7px;"></i></td>' +
+            '</tr>'
+        $('#tblGoodsDetail  tbody').append(bindRow);
+        $('#ddlMaterial').prop('selectedIndex', 0);
+        $('#ddlUnit').prop('selectedIndex', 0);
+        $("#txt_Height").val('');
+        $("#txt_Width").val('');
+        $("#txt_Length").val('');
+        $("#txt_Weight").val('');
+        $("#txt_Quantity").val('')
+    });
+
+    $(document).on('click', 'i.deleterow', function (e) {
+        e.preventDefault();
+        $(this).parents('tr').remove();
+        var rowCount = parseInt($("#RowCount").val());
+        rowCount = rowCount - 1;
+        $("#RowCount").val(rowCount);
+
+
+
+    });
+    $(document).on('click', '#btnSubmit', function (e) {
+        e.preventDefault();
+        
+        
+        var bflagValid = 1;
+        var idArrRoot = [];
+        $('.RootID').each(function (k, v) {
+            var tdVals = $(this).attr("id") + "~" + $(this).attr('SeqNo');
+            idArrRoot.push(tdVals);
+        });
+
+        if ($("#SourceID option:selected").val() == null || $("#SourceID option:selected").val() == "") {
+            $("#SourceID").addClass('borderValidation');
+        
+        }
+        if ($("#DestinationID option:selected").val() == null || $("#DestinationID option:selected").val() == "") {
+            $("#DestinationID").addClass('borderValidation');
+            
+        }
+        if ($("#StartDate").val() == null || $("#StartDate").val() == "") {
+            $("#StartDate").addClass('borderValidation');
+           
+        }
+
+        if ($("#EndDate").val() == null || $("#EndDate").val() == "") {
+            $("#EndDate").addClass('borderValidation');
+            
+        }
+        
+        
+        if ($("#VehicleTypeID option:selected").val() == null || $("#VehicleTypeID option:selected").val() == "") {
+            $("#VehicleTypeID").addClass('borderValidation');
+            
+        }
+
+
+        //if anly source is added
+        if (idArrRoot.length <= 1) {
+            
+            $("#CityRootID").addClass('borderValidation');
+            
+        }
+        if ($('#tblGoodsDetail >tbody>tr').length == 0) {
+            bflagValid = 0;
+            $("#tblGoodsDetail").addClass('borderValidation');
+            
+        }
+        if (bflagValid == 0) {
+            return 0;
+            
+        }
+        
+        // Adding City Root into array
+        
+        
+        var SaveRoot = [];
+        for (var i = 0; i < idArrRoot.length; i++) {
+            var arrElement = idArrRoot[i].split("~");
+            item = {}
+            item["CityID"] = arrElement[0];
+            item["SequenceNo"] = arrElement[1];
+            SaveRoot.push(item);
+        }
+        
+        //adding Load Grid Details In Array
+        var idArrLoadDetails = [];
+        $('#tblGoodsDetail tbody tr').each(function (k, v) {
+            var trElement = $(this);
+
+            var tdVals = trElement.find('td.clsSrNo').text() + "~" +
+                trElement.find('td.clsMaterialID').text() + "~" +
+                trElement.find('td.clsUnit').text() + "~" +
+                trElement.find('td.clsHeight').text() + "~" +
+                trElement.find('td.clsWidth').text() + "~" +
+                trElement.find('td.clslength').text() + "~" +
+                trElement.find('td.clsWeight').text() + "~" +
+                trElement.find('td.clsQuantity').text();
+            idArrLoadDetails.push(tdVals);
+
+
+        });
+        
+        var TripDetails = [];
+        for (var i = 0; i < idArrLoadDetails.length; i++) {
+            var arrElement = idArrLoadDetails[i].split("~");
+            item = {}
+            item["TripDetailID"] = arrElement[0];
+            item["MaterialID"] = arrElement[1];
+            item["UnitOfMeasure"] = arrElement[2];
+            item["Height"] = arrElement[3];
+            item["Width"] = arrElement[4];
+            item["Length"] = arrElement[5];
+            item["Weight"] = arrElement[6];
+            item["Qty"] = arrElement[7];
+            TripDetails.push(item);
+        }
+        
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/TLoader/SaveTrip',
+            data:
+            {
+                SourceID: $("#SourceID option:selected").val(),
+                DestinationID: $("#DestinationID option:selected").val(),
+                VehicleTypeID: $("#VehicleTypeID option:selected").val(),
+                EndDate: $("#EndDate").val(),
+                StartDate: $("#StartDate").val(),
+                TripStatus: $("#TripStatus option:selected").val(),
+                CityRootID: SaveRoot,
+                _tripDetail: TripDetails
+
+            },
+            success: function (da) {
+                alert(da);
+                $('#showrootdetails').attr('SeqNo', 0);
+                window.location.href = "/TLoader/Index";
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Error");
+            }
+        });
+
+    });
+</script>

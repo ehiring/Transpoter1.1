@@ -22,6 +22,5 @@ namespace TransportService.Web.Models.Activity
         public int IsDeleted { get; set; }
 
 
-
     }
 }

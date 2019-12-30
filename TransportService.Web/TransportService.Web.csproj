@@ -150,6 +150,7 @@
     <Compile Include="Models\Activity\SubTrip.cs" />
     <Compile Include="Models\Activity\Trip.cs" />
     <Compile Include="Models\Activity\TripAndSubTripDetails.cs" />
+    <Compile Include="Models\Activity\TripDetail.cs" />
     <Compile Include="Models\DBStructs.cs" />
     <Compile Include="Models\ErrorHandler.cs" />
     <Compile Include="Models\Masters\CargoType.cs" />
