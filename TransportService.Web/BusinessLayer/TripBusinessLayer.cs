@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Web.Mvc;
 using TransportService.Web.Models.Activity;
 using System.Data;
+using TransportService.Web.Models.Masters;
 namespace TransportService.Web.BusinessLayer
 {
     public class TripBusinessLayer
@@ -100,7 +101,10 @@ namespace TransportService.Web.BusinessLayer
         {
             return _jobDbContext.DBLoadDetails.SqlQuery(@"exec USP_GetLoadDetailsByID @LoaderID", new SqlParameter("@LoaderID", id)).ToList<LoadDetail>();
         }
-
+        public VehicleCapacity GetVehicleSizeCapacityWhereID(int id)
+        {
+            return _jobDbContext.DBvehicleCapacities.SqlQuery(@"exec USP_GetSizeAndCapacityFromVehicleWhereID @VehicleID", new SqlParameter("@VehicleID", id)).FirstOrDefault<VehicleCapacity>();
+        }
 
 
         public List<SelectListItem> GetDropDownData(string action, int val = 0, int TripId = 0)

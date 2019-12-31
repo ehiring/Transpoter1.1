@@ -5,6 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using PagedList;
 using TransportService.Web.Models.Activity;
+using TransportService.Web.Models.Masters;
 namespace TransportService.Web.Models
 {
 
@@ -66,6 +67,10 @@ namespace TransportService.Web.Models
 
     public class Transpoter
     {
+        public Transpoter()
+        {
+            
+        }
         [Key]
         public int TripID { get; set; }
      
@@ -84,6 +89,7 @@ namespace TransportService.Web.Models
         public IEnumerable<RouteDetails> RouteList { get; set; }
         public StaticPagedList<Transpoter> TransDetails { get; set; }
         public IEnumerable<subtripDetails> SubTDetails { get; set; }
+        
 
 
 

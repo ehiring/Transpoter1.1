@@ -5,6 +5,7 @@ using System.Web;
 using System.Data.Entity;
 using TransportService.Web.Models;
 using TransportService.Web.Models.Activity;
+using TransportService.Web.Models.Masters;
 
 namespace TransportService.Web.BusinessLayer
 {
@@ -26,5 +27,6 @@ namespace TransportService.Web.BusinessLayer
         public DbSet<LoadDetail> DBLoadDetails { get; set; }
         public DbSet<MaterialList> DBMaterialList { get; set; }
         public DbSet<LoaderEdit> DBLoaderEdit { get; set; }
+        public DbSet<VehicleCapacity> DBvehicleCapacities { get; set; }
     }
 }

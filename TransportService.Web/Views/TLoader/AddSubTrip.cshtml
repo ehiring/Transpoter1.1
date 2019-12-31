@@ -3,140 +3,174 @@
     ViewBag.Title = "AddSubTrip";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
 @model TransportService.Web.Models.Transpoter
-<script src="~/Scripts/jquery-3.3.1.min.js"></script>
-
-<style>
-    .LabelMargin {
-        margin-bottom: 5px;
-    }
-
-    .ArrowMargin {
-        margin-left: 5px;
-        margin-right: 5px;
-    }
-
-    .dropwidth {
-        max-width: 96%;
-    }
-</style>
-
 @using (Html.BeginForm())
 {
-    @Html.AntiForgeryToken()
 
-    <div class="form-horizontal" id="pnl-mdlSchedule" style="width:50%;margin-left:5%">
-        @using (Html.BeginForm(null, null, FormMethod.Post, new { @id = "frmc" }))
-        {
-            <div class="row">
-                <div class="col-lg-12`">
-                    <h3>Book Your Trip</h3>
-                    <div id="divValidationSummary" class="row text-danger">
+    <div class="container-fluid">
+        <hr />
+        <div class="row">
+            <div class="col-sm-12 pull-left">
+                @*<input id="btnSubmit" type="submit" class="btn btn-primary" name="regform" value="Create Truck">*@
+                <input type="button" id="btnSubmit" class="btn btn-primary" name="regform" value="Add Trip">
+            </div>
+        </div>
+        <div class="row">
+            <hr />
 
+
+            <div class="col-lg-6">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h5 class="panel-title"><b>Trip Details</b> </h5>
                     </div>
+                    <div class="panel-body">
 
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <div><input type="hidden" value="@ViewBag.tripid" id="txtTripid" /></div>
-                                <div class="LabelMargin">Select Source</div>
-                                <div>
-                                    @Html.DropDownList("model.subSourceId", new SelectList((System.Collections.IEnumerable)ViewData["TripWiseCityList"], "Value", "Text", @ViewBag.Source), "Select Source", new { @class = "form-control dropwidth", @id = "subSourceId", Title = "subSourceId" })
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <div class="LabelMargin">  Select Destination</div>
-                                <div>
-                                    @Html.DropDownList("model.subDestinationId", new SelectList(string.Empty, "Value", "Text"), "......Loading", new { @class = "form-control dropwidth", @id = "subDestinationId", Title = "subDestinationId" })
-                                </div>
+                        <div class="col-sm-6 form-group">
+                            <label><i class="red">*</i> Source  </label>
+                            <div class="input-group">
+                                <input type="hidden" value="@ViewBag.tripid" id="txtTripid" />
+                                <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+                                @Html.DropDownList("model.subSourceId", new SelectList((System.Collections.IEnumerable)ViewData["TripWiseCityList"], "Value", "Text", @ViewBag.Source), "Select Source", new { @class = "form-control", @id = "subSourceId", Title = "Select Source" })
                             </div>
 
                         </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-sm-12" id="grid2" style="margin-bottom: 15px;">
+                        <div class="col-sm-6 form-group">
+                            <label><i class="red">*</i> Destination </label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
 
-                        </div>
-                    </div>
+                                @Html.DropDownList("model.subDestinationId", new SelectList(string.Empty, "Value", "Text"), "......Loading", new { @class = "form-control", @id = "subDestinationId", Title = "Select Destination" })
 
-                    <div class="row">
-                        <div class="row goodstable">
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <h4>Goods Details</h4>
-
-                                </div>
-                                <div class="form-group">
-                                    <div>
-                                        <table class="table" id="root">
-                                            <thead>
-                                                <tr>
-                                                    <th></th>
-                                                    <th>Cargo type</th>
-                                                    <th>Height</th>
-                                                    <th>Width</th>
-                                                    <th>Length</th>
-                                                    <th>Weight</th>
-                                                    <th>Quantity</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td><i class="fa fa-plus addgoods" aria-hidden="true" style="margin-top: 7px;"></i></td>
-                                                    <td>
-                                                        <select class="form-control" id="CargoType">
-                                                            <option value="0">Select Cargo Type</option>
-                                                            <option value="1">Box</option>
-                                                            <option value="2">Big Bags</option>
-                                                            <option value="3">Barrels</option>
-                                                            <option value="4">Sacks</option>
-                                                        </select>
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" class="form-control ClsHeigh " />
-                                                    </td>
-                                                    <td><input type="text" class="form-control ClsWidth" /></td>
-                                                    <td><input type="text" class="form-control ClsLength" /></td>
-                                                    <td><input type="text" class="form-control ClsWeight" /></td>
-                                                    <td><input type="text" class="form-control ClsQty" /></td>
-                                                    <td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true" style="margin-top: 7px;"></i></td>
-                                                </tr>
-                                            </tbody>
-
-                                        </table>
-                                    </div>
-                                </div>
                             </div>
+                        </div>
 
+
+                        <div class="col-sm-12 ">
+                            @*<label><i class="red">*</i> Destination </label>*@
+                            <div id="grid2">
+                               
+
+                            </div>
                         </div>
                     </div>
-
-                    <div class="form-group">
-                        <div class="pull-right">
-                            <p id="demo"></p>
-                            <button type="button" id="BtnSubmit" class="btn btn-primary">Save</button>
-                            <button type="button" id="BtnBack" class="btn btn-default">Back</button>
-                        </div>
-                    </div>
-
                 </div>
 
             </div>
-        }
+            <div class="col-lg-6">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h5 class="panel-title"><b>Good Details</b> </h5>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="col-sm-6 form-group">
+                            <label><i class="red">*</i> Material</label>
+                            <div>
+                                @Html.DropDownList("Material", new SelectList((System.Collections.IEnumerable)ViewData["MaterialList"], "Value", "Text"), "Select Material", new { @class = "form-control", @id = "ddlMaterial", Title = "Select Material" })
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-6 form-group">
+                            <label><i class="red">*</i> Unit</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-balance-scale" aria-hidden="true"></i></span>
+                                @Html.DropDownList("Unit", new SelectList((System.Collections.IEnumerable)ViewData["UOMList"], "Value", "Text"), "Select Unit", new { @class = "form-control", @id = "ddlUnit", Title = "Select Unit" })
+
+                            </div>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <label>Heigth</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-up"></i></span>
+                                <input id="txt_Height" type="number" class="form-control" name="altr_name" value="" placeholder="Height" title="Enter Height">
+                            </div>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <label>Width</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-right"></i></span>
+                                <input id="txt_Width" type="number" class="form-control" name="altr_name" value="" placeholder="Width" title="Enter Width">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 form-group">
+                            <label>Length</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-down"></i></span>
+                                <input id="txt_Length" type="number" class="form-control" name="altr_name" value="" placeholder="Length" title="Enter Length">
+                            </div>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <label>Quantity</label>
+                            <div class="input-group">
+
+                                <input id="txt_Quantity" type="number" class="form-control" name="altr_name" value="" placeholder="Quantity" title="Enter Quantity">
+                            </div>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <label>Total Weight(Tonn)</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-glass"></i></span>
+                                <input id="txt_Weight" type="number" class="form-control" name="altr_name" value="" placeholder="Weigtht" title="Enter Weight">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <div>
+                                        <button type="button" id="btnAddGoods" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Add Good Details</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="hidden" id="RowCount" name="RowCount" value="0">
+                            <div>
+                                <table class="table table-bordered" id="tblGoodsDetail" title="Enter Good Details">
+                                    <thead>
+                                        <tr>
+                                            <th>Sr.</th>
+                                            <th style="display:none"></th>
+                                            <th>Material</th>
+                                            <th style="display:none"></th>
+                                            <th>Unit</th>
+                                            <th>Height</th>
+                                            <th>Width</th>
+                                            <th>Length</th>
+                                            <th>Weight(Tonn)</th>
+                                            <th>Quantity</th>
+                                            <th></th>
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
     </div>
 }
-
 <script>
-
-    $(document).on('change', '#subSourceId', function (e) {
-        e.preventDefault();
+     $(document).on('change', '#subSourceId', function (e) {
+         e.preventDefault();
+         var TripID= $('#txtTripid').val();
+         var SourceID= $("#subSourceId option:selected").val();
+         alert("TripID :" + TripID + "  SourceID :" + SourceID);
+         
         $("#subDestinationId").empty();
         var ddlDestination = $("#subDestinationId");
 
@@ -187,13 +221,12 @@
             }
         });
     });
-
-
     $(document).on('change', '#subDestinationId', function (e) {
         e.preventDefault();
-
+        $('tblGoodsDetail tbody tr').empty();
+        alert("Hi");
             $.ajax({
-            url: "@Url.Action("GetAvailableSpace", "Loader")",
+            url: "@Url.Action("GetAvailableSpace", "TLoader")",
             contentType: "application/json",
             data: JSON.stringify({
                 TripId: $('#txtTripid').val(),
@@ -203,13 +236,14 @@
             dataType: "text",
             type: "POST",
             async: true,
-            success: function (data) {
+                success: function (data) {
+
                 $('#grid2').html(data);
 
 
             },
             error: function (data) {
-
+                alert("Error");
             },
             complete: function () {
 
@@ -217,164 +251,243 @@
         });
 
     });
+    $(document).on('click', '#btnAddGoods', function (e) {
+        alert("Hi");
+        var bFlagValid = 1;
+        var rowCount = parseInt($("#RowCount").val());
 
-    $(document).on('click', 'i.addgoods', function (e) {
-        e.preventDefault();
+        rowCount = rowCount + 1;
+        $("#RowCount").val(rowCount);
+        var materialID = $("#ddlMaterial option:selected").val();
+        var material = $("#ddlMaterial option:selected").text();
+        var conversionFactor = $("#ddlUnit option:selected").val();
+        var unit = $("#ddlUnit option:selected").text();
+        var height = $("#txt_Height").val();
+        var width = $("#txt_Width").val();
+        var length = $("#txt_Length").val();
+        var weight = $("#txt_Weight").val();
+        var quantity = $("#txt_Quantity").val();
 
+        if (materialID == 0) {
+            bFlagValid = 0;
+            $("#ddlMaterial").addClass('borderValidation');
 
-        var currentRow = $(this).closest("tr");
-        var cargoType = currentRow.find('td:eq(1) #CargoType option:selected').val();
-        var height = currentRow.find('td:eq(2) input').val();
-        var width = currentRow.find('td:eq(3) input').val();
-        var length = currentRow.find('td:eq(4) input').val();
-        var weight = currentRow.find('td:eq(5) input').val();
-        var quantity = currentRow.find('td:eq(6) input').val();
-        var sValidationWarning = "";
+        }
+        if (conversionFactor == 0) {
+            bFlagValid = 0;
+            $("#ddlUnit").addClass('borderValidation');
+        }
+        if (height == null || height == "") {
 
+            bFlagValid = 0;
+            $("#txt_Height").addClass('borderValidation');
+        }
 
-        sValidationWarning = (cargoType == 0 ? "CargoType/" : "");
-        sValidationWarning = sValidationWarning + ((height == null || height == "") ? "Height/" : "");
-        sValidationWarning = sValidationWarning + ((width == null || width == "") ? "Width/" : "");
-        sValidationWarning = sValidationWarning + ((length == null || length == "") ? "Length/" : "");
-        sValidationWarning = sValidationWarning + ((weight == null || weight == "") ? "Weight/" : "");
-        sValidationWarning = sValidationWarning + ((quantity == null || quantity == "") ? "Quantity" : "");
+        if (width == null || width == "") {
+            bFlagValid = 0;
+            $("#txt_Width").addClass('borderValidation');
+        }
+        if (length == null || length == "") {
 
-        if (sValidationWarning.length != 0) {
-            alert("Please fill the fields (" + sValidationWarning + ")");
+            bFlagValid = 0;
+            $("#txt_Length").addClass('borderValidation');
+        }
+        if (weight == null || weight == "") {
+
+            bFlagValid = 0;
+            $("#txt_Weight").addClass('borderValidation');
+        }
+        if (quantity == null || quantity == "") {
+            bFlagValid = 0;
+            $("#txt_Quantity").addClass('borderValidation');
+        }
+
+        if (bFlagValid == 0) {
+
             return;
         }
 
+        /*.
+         * check if entered size 
+         * and capacity does 
+         * not exceed.
+         * 
+         * */
+        var availableHeight = $("#lblHeight").text();
+        var availableWidth = $("#lblWidth").text();
+        var availableLength = $("#lblLength").text();
+        var availableWeight = $("#lblCapacity").text();
 
 
-        var bindrow = '<tr>' +
-            '<td> <i class="fa fa-plus addgoods" aria-hidden="true" style="margin-top: 7px;"></i></td>' +
-            '<td>' +
-            '<select class="form-control" id="CargoType">' +
-            '<option value="0">Select Cargo Type</option>' +
-            '<option value="1">Box</option>' +
-            '<option value="2">Big Bags</option>' +
-            '<option value="3">Barrels</option>' +
-            '<option value="4">Sacks</option>' +
-            '</select>' +
-            '</td>' +
-            '<td>' +
-            '<input type="text" class="form-control ClsHeigh " />' +
-            '</td>' +
-            '<td><input type="text" class="form-control ClsWidth" /></td>' +
-            '<td><input type="text" class="form-control ClsLength" /></td>' +
-            '<td><input type="text" class="form-control ClsWeight" /></td>' +
-            '<td><input type="text" class="form-control ClsQty" /></td>' +
+
+        /*......Conversion in feet.....*/
+        var feetHeight = height * conversionFactor;
+        var feetWidth = width * conversionFactor;
+        var feetLength = length * conversionFactor;
+
+        var exceedMsg = "";
+        exceedMsg = exceedMsg + (availableHeight < quantity * feetHeight ? "Height/" : "");
+        exceedMsg = exceedMsg + (availableWidth < quantity * feetWidth ? "Width/" : "");
+        exceedMsg = exceedMsg + (availableLength < quantity * feetLength ? "Length/" : "");
+        exceedMsg = exceedMsg + (availableWeight < weight ? "Weight" : "");
+        if (exceedMsg != "") {
+            exceedMsg = exceedMsg + "exceeded. Please enter proper value according to Available size";
+            alert(exceedMsg);
+            return 0;
+        }
+
+        var availableHeight = availableHeight - (quantity * feetHeight);
+        var availableWidth = availableWidth - (quantity * feetWidth);
+        var availableLength = availableLength - (quantity * feetLength);
+        var availableWeight = availableWeight - weight;
+
+        var bindRow = '<tr>' +
+            '<td class="clsSrNo">' + rowCount + '</td>' +
+            '<td style="display:none" class="clsMaterialID">' + materialID + '</td>' +
+            '<td class="clsMaterial">' + material + '</td>' +
+            '<td style="display:none" class="clsConversionFactor">' + conversionFactor + '</td>' +
+            '<td class="clsUnit">' + unit + '</td>' +
+            '<td class="clsHeight">' + height + '</td>' +
+            '<td class="clsWidth">' + width + '</td>' +
+            '<td class="clslength">' + length + '</td>' +
+            '<td class="clsWeight">' + weight + '</td>' +
+            '<td class="clsQuantity">' + quantity + '</td>' +
             '<td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true" style="margin-top: 7px;"></i></td>' +
-            '</tr >';
-
-        $('#root tbody').append(bindrow);
-
+            '</tr>'
+        $('#tblGoodsDetail  tbody').append(bindRow);
+        $('#ddlMaterial').prop('selectedIndex', 0);
+        $('#ddlUnit').prop('selectedIndex', 0);
+        $("#txt_Height").val('');
+        $("#txt_Width").val('');
+        $("#txt_Length").val('');
+        $("#txt_Weight").val('');
+        $("#txt_Quantity").val('')
+        $("#ddlMaterial").removeClass('borderValidation');
+        $("#ddlUnit").removeClass('borderValidation');
+        $("#txt_Height").removeClass('borderValidation');
+        $("#txt_Width").removeClass('borderValidation');
+        $("#txt_Length").removeClass('borderValidation');
+        $("#txt_Weight").removeClass('borderValidation');
+        $("#txt_Quantity").removeClass('borderValidation');
+        $("#lblHeight").text(availableHeight);
+        $("#lblWidth").text(availableWidth);
+        $("#lblLength").text(availableLength);
+        $("#lblCapacity").text(availableWeight);
+       
     });
 
     $(document).on('click', 'i.deleterow', function (e) {
         e.preventDefault();
-        if ($('#root >tbody>tr').length == 1) {
-            return;
-        }
+        var trElement = $(this).parents('tr');
+        var ConversionFactor = trElement.find('td.clsConversionFactor').text();
+        var Height = trElement.find('td.clsHeight').text();
+        var Width = trElement.find('td.clsWidth').text();
+        var length = trElement.find('td.clslength').text();
+        var Weight = parseFloat(trElement.find('td.clsWeight').text());
+        var Quantity = trElement.find('td.clsQuantity').text();
+
+
+        var availableHeight = parseInt($("#lblHeight").text());
+        var availableWidth = parseInt($("#lblWidth").text());
+        var availableLength = parseInt($("#lblLength").text());
+        var availableWeight = parseFloat($("#lblCapacity").text());
+
+
+        var availableHeight = availableHeight + (Quantity * ConversionFactor * Height);
+        var availableWidth = availableWidth + (Quantity * ConversionFactor * Width);
+        var availableLength = availableLength + (Quantity * ConversionFactor * length);
+        var availableWeight = availableWeight + Weight;
+
+        $("#lblHeight").text(availableHeight);
+        $("#lblWidth").text(availableWidth);
+        $("#lblLength").text(availableLength);
+        $("#lblCapacity").text(availableWeight);
+
         $(this).parents('tr').remove();
+        var rowCount = parseInt($("#RowCount").val());
+        rowCount = rowCount - 1;
+        $("#RowCount").val(rowCount);
 
     });
-    $(document).on('click', '#BtnBack', function (e) {
+    $(document).on('click', '#btnSubmit', function (e) {
         e.preventDefault();
-        window.location.href = "/Loader/Index";
+        var bFlagValid = 1;
 
-    });
-
-    $(document).on('click', '#BtnSubmit', function (e) {
-        e.preventDefault();
-        var sValidationMessage = "";
-
-        if ($("#subSourceId option:selected").val() == null || $("#subSourceId option:selected").val()=="") {
-            sValidationMessage = sValidationMessage + "<li> Please Select Source</li>";
+        if ($("#subSourceId option:selected").val() == null || $("#subSourceId option:selected").val() == "") {
+            bFlagValid = 0;
+            $("#subSourceId").addClass('borderValidation');
         }
-        if ($("#subDestinationId option:selected").val() == null || $("#subDestinationId option:selected").val()=="") {
-            sValidationMessage = sValidationMessage +"<li> Please Select Destination</li>"
+        if ($("#subDestinationId option:selected").val() == null || $("#subDestinationId option:selected").val() == "") {
+            bFlagValid = 0;
+            $("#subDestinationId").addClass('borderValidation');
         }
-        if ($('#root >tbody>tr').length == 1) {
-            //var firstrow = $('#root tr:eq(0)');
-            var firstrow = $('#root tbody tr:first');
-
-            var cargoType = firstrow.find('td:eq(1) #CargoType option:selected').val();
-            var height = firstrow.find('td:eq(2) input').val();
-            var width = firstrow.find('td:eq(3) input').val();
-            var length = firstrow.find('td:eq(4) input').val();
-            var weight = firstrow.find('td:eq(5) input').val();
-            var quantity = firstrow.find('td:eq(6) input').val();
-            var sValidationGoodTable = "";
-
-            sValidationGoodTable = (cargoType == 0 ? "CargoType/" : "");
-            sValidationGoodTable = sValidationGoodTable + ((height == null || height == "") ? "Height/" : "");
-            sValidationGoodTable = sValidationGoodTable + ((width == null || width == "") ? "Width/" : "");
-            sValidationGoodTable = sValidationGoodTable + ((length == null || length == "") ? "Length/" : "");
-            sValidationGoodTable = sValidationGoodTable + ((weight == null || weight == "") ? "Weight/" : "");
-            sValidationGoodTable = sValidationGoodTable + ((quantity == null || quantity == "") ? "Quantity" : "");
-            if (sValidationGoodTable.length !=0) {
-                sValidationGoodTable = "Please fill the fields (" + sValidationGoodTable + ") in Goods Table.";
-                sValidationMessage = sValidationMessage + "<li>" + sValidationGoodTable + "</li>";
-            }
-
+        if ($('#tblGoodsDetail >tbody>tr').length == 0) {
+            bflagValid = 0;
+            $("#tblGoodsDetail").addClass('borderValidation');
 
         }
+        if (bFlagValid == 0) {
 
-
-        if (sValidationMessage.length != 0) {
-            sValidationMessage = "<ul>" + sValidationMessage + "</ul>";
-            $('#divValidationSummary').html(sValidationMessage);
             return;
         }
+
 
         //adding Load Grid Details In Array
         var idArrLoadDetails = [];
-        $('#root tbody tr').each(function (k, v) {
+        $('#tblGoodsDetail tbody tr').each(function (k, v) {
             var trElement = $(this);
-            var tdVals = trElement.find('td:eq(1) #CargoType option:selected').val() + "~" +
-                trElement.find('td:eq(2) input').val() + "~" +
-                trElement.find('td:eq(3) input').val() + "~" +
-                trElement.find('td:eq(4) input').val() + "~" +
-                trElement.find('td:eq(5) input').val() + "~" +
-                trElement.find('td:eq(6) input').val()
+
+            var tdVals = trElement.find('td.clsSrNo').text() + "~" +
+                trElement.find('td.clsMaterialID').text() + "~" +
+                trElement.find('td.clsConversionFactor').text() + "~" +
+                trElement.find('td.clsUnit').text() + "~" +
+                trElement.find('td.clsHeight').text() + "~" +
+                trElement.find('td.clsWidth').text() + "~" +
+                trElement.find('td.clslength').text() + "~" +
+                trElement.find('td.clsWeight').text() + "~" +
+                trElement.find('td.clsQuantity').text();
             idArrLoadDetails.push(tdVals);
+
+
         });
 
-        var SaveLoadDetails = [];
+
+        var TripDetails = [];
         for (var i = 0; i < idArrLoadDetails.length; i++) {
             var arrElement = idArrLoadDetails[i].split("~");
             item = {}
-            item["CargoTypeId"] = arrElement[0];
-            item["Height"] = arrElement[1];
-            item["Width"] =  arrElement[2];
-            item["Length"] = arrElement[3];
-            item["Weight"] = arrElement[4];
-            item["Qty"] = arrElement[5];
-            SaveLoadDetails.push(item);
+            item["TripDetailID"] = arrElement[0];
+            item["MaterialID"] = arrElement[1];
+            item["ConversionFactor"] = arrElement[2];
+            item["UnitOfMeasure"] = arrElement[3];
+            item["Height"] = arrElement[4];
+            item["Width"] = arrElement[5];
+            item["Length"] = arrElement[6];
+            item["Weight"] = arrElement[7];
+            item["Qty"] = arrElement[8];
+            TripDetails.push(item);
         }
+       
 
         $.ajax({
             type: 'POST',
             dataType: 'json',
-            url: '/Loader/SaveSubTrip',
+            url: '/TLoader/SaveSubTrip',
             data:
             {
                 sourceId: $("#subSourceId option:selected").val(),
                 destinationId: $("#subDestinationId option:selected").val(),
                 TripId: $("#txtTripid").val(),
-                CargoDetails: SaveLoadDetails
+                _tripDetails: TripDetails
 
             },
             success: function (da) {
                 alert(da);
-                window.location.href = "/Loader/Index";
+                window.location.href = "/TLoader/Index";
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
             }
         });
 
     });
-
 </script>
-

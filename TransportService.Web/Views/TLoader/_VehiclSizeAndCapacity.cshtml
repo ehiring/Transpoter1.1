@@ -1,0 +1,31 @@
+﻿@model TransportService.Web.Models.Masters.VehicleCapacity
+<div class="panel-heading">
+    <h6 class="panel-title"><b>Size(Ft) / Capacity(Tonn)</b> </h6>
+</div>
+<hr style="margin-top:5px;margin-bottom:5px;" />
+<div class="col-sm-6 form-group">
+    <table>
+        <tbody>
+            <tr>
+                <td><label class="control-label ">Height</label></td>
+                <td>:</td>
+                <td class="clsHeightValue"><label id="lblHeight" class="control-label ">@Model.Height</label></td>
+                <td class="col-lg-1"></td>
+                <td><label>Width</label></td>
+                <td>:</td>
+                <td><label id="lblWidth" class="control-label ">@Model.Width</label></td>
+
+            </tr>
+            <tr>
+                <td><label class="control-label ">Length</label></td>
+                <td>:</td>
+                <td><label id="lblLength" class="control-label ">@Model.Length</label></td>
+                <td class="col-lg-1"></td>
+                <td><label class="control-label ">Capacity</label></td>
+                <td>:</td>
+                <td><label id="lblCapacity" class="control-label ">@Model.Capacity</label></td>
+
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -91,7 +91,11 @@
 
                         </div>
                     </div>
+                    <div id="divVehicleCapcity" class="col-sm-6 form-group">
 
+
+                    </div>
+                    <label id="lblTest"></label>
                     <div class="col-sm-12 form-group">
                         <label>Route Details</label>
                         <div class="form-group">
@@ -186,6 +190,7 @@
 
                     <div class="form-group">
                         <input type="hidden" id="RowCount" name="RowCount" value="0">
+                       
                         <div>
                             <table class="table table-bordered" id="tblGoodsDetail" title="Enter Good Details">
                                 <thead>
@@ -229,6 +234,37 @@
         $('#showrootdetails').attr('SeqNo', SeqNo);
         $('#showrootdetails').append(bindrow);
        
+    });
+
+    $(document).on('change', '#VehicleID', function (e) {
+        e.preventDefault();
+        $('#tblGoodsDetail tbody').empty();
+        var VehicleID = $("#VehicleID option:selected").val();
+        
+        alert("Hi");
+            $.ajax({
+            url: "@Url.Action("GetVehicleSizeCapacityWhereID", "TLoader")",
+            contentType: "application/json",
+            data: JSON.stringify({
+                VehicleID: VehicleID
+            }),
+            dataType: "text",
+            type: "POST",
+            async: true,
+                success: function (data) {
+                    $('#divVehicleCapcity').html(data);
+
+                   
+            },
+            error: function (data) {
+                alert("Error");
+            },
+            complete: function () {
+
+            }
+        });
+
+
     });
     $('#ShowRoute').on("click", function (e) {
         $('.route').show();
@@ -334,6 +370,35 @@
             return;
         }
 
+
+        /*....check if entered size and capacity does not exceed.*/
+        var availableHeight = $("#lblHeight").text();
+        var availableWidth = $("#lblWidth").text();
+        var availableLength = $("#lblLength").text();
+        var availableWeight = $("#lblCapacity").text();
+
+
+
+        /*......Conversion in feet.....*/
+        var feetHeight = height * conversionFactor;
+        var feetWidth = width * conversionFactor;
+        var feetLength = length * conversionFactor;
+
+        var exceedMsg = "";
+        exceedMsg = exceedMsg + (availableHeight < quantity*feetHeight ? "Height/" : "");
+        exceedMsg = exceedMsg + (availableWidth < quantity*feetWidth ? "Width/" : "");
+        exceedMsg = exceedMsg + (availableLength < quantity*feetLength ? "Length/" : "");
+        exceedMsg = exceedMsg + (availableWeight < weight ? "Weight" : "");
+        if (exceedMsg != "") {
+            exceedMsg = exceedMsg + "exceeded. Please enter proper value according to Available size";
+            alert(exceedMsg);
+            return 0;
+        }
+
+
+        alert("A");
+
+
         var bindRow = '<tr>' +
             '<td class="clsSrNo">' + rowCount + '</td>' +
             '<td style="display:none" class="clsMaterialID">' + materialID + '</td>' +
@@ -348,17 +413,63 @@
             '<td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true" style="margin-top: 7px;"></i></td>' +
             '</tr>'
         $('#tblGoodsDetail  tbody').append(bindRow);
+
+
+        var availableHeight = availableHeight - (quantity * feetHeight);
+        var availableWidth = availableWidth - (quantity * feetWidth);
+        var availableLength = availableLength - (quantity * feetLength);
+        var availableWeight = availableWeight -  weight;
+
         $('#ddlMaterial').prop('selectedIndex', 0);
         $('#ddlUnit').prop('selectedIndex', 0);
         $("#txt_Height").val('');
         $("#txt_Width").val('');
         $("#txt_Length").val('');
         $("#txt_Weight").val('');
-        $("#txt_Quantity").val('')
+        $("#txt_Quantity").val('');
+        $("#ddlMaterial").removeClass('borderValidation');
+        $("#ddlUnit").removeClass('borderValidation');
+        $("#txt_Height").removeClass('borderValidation');
+        $("#txt_Width").removeClass('borderValidation');
+        $("#txt_Length").removeClass('borderValidation');
+        $("#txt_Weight").removeClass('borderValidation');
+        $("#txt_Quantity").removeClass('borderValidation');
+
+        $("#lblHeight").text(availableHeight);
+        $("#lblWidth").text(availableWidth);
+        $("#lblLength").text(availableLength);
+        $("#lblCapacity").text(availableWeight);
+
+
     });
 
     $(document).on('click', 'i.deleterow', function (e) {
         e.preventDefault();
+        var trElement = $(this).parents('tr');
+        var ConversionFactor = trElement.find('td.clsConversionFactor').text();
+        var Height = trElement.find('td.clsHeight').text();
+        var Width = trElement.find('td.clsWidth').text();
+        var length = trElement.find('td.clslength').text();
+        var Weight = parseFloat(trElement.find('td.clsWeight').text());
+        var Quantity = trElement.find('td.clsQuantity').text();
+
+
+        var availableHeight = parseInt($("#lblHeight").text());
+        var availableWidth = parseInt($("#lblWidth").text());
+        var availableLength = parseInt($("#lblLength").text());
+        var availableWeight = parseFloat($("#lblCapacity").text());
+
+
+        var availableHeight = availableHeight + (Quantity * ConversionFactor * Height);
+        var availableWidth = availableWidth + (Quantity * ConversionFactor * Width);
+        var availableLength = availableLength + (Quantity * ConversionFactor * length);
+        var availableWeight = availableWeight + (Weight);
+
+        $("#lblHeight").text(availableHeight);
+        $("#lblWidth").text(availableWidth);
+        $("#lblLength").text(availableLength);
+        $("#lblCapacity").text(availableWeight);
+          
         $(this).parents('tr').remove();
         var rowCount = parseInt($("#RowCount").val());
         rowCount = rowCount - 1;
@@ -379,33 +490,37 @@
         });
 
         if ($("#SourceID option:selected").val() == null || $("#SourceID option:selected").val() == "") {
+            bflagValid = 0;
             $("#SourceID").addClass('borderValidation');
         
         }
         if ($("#DestinationID option:selected").val() == null || $("#DestinationID option:selected").val() == "") {
+            bflagValid = 0;
             $("#DestinationID").addClass('borderValidation');
             
         }
         if ($("#StartDate").val() == null || $("#StartDate").val() == "") {
+            bflagValid = 0;
             $("#StartDate").addClass('borderValidation');
            
         }
 
         if ($("#EndDate").val() == null || $("#EndDate").val() == "") {
+            bflagValid = 0;
             $("#EndDate").addClass('borderValidation');
             
         }
         
         
         if ($("#VehicleID option:selected").val() == null || $("#VehicleID option:selected").val() == "") {
+            bflagValid = 0;
             $("#VehicleID").addClass('borderValidation');
-            
         }
 
 
         //if anly source is added
         if (idArrRoot.length <= 1) {
-            
+            bflagValid = 0;
             $("#CityRootID").addClass('borderValidation');
             
         }
@@ -479,7 +594,7 @@
                 StartDate: $("#StartDate").val(),
                 TripStatus: $("#TripStatus option:selected").val(),
                 CityRootID: SaveRoot,
-                _tripDetail: TripDetails
+                _tripDetails: TripDetails
 
             },
             success: function (da) {

@@ -260,7 +260,7 @@
 
 
         $(document).on('click', '#btnAddGoods', function (e) {
-            var htmlValidation = "";
+            var bFlagValid = 1;
 
             var rowCount = parseInt($("#RowCount").val());
 
@@ -275,16 +275,41 @@
             var weight = $("#txt_Weight").val();
             var quantity = $("#txt_Quantity").val();
 
-            htmlValidation = (materialID == 0 ? "CargoType/" : "");
-            htmlValidation = htmlValidation + (unit == 0 ? "Unit/" : "");
-            htmlValidation = htmlValidation + ((height == null || height == "") ? "Height/" : "");
-            htmlValidation = htmlValidation + ((width == null || width == "") ? "Width/" : "");
-            htmlValidation = htmlValidation + ((length == null || length == "") ? "Length/" : "");
-            htmlValidation = htmlValidation + ((weight == null || weight == "") ? "Weight/" : "");
-            htmlValidation = htmlValidation + ((quantity == null || quantity == "") ? "Quantity" : "");
+            if (materialID == 0) {
+                bFlagValid = 0;
+                $("#ddlMaterial").addClass('borderValidation');
+            }
+            if (conversionFactor == 0) {
+                bFlagValid = 0;
+                $("#ddlUnit").addClass('borderValidation');
+            }
+            if (height == null || height == "") {
 
-            if (htmlValidation.length != 0) {
-                alert("Please fill the fields (" + htmlValidation + ")");
+                bFlagValid = 0;
+                $("#txt_Height").addClass('borderValidation');
+            }
+
+            if (width == null || width == "") {
+                bFlagValid = 0;
+                $("#txt_Width").addClass('borderValidation');
+            }
+            if (length == null || length == "") {
+
+                bFlagValid = 0;
+                $("#txt_Length").addClass('borderValidation');
+            }
+            if (weight == null || weight == "") {
+
+                bFlagValid = 0;
+                $("#txt_Weight").addClass('borderValidation');
+            }
+            if (quantity == null || quantity == "") {
+                bFlagValid = 0;
+                $("#txt_Quantity").addClass('borderValidation');
+            }
+
+            if (bFlagValid == 0) {
+
                 return;
             }
 
@@ -308,7 +333,14 @@
             $("#txt_Width").val('');
             $("#txt_Length").val('');
             $("#txt_Weight").val('');
-            $("#txt_Quantity").val('')
+            $("#txt_Quantity").val('');
+            $("#ddlMaterial").removeClass('borderValidation');
+            $("#ddlUnit").removeClass('borderValidation');
+            $("#txt_Height").removeClass('borderValidation');
+            $("#txt_Width").removeClass('borderValidation');
+            $("#txt_Length").removeClass('borderValidation');
+            $("#txt_Weight").removeClass('borderValidation');
+            $("#txt_Quantity").removeClass('borderValidation');
         });
         $(document).on('click', '#btnSubmit', function (e) {
             e.preventDefault();

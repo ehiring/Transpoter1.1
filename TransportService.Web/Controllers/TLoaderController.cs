@@ -87,7 +87,7 @@ namespace TransportService.Web.Controllers
 
 
         [HttpPost]
-        public ActionResult SaveTrip(Transpoter T, List<CityArray> CityRootId, List<TripDetail> _tripDetail)
+        public ActionResult SaveTrip(Transpoter T, List<CityArray> CityRootId, List<TripDetail> _tripDetails)
         {
             DataTable dtCityRoot = new DataTable();
 
@@ -127,11 +127,11 @@ namespace TransportService.Web.Controllers
             dtTripDetail.Columns.Add("ConversionFactor", typeof(decimal));
             
 
-            if (_tripDetail != null)
+            if (_tripDetails != null)
             {
-                if (_tripDetail.Count > 0)
+                if (_tripDetails.Count > 0)
                 {
-                    foreach (var item in _tripDetail)
+                    foreach (var item in _tripDetails)
                     {
                         DataRow dr_LoadDetail = dtTripDetail.NewRow();
                         dr_LoadDetail["TripDetailID"] = item.TripDetailID;
@@ -184,6 +184,8 @@ namespace TransportService.Web.Controllers
         public ActionResult AddSubTrip(int? Source, int TripId = 0)
         {
             ViewData["TripWiseCityList"] = _tripBusinessLayer.GetDropDownData("TripWiseCityList", 0, TripId);
+            ViewData["MaterialList"] = _tripBusinessLayer.GetDropDownData("MaterialList", 0);
+            ViewData["UOMList"] = _tripBusinessLayer.GetDropDownData("UOMList", 0);
             ViewBag.tripid = TripId;
             ViewBag.Source = Source;
             return View(); 
@@ -210,70 +212,76 @@ namespace TransportService.Web.Controllers
 
 
         }
-        [HttpPost]
-        public ActionResult SaveSubTrip(int? sourceId, int? destinationId, int? TripId, List<CargoDetails> CargoDetails)
+        public ActionResult GetVehicleSizeCapacityWhereID(int VehicleID)
         {
 
-            //Adding Load Details In DT
+            var data = _tripBusinessLayer.GetVehicleSizeCapacityWhereID(VehicleID);
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("_VehiclSizeAndCapacity", data)
+                    : View("_VehiclSizeAndCapacity", data);
 
-            DataTable dtLoad = new DataTable();
 
-            dtLoad.Columns.Add("CargoTypeID", typeof(int));
-            dtLoad.Columns.Add("Height", typeof(decimal));
-            dtLoad.Columns.Add("Width", typeof(decimal));
-            dtLoad.Columns.Add("Length", typeof(decimal));
-            dtLoad.Columns.Add("Weight", typeof(decimal));
-            dtLoad.Columns.Add("Qty", typeof(int));
+        }
+        [HttpPost]
+        public ActionResult SaveSubTrip(int? sourceId, int? destinationId, int? TripId, List<TripDetail> _tripDetails)
+        {
 
-            if (CargoDetails != null)
+
+            DataTable dtTripDetail = new DataTable();
+            dtTripDetail.Columns.Add("TripDetailID", typeof(int));
+            dtTripDetail.Columns.Add("MaterialID", typeof(int));
+            dtTripDetail.Columns.Add("UnitOfMeasure", typeof(string));
+            dtTripDetail.Columns.Add("Height", typeof(decimal));
+            dtTripDetail.Columns.Add("Width", typeof(decimal));
+            dtTripDetail.Columns.Add("Length", typeof(decimal));
+            dtTripDetail.Columns.Add("Weight", typeof(decimal));
+            dtTripDetail.Columns.Add("Qty", typeof(int));
+            dtTripDetail.Columns.Add("ConversionFactor", typeof(decimal));
+
+
+            if (_tripDetails != null)
             {
-                if (CargoDetails.Count > 0)
+                if (_tripDetails.Count > 0)
                 {
-                    foreach (var item in CargoDetails)
+                    foreach (var item in _tripDetails)
                     {
-                        DataRow dr_Load = dtLoad.NewRow();
-                        dr_Load["CargoTypeID"] = item.CargoTypeID;
-                        dr_Load["Height"] = item.Height;
-                        dr_Load["Width"] = item.Width;
-                        dr_Load["Length"] = item.Length;
-                        dr_Load["Weight"] = item.Weight;
-                        dr_Load["Qty"] = item.Qty;
-                        dtLoad.Rows.Add(dr_Load);
+                        DataRow dr_LoadDetail = dtTripDetail.NewRow();
+                        dr_LoadDetail["TripDetailID"] = item.TripDetailID;
+                        dr_LoadDetail["MaterialID"] = item.MaterialID;
+                        dr_LoadDetail["ConversionFactor"] = item.ConversionFactor;
+                        dr_LoadDetail["UnitOfMeasure"] = item.UnitOfMeasure;
+                        dr_LoadDetail["Height"] = item.Height;
+                        dr_LoadDetail["Width"] = item.Width;
+                        dr_LoadDetail["Length"] = item.Length;
+                        dr_LoadDetail["Weight"] = item.Weight;
+                        dr_LoadDetail["Qty"] = item.Qty;
+                        dtTripDetail.Rows.Add(dr_LoadDetail);
                     }
                 }
             }
 
-
-
-            SqlParameter tvpParamCargoDetails = new SqlParameter();
-            tvpParamCargoDetails.ParameterName = "@UDTable_CargoDetails";
-            tvpParamCargoDetails.SqlDbType = System.Data.SqlDbType.Structured;
-            tvpParamCargoDetails.Value = dtLoad;
-            tvpParamCargoDetails.TypeName = "UDTable_CargoDetails";
-
-
+            SqlParameter tvpParamTripDetails = new SqlParameter();
+            tvpParamTripDetails.ParameterName = "@UDTable_TripDetails";
+            tvpParamTripDetails.SqlDbType = System.Data.SqlDbType.Structured;
+            tvpParamTripDetails.Value = dtTripDetail;
+            tvpParamTripDetails.TypeName = "UDTable_TripDetails";
 
             JobDbContext _db = new JobDbContext();
             var result = _db.Database.ExecuteSqlCommand(@"exec USP_SaveSubtrip
                   @SourceID 
                  ,@DestinationID 
                  ,@TripID 
-                 ,@UDTable_CargoDetails",
+                 ,@UDTable_TripDetails",
             new SqlParameter("@SourceID", sourceId == null ? (object)DBNull.Value : sourceId),
             new SqlParameter("@DestinationID", destinationId == null ? (object)DBNull.Value : destinationId),
             new SqlParameter("@TripID", TripId == null ? (object)DBNull.Value : TripId),
-            tvpParamCargoDetails
+            tvpParamTripDetails
             );
-
-
-            //DBStatus.ParameterName = "@DBStatus";
-            //DBStatus.SqlDbType = SqlDbType.VarChar;
-            //DBStatus.Direction = ParameterDirection.Output;
-
 
             return Json("Your SubTrip Booked Sucessfully");
 
         }
+
         public ActionResult AddTruck()
         {
             ViewData["TruckCapacityList"] = _tripBusinessLayer.GetDropDownData("TruckCapacityList");
