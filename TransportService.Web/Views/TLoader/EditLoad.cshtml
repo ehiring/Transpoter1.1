@@ -46,12 +46,8 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-6 form-group " id="divValidationSource">
-                            <label class="text-danger">Select Souce</label>
-                        </div>
-                        <div class="col-sm-6 form-group " id="divValidationDestination">
-                            <label class="text-danger">Select Destination</label>
-                        </div>
+                        
+                        
 
                         <div class="col-sm-6 form-group">
                             <label>Pick Up Date:</label>
@@ -62,7 +58,6 @@
                                 @*<input type="text" id="dp2" data-date-format="yyyy-mm-dd" placeholder="YYYY-MM-DD" class="form-control select_date" name="truck_insurestartdate" value="" autocomplete="off" onkeypress="return checkdate(event);">*@
                             </div>
                         </div>
-
                         <div class="col-sm-6 form-group">
                             <label><i class="red">*</i>Load Type:</label>
                             <div class="input-group">
@@ -74,12 +69,6 @@
                                     <option value="Parcel (Less than 500 Kg)">Parcel (Less than 500 Kg) </option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="col-sm-6 form-group " id="divValidationPickUpDate">
-                            <label class="text-danger">Select Pick Up Date</label>
-                        </div>
-                        <div class="col-sm-6 form-group " id="divValidationLoadType">
-                            <label class="text-danger">Select Load Type</label>
                         </div>
                         <div class="col-sm-6 form-group">
                             <label><i class="red">*</i>Sub Service:</label>
@@ -101,12 +90,10 @@
                                 <input id="txt_Receiver" type="text" class="form-control" name="altr_name" value="@Model.Receiver" placeholder="Contact Name">
                             </div>
                         </div>
-                        <div class="col-sm-6 form-group " id="divValidationSubService">
-                            <label class="text-danger">Select Sub Service</label>
-                        </div>
-                        <div class="col-sm-6 form-group " id="divValidationReciever">
-                            <label class="text-danger">Enter Reciever Name</label>
-                        </div>
+
+                        
+                        
+
                         <div class="col-sm-6 form-group">
                             <label>Phone:</label>
                             <div class="input-group">
@@ -123,12 +110,8 @@
                                 <input id="txt_Mail" type="text" class="form-control" name="truck_phone" value="@Model.Email" placeholder="Email">
                             </div>
                         </div>
-                        <div class="col-sm-6 form-group " id="divValidationPhone">
-                            <label class="text-danger">Enter Phone</label>
-                        </div>
-                        <div class="col-sm-6 form-group " id="divValidationEmail">
-                            <label class="text-danger">Enter Email</label>
-                        </div>
+                        
+                        
 
                         <div class="col-sm-12 form-group">
                             <label>Address:</label>
@@ -403,9 +386,58 @@
 
     });
     $(document).on('click', '#btnUpdate', function (e) {
-
         e.preventDefault();
-        alert("A");
+        var bflagValid = 1;
+        if ($("#SourceID option:selected").val() == null || $("#SourceID option:selected").val() == "") {
+            alert("A");
+            bflagValid = 0;
+            $("#SourceID").addClass('borderValidation');
+
+        }
+        if ($("#DestinationID option:selected").val() == null || $("#DestinationID option:selected").val() == "") {
+            bflagValid = 0;
+            $("#DestinationID").addClass('borderValidation');
+        }
+        if ($("#PickUpDate").val() == null || $("#PickUpDate").val() == "") {
+            bflagValid = 0;
+            $("#PickUpDate").addClass('borderValidation');
+        }
+        if ($("#ddlLoadType option:selected").val() == 0 || $("#ddlLoadType option:selected").val() == "") {
+            bflagValid = 0;
+            $("#ddlLoadType").addClass('borderValidation');
+        }
+
+        if ($("#ddlSubService option:selected").val() == 0 || $("#ddlSubService option:selected").val() == "") {
+            bflagValid = 0;
+            $("#ddlSubService").addClass('borderValidation');
+        }
+
+        if ($("#txt_Receiver").val() == null || $("#txt_Receiver").val() == "") {
+            bflagValid = 0;
+            $("#txt_Receiver").addClass('borderValidation');
+        }
+        if ($("#txt_Phone").val() == null || $("#txt_Phone").val() == "") {
+            bflagValid = 0;
+            $("#txt_Phone").addClass('borderValidation');
+        }
+        if ($("#txt_Mail").val() == null || $("#txt_Mail").val() == "") {
+            bflagValid = 0;
+            $("#txt_Mail").addClass('borderValidation');
+        }
+        if ($("#txt_Address").val() == null || $("#txt_Address").val() == "") {
+            bflagValid = 0;
+            $("#txt_Address").addClass('borderValidation');
+        }
+        if ($('#tblGoodsDetail >tbody>tr').length == 0) {
+            bflagValid = 0;
+            $("#tblGoodsDetail").addClass('borderValidation');
+        }
+
+        if (bflagValid == 0) {
+
+            return 0;
+        }
+
         $.ajax({
             type: 'POST',
             dataType: 'json',

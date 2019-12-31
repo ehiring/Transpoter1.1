@@ -24,9 +24,11 @@
         <div class="col-lg-6">
             <hr />
             <div class="panel panel-default">
+
                 <div class="panel-heading">
                     <h5 class="panel-title"><b>Load Details</b> </h5>
                 </div>
+
                 <div class="panel-body">
 
                     <div class="col-sm-6 form-group">
@@ -47,8 +49,6 @@
                             
                         </div>
                     </div>
-
-                    
 
                     <div class="col-sm-6 form-group" >
                         <label>Pick Up Date:</label>
@@ -71,7 +71,6 @@
                             </select>
                         </div>
                     </div>
-                   
 
                     <div class="col-sm-6 form-group">
                         <label><i class="red">*</i>Sub Service:</label>
@@ -245,8 +244,6 @@
             $('.goodstable').hide();
            
         });
-
-
         $(document).on('click', 'i.deleterow', function (e) {
             e.preventDefault();
             $(this).parents('tr').remove();
@@ -257,8 +254,6 @@
 
 
         });
-
-
         $(document).on('click', '#btnAddGoods', function (e) {
             var bFlagValid = 1;
 
@@ -344,10 +339,7 @@
         });
         $(document).on('click', '#btnSubmit', function (e) {
             e.preventDefault();
-
             var bflagValid = 1;
-           
-
 
             //adding Load Grid Details In Array
             var idArrLoadDetails = [];
@@ -367,7 +359,6 @@
 
             });
 
-
             if ($("#SourceID option:selected").val() == null || $("#SourceID option:selected").val() == "") {
                 bflagValid = 0;
                 $("#SourceID").addClass('borderValidation');
@@ -385,7 +376,6 @@
                 bflagValid = 0;
                 $("#ddlLoadType").addClass('borderValidation');
             }
-
             if ($("#ddlSubService option:selected").val() == 0 || $("#ddlSubService option:selected").val() == "") {
                 bflagValid = 0;
                 $("#ddlSubService").addClass('borderValidation');
@@ -434,8 +424,6 @@
                 item["Qty"] = arrElement[7];
                 LoadDetails.push(item);
             }
-
-
 
             $.ajax({
                 type: 'POST',
