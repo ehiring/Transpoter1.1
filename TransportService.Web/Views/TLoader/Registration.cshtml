@@ -1,0 +1,907 @@
+﻿
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- xxx Basics xxx -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- xxx Change With Your Information xxx -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no" />
+    <title>Truck Load Website</title>
+    <meta name="author" content="Sandhya">
+    <meta name="description" content="Truck Load for Logistic related services.">
+    <meta name="keywords" content="">
+
+    <!-- Core Css Stylesheets -->
+    <link href="css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/jquery-ui-1.10.4.custom.min.css">
+    <link href="css/layers.css" rel="stylesheet">
+    <!-- <link href="loginnew.css" rel="stylesheet"> -->
+    <link href="plgin.css" rel="stylesheet">
+    <link href="search.css" rel="stylesheet">
+
+    <!-- REVOLUTION STYLE SHEETS -->
+    <link rel="stylesheet" type="text/css" href="css/pe-icon-7-stroke.css">
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+    <link rel="stylesheet" type="text/css" href="css/settings.css">
+    <link rel="stylesheet" type="text/css" href="css/navigation.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-dropdownhover.min.css">
+
+
+    <style>
+    </style>
+
+</head>
+
+<body>
+    <header class="fixed-top header-fullpage top-border top-transparent wow fadeInDown">
+        <div class="top-bar-right d-flex align-items-center text-md-left">
+            <div class="container">
+                <div class="row align-items-center ">
+                    <div class="col">
+                        <a href="#" class="mr-3"><i class="fa fa-phone" style="color: #1261F4;"></i> 05-460789986</a>
+                        <a href="#" class="mr-3"><i class="fa fa-envelope" style="color: #1261F4;"></i> mail@staff.com</a>
+                    </div>
+
+                    <div class="col-md-auto">
+                        <a href="#" class="fab fa-facebook-f mr-3" style="color: #1261F4;"></a>
+                        <a href="#" class="fab fa-twitter mr-3" style="color: #1261F4;"></a>
+                        <a href="#" class="fab fa-linkedin mr-3" style="color: #1261F4;"></a>
+                        <a href="#" class="fab fa-instagram mr-3" style="color: #1261F4;"></a>
+
+                        <div class="d-inline-flex order-lg-last">
+                            <a class="btn-theme icon-left bg-navy-blue no-shadow d-none d-lg-inline-block align-self-center" href="#" role="button" data-toggle="modal" data-target="#user-login-popup"><i class="fas fa-home" style="color: #fff;"></i>  Log In</a>
+                            <a class="btn-theme icon-left bg-navy-blue no-shadow d-none d-lg-inline-block align-self-center" href="#" role="button" data-toggle="modal" data-target="#user-reg-popup"><i class="far fa-user" style="color: #fff;"></i>  Register</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Navigation Start -->
+        <nav class="navbar navbar-expand-lg bg-transparent">
+            <div class="container text-nowrap">
+                <div class="d-flex align-items-center w-100 col p-0">
+                    <a class="navbar-brand rounded-bottom light-bg" href="index.html">
+                        <img src="#" alt="TruckLoad">
+                    </a>
+                </div>
+                <!-- Topbar Request Quote Start -->
+                <div class="d-inline-flex request-btn order-lg-last col p-0">
+                    <a class="btn-theme icon-left bg-navy-blue no-shadow d-none d-lg-inline-block align-self-center" href="#" role="button" data-toggle="modal" data-target="#request_popup">
+                        <i class="fas fa-receipt" style="color: #fff;"></i>     Request Quote
+                    </a>
+                    <!-- Toggle Button Start -->
+                    <button class="navbar-toggler x collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <!-- Toggle Button End -->
+                </div>
+                <!-- Topbar Request Quote End -->
+
+                <div class="collapse navbar-collapse" id="navbarCollapse" data-hover="dropdown" data-animations="slideInUp slideInUp slideInUp slideInUp">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="services.html">Home</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle-mob" href="index.html" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Load <i class="fas fa-angle-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="shortcodes-element.html">Find Load</a></li>
+                                <li><a class="dropdown-item" href="typography.html">Post Load</a></li>
+                                <li><a class="dropdown-item" href="request-page.html">Request Quote</a></li>
+                                <li><a class="dropdown-item" href="pricing-plan.html">Our Pricing</a></li>
+
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle-mob" href="index.html" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Truck <i class="fas fa-angle-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="shortcodes-element.html">Find Truck</a></li>
+                                <li><a class="dropdown-item" href="typography.html">Post Truck</a></li>
+                                <li><a class="dropdown-item" href="request-page.html">Request Quote</a></li>
+                                <li><a class="dropdown-item" href="pricing-plan.html">Our Pricing</a></li>
+
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle-mob" href="index.html" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Services <i class="fas fa-angle-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="project-grid.html">Distance Calculate</a></li>
+                                <li><a class="dropdown-item" href="project-masonary.html">Rate View</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="services.html">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="services.html">Blog</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle-mob" href="index.html" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Contact <i class="fas fa-angle-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="contact-us.html">Contact Us</a></li>
+                                <li><a class="dropdown-item" href="contact-us-option.html">Contact Us Option</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!-- Main Navigation End -->
+                </div>
+            </div>
+        </nav>
+        <!-- Main Navigation End -->
+    </header>
+
+    <!-- Inner Latest Updates Block -->
+    <div class="latest_updates_block">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-sm-7">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-3 latest-news">Latest Trucks  <span>|</span> </div>
+                        <div class="col-md-9 col-sm-9 scroll-news">
+                            <div class="carousel slide" data-ride="carousel" id="quote-carousel">
+                                <!-- Carousel Slides / Quotes -->
+                                <div class="carousel-inner">
+                                    <div class="item">
+                                        <div class="row">
+                                            <div class="col-sm-12">Regular trip available from Hyderabad to Mumbai</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="item active">
+                                        <div class="row">
+                                            <div class="col-sm-12">Regular trip available from Bangalore to Mumbai</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="item ">
+                                        <div class="row">
+                                            <div class="col-sm-12">Regular trip available from Hyderabad to Mumbai</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="item ">
+                                        <div class="row">
+                                            <div class="col-sm-12">Regular trip available from Delhi to Mumbai</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="item ">
+                                        <div class="row">
+                                            <div class="col-sm-12">Regular trip available from Bangalore to Mumbai</div>
+                                        </div>
+                                    </div>		 -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-5">
+                    <div class="pull-right live_trucks_details">799+ Live trucks  &nbsp;  |  &nbsp;  892+ Live Loads</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="ContentPlaceHolder1_hidediv" class="container" style="margin-top: 30px;background-color: pink;">
+        <div class="row job-card">
+            <div class="col-md-12">
+                <div class="PageDesc">
+                    If you have already registered with us, please
+                    <a href="#" class="orange">Click Here</a>
+                    <div class="gap-line"></div>
+                </div>
+            </div>
+            <div class="col-md-6" style="border: 1px solid #E6E6E6;margin-top: 25px;">
+
+                <h3 style="margin-top: -20px !important; color: white; font-weight: normal;
+            font-size: 12px; text-align: center; width: 520px!important; background: #008cff !important;
+            padding: 15px;">
+                    <b>CONTACT PERSON INFORMATION</b>
+                </h3>
+                <div class="PageDesc">
+
+
+                    <!-- <div id="ContentPlaceHolder1_fsrb" class="form-group" style="padding-top: 5px;">
+
+                        <a id="ContentPlaceHolder1_lnkindi" class="btnselactive" href="#">Individual</a>
+                        <a id="ContentPlaceHolder1_lnkcomp" class="btnsel" href="#">Company</a>
+
+                    </div> -->
+                    <div class="row" style="margin-top:30px">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>First Name</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                    <span class="mandatory" style="margin-left: 35px;">*</span>
+                                    <input name="Fname" type="text" id="ContentPlaceHolder1_txtFname" class="form-control capital" placeholder="Enter First Name">
+                                    <span id="ContentPlaceHolder1_rfvFname" class="validator" style="display:none;">Enter First Name</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Enter Last Name</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                    <input name="ctl00$ContentPlaceHolder1$txtLname" type="text" id="ContentPlaceHolder1_txtLname" class="form-control capital" placeholder="Enter Last Name">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Mobile No</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fas fa-mobile-alt"></i></span>
+                                    <span class="mandatory" style="margin-left: 38px;">*</span>
+                                    <input name="ctl00$ContentPlaceHolder1$txtMobile" type="text" maxlength="10" id="ContentPlaceHolder1_txtMobile" class="form-control capital" minlength="10" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" placeholder="Please Enter Mobile No">
+                                    <span id="ContentPlaceHolder1_RegularExpressionValidator2" class="validator" style="display:none;">Please Enter Valid Mobile Number</span>
+                                    <span id="ContentPlaceHolder1_rfvMobile" class="validator" style="display:none;">Please Enter Mobile No</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Email Id</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                    <span class="mandatory" style="margin-left: 15px;">*</span>
+                                    <input name="ctl00$ContentPlaceHolder1$txtEmail" type="text" id="ContentPlaceHolder1_txtEmail" class="form-control capital" onchange="UserOrEmailAvailability()" placeholder="Please Enter Email Id">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Aadhar Card No</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="far fa-id-card"></i></span>
+                                    <span class="mandatory" style="margin-left: 70px;">*</span>
+                                    <input name="ctl00$ContentPlaceHolder1$txtRPassword" type="password" id="ContentPlaceHolder1_txtRPassword" class="form-control capital" placeholder="Retype Password">
+                                    <span id="ContentPlaceHolder1_RequiredFieldValidator2" class="validator" style="display:none;">Retype Password</span>
+                                    <span id="ContentPlaceHolder1_CompareValidator1" class="validator" style="display:none;">Password Not Match</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>PAN Card No</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="far fa-id-card"></i></span>
+                                    <span class="mandatory" style="margin-left: 50px;margin-top: -30px;">*</span>
+                                    <input name="ctl00$ContentPlaceHolder1$txtpan" type="text" maxlength="10" id="ContentPlaceHolder1_txtpan" class="form-control capital" placeholder="PAN Card No.">
+                                    <span id="ContentPlaceHolder1_rfvPan" class="validator" style="display:none;">PAN Card No.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Enter Password</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                    <span class="mandatory" style="margin-left: 65px;">*</span>
+                                    <input name="ctl00$ContentPlaceHolder1$txtPassword" type="password" id="ContentPlaceHolder1_txtPassword" class="form-control capital" placeholder="Please Enter Password">
+                                    <span id="ContentPlaceHolder1_RequiredFieldValidator1" class="validator" style="display:none;">Please Enter Password</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Retype Password</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                    <span class="mandatory" style="margin-left: 75px;">*</span>
+                                    <input name="ctl00$ContentPlaceHolder1$txtRPassword" type="password" id="ContentPlaceHolder1_txtRPassword" class="form-control capital" placeholder="Retype Password">
+                                    <span id="ContentPlaceHolder1_RequiredFieldValidator2" class="validator" style="display:none;">Retype Password</span>
+                                    <span id="ContentPlaceHolder1_CompareValidator1" class="validator" style="display:none;">Password Not Match</span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-6" style="border: 1px solid #E6E6E6;margin-top: 25px;">
+                <div class="PageDesc">
+                    <h3 style="margin-top: -20px !important; width: 190px!important; font-weight: normal;
+                font-size: 12px; text-align: center; color: white; width: 515px!important;
+                background: #008cff !important; padding: 15px;">
+                        <b>CONTACT INFORMATION</b>
+                    </h3>
+
+                    <div class="row" style="margin-top:30px">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Enter City</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fas fa-city"></i></span>
+                                    <span class="mandatory" style="margin-left: 25px;">*</span>
+                                    <input type="text" id="txtDestinationRoute" name="txtcity" class="form-control capital" placeholder="Enter City" required="required" oninvalid=" " onchange=" " autocomplete="off">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Enter Pincode</label>
+                                <input name="ctl00$ContentPlaceHolder1$txtpincode" type="text" maxlength="6" id="ContentPlaceHolder1_txtpincode" class="form-control capital" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" placeholder="Enter Pincode">
+                                <span id="ContentPlaceHolder1_rfvPincode" class="validator" style="display:none;">Enter Pincode</span>
+                                <span class="mandatory">*</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label>Enter Address</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fas fa-address-card"></i></span>
+                            <span id="ContentPlaceHolder1_rfvAddress" class="validator" style="display:none;">Please Enter Address</span>
+                            <textarea name="ctl00$ContentPlaceHolder1$txtaddress" rows="2" cols="20" id="ContentPlaceHolder1_txtaddress" class="form-control capital" placeholder="Please Enter Address" style="height:70px;"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Alternate Contact Person</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="far fa-user"></i></span>
+
+                                <input name="ctl00$ContentPlaceHolder1$txtaperson" type="text" id="ContentPlaceHolder1_txtaperson" class="form-control capital" placeholder="Alternate Contact Person">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Alternate Mobile Number</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fas fa-mobile-alt"></i></span>
+
+                                <input name="ctl00$ContentPlaceHolder1$txtamobile" type="text" maxlength="10" id="ContentPlaceHolder1_txtamobile" class="form-control capital" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" placeholder="Alternate Mobile Number">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label>STD Code</label>
+                                    <input name="ctl00$ContentPlaceHolder1$txtstdcode" type="text" maxlength="3" id="ContentPlaceHolder1_txtstdcode" class="form-control capital" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" placeholder="STD Code">
+                                </div>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="form-group">
+                                    <label>Landine No.</label>
+                                    <input name="ctl00$ContentPlaceHolder1$txtlandline" type="text" maxlength="8" id="ContentPlaceHolder1_txtlandline" class="form-control capital" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" placeholder="Landine No.">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+
+
+    </div>
+
+    <div id="ContentPlaceHolder1_ci1" class="row" style="display: inline-block;width: 100%;margin-left: -5px;">
+
+        <div class="col-md-12 regcol" style="border: 1px solid #E6E6E6; margin-top: 25px;">
+            <h3 id="ContentPlaceHolder1_ci" style="margin-top: -15px !important; font-weight: normal; font-size: 12px; text-align: center; color: white; background:  #008cff !important; padding: 15px; width: 1070px!important;"><b>Company Information</b></h3>
+
+            <div id="ContentPlaceHolder1_ci2" class="row">
+                <div class="col-md-6">
+                    <label style="color: #6E6C6C;">Company Name</label>
+                    <span id="ContentPlaceHolder1_rfvCname" class="validator" style="display:none;">Enter Company Name</span>
+                    <input name="ctl00$ContentPlaceHolder1$txtCname" type="text" id="ContentPlaceHolder1_txtCname" class="form-control capital" placeholder="Enter Company Name">
+                    <span class="mandatory">*</span>
+
+                </div>
+                <div class="col-md-6">
+                    <label style="color: #6E6C6C;">Company Type</label>
+                    <span id="ContentPlaceHolder1_RequiredFieldValidator4" class="validator" style="display:none;">Company Type</span>
+                    <select name="ctl00$ContentPlaceHolder1$ddllctype" id="ContentPlaceHolder1_ddllctype" class="form-control capital">
+                        <option selected="selected" value="Company Type">Company Type</option>
+                        <option value="Agro products mgf. / supplier">Agro products mgf. / supplier</option>
+                        <option value="Builders / Building material suppliers">Builders / Building material suppliers</option>
+                        <option value="Cement plant / Coal Plant">Cement / Coal Plant</option>
+                        <option value="Dealer / Commision agent / Distributor">Dealer / Commision agent / Distributor</option>
+                        <option value="Export/Import">Export / Import Firm</option>
+                        <option value="Job Work/Maintenance">Job/Maintenance</option>
+                        <option value="Manufacturing/Traders">Manufacturing/Traders</option>
+                        <option value="Machinery manufacturers/Machinery suppliers">Machinery Manufacturers / Suppliers</option>
+                        <option value="Print Media">Print/Media Related</option>
+                        <option value="Raw Material Supplier">Raw Material Supplier</option>
+                        <option value="Sales &amp; Service">Sales &amp; Service</option>
+                        <option value="Traders / Shop keeper / Merchant">Traders / Shop keeper / Merchant</option>
+                        <option value="Wood product mfg. / supplier / merchant">Wood Product Mfg. / Supplier / Merchant</option>
+
+                    </select>
+                    <span class="mandatory">*</span>
+                </div>
+            </div>
+
+
+            <div id="ContentPlaceHolder1_ci2" class="row">
+                <div class="col-md-6">
+                    <label style="color: #6E6C6C;">Service Tax No.</label>
+                    <input name="ctl00$ContentPlaceHolder1$txtSTax" type="text" id="ContentPlaceHolder1_txtSTax" class="form-control capital" placeholder="Service Tax No.">
+                </div>
+                <div class="col-md-6">
+                    <label style="color: #6E6C6C;">Company PAN No.</label>
+                    <input name="ctl00$ContentPlaceHolder1$txtCPan" type="text" maxlength="10" id="ContentPlaceHolder1_txtCPan" class="form-control capital" placeholder="Company PAN No.">
+                    <span class="mandatory">*</span>
+                    <span id="ContentPlaceHolder1_rfvCPan" class="validator" style="display:none;">Please Enter Company PAN Card Number</span>
+                </div>
+                <div class="col-md-6">
+                    <label style="color: #6E6C6C;">Company Website</label>
+                    <input name="ctl00$ContentPlaceHolder1$txtCWebsite" type="text" id="ContentPlaceHolder1_txtCWebsite" placeholder="Ex. www.example.com" class="form-control capital">
+                </div>
+            </div>
+            <div class="gap"></div>
+            <div class="form-group">
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="gap"></div>
+
+
+    <div class="row regcol" style="margin-top: 40px; border: 1px solid #E6E6E6;">
+
+        <div class="col-md-6 ">
+            <h3 style="margin-top: -20px !important; width: 1075px!important; font-weight: normal;
+             font-size: 12px; text-align: center; color: white; background: #008cff !important;
+             padding: 15px;">
+                <b>OTHER INFORMATION</b>
+            </h3>
+            <div class="PageDesc">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <b>Upload Profile Image</b>
+                            <input type="file" name="ctl00$ContentPlaceHolder1$FileUploadControl" id="ContentPlaceHolder1_FileUploadControl" class="fu">
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <img id="ContentPlaceHolder1_imgDemo" src="#">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="PageDesc">
+                        <div id="ContentPlaceHolder1_UP1" style="padding-top: 35px;">
+                            <div class="form-group">
+                                <label>Enter Below Captcha Verification Code</label>
+                                <input name="ctl00$ContentPlaceHolder1$txtcap" type="text" id="ContentPlaceHolder1_txtcap" class="form-control" placeholder="Enter Below Captcha Verification Code">
+                            </div>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td style="height: 50px; width: 100px;">
+                                            <img id="ContentPlaceHolder1_imgCaptcha" src="#">
+                                        </td>
+                                        <td valign="middle">
+                                            <input type="submit" name="ctl00$ContentPlaceHolder1$btnRefresh" value="Refresh" id="ContentPlaceHolder1_btnRefresh" class="captcharefresh">
+                                        </td>
+                                    </tr>
+                                    <tr></tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                </div>
+            </div>
+            <span id="error" style="color: #E8E8E8; display: none">* Input digits (0 - 9)</span>
+        </div>
+        <script type="text/javascript">
+            var specialKeys = new Array();
+            specialKeys.push(8); //Backspace
+            function IsNumeric(e) {
+                var keyCode = e.which ? e.which : e.keyCode
+                var ret = ((keyCode >= 48 && keyCode <= 57) || specialKeys.indexOf(keyCode) != -1);
+                document.getElementById("error").style.display = ret ? "none" : "inline";
+                return ret;
+            }
+        </script>
+    </div>
+
+
+    <div class="form-group" style="background: rgb(202, 205, 216);width:82%;margin-left: 110px;padding: 10px;">
+
+        <div class="col-sm-12">
+            <div class="checkbox checkbox-primary">
+                <input id="checkbox1" type="checkbox" name="CA_news" value="yes">
+                <label for="checkbox1" style="font-size: 14px !important;color: rgb(59, 51, 51);">I wish to receive additional information about my account.</label>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="checkbox checkbox-primary">
+                <input id="checkbox2" type="checkbox" name="termsandconditions">
+                <label for="checkbox2" style="font-size: 14px !important;color: rgb(59, 51, 51);">	I have read and agree to the <a target="_blank" href="#">Terms and Conditions </a></label>
+            </div>
+        </div>
+
+    </div>
+    <div class="form-group" style="margin-right:125px;padding: 10px;">
+        <input type="submit" name="ctl00$ContentPlaceHolder1$Button1" value="Register" onclick=" " id="ContentPlaceHolder1_Button1" class="btn-primary" style="padding: 5px;width:150px;float: right;">
+    </div>
+
+    </div>
+
+    <!--login Modal starts-->
+    <section class="wide-tb-100 bg-fixed pb-0">
+        <div class="modal fade" id="user-login-popup">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="lnr lnr-cross"></i></span></button>
+                    </div>
+                    <div class="modal-body">
+                        <!--User Login section starts-->
+                        <div class="user-login-section">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <ul class="ui-list nav nav-tabs mb-30" role="tablist">
+                                            <!-- <li class="nav-item">
+                                                <a class="nav-link active" data-toggle="tab" href="#login" role="tab" aria-selected="true">Login</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#register" role="tab" aria-selected="false">Register</a>
+                                            </li> -->
+                                            <li class="nav-item">
+                                                <a class="nav-link active" data-toggle="tab" href="#login" role="tab" aria-selected="true">Loader</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#login" role="tab" aria-selected="false">Carrier</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#login" role="tab" aria-selected="false">Broker</a>
+                                            </li>
+                                        </ul>
+                                        <div class="login-wrapper">
+                                            <div class="ui-dash tab-content">
+                                                <div class="tab-pane fade show active" id="login" role="tabpanel">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <form id="login-form" action="#" method="post">
+                                                                <div class="form-group">
+                                                                    <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Email Or Mobile No." value="" required="">
+                                                                    <span class="mandatory">*</span>
+                                                                    <span id="ContentPlaceHolder1_rfvFname" class="validator" style="display:none;">Enter First Name</span>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
+                                                                    <span class="mandatory">*</span>
+                                                                </div>
+                                                                <div class="row mt-20">
+                                                                    <div class="col-md-6 col-12 text-left">
+                                                                        <div class="res-box">
+                                                                            <input id="check-l" type="checkbox" name="check">
+                                                                            <label for="check-l">Remember me</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6 col-12 text-right">
+                                                                        <div class="res-box sm-left">
+                                                                            <a href="#" tabindex="5" class="forgot-password">Forgot Password?</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="res-box text-center mt-30">
+                                                                    <button type="submit" class="btn v8"><span class="lnr lnr-exit"></span> Log In</button>
+                                                                </div>
+                                                            </form>
+                                                            <div class="social-profile-login  text-left mt-20">
+                                                                <h5>or Login with</h5>
+                                                                <ul class="social-btn">
+                                                                    <li class="bg-fb"><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                                                    <li class="bg-tt"><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                                                    <li class="bg-ig"><a href="#"><i class="fab fa-instagram"></i></a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="signup-wrapper">
+                                                                <img src="images/others/login-1.png" alt="...">
+                                                                <p>Welcome Back! Please Login to your Account for latest LOADS.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--User login section ends-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--login Modal ends-->
+    <!--Register Modal starts-->
+    <section class="wide-tb-100 bg-fixed pb-0">
+        <div class="modal fade" id="user-reg-popup">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="lnr lnr-cross"></i></span></button>
+                    </div>
+                    <div class="modal-body">
+                        <!--User Login section starts-->
+                        <div class="user-login-section">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <ul class="ui-list nav nav-tabs mb-30" role="tablist">
+
+                                            <li class="nav-item">
+                                                <a class="nav-link active" data-toggle="tab" href="#register" role="tab" aria-selected="true">Loader</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#register" role="tab" aria-selected="false">Carrier</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#register" role="tab" aria-selected="false">Broker</a>
+                                            </li>
+                                        </ul>
+                                        <div class="login-wrapper">
+                                            <div class="ui-dash tab-content">
+
+                                                <div class="tab-pane fade show active" id="register" role="tabpanel">
+                                                    <div class="row" style="margin-bottom: 20px;">
+                                                        <div class="col-md-4">
+                                                            <!-- <span>Do you have Passport?</span> -->
+                                                            <label for="chkYes">
+                                                                <input type="radio" id="chkYes" name="chkPassPort" onclick="ShowHideDiv()" />
+                                                                Company
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label for="chkNo">
+                                                                <input type="radio" id="chkNo" name="chkPassPort" onclick="ShowHideDiv()" />
+                                                                Individual
+                                                            </label>
+                                                        </div>
+                                                        <hr />
+
+                                                    </div>
+                                                    <!-- <div id="companyEmail" style="display: none;background-color: pink;display: block;width:48%">
+
+
+                                                        <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Company Email Address" value="" style="padding: 22px 0;
+                                                        border-bottom: 1px solid #ddd;
+                                                        border-top: none;
+                                                        border-left: none;
+                                                        border-right: none;">
+                                                    </div> -->
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <form id="register-form" action="#" method="post">
+                                                                <div class="form-group">
+                                                                    <input type="text" name="user_name" id="user_name" tabindex="1" class="form-control" placeholder="Username" value="">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <input type="number" name="number" id="number" tabindex="1" class="form-control" placeholder="Mobile Number" value="">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <input type="password" name="user_password" id="user_password" tabindex="2" class="form-control" placeholder="Password">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password">
+                                                                </div>
+                                                                <div class="res-box text-left">
+                                                                    <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
+                                                                    <label for="remember">I've read and accept terms &amp; conditions</label>
+                                                                </div>
+                                                                <div class="res-box text-center mt-30">
+                                                                    <button type="submit" class="btn v8"><i class="lnr lnr-enter"></i>Sign Up</button>
+                                                                </div>
+                                                            </form>
+                                                            <div class="social-profile-login  text-left mt-20">
+                                                                <h5>or Sign Up with</h5>
+                                                                <ul class="social-btn">
+                                                                    <li class="bg-fb"><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                                                    <li class="bg-tt"><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                                                    <li class="bg-ig"><a href="#"><i class="fab fa-instagram"></i></a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="signup-wrapper">
+                                                                <img src="images/others/login-1.png" alt="...">
+                                                                <p>Create an account to find the best Service for you.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--User login section ends-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--Register Modal ends-->
+    <!-- Request Modal -->
+    <div class="modal fade" id=request_popup tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered request_popup" role="document">
+            <div class="modal-content">
+                <div class="modal-body p-0">
+                    <!-- Contact Details Start -->
+                    <section class="pos-rel bg-light-gray">
+                        <div class="container-fluid p-0">
+                            <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+                                <i class="icofont-close-line"></i>
+                            </a>
+                            <div class="d-lg-flex justify-content-end no-gutters mb-spacer-md" style="box-shadow: 0px 18px 76px 0px rgba(0, 0, 0, 0.06);">
+                                <div class="col bg-fixed bg-img-7 request_pag_img">
+                                    &nbsp;
+                                </div>
+
+
+                                <div class="col-md-7 col-12">
+                                    <div class="px-3 m-5">
+                                        <h2 class="h2-xl mb-4 fw-6">Request A Quote</h2>
+                                        <form action="#" method="post" novalidate="novalidate" class="rounded-field">
+
+                                            <div class="form-row mb-4">
+                                                <div class="col">
+                                                    <select title="Please choose a package" required="" name="package" class="custom-select" aria-required="true" aria-invalid="false">
+                                                        <option value="">Freight Type</option>
+                                                        <option value="Type 1">Type 1</option>
+                                                        <option value="Type 2">Type 2</option>
+                                                        <option value="Type 3">Type 3</option>
+                                                        <option value="Type 4">Type 4</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col">
+                                                    <select title="Please choose a package" required="" name="package" class="custom-select" aria-required="true" aria-invalid="false">
+                                                        <option value="">Incoterms</option>
+                                                        <option value="Type 1">Type 1</option>
+                                                        <option value="Type 2">Type 2</option>
+                                                        <option value="Type 3">Type 3</option>
+                                                        <option value="Type 4">Type 4</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-row mb-4">
+                                                <div class="col">
+                                                    <input type="text" name="name" class="form-control" placeholder="City of departure">
+                                                </div>
+                                                <div class="col">
+                                                    <input type="text" name="email" class="form-control" placeholder="Delivery city">
+                                                </div>
+                                            </div>
+                                            <div class="form-row mb-4">
+                                                <div class="col">
+                                                    <input type="text" name="name" class="form-control" placeholder="Total gross weight (KG)">
+                                                </div>
+                                                <div class="col">
+                                                    <input type="text" name="email" class="form-control" placeholder="Dimension">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row">
+                                                <div class="col">
+                                                    <div class="center-head"><span class="bg-light-gray txt-orange">Your Personal Details</span></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row mb-4">
+                                                <div class="col">
+                                                    <input type="text" name="name" class="form-control mb-3" placeholder="Your Name">
+                                                    <input type="text" name="name" class="form-control mb-3" placeholder="Email">
+                                                    <input type="text" name="name" class="form-control" placeholder="Phone Number">
+                                                </div>
+                                                <div class="col">
+                                                    <textarea rows="7" placeholder="Message" class="form-control"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="col pt-3">
+                                                    <button type="submit" class="form-btn btn-theme bg-orange">Send Message <i class="icofont-rounded-right"></i></button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- Contact Details End -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Request Modal -->
+    <!-- Back To Top Start -->
+    <a id="mkdf-back-to-top" href="#" class="off"><i class="fas fa-chevron-circle-up"></i></a>
+    <!-- Back To Top End -->
+
+
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-dropdownhover.min.js"></script>
+    <script src="js/fontawesome-all.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="twitter/jquery.tweet.js"></script>
+    <script src="js/jflickrfeed.min.js"></script>
+    <script src="js/jquery.waypoints.min.js"></script>
+    <script src="js/jquery.easing.min.js"></script>
+    <script src="js/jquery.counterup.min.js"></script>
+    <script src="js/jquery.easypiechart.min.js"></script>
+    <script src="js/jquery.appear.js"></script>
+    <script src="js/wow.min.js"></script>
+
+    <script type="text/javascript" src="./js/jquery-1.11.0.min.js"></script>
+
+    <!-- <script type="text/javascript" src="./js/bootstrap.min.js"></script>  -->
+    <!-- JQuery Map Plugin -->
+    <script type="text/javascript" src="js/api.js"></script>
+    <script type="text/javascript" src="js/jquery.gmap.min.js"></script>
+    <script type="text/javascript" src="rev-slider/revolution/js/extensions/revolution.extension.carousel.min.js"></script>
+    <script type="text/javascript" src="rev-slider/revolution/js/extensions/revolution.extension.kenburn.min.js"></script>
+    <script type="text/javascript" src="rev-slider/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+    <script src="js/site-custom.js"></script>
+    <!-- <script type="text/javascript" src="./js/bootstrap.min.js"></script>  -->
+
+
+</body>
+</html>

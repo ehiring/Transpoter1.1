@@ -60,9 +60,6 @@ namespace TransportService.Web.Controllers
             // return View();
             return Request.IsAjaxRequest() ? (ActionResult)PartialView("_LoadList", _loader) : View("_LoadList", _loader);
         }
-
-
-
         public ActionResult New_LoaderIndex(int? page)
         {
             Loader _loader = new Loader();
@@ -84,7 +81,6 @@ namespace TransportService.Web.Controllers
             ViewData["UOMList"] = _tripBusinessLayer.GetDropDownData("UOMList", 0);
             return View();
         }
-
 
         [HttpPost]
         public ActionResult SaveTrip(Transpoter T, List<CityArray> CityRootId, List<TripDetail> _tripDetails)
@@ -178,9 +174,6 @@ namespace TransportService.Web.Controllers
         
 
         }
-
-
-
         public ActionResult AddSubTrip(int? Source, int TripId = 0)
         {
             ViewData["TripWiseCityList"] = _tripBusinessLayer.GetDropDownData("TripWiseCityList", 0, TripId);
@@ -323,28 +316,20 @@ namespace TransportService.Web.Controllers
             return Json("Truck Added Sucessfully");
         }
 
-
         public ActionResult AddLoad()
         {
             ViewData["CityList"] = _tripBusinessLayer.GetDropDownData("CityList", 0);
             //MaterialList
             ViewData["MaterialList"] = _tripBusinessLayer.GetDropDownData("MaterialList", 0);
-            Loader loader = new Loader();
+            ViewData["UOMList"] = _tripBusinessLayer.GetDropDownData("UOMList", 0);
 
-            return View(loader);
+            return View();
         }
 
-
-
-      
         [HttpPost]
         public ActionResult AddLoad(Loader _loader, List<LoadDetail> _loadDetails)
         {
 
-
-
-
-            
                 //Adding Load Details In DT
                 
 
@@ -357,8 +342,8 @@ namespace TransportService.Web.Controllers
                     dtLoadDetail.Columns.Add("Length", typeof(decimal));
                     dtLoadDetail.Columns.Add("Weight", typeof(decimal));
                     dtLoadDetail.Columns.Add("Qty", typeof(int));
-
-                    if (_loadDetails != null)
+                    dtLoadDetail.Columns.Add("ConversionFactor", typeof(decimal));
+            if (_loadDetails != null)
                     {
                         if (_loadDetails.Count > 0)
                         {
@@ -373,7 +358,8 @@ namespace TransportService.Web.Controllers
                                 dr_LoadDetail["Length"] = item.Length;
                                 dr_LoadDetail["Weight"] = item.Weight;
                                 dr_LoadDetail["Qty"] = item.Qty;
-                                dtLoadDetail.Rows.Add(dr_LoadDetail);
+                                dr_LoadDetail["ConversionFactor"] = item.ConversionFactor;
+                        dtLoadDetail.Rows.Add(dr_LoadDetail);
                             }
                         }
                     }
@@ -415,106 +401,12 @@ namespace TransportService.Web.Controllers
             
         }
 
-        [HttpPost]
-        public ActionResult AddLoad_trial(Loader _loader, List<LoadDetail> _loadDetails)
-        {
-
-
-
-
-            if (HttpContext.Request.IsAjaxRequest())
-            {
-
-                //Adding Load Details In DT
-                if (ModelState.IsValid)
-                {
-
-                    DataTable dtLoadDetail = new DataTable();
-                    dtLoadDetail.Columns.Add("LoadDetailID", typeof(int));
-                    dtLoadDetail.Columns.Add("MaterialID", typeof(int));
-                    dtLoadDetail.Columns.Add("UnitOfMeasure", typeof(string));
-                    dtLoadDetail.Columns.Add("Height", typeof(decimal));
-                    dtLoadDetail.Columns.Add("Width", typeof(decimal));
-                    dtLoadDetail.Columns.Add("Length", typeof(decimal));
-                    dtLoadDetail.Columns.Add("Weight", typeof(decimal));
-                    dtLoadDetail.Columns.Add("Qty", typeof(int));
-
-                    if (_loadDetails != null)
-                    {
-                        if (_loadDetails.Count > 0)
-                        {
-                            foreach (var item in _loadDetails)
-                            {
-                                DataRow dr_LoadDetail = dtLoadDetail.NewRow();
-                                dr_LoadDetail["LoadDetailID"] = item.LoadDetailID;
-                                dr_LoadDetail["MaterialID"] = item.MaterialID;
-                                dr_LoadDetail["UnitOfMeasure"] = item.UnitOfMeasure;
-                                dr_LoadDetail["Height"] = item.Height;
-                                dr_LoadDetail["Width"] = item.Width;
-                                dr_LoadDetail["Length"] = item.Length;
-                                dr_LoadDetail["Weight"] = item.Weight;
-                                dr_LoadDetail["Qty"] = item.Qty;
-                                dtLoadDetail.Rows.Add(dr_LoadDetail);
-                            }
-                        }
-                    }
-
-                    SqlParameter tvpParamLoadDetails = new SqlParameter();
-                    tvpParamLoadDetails.ParameterName = "@UDTable_LoadDetails";
-                    tvpParamLoadDetails.SqlDbType = System.Data.SqlDbType.Structured;
-                    tvpParamLoadDetails.Value = dtLoadDetail;
-                    tvpParamLoadDetails.TypeName = "UDTable_LoadDetails";
-                    //@PickUpDate,
-                    JobDbContext _jobDbContext = new JobDbContext();
-                    var result = _jobDbContext.Database.ExecuteSqlCommand(@"exec USP_SaveLoad
-                        @SourceID ,
-                        @DestinationID, 
-                        @PickUpDate,
-                        @LoadType ,
-                        @SubService ,
-                        @ContactNo ,
-                        @Email ,
-                        @Address ,
-                        @Status ,
-                        @AddedBy ,
-                        @Receiver,
-                        @UDTable_LoadDetails",
-                  new SqlParameter("@SourceID", _loader.SourceID),
-                  new SqlParameter("@DestinationID", _loader.DestinationID),
-                  new SqlParameter("@PickUpDate", _loader.PickUpDate),
-                  new SqlParameter("@LoadType", _loader.LoadType),
-                  new SqlParameter("@SubService", _loader.SubService),
-                  new SqlParameter("@ContactNo", _loader.ContactNo),
-                  new SqlParameter("@Email", _loader.Email),
-                  new SqlParameter("@Address", _loader.Address),
-                   new SqlParameter("@Status", 1),
-                  new SqlParameter("@AddedBy", 1),/*.....UserID 1 is Loader*/
-                  new SqlParameter("@Receiver", _loader.Receiver),
-                  tvpParamLoadDetails);
-                    return Json("Load Added Sucessfully");
-                }
-                else
-                {
-                    //foreach (var modelStateValue in ViewData.ModelState.Values)
-                    //{
-
-                    //    foreach (var error in modelStateValue.Errors)
-                    //    {
-                    //        var errorMessage = error.ErrorMessage;
-                    //        var exception = error.Exception;
-                    //    }
-
-                    //}
-                    
-                }
-            }
-            return View("Error");
-        }
-
+      
         public ActionResult EditLoad(int LoadID)
         {
             ViewData["CityList"] = _tripBusinessLayer.GetDropDownData("CityList", 0);
             ViewData["MaterialList"] = _tripBusinessLayer.GetDropDownData("MaterialList", 0);
+            ViewData["UOMList"] = _tripBusinessLayer.GetDropDownData("UOMList", 0);
             IEnumerable<LoaderEdit> LE = _tripBusinessLayer.GetLoaderByID(LoadID);
             LoaderEdit data = new LoaderEdit();
            
@@ -534,6 +426,7 @@ namespace TransportService.Web.Controllers
 
             DataTable dtLoadDetail = new DataTable();
 
+            dtLoadDetail.Columns.Add("LoadDetailID", typeof(int));
             dtLoadDetail.Columns.Add("MaterialID", typeof(int));
             dtLoadDetail.Columns.Add("UnitOfMeasure", typeof(string));
             dtLoadDetail.Columns.Add("Height", typeof(decimal));
@@ -541,6 +434,7 @@ namespace TransportService.Web.Controllers
             dtLoadDetail.Columns.Add("Length", typeof(decimal));
             dtLoadDetail.Columns.Add("Weight", typeof(decimal));
             dtLoadDetail.Columns.Add("Qty", typeof(int));
+            dtLoadDetail.Columns.Add("ConversionFactor", typeof(decimal));
 
             if (_loadDetails != null)
             {
@@ -549,6 +443,7 @@ namespace TransportService.Web.Controllers
                     foreach (var item in _loadDetails)
                     {
                         DataRow dr_LoadDetail = dtLoadDetail.NewRow();
+                        dr_LoadDetail["LoadDetailID"] = item.LoadDetailID;
                         dr_LoadDetail["MaterialID"] = item.MaterialID;
                         dr_LoadDetail["UnitOfMeasure"] = item.UnitOfMeasure;
                         dr_LoadDetail["Height"] = item.Height;
@@ -556,6 +451,7 @@ namespace TransportService.Web.Controllers
                         dr_LoadDetail["Length"] = item.Length;
                         dr_LoadDetail["Weight"] = item.Weight;
                         dr_LoadDetail["Qty"] = item.Qty;
+                        dr_LoadDetail["ConversionFactor"] = item.ConversionFactor;
                         dtLoadDetail.Rows.Add(dr_LoadDetail);
                     }
                 }
@@ -599,11 +495,18 @@ namespace TransportService.Web.Controllers
 
         }
 
+        
+        public ActionResult Registration()
+        {
+            return PartialView("_Registration");
+        }
 
-        public ActionResult test()
-        {            
+        public ActionResult RegistrationNew()
+        {
             return View();
         }
+
+
         #endregion
 
     }

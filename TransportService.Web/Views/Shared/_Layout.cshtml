@@ -99,13 +99,28 @@
                             </div>
                         </div>
                         <div class="th-item">
-                            <div class="social-icons"> <a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i class="fa fa-twitter"></i></a> <a href="#"><i class="fa fa-youtube-play"></i></a> </div>
+                            <div class="social-icons">
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                                <a href="#"><i class="fa fa-youtube-play"></i></a>
+                                @*<div class="d-inline-flex order-lg-last">
+                                        <a class="btn-theme icon-left bg-navy-blue no-shadow d-none d-lg-inline-block align-self-center" href="#" role="button" data-toggle="modal" data-target="#user-login-popup"><i class="fas fa-home" style="color: #fff;"></i>  Log In</a>
+                                        <a class="btn-theme icon-left bg-navy-blue no-shadow d-none d-lg-inline-block align-self-center" href="#" role="button" data-toggle="modal" data-target="#user-reg-popup"><i class="far fa-user" style="color: #fff;"></i>  Register</a>
+
+                                    </div>*@
+
+                                <a class="btn-theme icon-left bg-navy-blue no-shadow d-none d-lg-inline-block align-self-center" href="#" role="button" data-toggle="modal" data-target="#user-login-popup"><i class="fas fa-home" style="color: #fff;"></i>  Log In</a>
+                                <a id="btnRegistration" class="btn-theme icon-left bg-navy-blue no-shadow d-none d-lg-inline-block align-self-center" href="#" role="button" data-toggle="modal" data-target="#user-reg-popup"><i class="far fa-user" style="color: #fff;"></i>  Register</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
+
     <header>
         <!-- Navigation -->
         <div class="navbar navbar-default" id="sticky">
@@ -129,7 +144,7 @@
                             <a href="#" data-toggle="dropdown" class="dropdown-toggle js-activated">Load<b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li>
-                                   
+
                                     @Html.ActionLink("Find A Load", "New_LoaderIndex", "TLoader", new { @class = "nav-link", @style = "width: 100px;" })
                                 </li>
                                 <li>
@@ -141,7 +156,7 @@
                             <a href="#" data-toggle="dropdown" class="dropdown-toggle js-activated">Truck<b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    
+
                                     @Html.ActionLink("Find A Truck", "Index", "TLoader", new { @class = "nav-link", @style = "width: 100px;" })
                                 </li>
                                 <li>
@@ -170,85 +185,117 @@
         </div>
     </header>
 
+
     <div>
 
         @RenderBody()
 
     </div>
-        <hr />
+    <hr />
 
-        <!-- Footer -->
-        <footer>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-3">
+                    <h4>About Truck Load</h4>
+                    <p>
+                        Suspendisse sed sollicitudin nisl, at dignissim libero. Sed porta tincidunt ipsum, vel volutpat. <br>
+                        <br>
+                        Nunc ut fringilla urna. Cras vel adipiscing ipsum. Integer dignissim nisl eu lacus interdum facilisis. Aliquam erat volutpat. Nulla semper vitae felis vitae dapibus.
+                    </p>
+                </div>
+                <div class="col-md-3 col-sm-3">
+                    <h4>Recieve our newsletter</h4>
+                    <p>Suspendisse sed sollicitudin nisl, at dignissim libero. Sed porta tincidunt ipsum, vel volutpa!</p>
+                    <form role="form">
+                        <div class="form-group">
+                            <input name="newsletter" type="text" id="newsletter" value="" class="form-control" placeholder="Please enter your E-mailaddress">
+                        </div>
+                        <button type="submit" class="btn btn-lg btn-black btn-block">Submit</button>
+                    </form>
+                </div>
+                <div class="col-md-3 col-sm-3">
+                    <h4>From our blog</h4>
+                    <ul>
+                        <li>
+                            <article>
+                                <a href="blog-post.html">This is a video post<br>April 15 2014</a>
+                            </article>
+                        </li>
+                        <li>
+                            <article>
+                                <a href="blog-post.html">An image post<br>April 14 2014</a>
+                            </article>
+                        </li>
+                        <li>
+                            <article>
+                                <a href="blog-post.html">Audio included post<br>April 12 2014</a>
+                            </article>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-3 col-sm-3">
+                    <h4>Address</h4>
+                    <address>
+                        <strong>Starhotel</strong><br>
+                        795 Las Palmas<br>
+                        Spain, CA 94107<br>
+                        <abbr title="Phone">P:</abbr> <a href="#">(123) 456-7890</a><br>
+                        <abbr title="Email">E:</abbr> <a href="#">mail@example.com</a><br>
+                        <abbr title="Website">W:</abbr> <a href="#">www.slashdown.nl</a><br>
+                    </address>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-3 col-sm-3">
-                        <h4>About Truck Load</h4>
-                        <p>
-                            Suspendisse sed sollicitudin nisl, at dignissim libero. Sed porta tincidunt ipsum, vel volutpat. <br>
-                            <br>
-                            Nunc ut fringilla urna. Cras vel adipiscing ipsum. Integer dignissim nisl eu lacus interdum facilisis. Aliquam erat volutpat. Nulla semper vitae felis vitae dapibus.
-                        </p>
-                    </div>
-                    <div class="col-md-3 col-sm-3">
-                        <h4>Recieve our newsletter</h4>
-                        <p>Suspendisse sed sollicitudin nisl, at dignissim libero. Sed porta tincidunt ipsum, vel volutpa!</p>
-                        <form role="form">
-                            <div class="form-group">
-                                <input name="newsletter" type="text" id="newsletter" value="" class="form-control" placeholder="Please enter your E-mailaddress">
-                            </div>
-                            <button type="submit" class="btn btn-lg btn-black btn-block">Submit</button>
-                        </form>
-                    </div>
-                    <div class="col-md-3 col-sm-3">
-                        <h4>From our blog</h4>
+                    <div class="col-xs-6"> &copy; 2014 Starhotel All Rights Reserved </div>
+                    <div class="col-xs-6 text-right">
                         <ul>
-                            <li>
-                                <article>
-                                    <a href="blog-post.html">This is a video post<br>April 15 2014</a>
-                                </article>
-                            </li>
-                            <li>
-                                <article>
-                                    <a href="blog-post.html">An image post<br>April 14 2014</a>
-                                </article>
-                            </li>
-                            <li>
-                                <article>
-                                    <a href="blog-post.html">Audio included post<br>April 12 2014</a>
-                                </article>
-                            </li>
+                            <li><a href="contact-01.html">Contact</a></li>
                         </ul>
                     </div>
-                    <div class="col-md-3 col-sm-3">
-                        <h4>Address</h4>
-                        <address>
-                            <strong>Starhotel</strong><br>
-                            795 Las Palmas<br>
-                            Spain, CA 94107<br>
-                            <abbr title="Phone">P:</abbr> <a href="#">(123) 456-7890</a><br>
-                            <abbr title="Email">E:</abbr> <a href="#">mail@example.com</a><br>
-                            <abbr title="Website">W:</abbr> <a href="#">www.slashdown.nl</a><br>
-                        </address>
-                    </div>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-6"> &copy; 2014 Starhotel All Rights Reserved </div>
-                        <div class="col-xs-6 text-right">
-                            <ul>
-                                <li><a href="contact-01.html">Contact</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
-    
+        </div>
+    </footer>
 
+    <!--Register Modal starts-->
+    <div id='myModal' class='modal'>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id='myModalContent'></div>
+            </div>
+        </div>
+
+    </div>
+    <!--Register Modal ends-->
     <!-- Go-top Button -->
-    <div id="go-top"><i class="fa fa-angle-up fa-2x"></i></div>   
+    <div id="go-top"><i class="fa fa-angle-up fa-2x"></i></div>
     @*@RenderSection("scripts", required: false)*@
+
 </body>
 </html>
+<script>
+    $('#btnRegistration').on("click", function (e) {
+        alert("Registration");
+        $.ajax({
+            type: "GET",
+            url: '/TLoader/Registration',
+            contentType: "application/json; charset=utf-8",
+            datatype: "json",
+            success: function (data) {
+                alert(data);
+                $('#myModalContent').html(data);
+                $('#myModal').modal(options);
+                $('#myModal').modal('show');
+
+            },
+            error: function () {
+                alert("Dynamic content load failed.");
+            }
+        }); 
+    });
+</script>

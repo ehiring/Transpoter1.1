@@ -1,0 +1,792 @@
+﻿
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- xxx Basics xxx -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- xxx Change With Your Information xxx -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no" />
+    <title>Truck Load Website</title>
+    <meta name="author" content="Sandhya">
+    <meta name="description" content="Truck Load for Logistic related services.">
+    <meta name="keywords" content="">
+
+    <!-- Core Css Stylesheets -->
+    <link href="css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/jquery-ui-1.10.4.custom.min.css">
+    <link href="css/layers.css" rel="stylesheet">
+    <!-- <link href="loginnew.css" rel="stylesheet"> -->
+    <link href="plgin.css" rel="stylesheet">
+    <link href="search.css" rel="stylesheet">
+
+    <!-- REVOLUTION STYLE SHEETS -->
+    <link rel="stylesheet" type="text/css" href="css/pe-icon-7-stroke.css">
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+    <link rel="stylesheet" type="text/css" href="css/settings.css">
+    <link rel="stylesheet" type="text/css" href="css/navigation.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-dropdownhover.min.css">
+
+    <style>
+    </style>
+
+</head>
+
+<body>
+    <header class="fixed-top header-fullpage top-border top-transparent wow fadeInDown">
+        <div class="top-bar-right d-flex align-items-center text-md-left">
+            <div class="container">
+                <div class="row align-items-center ">
+                    <div class="col">
+                        <a href="#" class="mr-3"><i class="fa fa-phone" style="color: #1261F4;"></i> 05-460789986</a>
+                        <a href="#" class="mr-3"><i class="fa fa-envelope" style="color: #1261F4;"></i> mail@staff.com</a>
+                    </div>
+
+                    <div class="col-md-auto">
+                        <a href="#" class="fab fa-facebook-f mr-3" style="color: #1261F4;"></a>
+                        <a href="#" class="fab fa-twitter mr-3" style="color: #1261F4;"></a>
+                        <a href="#" class="fab fa-linkedin mr-3" style="color: #1261F4;"></a>
+                        <a href="#" class="fab fa-instagram mr-3" style="color: #1261F4;"></a>
+
+                        <div class="d-inline-flex order-lg-last">
+                            <a class="btn-theme icon-left bg-navy-blue no-shadow d-none d-lg-inline-block align-self-center" href="#" role="button" data-toggle="modal" data-target="#user-login-popup"><i class="fas fa-home" style="color: #fff;"></i>  Log In</a>
+                            <a class="btn-theme icon-left bg-navy-blue no-shadow d-none d-lg-inline-block align-self-center" href="#" role="button" data-toggle="modal" data-target="#user-reg-popup"><i class="far fa-user" style="color: #fff;"></i>  Register</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Navigation Start -->
+        <nav class="navbar navbar-expand-lg bg-transparent">
+            <div class="container text-nowrap">
+                <div class="d-flex align-items-center w-100 col p-0">
+                    <a class="navbar-brand rounded-bottom light-bg" href="index.html">
+                        <img src="#" alt="TruckLoad">
+                    </a>
+                </div>
+                <!-- Topbar Request Quote Start -->
+                <div class="d-inline-flex request-btn order-lg-last col p-0">
+                    <a class="btn-theme icon-left bg-navy-blue no-shadow d-none d-lg-inline-block align-self-center" href="#" role="button" data-toggle="modal" data-target="#request_popup">
+                        <i class="fas fa-receipt" style="color: #fff;"></i>     Request Quote
+                    </a>
+                    <!-- Toggle Button Start -->
+                    <button class="navbar-toggler x collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <!-- Toggle Button End -->
+                </div>
+                <!-- Topbar Request Quote End -->
+
+                <div class="collapse navbar-collapse" id="navbarCollapse" data-hover="dropdown" data-animations="slideInUp slideInUp slideInUp slideInUp">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="services.html">Home</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle-mob" href="index.html" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Load <i class="fas fa-angle-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="shortcodes-element.html">Find Load</a></li>
+                                <li><a class="dropdown-item" href="typography.html">Post Load</a></li>
+                                <li><a class="dropdown-item" href="request-page.html">Request Quote</a></li>
+                                <li><a class="dropdown-item" href="pricing-plan.html">Our Pricing</a></li>
+
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle-mob" href="index.html" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Truck <i class="fas fa-angle-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="shortcodes-element.html">Find Truck</a></li>
+                                <li><a class="dropdown-item" href="typography.html">Post Truck</a></li>
+                                <li><a class="dropdown-item" href="request-page.html">Request Quote</a></li>
+                                <li><a class="dropdown-item" href="pricing-plan.html">Our Pricing</a></li>
+
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle-mob" href="index.html" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Services <i class="fas fa-angle-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="project-grid.html">Distance Calculate</a></li>
+                                <li><a class="dropdown-item" href="project-masonary.html">Rate View</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="services.html">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="services.html">Blog</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle-mob" href="index.html" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Contact <i class="fas fa-angle-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="contact-us.html">Contact Us</a></li>
+                                <li><a class="dropdown-item" href="contact-us-option.html">Contact Us Option</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!-- Main Navigation End -->
+                </div>
+            </div>
+        </nav>
+        <!-- Main Navigation End -->
+    </header>
+
+    <!-- Banner -->
+    <section class="revolution-slider">
+        <div class="banner">
+            <image src="banner3.jpg" />
+        </div>
+    </section>
+
+    <!-- Search form -->
+    <section id="reservation-form">
+        <!-- <div class="container"> -->
+        <div class="row">
+            <div class="col-md-12">
+                <form class="form-inline reservation-horizontal clearfix" role="form" method="post" action="php/reservation.php" name="reservationform" id="reservationform">
+                    <!-- Error message -->
+                    <div id="message"></div>
+                    <div class="row">
+                        <!-- <div class="col-sm-2">
+                          <div class="form-group">
+                            <label for="room"> Who I Am</label>
+
+                              <select class="form-control" name="room" id="room">
+                              <option selected="selected" disabled="disabled">Who I Am</option>
+                              <option value="Single" selected="selected">Transporter</option>
+                              <option value="Double">Loader</option>
+                              <option value="Deluxe">Broker</option>
+                            </select>
+                          </div>
+                        </div> -->
+
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <label for="email" accesskey="E">Source</label>
+                                <input name="email" type="text" id="email" value="" class="form-control" placeholder="Enter Source" />
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <label for="email" accesskey="E">Destination</label>
+                                <input name="email" type="text" id="email" value="" class="form-control" placeholder="Enter Destination" />
+                            </div>
+                        </div>
+
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <label for="checkin">Check-in</label>
+                                <!-- <div class="popover-icon" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="right" data-content="Check-In is from 11:00"> <i class="fa fa-info-circle fa-lg"> </i> </div> -->
+                                <i class="fa fa-calendar infield"></i>
+                                <input name="checkin" type="text" id="checkin" value="" class="form-control" placeholder="Check-in" />
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <label for="room">Load Type</label>
+                                <!-- <div class="popover-icon" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="right" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."> <i class="fa fa-info-circle fa-lg"> </i> </div> -->
+                                <select class="form-control" name="room" id="room">
+                                    <option selected="selected" disabled="disabled">Select Type</option>
+                                    <option value="Single">Full Load</option>
+                                    <option value="Double">Part Load</option>
+                                    <option value="Deluxe">Near By</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-1">
+                            <div class="form-group" style="width: 140px;">
+                                <label for="room">Within KM</label>
+                                <!-- <div class="popover-icon" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="right" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."> <i class="fa fa-info-circle fa-lg"> </i> </div> -->
+                                <select class="form-control" name="room" id="room">
+                                    <option selected="selected" disabled="disabled">Select KM</option>
+                                    <option value="Single">5 KM</option>
+                                    <option value="Double">10 KM</option>
+                                    <option value="Deluxe">15 KM</option>
+                                    <option value="Double">20 KM</option>
+                                    <option value="Deluxe">25 KM</option>
+                                    <option value="Double">50 KM</option>
+                                    <option value="Double">75 KM</option>
+                                    <option value="Double">100 KM</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-2" style="margin-left: 50px;margin-top: -3px;">
+                            <button type="submit" class="btn btn-primary btn-block">Search Now</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- </div> -->
+    </section>
+
+    <!-- sERACH lIST -->
+    <section class="rooms mt50">
+        <div class="container" ">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2 class="lined-heading"><span>Available Loads</span></h2>
+                </div>
+
+                <div id="content">
+                    <!-- Start Content -->
+                    <div class="container">
+                        <!--Start Container-->
+                        <div class="row Border" style="margin-left: 700px;margin-top: -25px;">
+                            <div class="col-sm-12">
+                                <div class="row places">
+                                    <div class="col-sm-12" style="margin-top:5px;" align="right">
+                                        Chennai
+                                        <input type="hidden" id="citysrc" value="Chennai"> - Madurai
+                                        <input type="hidden" id="citydest" value="Madurai"> 17-12-2019
+                                        <input type="hidden" id="citydate" value="17-12-2019">
+                                        <input type="hidden" id="statesrc" value="Tamil Nadu">
+                                        <input type="hidden" id="statedest" value="Tamil Nadu">
+                                        <span class="btn btn-primary btn-md search">Modify Search</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Inner Latest Updates Block -->
+
+                    <div class="inner_latest_updates_block">
+                        <div class="sc-kTUwUJ dmMRtR">
+                            <div class="sc-fYxtnH cPxaEJ">
+                                <div class="sc-tilXH ipziHM">
+                                    <div class="sc-kTUwUJ dmMRtR">
+
+                                        <div class="sc-fYxtnH cPxaEJ">
+                                            <div class="sc-tilXH ipziHM">
+                                                <span class="sc-hEsumM jsiyYo">Top Trucks</span>
+                                                <span class="sc-ktHwxA ibNUjc">(6 Trucks)</span>
+                                                <span class="sc-cIShpX bqfUsD">
+                                                    <span class="sc-kafWEX dTxOVG sc-ckVGcZ cVWzTH">&nbsp;</span>High Rating
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="sc-kTUwUJ dmMRtR">
+                                            <div class="sc-dnqmqq bDsesi">
+                                                <div class="BusViewContainer">
+                                                    <div class="sc-iwsKbI gTUxim">
+                                                        <div class="sc-gZMcBi gkRcqz">
+                                                            <span class="sc-gqjmRU izTLmu">Pune&nbsp;</span>
+                                                            <span class="sc-jzJRlG btSGRi"> 15h 58m</span>
+                                                            <span class="sc-fjdhpX laKnSQ">Nashik&nbsp;</span>
+                                                        </div>
+
+                                                        <div class="sc-cSHVUG kBaSPa">
+                                                            <p class="sc-kAzzGY eVnWFt">
+                                                                <span class="sc-chPdSV glJpds" title="!9 Feet Container" style="background: red;">19 Feet Container</span>
+                                                                <span class="sc-kgoBCf cQRYis">| 16/12/2019</span>
+                                                            </p>
+
+                                                            <ul class="sc-kGXeez sOzzB">
+                                                                <ul class="sc-kpOJdX bFqegh">
+                                                                    <span class="sc-jKJlTe jhvond sc-ckVGcZ fYVOJz"></span> 3 Ton Available
+                                                                </ul>
+                                                                <ul class="sc-kpOJdX bFqegh">
+                                                                    <span class="sc-jKJlTe jhvond sc-ckVGcZ dZOAqA"></span>Pune -> RajguruNagar -> Sangmner -> Nashik
+                                                                </ul>
+                                                            </ul>
+
+                                                            <ul class="sc-eNQAEJ bFIowg">
+                                                                <p class="sc-kkGfuU dfuvAZ">
+                                                                    <span class="sc-iAyFgw krClWy" high="true">
+                                                                        <span class="sc-hSdWYo eXbDWv">4.7</span>/5
+                                                                    </span>
+                                                                </p>
+
+                                                                <li class="sc-hMqMXs kEmCaG">Policies</li>
+                                                                <li class="sc-hMqMXs kEmCaG" data-toggle="collapse" href="#collapse1">Pickups &amp; Drops</li>
+                                                                <li class="sc-hMqMXs kEmCaG">5 Photos</li>
+                                                            </ul>
+                                                        </div>
+
+                                                        <div class="sc-eHgmQL qdAhs">
+                                                            <div>
+                                                                <div>
+                                                                    <span data-placeholder="true" class="sc-brqgnP bKUXLW">1285</span>
+                                                                </div>
+                                                                <p class="sc-csuQGl dKyclB">
+                                                                    <span class="sc-Rmtcm gnTLhn sc-ckVGcZ kvMNaU"></span>
+                                                                </p>
+                                                            </div>
+                                                            <ul class="sc-kGXeez sOzzB">
+                                                                <ul class="sc-dxgOiQ BhRgU">
+                                                                    <span class="sc-jKJlTe jhvond sc-ckVGcZ gYzbWd"></span> Pending
+                                                                </ul>
+                                                            </ul>
+                                                            <a class="sc-cMljjf drsecP">Select Seats</a>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="sc-kTUwUJ dmMRtR">
+                                            <div class="sc-dnqmqq bDsesi">
+                                                <div class="BusViewContainer">
+                                                    <div class="sc-iwsKbI gTUxim">
+                                                        <div class="sc-gZMcBi gkRcqz">
+                                                            <span class="sc-gqjmRU izTLmu">Pune&nbsp;</span>
+                                                            <span class="sc-jzJRlG btSGRi"> 15h 58m</span>
+                                                            <span class="sc-fjdhpX laKnSQ">Nashik&nbsp;</span>
+                                                        </div>
+
+                                                        <div class="sc-cSHVUG kBaSPa">
+                                                            <p class="sc-kAzzGY eVnWFt">
+                                                                <span class="sc-chPdSV glJpds" title="!9 Feet Container" style="background: red;">19 Feet Container</span>
+                                                                <span class="sc-kgoBCf cQRYis">| 16/12/2019</span>
+                                                            </p>
+
+                                                            <ul class="sc-kGXeez sOzzB">
+                                                                <ul class="sc-kpOJdX bFqegh">
+                                                                    <span class="sc-jKJlTe jhvond sc-ckVGcZ fYVOJz"></span> 3 Ton Available
+                                                                </ul>
+                                                                <ul class="sc-kpOJdX bFqegh">
+                                                                    <span class="sc-jKJlTe jhvond sc-ckVGcZ dZOAqA"></span>Pune -> RajguruNagar -> Sangmner -> Nashik
+                                                                </ul>
+                                                            </ul>
+
+                                                            <ul class="sc-eNQAEJ bFIowg">
+                                                                <p class="sc-kkGfuU dfuvAZ">
+                                                                    <span class="sc-iAyFgw krClWy" high="true">
+                                                                        <span class="sc-hSdWYo eXbDWv">4.7</span>/5
+                                                                    </span>
+                                                                </p>
+
+                                                                <li class="sc-hMqMXs kEmCaG">Policies</li>
+                                                                <li class="sc-hMqMXs kEmCaG" data-toggle="collapse" href="#collapse1">Pickups &amp; Drops</li>
+                                                                <li class="sc-hMqMXs kEmCaG">5 Photos</li>
+                                                            </ul>
+                                                        </div>
+
+                                                        <div class="sc-eHgmQL qdAhs">
+                                                            <div>
+                                                                <div>
+                                                                    <span data-placeholder="true" class="sc-brqgnP bKUXLW">1285</span>
+                                                                </div>
+                                                                <p class="sc-csuQGl dKyclB">
+                                                                    <span class="sc-Rmtcm gnTLhn sc-ckVGcZ kvMNaU"></span>
+                                                                </p>
+                                                            </div>
+                                                            <ul class="sc-kGXeez sOzzB">
+                                                                <ul class="sc-dxgOiQ BhRgU">
+                                                                    <span class="sc-jKJlTe jhvond sc-ckVGcZ gYzbWd"></span> Pending
+                                                                </ul>
+                                                            </ul>
+                                                            <a class="sc-cMljjf drsecP">Select Seats</a>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="collapse1" class="panel-collapse collapse" class="sc-gPEVay iURMXd" style="background-color: #fff;">
+                                            <span class="upArrow policies">&nbsp;</span>
+                                            <a class="btnClose latoBold font12 deepskyBlueText" href="javascript:void(0);">Close</a>
+                                            <div class="sc-jlyJG hZYYwk">
+                                                <div class="policiesLeft">
+                                                    <p class="cancellaton latoBold font12 capText darkGreyText makeFlex spaceBetween appendBottom5">
+                                                        <span>
+                                                            <span class="sprite cancellationIcon"></span> Sub Route Trips
+                                                        </span>
+                                                        <span>Type</span>
+                                                    </p>
+                                                    <div class="cancellationCharges">
+                                                        <p class="makeFlex spaceBetween latoRegular font12 darkGreyText">
+                                                            <span class="sprite activePolicy"></span>
+                                                            <span>Pune to Nashik Phata</span>
+                                                            <span>Boxes </span>
+                                                        </p>
+                                                        <p class="makeFlex spaceBetween latoRegular font12 darkGreyText">
+                                                            <span class="sprite activePolicy"></span>
+                                                            <span>Nashik Phata to Rajguru Nagar</span>
+                                                            <span>Cotton</span>
+                                                        </p>
+
+                                                    </div>
+                                                </div>
+                                                <div class="policiesRight pushRight">
+                                                    <p class="latoBold font12 capText darkGreyText appendBottom10">OTHER CONDITIONS</p>
+                                                    <p class="latoRegular font12 darkGreyText txtTnc">* The penalty is calculated based on total seat worth 799</p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Inner Latest Updates Block End-->
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+
+
+
+
+    <!-- Search Popup Start -->
+    <div class="overlay overlay-hugeinc">
+        <form class="form-inline mt-2 mt-md-0">
+            <div class="form-inner">
+                <div class="form-inner-div d-inline-flex align-items-center no-gutters">
+                    <div class="col-md-1">
+                        <i class="icofont-search"></i>
+                    </div>
+                    <div class="col-10">
+                        <input class="form-control w-100 p-0" type="text" placeholder="Search" aria-label="Search">
+                    </div>
+                    <div class="col-md-1">
+                        <a href="#" class="overlay-close link-oragne"><i class="icofont-close-line"></i></a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- Search Popup End -->
+    <!--login Modal starts-->
+    <section class="wide-tb-100 bg-fixed pb-0">
+        <div class="modal fade" id="user-login-popup">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="lnr lnr-cross"></i></span></button>
+                    </div>
+                    <div class="modal-body">
+                        <!--User Login section starts-->
+                        <div class="user-login-section">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <ul class="ui-list nav nav-tabs mb-30" role="tablist">
+                                            <!-- <li class="nav-item">
+                                                <a class="nav-link active" data-toggle="tab" href="#login" role="tab" aria-selected="true">Login</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#register" role="tab" aria-selected="false">Register</a>
+                                            </li> -->
+                                            <li class="nav-item">
+                                                <a class="nav-link active" data-toggle="tab" href="#login" role="tab" aria-selected="true">Loader</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#login" role="tab" aria-selected="false">Carrier</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#login" role="tab" aria-selected="false">Broker</a>
+                                            </li>
+                                        </ul>
+                                        <div class="login-wrapper">
+                                            <div class="ui-dash tab-content">
+                                                <div class="tab-pane fade show active" id="login" role="tabpanel">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <form id="login-form" action="#" method="post">
+                                                                <div class="form-group">
+                                                                    <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Email Or Mobile No." value="" required="">
+                                                                    <span class="mandatory">*</span>
+                                                                    <span id="ContentPlaceHolder1_rfvFname" class="validator" style="display:none;">Enter First Name</span>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
+                                                                    <span class="mandatory">*</span>
+                                                                </div>
+                                                                <div class="row mt-20">
+                                                                    <div class="col-md-6 col-12 text-left">
+                                                                        <div class="res-box">
+                                                                            <input id="check-l" type="checkbox" name="check">
+                                                                            <label for="check-l">Remember me</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6 col-12 text-right">
+                                                                        <div class="res-box sm-left">
+                                                                            <a href="#" tabindex="5" class="forgot-password">Forgot Password?</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="res-box text-center mt-30">
+                                                                    <button type="submit" class="btn v8"><span class="lnr lnr-exit"></span> Log In</button>
+                                                                </div>
+                                                            </form>
+                                                            <div class="social-profile-login  text-left mt-20">
+                                                                <h5>or Login with</h5>
+                                                                <ul class="social-btn">
+                                                                    <li class="bg-fb"><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                                                    <li class="bg-tt"><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                                                    <li class="bg-ig"><a href="#"><i class="fab fa-instagram"></i></a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="signup-wrapper">
+                                                                <img src="images/others/login-1.png" alt="...">
+                                                                <p>Welcome Back! Please Login to your Account for latest LOADS.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--User login section ends-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--login Modal ends-->
+    <!--Register Modal starts-->
+    <section class="wide-tb-100 bg-fixed pb-0">
+        <div class="modal fade" id="user-reg-popup">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="lnr lnr-cross"></i></span></button>
+                    </div>
+                    <div class="modal-body">
+                        <!--User Login section starts-->
+                        <div class="user-login-section">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <ul class="ui-list nav nav-tabs mb-30" role="tablist">
+
+                                            <li class="nav-item">
+                                                <a class="nav-link active" data-toggle="tab" href="#register" role="tab" aria-selected="true">Loader</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#register" role="tab" aria-selected="false">Carrier</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="#register" role="tab" aria-selected="false">Broker</a>
+                                            </li>
+                                        </ul>
+                                        <div class="login-wrapper">
+                                            <div class="ui-dash tab-content">
+
+                                                <div class="tab-pane fade show active" id="register" role="tabpanel">
+                                                    <div class="row" style="margin-bottom: 20px;">
+                                                        <div class="col-md-4">
+                                                            <!-- <span>Do you have Passport?</span> -->
+                                                            <label for="chkYes">
+                                                                <input type="radio" id="chkYes" name="chkPassPort" onclick="ShowHideDiv()" />
+                                                                Company
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label for="chkNo">
+                                                                <input type="radio" id="chkNo" name="chkPassPort" onclick="ShowHideDiv()" />
+                                                                Individual
+                                                            </label>
+                                                        </div>
+                                                        <hr />
+
+                                                    </div>
+                                                    <!-- <div id="companyEmail" style="display: none;background-color: pink;display: block;width:48%">
+
+
+                                                        <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Company Email Address" value="" style="padding: 22px 0;
+                                                        border-bottom: 1px solid #ddd;
+                                                        border-top: none;
+                                                        border-left: none;
+                                                        border-right: none;">
+                                                    </div> -->
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <form id="register-form" action="#" method="post">
+                                                                <div class="form-group">
+                                                                    <input type="text" name="user_name" id="user_name" tabindex="1" class="form-control" placeholder="Username" value="">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <input type="number" name="number" id="number" tabindex="1" class="form-control" placeholder="Mobile Number" value="">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <input type="password" name="user_password" id="user_password" tabindex="2" class="form-control" placeholder="Password">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password">
+                                                                </div>
+                                                                <div class="res-box text-left">
+                                                                    <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
+                                                                    <label for="remember">I've read and accept terms &amp; conditions</label>
+                                                                </div>
+                                                                <div class="res-box text-center mt-30">
+                                                                    <button type="submit" class="btn btn-primary" style="width:50%;margin-left: -25px;"><i class="lnr lnr-enter"></i>Sign Up</button>
+                                                                </div>
+                                                            </form>
+                                                            <div class="social-profile-login  text-left mt-20">
+                                                                <h5>or Sign Up with</h5>
+                                                                <ul class="social-btn">
+                                                                    <li class="bg-fb"><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                                                    <li class="bg-tt"><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                                                    <li class="bg-ig"><a href="#"><i class="fab fa-instagram"></i></a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="signup-wrapper">
+                                                                <img src="images/others/login-1.png" alt="...">
+                                                                <p>Create an account to find the best Service for you.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--User login section ends-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--Register Modal ends-->
+    <!-- Request Modal -->
+    <div class="modal fade" id=request_popup tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered request_popup" role="document">
+            <div class="modal-content">
+                <div class="modal-body p-0">
+                    <!-- Contact Details Start -->
+                    <section class="pos-rel bg-light-gray">
+                        <div class="container-fluid p-0">
+                            <a href="#" class="close" data-dismiss="modal" aria-label="Close">
+                                <i class="icofont-close-line"></i>
+                            </a>
+                            <div class="d-lg-flex justify-content-end no-gutters mb-spacer-md" style="box-shadow: 0px 18px 76px 0px rgba(0, 0, 0, 0.06);">
+                                <div class="col bg-fixed bg-img-7 request_pag_img">
+                                    &nbsp;
+                                </div>
+
+
+                                <div class="col-md-7 col-12">
+                                    <div class="px-3 m-5">
+                                        <h2 class="h2-xl mb-4 fw-6">Request A Quote</h2>
+                                        <form action="#" method="post" novalidate="novalidate" class="rounded-field">
+
+                                            <div class="form-row mb-4">
+                                                <div class="col">
+                                                    <select title="Please choose a package" required="" name="package" class="custom-select" aria-required="true" aria-invalid="false">
+                                                        <option value="">Freight Type</option>
+                                                        <option value="Type 1">Type 1</option>
+                                                        <option value="Type 2">Type 2</option>
+                                                        <option value="Type 3">Type 3</option>
+                                                        <option value="Type 4">Type 4</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col">
+                                                    <select title="Please choose a package" required="" name="package" class="custom-select" aria-required="true" aria-invalid="false">
+                                                        <option value="">Incoterms</option>
+                                                        <option value="Type 1">Type 1</option>
+                                                        <option value="Type 2">Type 2</option>
+                                                        <option value="Type 3">Type 3</option>
+                                                        <option value="Type 4">Type 4</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-row mb-4">
+                                                <div class="col">
+                                                    <input type="text" name="name" class="form-control" placeholder="City of departure">
+                                                </div>
+                                                <div class="col">
+                                                    <input type="text" name="email" class="form-control" placeholder="Delivery city">
+                                                </div>
+                                            </div>
+                                            <div class="form-row mb-4">
+                                                <div class="col">
+                                                    <input type="text" name="name" class="form-control" placeholder="Total gross weight (KG)">
+                                                </div>
+                                                <div class="col">
+                                                    <input type="text" name="email" class="form-control" placeholder="Dimension">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row">
+                                                <div class="col">
+                                                    <div class="center-head"><span class="bg-light-gray txt-orange">Your Personal Details</span></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row mb-4">
+                                                <div class="col">
+                                                    <input type="text" name="name" class="form-control mb-3" placeholder="Your Name">
+                                                    <input type="text" name="name" class="form-control mb-3" placeholder="Email">
+                                                    <input type="text" name="name" class="form-control" placeholder="Phone Number">
+                                                </div>
+                                                <div class="col">
+                                                    <textarea rows="7" placeholder="Message" class="form-control"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="col pt-3">
+                                                    <button type="submit" class="form-btn btn-theme bg-orange">Send Message <i class="icofont-rounded-right"></i></button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- Contact Details End -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Request Modal -->
+    <!-- Back To Top Start -->
+    <a id="mkdf-back-to-top" href="#" class="off"><i class="fas fa-chevron-circle-up"></i></a>
+    <!-- Back To Top End -->
+
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-dropdownhover.min.js"></script>
+    <script src="js/fontawesome-all.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="twitter/jquery.tweet.js"></script>
+    <script src="js/jflickrfeed.min.js"></script>
+    <script src="js/jquery.waypoints.min.js"></script>
+    <script src="js/jquery.easing.min.js"></script>
+    <script src="js/jquery.counterup.min.js"></script>
+    <script src="js/jquery.easypiechart.min.js"></script>
+    <script src="js/jquery.appear.js"></script>
+    <script src="js/wow.min.js"></script>
+
+    <!-- JQuery Map Plugin -->
+    <script type="text/javascript" src="js/api.js"></script>
+    <script type="text/javascript" src="js/jquery.gmap.min.js"></script>
+    <script type="text/javascript" src="rev-slider/revolution/js/extensions/revolution.extension.carousel.min.js"></script>
+    <script type="text/javascript" src="rev-slider/revolution/js/extensions/revolution.extension.kenburn.min.js"></script>
+    <script type="text/javascript" src="rev-slider/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+    <script src="js/site-custom.js"></script>
+
+
+</body>
+</html>

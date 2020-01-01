@@ -1,0 +1,108 @@
+﻿
+<section class="wide-tb-100 bg-fixed pb-0">
+    <div class="modal fade" id="user-reg-popup">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="lnr lnr-cross"></i></span></button>
+                </div>
+                <div class="modal-body">
+                    <!--User Login section starts-->
+                    <div class="user-login-section">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <ul class="ui-list nav nav-tabs mb-30" role="tablist">
+
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-toggle="tab" href="#register" role="tab" aria-selected="true">Loader</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#register" role="tab" aria-selected="false">Carrier</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#register" role="tab" aria-selected="false">Broker</a>
+                                        </li>
+                                    </ul>
+                                    <div class="login-wrapper">
+                                        <div class="ui-dash tab-content">
+
+                                            <div class="tab-pane fade show active" id="register" role="tabpanel">
+                                                <div class="row" style="margin-bottom: 20px;">
+                                                    <div class="col-md-4">
+                                                        <!-- <span>Do you have Passport?</span> -->
+                                                        <label for="chkYes">
+                                                            <input type="radio" id="chkYes" name="chkPassPort" onclick="ShowHideDiv()" />
+                                                            Company
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label for="chkNo">
+                                                            <input type="radio" id="chkNo" name="chkPassPort" onclick="ShowHideDiv()" />
+                                                            Individual
+                                                        </label>
+                                                    </div>
+                                                    <hr />
+
+                                                </div>
+                                                <!-- <div id="companyEmail" style="display: none;background-color: pink;display: block;width:48%">
+
+
+                                                    <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Company Email Address" value="" style="padding: 22px 0;
+                                                    border-bottom: 1px solid #ddd;
+                                                    border-top: none;
+                                                    border-left: none;
+                                                    border-right: none;">
+                                                </div> -->
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <form id="register-form" action="#" method="post">
+                                                            <div class="form-group">
+                                                                <input type="text" name="user_name" id="user_name" tabindex="1" class="form-control" placeholder="Username" value="">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <input type="number" name="number" id="number" tabindex="1" class="form-control" placeholder="Mobile Number" value="">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <input type="password" name="user_password" id="user_password" tabindex="2" class="form-control" placeholder="Password">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password">
+                                                            </div>
+                                                            <div class="res-box text-left">
+                                                                <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
+                                                                <label for="remember">I've read and accept terms &amp; conditions</label>
+                                                            </div>
+                                                            <div class="res-box text-center mt-30">
+                                                                <button type="submit" class="btn btn-primary" style="width:50%;margin-left: -25px;"><i class="lnr lnr-enter"></i>Sign Up</button>
+                                                            </div>
+                                                        </form>
+                                                        <div class="social-profile-login  text-left mt-20">
+                                                            <h5>or Sign Up with</h5>
+                                                            <ul class="social-btn">
+                                                                <li class="bg-fb"><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                                                <li class="bg-tt"><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                                                <li class="bg-ig"><a href="#"><i class="fab fa-instagram"></i></a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="signup-wrapper">
+                                                            <img src="images/others/login-1.png" alt="...">
+                                                            <p>Create an account to find the best Service for you.</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--User login section ends-->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

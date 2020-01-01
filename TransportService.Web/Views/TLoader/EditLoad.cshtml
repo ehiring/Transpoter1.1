@@ -46,9 +46,6 @@
                             </div>
                         </div>
 
-                        
-                        
-
                         <div class="col-sm-6 form-group">
                             <label>Pick Up Date:</label>
                             <div class="input-group">
@@ -58,6 +55,7 @@
                                 @*<input type="text" id="dp2" data-date-format="yyyy-mm-dd" placeholder="YYYY-MM-DD" class="form-control select_date" name="truck_insurestartdate" value="" autocomplete="off" onkeypress="return checkdate(event);">*@
                             </div>
                         </div>
+
                         <div class="col-sm-6 form-group">
                             <label><i class="red">*</i>Load Type:</label>
                             <div class="input-group">
@@ -70,6 +68,7 @@
                                 </select>
                             </div>
                         </div>
+
                         <div class="col-sm-6 form-group">
                             <label><i class="red">*</i>Sub Service:</label>
                             <div class="input-group">
@@ -145,18 +144,11 @@
                             </div>
 
                         </div>
-
                         <div class="col-sm-6 form-group">
                             <label><i class="red">*</i> Unit</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-balance-scale" aria-hidden="true"></i></span>
-                                <select id="ddlUnit" class="form-control">
-                                    <option> Select Unit </option>
-                                    <option value="inch">inch</option>
-                                    <option value="mm">mm</option>
-                                    <option value="cm">cm</option>
-                                    <option value="ft">ft</option>
-                                </select>
+                                @Html.DropDownList("Unit", new SelectList((System.Collections.IEnumerable)ViewData["UOMList"], "Value", "Text"), "Select Unit", new { @class = "form-control", @id = "ddlUnit", Title = "Select Unit" })
                             </div>
                         </div>
                         <div class="col-sm-6 form-group">
@@ -173,7 +165,6 @@
                                 <input id="txt_Width" type="number" class="form-control" name="altr_name" value="" placeholder="Width">
                             </div>
                         </div>
-
                         <div class="col-sm-6 form-group">
                             <label>Length</label>
                             <div class="input-group">
@@ -221,11 +212,10 @@
                                             <th>Height</th>
                                             <th>Width</th>
                                             <th>Length</th>
-                                            <th>Weight(Tonn)</th>
-                                            <th>Quantity</th>
-                                            <th></th>
-                                            <th>IsDeleted</th>
-                                            <th>Operation</th>
+                                            <th>Weight</th>
+                                            <th>Qty</th>
+                                            <th>Action</th>
+                                            <th style="display:none">Operation</th>
 
                                         </tr>
                                     </thead>
@@ -233,21 +223,21 @@
                                         @foreach (var item in Model.LoadDetails)
                                         {
                                             <tr>
-                                                <td class="SrNo">@item.LoadDetailID</td>
-                                                <td style="display:none" class="MaterialID"> @item.MaterialID</td>
-                                                <td class="MaterialName">@item.MaterialName</td>
-                                                <td class="UnitOfMeasure">@item.UnitOfMeasure </td>
-                                                <td class="Height">@item.Height</td>
-                                                <td class="Width">@item.Width</td>
-                                                <td class="Length">@item.Length</td>
-                                                <td class="Weight">@item.Weight</td>
-                                                <td class="Qty">@item.Qty</td>
+                                                <td class="clsSrNo">@item.LoadDetailID</td>
+                                                <td style="display:none" class="clsMaterialID"> @item.MaterialID</td>
+                                                <td class="clsMaterialName">@item.MaterialName</td>
+                                                <td style="display:none" class="clsConversionFactor"> @item.ConversionFactor</td>
+                                                <td class="clsUnitOfMeasure">@item.UnitOfMeasure </td>
+                                                <td class="clsHeight">@item.Height</td>
+                                                <td class="clsWidth">@item.Width</td>
+                                                <td class="clsLength">@item.Length</td> 
+                                                <td class="clsWeight">@item.Weight</td>
+                                                <td class="clsQty">@item.Qty</td>
                                                 <td>
                                                     @Html.ActionLink("Edit", null, null, new { @class = "clsEditRow" }) |
-                                                    @Html.ActionLink("Delete", null, null, new { @class = "clsDeleteRow" })
+                                                    @Html.ActionLink("Delete", null,null, new { @id = Model.LoadID }, new { @class = "clsDeleteRow" })
                                                 </td>
-                                                <td class="IsDeleted">@item.IsDeleted</td>
-                                                <td class="Operation">U</td>
+                                                
                                             </tr>
                                         }
 
@@ -282,11 +272,11 @@
     $(document).on('click', '#btnAddGoods', function (e) {
         var htmlValidation = "";
         var operationType = $('#hdnOperationType').val();
-        var lastSrNo = parseInt($("#idLastSrNo").val());
+        var SrNo = parseInt($("#idLastSrNo").val());
         alert($("#idLastSrNo").val());
-        var SrNo;
+        
         if (operationType == 'I') {
-            SrNo = lastSrNo + 1;
+            SrNo = SrNo + 1;
         }
         else {
             //SrNo = editRecordSrNo
@@ -295,7 +285,8 @@
 
         var materialID = $("#ddlMaterial option:selected").val();
         var material = $("#ddlMaterial option:selected").text();
-        var unit = $("#ddlUnit option:selected").val();
+        var unit = $("#ddlUnit option:selected").text();
+        var conversionFactor = $("#ddlUnit option:selected").val();
         var height = $("#txt_Height").val();
         var width = $("#txt_Width").val();
         var length = $("#txt_Length").val();
@@ -303,7 +294,7 @@
         var quantity = $("#txt_Quantity").val();
 
         htmlValidation = (materialID == 0 ? "CargoType/" : "");
-        htmlValidation = htmlValidation + (unit == 0 ? "Unit/" : "");
+        htmlValidation = htmlValidation + (conversionFactor == 0 ? "Unit/" : "");
         htmlValidation = htmlValidation + ((height == null || height == "") ? "Height/" : "");
         htmlValidation = htmlValidation + ((width == null || width == "") ? "Width/" : "");
         htmlValidation = htmlValidation + ((length == null || length == "") ? "Length/" : "");
@@ -315,29 +306,39 @@
             return;
         }
         if (operationType == 'I') {
-        var bindRow = '<tr>' +
-            '<td class="SrNo">' + lastSrNo + '</td>' +
-            '<td style="display:none" class="MaterialID">' + materialID + '</td>' +
-            '<td class="MaterialName">' + material + '</td>' +
-            '<td class="UnitOfMeasure">' + unit + '</td>' +
-            '<td class="Height">' + height + '</td>' +
-            '<td class="Width">' + width + '</td>' +
-            '<td class="Length">' + length + '</td>' +
-            '<td class="Weight">' + weight + '</td>' +
-            '<td class="Qty">' + quantity + '</td>' +
-            '<td>' +
-            '@Html.ActionLink("Edit", null, null, new { @class = "clsEditRow" }) | @Html.ActionLink("Delete", null, null, new { @class = "clsDeleteRow" })' +
-            '</td >' +
-            '<td class="IsDeleted">0</td>';
-
-            bindRow = bindRow + '<td class="Operation">I</td></tr>'
+            var bindRow = '<tr>' +
+                '<td class="clsSrNo">' + SrNo + '</td>' +
+                '<td style="display:none" class="clsMaterialID">' + materialID + '</td>' +
+                '<td class="clsMaterialName">' + material + '</td>' +
+                '<td style="display:none" class="clsConversionFactor">' + conversionFactor + '</td>' +
+                '<td class="clsUnitOfMeasure">' + unit + '</td>' +
+                '<td class="clsHeight">' + height + '</td>' +
+                '<td class="clsWidth">' + width + '</td>' +
+                '<td class="clsLength">' + length + '</td>' +
+                '<td class="clsWeight">' + weight + '</td>' +
+                '<td class="clsQty">' + quantity + '</td>' +
+                '<td>' +
+                '@Html.ActionLink("Edit",null, null, new { @class = "clsEditRow" }) | @Html.ActionLink("Delete", null, null, new { @class = "clsDeleteRow" })' +
+                '</td >' +
+                '</tr>';
+           
+            
             $('#tblGoodsDetail  tbody').append(bindRow);
             $("#idLastSrNo").val(SrNo);
         }
         else {
             var rowindex = $('#hdnRowNo').val();
             //$('#tblGoodsDetail').find('tr#' + rowindex).find('td.MaterialName').html(material);
-            $('#tblGoodsDetail tbody tr:eq(' + rowindex + ') ').children('td.MaterialName').text(material);
+            $('#tblGoodsDetail tbody tr:eq(' + rowindex + ') ').children('td.clsMaterialID').text(materialID);
+            $('#tblGoodsDetail tbody tr:eq(' + rowindex + ') ').children('td.clsMaterialName').text(material);
+            $('#tblGoodsDetail tbody tr:eq(' + rowindex + ') ').children('td.clsConversionFactor').text(conversionFactor);
+            $('#tblGoodsDetail tbody tr:eq(' + rowindex + ') ').children('td.clsUnitOfMeasure').text(unit);
+            $('#tblGoodsDetail tbody tr:eq(' + rowindex + ') ').children('td.clsHeight').text(height);
+            $('#tblGoodsDetail tbody tr:eq(' + rowindex + ') ').children('td.clsWidth').text(width);
+            $('#tblGoodsDetail tbody tr:eq(' + rowindex + ') ').children('td.clsLength').text(length);
+            $('#tblGoodsDetail tbody tr:eq(' + rowindex + ') ').children('td.clsWeight').text(weight);
+            $('#tblGoodsDetail tbody tr:eq(' + rowindex + ') ').children('td.clsQty').text(quantity);
+            
             }
 
 
@@ -357,22 +358,23 @@
     });
     $(document).on('click', '.clsEditRow', function (e) {
         e.preventDefault();
-        alert("Edit");
+        
 
-        var srNo = $(this).closest('tr').children('td.SrNo').text();
-        var materialID = $(this).closest('tr').children('td.MaterialID').text();
-        var unit = $(this).closest('tr').children('td.UnitOfMeasure').text();
-        var height = $(this).closest('tr').children('td.Height').text();
-        var width = $(this).closest('tr').children('td.Width').text();
-        var length = $(this).closest('tr').children('td.Length').text();
-        var weight = $(this).closest('tr').children('td.Weight').text();
-        var quantity = $(this).closest('tr').children('td.Qty').text();
-        alert(materialID);
-
+        var srNo = $(this).closest('tr').children('td.clsSrNo').text();
+        var materialID = $(this).closest('tr').children('td.clsMaterialID').text();
+        var ConversionFactor = $(this).closest('tr').children('td.clsConversionFactor').text();
+        var unit = $(this).closest('tr').children('td.clsUnitOfMeasure').text();
+        var height = $(this).closest('tr').children('td.clsHeight').text();
+        var width = $(this).closest('tr').children('td.clsWidth').text();
+        var length = $(this).closest('tr').children('td.clsLength').text();
+        var weight = $(this).closest('tr').children('td.clsWeight').text();
+        var quantity = $(this).closest('tr').children('td.clsQty').text();
+        
+        
         $('#hdnOperationType').val('U');
         $('#hdnUpdateSrNo').val(srNo);
-        $("#ddlMaterial option[value = '"+ materialID +"']").attr("selected", "selected");
-        $("#ddlUnit option[value = '" + unit + "']").attr("selected", "selected");
+        $("#ddlMaterial option[value = '" + materialID + "']").attr("selected", "selected");
+        $("#ddlUnit option[value = '" + ConversionFactor + "']").attr("selected", "selected");
         //$("#ddlMaterial").val(materialID);
         $("#txt_Height").val(height);
         $("#txt_Width").val(width);
@@ -380,8 +382,9 @@
         $("#txt_Weight").val(weight);
         $("#txt_Quantity").val(quantity);
         var row = $(this).closest('tr').index();
-
         $('#hdnRowNo').val(row);
+        
+        
 
 
     });
@@ -437,6 +440,43 @@
 
             return 0;
         }
+        //adding Load Grid Details In Array
+        var idArrLoadDetails = [];
+        $('#tblGoodsDetail tbody tr').each(function (k, v) {
+            var trElement = $(this);
+
+            var tdVals = trElement.find('td.clsSrNo').text() + "~" +
+                trElement.find('td.clsMaterialID').text() + "~" +
+                trElement.find('td.clsConversionFactor').text() + "~" +
+                trElement.find('td.clsUnitOfMeasure').text() + "~" +
+                trElement.find('td.clsHeight').text() + "~" +
+                trElement.find('td.clsWidth').text() + "~" +
+                trElement.find('td.clsLength').text() + "~" +
+                trElement.find('td.clsWeight').text() + "~" +
+                trElement.find('td.clsQty').text();
+            alert(tdVals);
+            idArrLoadDetails.push(tdVals);
+
+        });
+
+        var LoadDetails = [];
+        for (var i = 0; i < idArrLoadDetails.length; i++) {
+            var arrElement = idArrLoadDetails[i].split("~");
+            item = {}
+            item["LoadDetailID"] = arrElement[0];
+            item["MaterialID"] = arrElement[1];
+            item["ConversionFactor"] = arrElement[2];
+            item["UnitOfMeasure"] = arrElement[3]; 
+            item["Height"] = arrElement[4];
+            item["Width"] = arrElement[5];
+            item["Length"] = arrElement[6];
+            item["Weight"] = arrElement[7];
+            item["Qty"] = arrElement[8];
+            LoadDetails.push(item);
+        }
+
+
+
 
         $.ajax({
             type: 'POST',
@@ -454,8 +494,8 @@
                 ContactNo: $("#txt_Phone").val(),
                 Email: $("#txt_Mail").val(),
                 Address: $("#txt_Address").val(),
-                Status:0
-                //_loadDetails: LoadDetails
+                Status:0,
+                _loadDetails: LoadDetails
             },
             success: function (da) {
                 alert(da);

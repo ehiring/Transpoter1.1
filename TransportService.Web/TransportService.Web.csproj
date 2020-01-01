@@ -172,7 +172,6 @@
     <Content Include="assets\calculator-3836901_1920-e1552787374100.jpg" />
     <Content Include="assets\css\animate.css" />
     <Content Include="assets\css\bootstrap.css" />
-    <Content Include="assets\css\colors\turquoise.css" />
     <Content Include="assets\css\custom.css" />
     <Content Include="assets\css\demo.css" />
     <Content Include="assets\css\font-awesome.min.css" />
@@ -204,7 +203,6 @@
     <Content Include="assets\js\owl.carousel.min.js" />
     <Content Include="assets\js\switch.js" />
     <Content Include="assets\js\waypoints.min.js" />
-    <Content Include="assets\LOAD.JS" />
     <Content Include="assets\rs-plugin\css\prettyPhoto.css" />
     <Content Include="assets\rs-plugin\css\settings.css" />
     <Content Include="assets\rs-plugin\js\jquery.themepunch.revolution.min.js" />
@@ -268,7 +266,6 @@
     <Content Include="Views\TLoader\EditLoad.cshtml" />
     <Content Include="Views\TLoader\Test.cshtml" />
     <Content Include="Views\TLoader\AddLoad.cshtml" />
-    <Content Include="Views\TLoader\Old_AddSubTrip.cshtml" />
     <Content Include="Views\Home\Test.cshtml" />
     <Content Include="Views\Home\TestNew.cshtml" />
     <Content Include="Views\TLoader\trail_load.cshtml" />
@@ -276,6 +273,9 @@
     <Content Include="Views\TLoader\AddSubTrip.cshtml" />
     <Content Include="Views\TLoader\_AvailabeLoadSpace.cshtml" />
     <Content Include="Views\TLoader\_VehiclSizeAndCapacity.cshtml" />
+    <Content Include="Views\TLoader\Registration.cshtml" />
+    <Content Include="Views\TLoader\RegistrationNew.cshtml" />
+    <Content Include="Views\TLoader\_Registration.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
