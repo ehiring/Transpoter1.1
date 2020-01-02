@@ -276,6 +276,7 @@
     <Content Include="Views\TLoader\Registration.cshtml" />
     <Content Include="Views\TLoader\RegistrationNew.cshtml" />
     <Content Include="Views\TLoader\_Registration.cshtml" />
+    <Content Include="Views\TLoader\EditTrip.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

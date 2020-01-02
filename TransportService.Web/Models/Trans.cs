@@ -73,19 +73,25 @@ namespace TransportService.Web.Models
         }
         [Key]
         public int TripID { get; set; }
-     
         public int? SourceID { get; set; }
         public int? DestinationID { get; set; }
         public int? VehicleID { get; set; }
-        public int? VehicleTypeID { get; set; }
         public string VehicleType { get; set; }
-        public string StartDate { get; set; }
-        public string EndDate { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime? TripStartDate { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime? TripEndDate { get; set; }
+
         public string Source { get; set; }
         public string Destination { get; set; }
         public string Route_Details { get; set; }
         public string TripStatus { get; set; }
         public int? TotalRows { get; set; }
+        public IEnumerable<TripDetail> TripDetails { get; set; }
         public IEnumerable<RouteDetails> RouteList { get; set; }
         public StaticPagedList<Transpoter> TransDetails { get; set; }
         public IEnumerable<subtripDetails> SubTDetails { get; set; }
@@ -94,6 +100,36 @@ namespace TransportService.Web.Models
 
 
     }
+    public class TranspoterEdit
+    {
+        public TranspoterEdit()
+        {
+
+        }
+        [Key]
+        public int TripID { get; set; }
+        public int? SourceID { get; set; }
+        public int? DestinationID { get; set; }
+        public int? VehicleID { get; set; }
+        
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime? TripStartDate { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime? TripEndDate { get; set; }
+        
+        
+        public int Status { get; set; }
+        
+        public IEnumerable<TripDetail> TripDetails { get; set; }
+        public IEnumerable<RouteDetails> RouteList { get; set; }
+        
+    }
+
+
     public class CityArray
     {
         [Key]

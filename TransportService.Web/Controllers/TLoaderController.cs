@@ -21,7 +21,7 @@ namespace TransportService.Web.Controllers
             _tripBusinessLayer = new TripBusinessLayer();
         }
 
-        #region "New Code"
+        #region "Trip Methods"
 
         public ActionResult Index(int? page)
         {
@@ -47,32 +47,6 @@ namespace TransportService.Web.Controllers
             ViewData["SearchApplied"] = 1;
             return Request.IsAjaxRequest() ? (ActionResult)PartialView("_TripList", _transpoter) : View("_TripList", _transpoter);
         }
-        public ActionResult SearchLoads(int? page, string Source, string Destination)
-        {
-            Loader _loader = new Loader();
-            _loader.Loaders = _tripBusinessLayer.GetLoaderList(page, Source,Destination);
-            _loader.LoadDetails = _tripBusinessLayer.GetLoadeDetails();
-            _loader.MaterialList = _tripBusinessLayer.GetMaterialList();
-
-            ViewData["CityList"] = _tripBusinessLayer.GetDropDownData("CityList", 0);
-            ViewData["SearchApplied"] = 0;
-
-            // return View();
-            return Request.IsAjaxRequest() ? (ActionResult)PartialView("_LoadList", _loader) : View("_LoadList", _loader);
-        }
-        public ActionResult New_LoaderIndex(int? page)
-        {
-            Loader _loader = new Loader();
-            _loader.Loaders = _tripBusinessLayer.GetLoaderList(page, "", "");
-            _loader.LoadDetails = _tripBusinessLayer.GetLoadeDetails();
-            _loader.MaterialList = _tripBusinessLayer.GetMaterialList();
-
-            ViewData["CityList"] = _tripBusinessLayer.GetDropDownData("CityList", 0);
-            ViewData["SearchApplied"] = 0;
-
-            // return View();
-            return Request.IsAjaxRequest() ? (ActionResult)PartialView("New_LoaderIndex", _loader) : View("New_LoaderIndex", _loader);
-        }
         public ActionResult AddTrip()
         {
             ViewData["CityList"] = _tripBusinessLayer.GetDropDownData("CityList", 0);
@@ -81,7 +55,6 @@ namespace TransportService.Web.Controllers
             ViewData["UOMList"] = _tripBusinessLayer.GetDropDownData("UOMList", 0);
             return View();
         }
-
         [HttpPost]
         public ActionResult SaveTrip(Transpoter T, List<CityArray> CityRootId, List<TripDetail> _tripDetails)
         {
@@ -121,7 +94,7 @@ namespace TransportService.Web.Controllers
             dtTripDetail.Columns.Add("Weight", typeof(decimal));
             dtTripDetail.Columns.Add("Qty", typeof(int));
             dtTripDetail.Columns.Add("ConversionFactor", typeof(decimal));
-            
+
 
             if (_tripDetails != null)
             {
@@ -164,15 +137,95 @@ namespace TransportService.Web.Controllers
           new SqlParameter("@SourceID", T.SourceID == null ? (object)DBNull.Value : T.SourceID),
           new SqlParameter("@DestinationID", T.DestinationID == null ? (object)DBNull.Value : T.DestinationID),
           new SqlParameter("@VehicleID", T.VehicleID == null ? (object)DBNull.Value : T.VehicleID),
-          new SqlParameter("@TripStartDate", T.StartDate == null ? (object)DBNull.Value : T.StartDate),
-          new SqlParameter("@TripEndDate", T.EndDate == null ? (object)DBNull.Value : T.EndDate),
+          new SqlParameter("@TripStartDate", T.TripStartDate == null ? (object)DBNull.Value : T.TripStartDate),
+          new SqlParameter("@TripEndDate", T.TripEndDate == null ? (object)DBNull.Value : T.TripEndDate),
           new SqlParameter("@Status", T.TripStatus),
           new SqlParameter("@AddedBy", 1),
           tvpParamCityRoot,
           tvpParamTripDetails);
             return Json("Trip Posted Sucessfull");
-        
 
+
+        }
+        public ActionResult EditTrip(int TripID)
+        {
+            ViewData["CityList"] = _tripBusinessLayer.GetDropDownData("CityList", 0);
+            ViewData["VehicleList"] = _tripBusinessLayer.GetDropDownData("VehicleList", 1); //pass @val= ownerID i.e. Login ClientID
+            ViewData["MaterialList"] = _tripBusinessLayer.GetDropDownData("MaterialList", 0);
+            ViewData["UOMList"] = _tripBusinessLayer.GetDropDownData("UOMList", 0);
+
+
+            TranspoterEdit transpoterEdit = _tripBusinessLayer.GetTripByID(TripID);
+            transpoterEdit.TripDetails = _tripBusinessLayer.GetTripDetailsByID(TripID);
+
+            return View(transpoterEdit);
+        }
+
+        [HttpPost]
+        public ActionResult EditTrip(Transpoter transpoter, List<TripDetail> _tripDetails)
+        {
+            DataTable dtTripDetail = new DataTable();
+            dtTripDetail.Columns.Add("TripDetailID", typeof(int));
+            dtTripDetail.Columns.Add("MaterialID", typeof(int));
+            dtTripDetail.Columns.Add("UnitOfMeasure", typeof(string));
+            dtTripDetail.Columns.Add("Height", typeof(decimal));
+            dtTripDetail.Columns.Add("Width", typeof(decimal));
+            dtTripDetail.Columns.Add("Length", typeof(decimal));
+            dtTripDetail.Columns.Add("Weight", typeof(decimal));
+            dtTripDetail.Columns.Add("Qty", typeof(int));
+            dtTripDetail.Columns.Add("ConversionFactor", typeof(decimal));
+
+
+            if (_tripDetails != null)
+            {
+                if (_tripDetails.Count > 0)
+                {
+                    foreach (var item in _tripDetails)
+                    {
+                        DataRow dr_LoadDetail = dtTripDetail.NewRow();
+                        dr_LoadDetail["TripDetailID"] = item.TripDetailID;
+                        dr_LoadDetail["MaterialID"] = item.MaterialID;
+                        dr_LoadDetail["ConversionFactor"] = item.ConversionFactor;
+                        dr_LoadDetail["UnitOfMeasure"] = item.UnitOfMeasure;
+                        dr_LoadDetail["Height"] = item.Height;
+                        dr_LoadDetail["Width"] = item.Width;
+                        dr_LoadDetail["Length"] = item.Length;
+                        dr_LoadDetail["Weight"] = item.Weight;
+                        dr_LoadDetail["Qty"] = item.Qty;
+                        dtTripDetail.Rows.Add(dr_LoadDetail);
+                    }
+                }
+            }
+
+            SqlParameter tvpParamTripDetails = new SqlParameter();
+            tvpParamTripDetails.ParameterName = "@UDTable_TripDetails";
+            tvpParamTripDetails.SqlDbType = System.Data.SqlDbType.Structured;
+            tvpParamTripDetails.Value = dtTripDetail;
+            tvpParamTripDetails.TypeName = "UDTable_TripDetails";
+
+            JobDbContext _jobDbContext = new JobDbContext();
+            var result = _jobDbContext.Database.ExecuteSqlCommand(@"exec USP_UpdateTripWhereID
+                    @TripID,
+                    @SourceID, 
+                    @DestinationID ,
+                    @VehicleID, 
+                    @TripStartDate,
+                    @TripEndDate ,
+                    @Status ,
+                    @AddedBy,
+                    @RouteCityIDs,
+                    @UDTable_TripDetails",
+          new SqlParameter("@SourceID", transpoter.SourceID == null ? (object)DBNull.Value : transpoter.SourceID),
+          new SqlParameter("@DestinationID", transpoter.DestinationID == null ? (object)DBNull.Value : transpoter.DestinationID),
+          new SqlParameter("@VehicleID", transpoter.VehicleID == null ? (object)DBNull.Value : transpoter.VehicleID),
+          new SqlParameter("@TripStartDate", transpoter.TripStartDate == null ? (object)DBNull.Value : transpoter.TripStartDate),
+          new SqlParameter("@TripEndDate", transpoter.TripEndDate == null ? (object)DBNull.Value : transpoter.TripEndDate),
+          new SqlParameter("@Status", transpoter.TripStatus),
+          new SqlParameter("@AddedBy", 1),
+          //tvpParamCityRoot,
+          tvpParamTripDetails);
+          return Json("Trip Updated Sucessfull");
+            
         }
         public ActionResult AddSubTrip(int? Source, int TripId = 0)
         {
@@ -181,7 +234,7 @@ namespace TransportService.Web.Controllers
             ViewData["UOMList"] = _tripBusinessLayer.GetDropDownData("UOMList", 0);
             ViewBag.tripid = TripId;
             ViewBag.Source = Source;
-            return View(); 
+            return View();
         }
 
         public JsonResult GetCityAgainstTheSource(int TripID = 0, int SourceID = 0)
@@ -215,6 +268,44 @@ namespace TransportService.Web.Controllers
 
 
         }
+        public ActionResult GetAvailableSizeCapacityOfVehicle(int TripId, int SourceID, int DestinationID)
+        {
+
+            var data = _tripBusinessLayer.GetAvailableSizeCapacityOfVehicle(TripId, SourceID, DestinationID);
+            return Request.IsAjaxRequest()
+                    ? (ActionResult)PartialView("_VehiclSizeAndCapacity", data)
+                    : View("_VehiclSizeAndCapacity", data);
+
+
+        }
+
+        public ActionResult SearchLoads(int? page, string Source, string Destination)
+        {
+            Loader _loader = new Loader();
+            _loader.Loaders = _tripBusinessLayer.GetLoaderList(page, Source,Destination);
+            _loader.LoadDetails = _tripBusinessLayer.GetLoadeDetails();
+            _loader.MaterialList = _tripBusinessLayer.GetMaterialList();
+
+            ViewData["CityList"] = _tripBusinessLayer.GetDropDownData("CityList", 0);
+            ViewData["SearchApplied"] = 0;
+
+            // return View();
+            return Request.IsAjaxRequest() ? (ActionResult)PartialView("_LoadList", _loader) : View("_LoadList", _loader);
+        }
+        public ActionResult New_LoaderIndex(int? page)
+        {
+            Loader _loader = new Loader();
+            _loader.Loaders = _tripBusinessLayer.GetLoaderList(page, "", "");
+            _loader.LoadDetails = _tripBusinessLayer.GetLoadeDetails();
+            _loader.MaterialList = _tripBusinessLayer.GetMaterialList();
+
+            ViewData["CityList"] = _tripBusinessLayer.GetDropDownData("CityList", 0);
+            ViewData["SearchApplied"] = 0;
+
+            // return View();
+            return Request.IsAjaxRequest() ? (ActionResult)PartialView("New_LoaderIndex", _loader) : View("New_LoaderIndex", _loader);
+        }
+
         [HttpPost]
         public ActionResult SaveSubTrip(int? sourceId, int? destinationId, int? TripId, List<TripDetail> _tripDetails)
         {
@@ -275,46 +366,9 @@ namespace TransportService.Web.Controllers
 
         }
 
-        public ActionResult AddTruck()
-        {
-            ViewData["TruckCapacityList"] = _tripBusinessLayer.GetDropDownData("TruckCapacityList");
-            ViewData["VehicalTypeList"] = _tripBusinessLayer.GetDropDownData("VehicalTypeList");
-            return View();
-        }
-        [HttpPost]
-        public ActionResult AddTruck1(Vehicle _vehicle)
-        {
-            JobDbContext jobDbContext = new JobDbContext();
-            var result = jobDbContext.Database.ExecuteSqlCommand(@"exec USP_AddVehicle @VehicleTypeID ,
-            @CapacityID ,
-            @VehicleNo ,
-            @Height ,
-            @Width ,
-            @Length ,
-            @Description ,
-            @InsuredBy  ,
-            @InsuranceStartDate ,
-            @InsuranceExpDate ,
-            @OwnerID ,
-            @GPSStatus ,
-            @Phone ,
-            @ContactName ",
-            new SqlParameter("@VehicleTypeID", _vehicle.VehicleTypeID),
-             new SqlParameter("@CapacityID", _vehicle.CapacityID),
-              new SqlParameter("@VehicleNo", _vehicle.VehicleNo),
-               new SqlParameter("@Height", _vehicle.Height == null ? (object)DBNull.Value : _vehicle.Height),
-                new SqlParameter("@Width", _vehicle.Width == null ? (object)DBNull.Value : _vehicle.Width),
-                 new SqlParameter("@Length", _vehicle.Length == null ? (object)DBNull.Value : _vehicle.Length),
-                  new SqlParameter("@Description", _vehicle.Description == null ? (object)DBNull.Value : _vehicle.Description),
-                   new SqlParameter("@InsuredBy", _vehicle.InsuredBy == null ? (object)DBNull.Value : _vehicle.InsuredBy),
-                    new SqlParameter("@InsuranceStartDate", _vehicle.InsuranceStartDate == null ? (object)DBNull.Value : _vehicle.InsuranceStartDate),
-                     new SqlParameter("@InsuranceExpDate", _vehicle.InsuranceExpDate == null ? (object)DBNull.Value : _vehicle.InsuranceExpDate),
-                      new SqlParameter("@OwnerID", _vehicle.OwnerID == null ? (object)DBNull.Value : _vehicle.OwnerID),
-                       new SqlParameter("@GPSStatus", _vehicle.GPSStatus == null ? (object)DBNull.Value : _vehicle.GPSStatus),
-                        new SqlParameter("@Phone", _vehicle.Phone == null ? (object)DBNull.Value : _vehicle.Phone),
-                        new SqlParameter("@ContactName", _vehicle.ContactName == null ? (object)DBNull.Value : _vehicle.ContactName));
-            return Json("Truck Added Sucessfully");
-        }
+        #endregion
+
+        #region "Load Methods"
 
         public ActionResult AddLoad()
         {
@@ -407,14 +461,12 @@ namespace TransportService.Web.Controllers
             ViewData["CityList"] = _tripBusinessLayer.GetDropDownData("CityList", 0);
             ViewData["MaterialList"] = _tripBusinessLayer.GetDropDownData("MaterialList", 0);
             ViewData["UOMList"] = _tripBusinessLayer.GetDropDownData("UOMList", 0);
-            IEnumerable<LoaderEdit> LE = _tripBusinessLayer.GetLoaderByID(LoadID);
-            LoaderEdit data = new LoaderEdit();
-           
-            
-            data = LE.FirstOrDefault();
-            data.LoadDetails = _tripBusinessLayer.GetLoadDetailsByID(LoadID);
-            ViewData["LoadDetailCount"] = data.LoadDetails.Count<LoadDetail>();
-            return View(data);
+
+            LoaderEdit loaderEdit = new LoaderEdit();
+            loaderEdit = _tripBusinessLayer.GetLoaderByID(LoadID);
+            loaderEdit.LoadDetails = _tripBusinessLayer.GetLoadDetailsByID(LoadID);
+            ViewData["LoadDetailCount"] = loaderEdit.LoadDetails.Count<LoadDetail>();
+            return View(loaderEdit);
 
         }
 
@@ -494,8 +546,52 @@ namespace TransportService.Web.Controllers
             return Json("Load Updated Sucessfully");
 
         }
+        #endregion
 
-        
+
+
+        public ActionResult AddTruck()
+        {
+            ViewData["TruckCapacityList"] = _tripBusinessLayer.GetDropDownData("TruckCapacityList");
+            ViewData["VehicalTypeList"] = _tripBusinessLayer.GetDropDownData("VehicalTypeList");
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddTruck1(Vehicle _vehicle)
+        {
+            JobDbContext jobDbContext = new JobDbContext();
+            var result = jobDbContext.Database.ExecuteSqlCommand(@"exec USP_AddVehicle @VehicleTypeID ,
+            @CapacityID ,
+            @VehicleNo ,
+            @Height ,
+            @Width ,
+            @Length ,
+            @Description ,
+            @InsuredBy  ,
+            @InsuranceStartDate ,
+            @InsuranceExpDate ,
+            @OwnerID ,
+            @GPSStatus ,
+            @Phone ,
+            @ContactName ",
+            new SqlParameter("@VehicleTypeID", _vehicle.VehicleTypeID),
+             new SqlParameter("@CapacityID", _vehicle.CapacityID),
+              new SqlParameter("@VehicleNo", _vehicle.VehicleNo),
+               new SqlParameter("@Height", _vehicle.Height == null ? (object)DBNull.Value : _vehicle.Height),
+                new SqlParameter("@Width", _vehicle.Width == null ? (object)DBNull.Value : _vehicle.Width),
+                 new SqlParameter("@Length", _vehicle.Length == null ? (object)DBNull.Value : _vehicle.Length),
+                  new SqlParameter("@Description", _vehicle.Description == null ? (object)DBNull.Value : _vehicle.Description),
+                   new SqlParameter("@InsuredBy", _vehicle.InsuredBy == null ? (object)DBNull.Value : _vehicle.InsuredBy),
+                    new SqlParameter("@InsuranceStartDate", _vehicle.InsuranceStartDate == null ? (object)DBNull.Value : _vehicle.InsuranceStartDate),
+                     new SqlParameter("@InsuranceExpDate", _vehicle.InsuranceExpDate == null ? (object)DBNull.Value : _vehicle.InsuranceExpDate),
+                      new SqlParameter("@OwnerID", _vehicle.OwnerID == null ? (object)DBNull.Value : _vehicle.OwnerID),
+                       new SqlParameter("@GPSStatus", _vehicle.GPSStatus == null ? (object)DBNull.Value : _vehicle.GPSStatus),
+                        new SqlParameter("@Phone", _vehicle.Phone == null ? (object)DBNull.Value : _vehicle.Phone),
+                        new SqlParameter("@ContactName", _vehicle.ContactName == null ? (object)DBNull.Value : _vehicle.ContactName));
+            return Json("Truck Added Sucessfully");
+        }
+
+
         public ActionResult Registration()
         {
             return PartialView("_Registration");
@@ -507,7 +603,7 @@ namespace TransportService.Web.Controllers
         }
 
 
-        #endregion
+        
 
     }
 }

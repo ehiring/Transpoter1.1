@@ -31,7 +31,9 @@
                                             <div class="sc-cSHVUG kBaSPa">
                                                 <p class="sc-kAzzGY eVnWFt">
                                                     <span class="sc-chPdSV glJpds" title="!9 Feet Container" style="color: darkgray;">@item1.VehicleType</span>
-                                                    <span class="sc-kgoBCf cQRYis">| Start Date @item1.StartDate | End Date @item1.StartDate</span>
+                                                    <span class="sc-kgoBCf cQRYis">| Start Date @item1.TripStartDate | End Date @item1.TripEndDate</span>
+                                                    <span >@Html.ActionLink("Edit Trip", "EditTrip", new { TripID = item1.TripID },new { @class= "linkDecoration" }) <br /></span>
+                                                    
                                                 </p>
 
                                                 <ul class="sc-kGXeez sOzzB">

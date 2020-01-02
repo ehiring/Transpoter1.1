@@ -1,131 +1,124 @@
-﻿@model TransportService.Web.Models.Activity.LoaderEdit
+﻿@model TransportService.Web.Models.TranspoterEdit
 @{
-    ViewBag.Title = "EditLoad";
+    /**/
+
+    ViewBag.Title = "AddTrip";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<script src="~/Scripts/jquery-3.3.1.min.js"></script>
-
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
 @using (Html.BeginForm())
 {
-    @Html.AntiForgeryToken()
+
     <div class="container-fluid">
         <hr />
         <div class="row">
-            <div class="col-lg-12 pull-left">
+            <div class="col-sm-12 pull-left">
                 @*<input id="btnSubmit" type="submit" class="btn btn-primary" name="regform" value="Create Truck">*@
-                <input type="button" id="btnUpdate" class="btn btn-primary" name="regform" value="Update Load">
+                <input type="button" id="btnSubmit" class="btn btn-primary" name="regform" value="Update Trip">
+
             </div>
         </div>
 
         <div class="row">
             <hr />
             <div class="col-lg-6">
-               
+
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h5 class="panel-title"><b>Edit Load</b> </h5>
+                        <h5 class="panel-title"><b>Trip Details</b> </h5>
                     </div>
-
                     <div class="panel-body">
+
                         <div class="col-sm-6 form-group">
                             <label><i class="red">*</i> Source  </label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
-                                @Html.DropDownList("Source", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text", Model.SourceID), "Select Source", new { @class = "form-control", @id = "SourceID", Title = "SourceID" })
+                                @Html.DropDownList("Source", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text", Model.SourceID), "Select Source", new { @class = "form-control", @id = "SourceID", Title = "Select Source" })
                             </div>
+
                         </div>
 
                         <div class="col-sm-6 form-group">
                             <label><i class="red">*</i> Destination </label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
-                                @Html.DropDownList("Destination", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text", Model.DestinationID), "Select Destination", new { @class = "form-control", @id = "DestinationID", Title = "DestinationID" })
-
+                                @Html.DropDownList("Destination", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text", Model.DestinationID), "Select Destination", new { @class = "form-control", @id = "DestinationID", Title = "Select Destination" })
                             </div>
                         </div>
 
                         <div class="col-sm-6 form-group">
-                            <label>Pick Up Date:</label>
+                            <label>Start Date</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                @Html.TextBoxFor(Model => Model.PickUpDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date", @id = "PickUpDate" })
-                                @*<input type="date" id="PickUpDate" class="form-control dropwidth" placeholder="YYYY-MM-DD" value="@Model.PickUpDate" />*@
-                                @*<input type="text" id="dp2" data-date-format="yyyy-mm-dd" placeholder="YYYY-MM-DD" class="form-control select_date" name="truck_insurestartdate" value="" autocomplete="off" onkeypress="return checkdate(event);">*@
+                                @*<input type="date" id="StartDate" class="form-control dropwidth" placeholder="YYYY-MM-DD" title="Select Pick Up Date" />*@
+                                @Html.TextBoxFor(Model => Model.TripStartDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date", @id = "Select Start Date" })
                             </div>
                         </div>
 
                         <div class="col-sm-6 form-group">
-                            <label><i class="red">*</i>Load Type:</label>
+                            <label>End Date</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                @*<input type="date" id="EndDate" class="form-control dropwidth" placeholder="YYYY-MM-DD" title="Select Pick Up Date" />*@
+                                @Html.TextBoxFor(Model => Model.TripEndDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date", @id = "Select End Date" })
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 form-group">
+                            <label><i class="red">*</i>Trip Status </label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-shopping-cart"></i></span>
-                                <select id="ddlLoadType" class="form-control">
-                                    <option value="0"> Select Load Type </option>
-                                    <option value="Full Truck Load(Above 3000 Kg)"> Full Truck Load(Above 3000 Kg) </option>
-                                    <option value="Part Truck Load(500-3000 Kg)">Part Truck Load(500-3000 Kg) </option>
-                                    <option value="Parcel (Less than 500 Kg)">Parcel (Less than 500 Kg) </option>
+                                <select id="TripStatus" class="form-control" title="Select Load Type">
+                                    <option value="0">In Process</option>
+                                    <option value="1">Complted</option>
                                 </select>
                             </div>
                         </div>
 
+
                         <div class="col-sm-6 form-group">
-                            <label><i class="red">*</i>Sub Service:</label>
+                            <label><i class="red">*</i>Vehicle </label>
                             <div class="input-group">
-                                <span class="input-group-addon"><i class="fas fa-users"></i></span>
-                                <select id="ddlSubService" class="form-control">
-                                    <option> Select Sub Service</option>
-                                    <option value="Commercial"> Commercial </option>
-                                    <option value="NonCommercial_Business">Non Commercial(Business) </option>
-                                    <option value="NonCommercial_Household">Non Commercial(Household) </option>
-                                </select>
+                                <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+                                @Html.DropDownList("model.VehicleID", new SelectList((System.Collections.IEnumerable)ViewData["VehicleList"], "Value", "Text",Model.VehicleID), "Select Source", new { @class = "form-control dropwidth", @id = "VehicleID", Title = "Select Vehicle" })
                             </div>
                         </div>
 
                         <div class="col-sm-6 form-group">
-                            <label>Reciever Name:</label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fas fa-user"></i></span>
-                                <input id="txt_Receiver" type="text" class="form-control" name="altr_name" value="@Model.Receiver" placeholder="Contact Name">
+                            <label>Add City Route</label>
+                            <div style="display:flex;">
+                                @Html.DropDownList("model.SourceID", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select City", new { @class = "form-control dropwidth", @id = "CityRootID", Title = "Add Cities To The Root" })
+                                <i class="fa fa-plus" id="addRoute" aria-hidden="true" style="margin-top: 10px;margin-left: 10px;margin-right:12px;"></i>
+
                             </div>
                         </div>
+                        <div id="divVehicleCapcity" class="col-sm-6 form-group">
 
-                        
-                        
 
-                        <div class="col-sm-6 form-group">
-                            <label>Phone:</label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                <input id="txt_Phone" type="number" class="form-control" name="truck_phone" value="@Model.ContactNo" placeholder="Phone" maxlength="10">
-                            </div>
                         </div>
-
-                        <div class="col-sm-6 form-group">
-                            <label>Email:</label>
-                            <div class="input-group">
-
-                                <span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
-                                <input id="txt_Mail" type="text" class="form-control" name="truck_phone" value="@Model.Email" placeholder="Email">
-                            </div>
-                        </div>
-                        
-                        
-
+                        <label id="lblTest"></label>
                         <div class="col-sm-12 form-group">
-                            <label>Address:</label>
-                            <div class="input-group">
-
-                                <span class="input-group-addon"><i class="far fa-address-card"></i></span>
-                                @*<input id="truck_phone" type="text" class="form-control" name="truck_phone" value="" placeholder="Email" onkeypress="return isNumberKey(event);">*@
-                                @*<textarea id="txt_Address" class="form-control" name="Adress" placeholder="Address" rows="2" cols="150"></textarea>*@
-                                @Html.TextArea("Address", Model.Address, new { @class = "form-control", @id = "txt_Address" })
+                            <label>Route Details</label>
+                            <div class="form-group">
+                                <div id="showrootdetails" style="margin-top: 12px;" SeqNo="0">
+                                    <span class="Rootmgs" style="color:#939393;font-size:small;">Add Route From Source To Destination</span>
+                                </div>
                             </div>
                         </div>
+
+                        <div class="row route">
+                            <div class="col-sm-12">
+
+                            </div>
+
+                        </div>
+
 
                     </div>
                 </div>
-            </div>
 
+            </div>
 
             <div class="col-lg-6">
 
@@ -135,63 +128,63 @@
                     </div>
 
                     <div class="panel-body">
-
                         <div class="col-sm-6 form-group">
                             <label><i class="red">*</i> Material</label>
                             <div>
-                                @Html.DropDownList("Material", new SelectList((System.Collections.IEnumerable)ViewData["MaterialList"], "Value", "Text"), "Select Material", new { @class = "form-control", @id = "ddlMaterial", Title = "Material" })
+                                @Html.DropDownList("Material", new SelectList((System.Collections.IEnumerable)ViewData["MaterialList"], "Value", "Text"), "Select Material", new { @class = "form-control", @id = "ddlMaterial", Title = "Select Material" })
                             </div>
 
                         </div>
+
                         <div class="col-sm-6 form-group">
                             <label><i class="red">*</i> Unit</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-balance-scale" aria-hidden="true"></i></span>
                                 @Html.DropDownList("Unit", new SelectList((System.Collections.IEnumerable)ViewData["UOMList"], "Value", "Text"), "Select Unit", new { @class = "form-control", @id = "ddlUnit", Title = "Select Unit" })
+
                             </div>
                         </div>
                         <div class="col-sm-6 form-group">
                             <label>Heigth</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-up"></i></span>
-                                <input id="txt_Height" type="number" class="form-control" name="altr_name" value="" placeholder="Height">
+                                <input id="txt_Height" type="number" class="form-control" name="altr_name" value="" placeholder="Height" title="Enter Height">
                             </div>
                         </div>
                         <div class="col-sm-6 form-group">
                             <label>Width</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-right"></i></span>
-                                <input id="txt_Width" type="number" class="form-control" name="altr_name" value="" placeholder="Width">
+                                <input id="txt_Width" type="number" class="form-control" name="altr_name" value="" placeholder="Width" title="Enter Width">
                             </div>
                         </div>
+
                         <div class="col-sm-6 form-group">
                             <label>Length</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-down"></i></span>
-                                <input id="txt_Length" type="number" class="form-control" name="altr_name" value="" placeholder="Length">
-                            </div>
-                        </div>
-                        <div class="col-sm-6 form-group">
-                            <label>Weight(Tonn)</label>
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-glass"></i></span>
-                                <input id="txt_Weight" type="number" class="form-control" name="altr_name" value="" placeholder="Weigtht">
+                                <input id="txt_Length" type="number" class="form-control" name="altr_name" value="" placeholder="Length" title="Enter Length">
                             </div>
                         </div>
                         <div class="col-sm-6 form-group">
                             <label>Quantity</label>
                             <div class="input-group">
 
-                                <input id="txt_Quantity" type="number" class="form-control" name="altr_name" value="" placeholder="Quantity">
+                                <input id="txt_Quantity" type="number" class="form-control" name="altr_name" value="" placeholder="Quantity" title="Enter Quantity">
                             </div>
                         </div>
+                        <div class="col-sm-6 form-group">
+                            <label>Total Weight(Tonn)</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-glass"></i></span>
+                                <input id="txt_Weight" type="number" class="form-control" name="altr_name" value="" placeholder="Weigtht" title="Enter Weight">
+                            </div>
+                        </div>
+
                         <div class="row">
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <div>
-                                        <input type="hidden" id="hdnOperationType" value="I" />
-                                        <input type="hidden" id="hdnUpdateSrNo" value="" />
-                                        <input type="hidden" id="hdnRowNo" value="" />
                                         <button type="button" id="btnAddGoods" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Add Good Details</button>
                                     </div>
                                 </div>
@@ -199,9 +192,11 @@
                         </div>
 
                         <div class="form-group">
-                            <input type="hidden" id="idLastSrNo" name="LastSrNo" value="">
+                            <input type="hidden" id="RowCount" name="RowCount" value="0">
+
                             <div>
-                                <table class="table table-bordered" id="tblGoodsDetail">
+                                <input type="hidden" id="idLastSrNo" name="LastSrNo" value="">
+                                <table class="table table-bordered" id="tblGoodsDetail" title="Enter Good Details">
                                     <thead>
                                         <tr>
                                             <th>Sr.</th>
@@ -212,65 +207,140 @@
                                             <th>Height</th>
                                             <th>Width</th>
                                             <th>Length</th>
-                                            <th>Weight</th>
-                                            <th>Qty</th>
-                                            <th>Action</th>
-                                            <th style="display:none">Operation</th>
-
+                                            <th>Weight(Tonn)</th>
+                                            <th>Quantity</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach (var item in Model.LoadDetails)
+                                        @foreach (var item in Model.TripDetails)
                                         {
                                             <tr>
-                                                <td class="clsSrNo">@item.LoadDetailID</td>
+                                                <td class="clsSrNo">@item.TripDetailID</td>
                                                 <td style="display:none" class="clsMaterialID"> @item.MaterialID</td>
                                                 <td class="clsMaterialName">@item.MaterialName</td>
                                                 <td style="display:none" class="clsConversionFactor"> @item.ConversionFactor</td>
                                                 <td class="clsUnitOfMeasure">@item.UnitOfMeasure </td>
                                                 <td class="clsHeight">@item.Height</td>
                                                 <td class="clsWidth">@item.Width</td>
-                                                <td class="clsLength">@item.Length</td> 
+                                                <td class="clsLength">@item.Length</td>
                                                 <td class="clsWeight">@item.Weight</td>
                                                 <td class="clsQty">@item.Qty</td>
                                                 <td>
                                                     @Html.ActionLink("Edit", null, null, new { @class = "clsEditRow" }) |
-                                                    @Html.ActionLink("Delete", null,null, new { @id = Model.LoadID }, new { @class = "clsDeleteRow" })
+                                                    @Html.ActionLink("Delete", null, null, new { @class = "clsDeleteRow" })
                                                 </td>
-                                                
+
                                             </tr>
                                         }
-
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
-
-
-        <div class="row">
-            @Html.ActionLink("Back to List", "New_LoaderIndex")
-        </div>
     </div>
-
 }
-
 <script>
     $(document).ready(function () {
-    $("#ddlLoadType option[value = '" + "@Model.LoadType" + "']").attr("selected", "selected");
-    $("#ddlSubService option[value = '" + "@Model.SubService" + "']").attr("selected", "selected");
-        var lastSrNo =$ ('#tblGoodsDetail tr:last td:first').text();
+
+        var lastSrNo = $('#tblGoodsDetail tr:last td:first').text();
         $('#idLastSrNo').val(lastSrNo);
+
+
+
+        
+        alert("Hi");
+            $.ajax({
+            url: "@Url.Action("GetAvailableSizeCapacityOfVehicle", "TLoader")",
+            contentType: "application/json",
+            data: JSON.stringify({
+                TripId : @Model.TripID,
+                SourceID : @Model.SourceID,
+                DestinationID : @Model.DestinationID
+            }),
+            dataType: "text",
+            type: "POST",
+            async: true,
+                success: function (data) {
+                    $('#divVehicleCapcity').html(data);
+
+                   
+            },
+            error: function (data) {
+                alert("Error");
+            },
+            complete: function () {
+
+            }
+        });
+
 
     });
 
-    $(document).on('click', '#btnAddGoods', function (e) {
-        var htmlValidation = "";
+    $(document).on('click', '.clsDeleteRow', function (e) {
+        e.preventDefault();
+        alert("Delete");
+        $(this).parents('tr').remove();
+    });
+    $(document).on('click', '.clsEditRow', function (e) {
+        e.preventDefault();
+
+
+        var srNo = $(this).closest('tr').children('td.clsSrNo').text();
+        var materialID = $(this).closest('tr').children('td.clsMaterialID').text();
+        var ConversionFactor = $(this).closest('tr').children('td.clsConversionFactor').text();
+        var unit = $(this).closest('tr').children('td.clsUnitOfMeasure').text();
+        var height = $(this).closest('tr').children('td.clsHeight').text();
+        var width = $(this).closest('tr').children('td.clsWidth').text();
+        var length = $(this).closest('tr').children('td.clsLength').text();
+        var weight = $(this).closest('tr').children('td.clsWeight').text();
+        var quantity = $(this).closest('tr').children('td.clsQty').text();
+        
+
+        $('#hdnOperationType').val('U');
+        $('#hdnUpdateSrNo').val(srNo);
+        $("#ddlMaterial option[value = '" + materialID + "']").attr("selected", "selected");
+        $("#ddlUnit option[value = '" + ConversionFactor + "']").attr("selected", "selected");
+        //$("#ddlMaterial").val(materialID);
+        $("#txt_Height").val(height);
+        $("#txt_Width").val(width);
+        $("#txt_Length").val(length);
+        $("#txt_Weight").val(weight);
+        $("#txt_Quantity").val(quantity);
+        var row = $(this).closest('tr').index();
+        $('#hdnRowNo').val(row);
+
+
+        var availableHeight = parseFloat($('#lblHeight').text());
+        var availableWidth = parseFloat($('#lblWidth').text());
+        var availableLength = parseFloat($('#lblLength').text());
+        var availableCapacity = parseFloat($('#lblCapacity').text());
+
+        alert('availableHeight :' + $('#lblHeight').text());
+        alert('availableWidth :' + availableWidth);
+        alert('availableLength :' + availableLength);
+        alert('availableCapacity :' + availableCapacity);
+
+
+
+        availableHeight = availableHeight + (height * ConversionFactor);
+        availableWidth = availableWidth + (width * ConversionFactor);
+        availableLength = availableLength + (length * ConversionFactor);
+        availableCapacity = availableCapacity + parseFloat(weight);
+
+        $('#lblHeight').text(availableHeight);
+        $('#lblWidth').text(availableWidth);
+        $('#lblLength').text(availableLength);
+        $('#lblCapacity').text(availableCapacity);
+
+
+
+    });
+     $(document).on('click', '#btnAddGoods', function (e) {
+         var bFlagValid = 1;
         var operationType = $('#hdnOperationType').val();
         var SrNo = parseInt($("#idLastSrNo").val());
         alert($("#idLastSrNo").val());
@@ -293,18 +363,72 @@
         var weight = $("#txt_Weight").val();
         var quantity = $("#txt_Quantity").val();
 
-        htmlValidation = (materialID == 0 ? "CargoType/" : "");
-        htmlValidation = htmlValidation + (conversionFactor == 0 ? "Unit/" : "");
-        htmlValidation = htmlValidation + ((height == null || height == "") ? "Height/" : "");
-        htmlValidation = htmlValidation + ((width == null || width == "") ? "Width/" : "");
-        htmlValidation = htmlValidation + ((length == null || length == "") ? "Length/" : "");
-        htmlValidation = htmlValidation + ((weight == null || weight == "") ? "Weight/" : "");
-        htmlValidation = htmlValidation + ((quantity == null || quantity == "") ? "Quantity" : "");
+        
 
-        if (htmlValidation.length != 0) {
-            alert("Please fill the fields (" + htmlValidation + ")");
-            return;
-        }
+         if (materialID == 0) {
+             bFlagValid = 0;
+             $("#ddlMaterial").addClass('borderValidation');
+         }
+         if (conversionFactor == 0) {
+             bFlagValid = 0;
+             $("#ddlUnit").addClass('borderValidation');
+         }
+         if (height == null || height == "") {
+
+             bFlagValid = 0;
+             $("#txt_Height").addClass('borderValidation');
+         }
+
+         if (width == null || width == "") {
+             bFlagValid = 0;
+             $("#txt_Width").addClass('borderValidation');
+         }
+         if (length == null || length == "") {
+
+             bFlagValid = 0;
+             $("#txt_Length").addClass('borderValidation');
+         }
+         if (weight == null || weight == "") {
+
+             bFlagValid = 0;
+             $("#txt_Weight").addClass('borderValidation');
+         }
+         if (quantity == null || quantity == "") {
+             bFlagValid = 0;
+             $("#txt_Quantity").addClass('borderValidation');
+         }
+         if (bFlagValid == 0) {
+
+             return;
+         }
+
+         /*....check if entered size and capacity does not exceed.*/
+         var availableHeight = $("#lblHeight").text();
+         var availableWidth = $("#lblWidth").text();
+         var availableLength = $("#lblLength").text();
+         var availableWeight = $("#lblCapacity").text();
+
+
+
+         /*......Conversion in feet.....*/
+         var feetHeight = height * conversionFactor;
+         var feetWidth = width * conversionFactor;
+         var feetLength = length * conversionFactor;
+
+         var exceedMsg = "";
+         exceedMsg = exceedMsg + (availableHeight < quantity * feetHeight ? "Height/" : "");
+         exceedMsg = exceedMsg + (availableWidth < quantity * feetWidth ? "Width/" : "");
+         exceedMsg = exceedMsg + (availableLength < quantity * feetLength ? "Length/" : "");
+         exceedMsg = exceedMsg + (availableWeight < parseFloat(weight) ? "Weight" : "");
+
+         if (exceedMsg != "") {
+             exceedMsg = exceedMsg + "exceeded. Please enter proper value according to Available size";
+             alert(exceedMsg);
+             return 0;
+         }
+
+
+
         if (operationType == 'I') {
             var bindRow = '<tr>' +
                 '<td class="clsSrNo">' + SrNo + '</td>' +
@@ -339,7 +463,11 @@
             $('#tblGoodsDetail tbody tr:eq(' + rowindex + ') ').children('td.clsWeight').text(weight);
             $('#tblGoodsDetail tbody tr:eq(' + rowindex + ') ').children('td.clsQty').text(quantity);
             
-            }
+         }
+         var availableHeight = availableHeight - (quantity * feetHeight);
+         var availableWidth = availableWidth - (quantity * feetWidth);
+         var availableLength = availableLength - (quantity * feetLength);
+         var availableWeight = availableWeight - weight;
 
 
         $('#ddlMaterial').prop('selectedIndex', 0);
@@ -349,50 +477,18 @@
         $("#txt_Length").val('');
         $("#txt_Weight").val('');
         $("#txt_Quantity").val('')
-        $('#hdnOperationType').val('I');
+         $('#hdnOperationType').val('I');
+         $("#lblHeight").text(availableHeight);
+         $("#lblWidth").text(availableWidth);
+         $("#lblLength").text(availableLength);
+         $("#lblCapacity").text(availableWeight);
     });
-    $(document).on('click', '.clsDeleteRow', function (e) {
-        e.preventDefault();
-        alert("Delete");
-        $(this).parents('tr').remove();
-    });
-    $(document).on('click', '.clsEditRow', function (e) {
-        e.preventDefault();
-        
 
-        var srNo = $(this).closest('tr').children('td.clsSrNo').text();
-        var materialID = $(this).closest('tr').children('td.clsMaterialID').text();
-        var ConversionFactor = $(this).closest('tr').children('td.clsConversionFactor').text();
-        var unit = $(this).closest('tr').children('td.clsUnitOfMeasure').text();
-        var height = $(this).closest('tr').children('td.clsHeight').text();
-        var width = $(this).closest('tr').children('td.clsWidth').text();
-        var length = $(this).closest('tr').children('td.clsLength').text();
-        var weight = $(this).closest('tr').children('td.clsWeight').text();
-        var quantity = $(this).closest('tr').children('td.clsQty').text();
-        
-        
-        $('#hdnOperationType').val('U');
-        $('#hdnUpdateSrNo').val(srNo);
-        $("#ddlMaterial option[value = '" + materialID + "']").attr("selected", "selected");
-        $("#ddlUnit option[value = '" + ConversionFactor + "']").attr("selected", "selected");
-        //$("#ddlMaterial").val(materialID);
-        $("#txt_Height").val(height);
-        $("#txt_Width").val(width);
-        $("#txt_Length").val(length);
-        $("#txt_Weight").val(weight);
-        $("#txt_Quantity").val(quantity);
-        var row = $(this).closest('tr').index();
-        $('#hdnRowNo').val(row);
-        
-        
-
-
-    });
-    $(document).on('click', '#btnUpdate', function (e) {
+    $(document).on('click', '#btnSubmit', function (e) {
         e.preventDefault();
+        alert("A");
         var bflagValid = 1;
         if ($("#SourceID option:selected").val() == null || $("#SourceID option:selected").val() == "") {
-            alert("A");
             bflagValid = 0;
             $("#SourceID").addClass('borderValidation');
 
@@ -400,46 +496,37 @@
         if ($("#DestinationID option:selected").val() == null || $("#DestinationID option:selected").val() == "") {
             bflagValid = 0;
             $("#DestinationID").addClass('borderValidation');
+
         }
-        if ($("#PickUpDate").val() == null || $("#PickUpDate").val() == "") {
+        if ($("#StartDate").val() == null || $("#StartDate").val() == "") {
             bflagValid = 0;
-            $("#PickUpDate").addClass('borderValidation');
-        }
-        if ($("#ddlLoadType option:selected").val() == 0 || $("#ddlLoadType option:selected").val() == "") {
-            bflagValid = 0;
-            $("#ddlLoadType").addClass('borderValidation');
+            $("#StartDate").addClass('borderValidation');
+
         }
 
-        if ($("#ddlSubService option:selected").val() == 0 || $("#ddlSubService option:selected").val() == "") {
+        if ($("#EndDate").val() == null || $("#EndDate").val() == "") {
             bflagValid = 0;
-            $("#ddlSubService").addClass('borderValidation');
+            $("#EndDate").addClass('borderValidation');
+
         }
 
-        if ($("#txt_Receiver").val() == null || $("#txt_Receiver").val() == "") {
+
+        if ($("#VehicleID option:selected").val() == null || $("#VehicleID option:selected").val() == "") {
             bflagValid = 0;
-            $("#txt_Receiver").addClass('borderValidation');
+            $("#VehicleID").addClass('borderValidation');
         }
-        if ($("#txt_Phone").val() == null || $("#txt_Phone").val() == "") {
-            bflagValid = 0;
-            $("#txt_Phone").addClass('borderValidation');
-        }
-        if ($("#txt_Mail").val() == null || $("#txt_Mail").val() == "") {
-            bflagValid = 0;
-            $("#txt_Mail").addClass('borderValidation');
-        }
-        if ($("#txt_Address").val() == null || $("#txt_Address").val() == "") {
-            bflagValid = 0;
-            $("#txt_Address").addClass('borderValidation');
-        }
+        alert('B');
+        
         if ($('#tblGoodsDetail >tbody>tr').length == 0) {
             bflagValid = 0;
             $("#tblGoodsDetail").addClass('borderValidation');
-        }
 
+        }
         if (bflagValid == 0) {
-
             return 0;
+
         }
+        alert('c');
         //adding Load Grid Details In Array
         var idArrLoadDetails = [];
         $('#tblGoodsDetail tbody tr').each(function (k, v) {
@@ -458,12 +545,12 @@
             idArrLoadDetails.push(tdVals);
 
         });
-        
+        alert('d');
         var LoadDetails = [];
         for (var i = 0; i < idArrLoadDetails.length; i++) {
             var arrElement = idArrLoadDetails[i].split("~");
             item = {}
-            item["LoadDetailID"] = arrElement[0];
+            item["TripDetailID"] = arrElement[0];
             item["MaterialID"] = arrElement[1];
             item["ConversionFactor"] = arrElement[2];
             item["UnitOfMeasure"] = arrElement[3]; 
@@ -474,32 +561,29 @@
             item["Qty"] = arrElement[8];
             LoadDetails.push(item);
         }
-
+        alert('e');
 
 
 
         $.ajax({
             type: 'POST',
             dataType: 'json',
-            url: '/TLoader/EditLoad',
+            url: '/TLoader/EditTrip',
             data:
             {
-                LoadID:@Model.LoadID,
+                LoadID:@Model.TripID,
                 SourceID: $("#SourceID option:selected").val(),
                 DestinationID: $("#DestinationID option:selected").val(),
-                PickUpDate: $("#PickUpDate").val(),
-                LoadType: $("#ddlLoadType option:selected").val(),
-                SubService: $("#ddlSubService option:selected").val(),
-                Receiver: $("#txt_Receiver").val(),
-                ContactNo: $("#txt_Phone").val(),
-                Email: $("#txt_Mail").val(),
-                Address: $("#txt_Address").val(),
-                Status:0,
-                _loadDetails: LoadDetails
+                VehicleID: $("#VehicleID option:selected").val(),
+                EndDate: $("#EndDate").val(),
+                StartDate: $("#StartDate").val(),
+                TripStatus: $("#TripStatus option:selected").val(),
+                //CityRootID: SaveRoot,
+                _tripDetails: TripDetails
             },
             success: function (da) {
                 alert(da);
-                window.location.href = "/TLoader/New_LoaderIndex";
+                window.location.href = "/TLoader/Index";
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("Error " + errorThrown);
@@ -507,4 +591,3 @@
         });
     });
 </script>
-

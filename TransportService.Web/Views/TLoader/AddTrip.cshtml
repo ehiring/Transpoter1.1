@@ -51,7 +51,7 @@
                         <label>Start Date</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                            <input type="date" id="StartDate" class="form-control dropwidth" placeholder="YYYY-MM-DD" title="Select Pick Up Date" />
+                            <input type="date" id="StartDate" class="form-control dropwidth" placeholder="YYYY-MM-DD" title="Select Start Date" />
                         </div>
                     </div>
 
@@ -59,7 +59,7 @@
                         <label>End Date</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                            <input type="date" id="EndDate" class="form-control dropwidth" placeholder="YYYY-MM-DD" title="Select Pick Up Date" />
+                            <input type="date" id="EndDate" class="form-control dropwidth" placeholder="YYYY-MM-DD" title="Select End Date" />
                         </div>
                     </div>
 
@@ -256,8 +256,11 @@
 
                    
             },
-            error: function (data) {
-                alert("Error");
+                error: function (xhr, errorType, exception) {
+                    alert("Error");
+                    alert("ErrorType :" + errorType);
+                    alert("Exception :" + exception);
+
             },
             complete: function () {
 
@@ -388,15 +391,15 @@
         exceedMsg = exceedMsg + (availableHeight < quantity*feetHeight ? "Height/" : "");
         exceedMsg = exceedMsg + (availableWidth < quantity*feetWidth ? "Width/" : "");
         exceedMsg = exceedMsg + (availableLength < quantity*feetLength ? "Length/" : "");
-        exceedMsg = exceedMsg + (availableWeight < weight ? "Weight" : "");
+        exceedMsg = exceedMsg + (availableWeight < parseFloat(weight) ? "Weight" : "");
         if (exceedMsg != "") {
-            exceedMsg = exceedMsg + "exceeded. Please enter proper value according to Available size";
+            exceedMsg = exceedMsg + " exceeded. Please enter proper value according to Available size";
             alert(exceedMsg);
             return 0;
         }
 
 
-        alert("A");
+        
 
 
         var bindRow = '<tr>' +
@@ -489,6 +492,8 @@
             idArrRoot.push(tdVals);
         });
 
+
+        
         if ($("#SourceID option:selected").val() == null || $("#SourceID option:selected").val() == "") {
             bflagValid = 0;
             $("#SourceID").addClass('borderValidation');

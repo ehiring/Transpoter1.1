@@ -25,7 +25,7 @@ namespace TransportService.Web.BusinessLayer
 
         #endregion
 
-        #region "Methods"
+        #region "Trip Methods"
 
        
 
@@ -62,6 +62,19 @@ namespace TransportService.Web.BusinessLayer
             return _jobDbContext.DBRouteDetails.SqlQuery(@"exec GetTripRouteDetails").ToList<RouteDetails>();
         }
 
+        public TranspoterEdit GetTripByID(int id)
+        {
+            return _jobDbContext.DBTranspoterEdit.SqlQuery(@"exec USP_GetTripByID @TripID", new SqlParameter("@TripID", id)).FirstOrDefault<TranspoterEdit>();
+        }
+
+        public IEnumerable<TripDetail> GetTripDetailsByID(int id)
+        {
+            return _jobDbContext.DBTripDetail.SqlQuery(@"exec USP_GetTripDetailsByID @TripID", new SqlParameter("@TripID", id)).ToList<TripDetail>();
+        }
+
+        #endregion
+
+        #region "Loader Methods"
         public StaticPagedList<Loader> GetLoaderList(int? page, string Source = "", string Destination = "")
         {
 
@@ -93,20 +106,17 @@ namespace TransportService.Web.BusinessLayer
         {
             return _jobDbContext.DBMaterialList.SqlQuery(@"exec USP_GetMaterialListByLoadID").ToList<MaterialList>();
         }
-        public IEnumerable<LoaderEdit> GetLoaderByID(int id)
+        public LoaderEdit GetLoaderByID(int id)
         {
-            return _jobDbContext.DBLoaderEdit.SqlQuery(@"exec USP_GetLoaderByID @LoaderID",new SqlParameter("@LoaderID",id)).ToList<LoaderEdit>();
+            return _jobDbContext.DBLoaderEdit.SqlQuery(@"exec USP_GetLoaderByID @LoaderID", new SqlParameter("@LoaderID", id)).FirstOrDefault<LoaderEdit>();
         }
         public IEnumerable<LoadDetail> GetLoadDetailsByID(int id)
         {
             return _jobDbContext.DBLoadDetails.SqlQuery(@"exec USP_GetLoadDetailsByID @LoaderID", new SqlParameter("@LoaderID", id)).ToList<LoadDetail>();
         }
-        public VehicleCapacity GetVehicleSizeCapacityWhereID(int id)
-        {
-            return _jobDbContext.DBvehicleCapacities.SqlQuery(@"exec USP_GetSizeAndCapacityFromVehicleWhereID @VehicleID", new SqlParameter("@VehicleID", id)).FirstOrDefault<VehicleCapacity>();
-        }
+        #endregion
 
-
+        #region "Common methods"
         public List<SelectListItem> GetDropDownData(string action, int val = 0, int TripId = 0)
         {
             return _jobDbContext.Database.SqlQuery<SelectListItem>("exec USP_BindDropDown @action , @val, @TripId",
@@ -123,8 +133,19 @@ namespace TransportService.Web.BusinessLayer
                    }).ToList();
         }
 
-       
+        public AvalableSpace GetVehicleSizeCapacityWhereID(int id)
+        {
+            return _jobDbContext.DBAvalableSpace.SqlQuery(@"exec USP_GetSizeAndCapacityFromVehicleWhereID @VehicleID", new SqlParameter("@VehicleID", id)).FirstOrDefault<AvalableSpace>();
+        }
+        public AvalableSpace GetAvailableSizeCapacityOfVehicle(int TripId,int SourceID,int DestinationID)
+        {
+            return _jobDbContext.DBAvalableSpace.SqlQuery(@"exec USP_GetAvailableSpace @TripId,@SourceId,@Destination",
+                new SqlParameter("@TripId", TripId),
+                new SqlParameter("@SourceId", SourceID),
+                new SqlParameter("@Destination", DestinationID)).FirstOrDefault<AvalableSpace>();
+        }
         #endregion
+
 
     }
 }

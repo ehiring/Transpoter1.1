@@ -27,12 +27,5 @@ namespace TransportService.Web.Models.Masters
         public string DocumentPath { get; set; }
         public int? IsActive { get; set; }
     }
-    public class VehicleCapacity
-    {
-        [Key]
-        public int Capacity { get; set; }
-        public decimal? Height { get; set; }
-        public decimal? Width { get; set; }
-        public decimal? Length { get; set; }
-    }
+    
 }
