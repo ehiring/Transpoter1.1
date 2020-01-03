@@ -227,12 +227,14 @@
     $(document).on('change', '#SourceID', function (e) {
         //$('.Rootmgs').remove();
         $('#showrootdetails').find('span').remove()
+        routeArray = [];
         var CityRootText = $("#SourceID option:selected").text();
         var CityRootID = $("#SourceID option:selected").val();
         var SeqNo = 1;
         bindrow = '<span id=' + CityRootID + ' SeqNo=' + SeqNo + ' class="RootID"><i class="fa fa-times deleterootcity" aria-hidden="true" style="margin-right:3px;color: #f95555;"></i>' + CityRootText + '<i class="fa fa-arrow-right ArrowMargin" aria-hidden="true"></span>';
         $('#showrootdetails').attr('SeqNo', SeqNo);
         $('#showrootdetails').append(bindrow);
+        routeArray.push(CityRootID);
        
     });
 
@@ -272,6 +274,11 @@
     $('#ShowRoute').on("click", function (e) {
         $('.route').show();
     });
+
+
+
+    var routeArray = new Array();
+
     $('#addRoute').on("click", function (e) {
         $('.Rootmgs').remove();
         var CityRootText = $("#CityRootID option:selected").text();
@@ -293,25 +300,33 @@
         //    return 0;
 
         //}
-        SeqNo = SeqNo + 1;
+        ;
         //This code is for removing last arrow from root details
-        if (CityRootText == $("#DestinationID option:selected").text()) {
+        if (jQuery.inArray(CityRootID,routeArray) == -1) {
+            SeqNo = SeqNo + 1;
 
+        if (CityRootText == $("#DestinationID option:selected").text()) {
             bindrow = '<span id=' + CityRootID + ' SeqNo=' + SeqNo + ' class="RootID"><i class="fa fa-times deleterootcity" aria-hidden="true" style="margin-right:3px;color: #f95555;"></i>' + CityRootText + '</span>';
             $('#addRoute').hide();
         }
         else {
-
-            bindrow = '<span id=' + CityRootID + ' SeqNo=' + SeqNo + ' class="RootID"><i class="fa fa-times deleterootcity" aria-hidden="true" style="margin-right:3px;color: #f95555;"></i>' + CityRootText + '<i class="fa fa-arrow-right ArrowMargin" aria-hidden="true"></span>';
+            bindrow = '<span id=' + CityRootID + ' SeqNo=' + SeqNo + ' class="RootID"><i class="fa fa-times deleterootcity" aria-hidden="true" style="margin-right:3px;color: #f95555;"></i>' + CityRootText + '<i class="fa fa-arrow-right ArrowMargin" aria-hidden="true"></i></span>';
         }
         $('#showrootdetails').attr('SeqNo', SeqNo);
         $('#showrootdetails').append(bindrow);
+            routeArray.push(CityRootID);
+        }
+        else {
+            alert(CityRootText + " is already in route");
+            return;
+        }
 
     });
 
     $(document).on('click', 'i.deleterootcity', function (e) {
         e.preventDefault();
         $(this).closest('span').remove();
+        
         var SeqNo = parseInt($('#showrootdetails').attr('SeqNo'));
         SeqNo = SeqNo - 1;
         $('#showrootdetails').attr('SeqNo', SeqNo);
@@ -595,8 +610,8 @@
                 SourceID: $("#SourceID option:selected").val(),
                 DestinationID: $("#DestinationID option:selected").val(),
                 VehicleID: $("#VehicleID option:selected").val(),
-                EndDate: $("#EndDate").val(),
-                StartDate: $("#StartDate").val(),
+                TripEndDate: $("#EndDate").val(),
+                TripStartDate: $("#StartDate").val(),
                 TripStatus: $("#TripStatus option:selected").val(),
                 CityRootID: SaveRoot,
                 _tripDetails: TripDetails

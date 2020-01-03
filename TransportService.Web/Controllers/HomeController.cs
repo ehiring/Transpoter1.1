@@ -139,7 +139,7 @@ namespace TransportService.Web.Controllers
                     foreach (var item in CityRootId)
                     {
                         DataRow dr_CityRoot = dtCityRoot.NewRow();
-                        dr_CityRoot["CityId"] = item.CityId;
+                        dr_CityRoot["CityId"] = item.CityID;
                         dtCityRoot.Rows.Add(dr_CityRoot);
                     }
                 }

@@ -1,0 +1,6 @@
+﻿@model IEnumerable<TransportService.Web.Models.CityArray>
+@foreach (var item in Model)
+{
+    <span id="@item.CityID" SeqNo="@item.SequenceNo" class="RootID"><i class="fa fa-times deleterootcity" aria-hidden="true" style="margin-right:3px;color: #f95555;"></i>@item.CityName</span>
+}
+

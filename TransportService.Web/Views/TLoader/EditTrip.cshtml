@@ -52,7 +52,7 @@
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                 @*<input type="date" id="StartDate" class="form-control dropwidth" placeholder="YYYY-MM-DD" title="Select Pick Up Date" />*@
-                                @Html.TextBoxFor(Model => Model.TripStartDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date", @id = "Select Start Date" })
+                                @Html.TextBoxFor(Model => Model.TripStartDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date",@id= "StartDate", @title = "Select Start Date" })
                             </div>
                         </div>
 
@@ -61,7 +61,7 @@
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                 @*<input type="date" id="EndDate" class="form-control dropwidth" placeholder="YYYY-MM-DD" title="Select Pick Up Date" />*@
-                                @Html.TextBoxFor(Model => Model.TripEndDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date", @id = "Select End Date" })
+                                @Html.TextBoxFor(Model => Model.TripEndDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date",@id= "EndDate", @title = "Select End Date" })
                             </div>
                         </div>
 
@@ -103,6 +103,20 @@
                             <div class="form-group">
                                 <div id="showrootdetails" style="margin-top: 12px;" SeqNo="0">
                                     <span class="Rootmgs" style="color:#939393;font-size:small;">Add Route From Source To Destination</span>
+                                    @foreach (var item in Model.CityArray)
+                                    {
+                                    <span id="@item.CityID" SeqNo="@item.SequenceNo" class="RootID">
+                                        <i class="fa fa-times deleterootcity" aria-hidden="true" style="margin-right:3px;color: #f95555;"></i>@item.CityName
+                                        @if (@item.CityID != Model.DestinationID)
+                                        {
+
+                                            <i class="fa fa-arrow-right ArrowMargin" aria-hidden="true"></i>
+
+                                        }                                       
+                                    </span>
+                                          
+                                        
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -207,8 +221,8 @@
                                             <th>Height</th>
                                             <th>Width</th>
                                             <th>Length</th>
-                                            <th>Weight(Tonn)</th>
-                                            <th>Quantity</th>
+                                            <th>Weight</th>
+                                            <th>Qty</th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -242,17 +256,15 @@
             </div>
         </div>
     </div>
+
 }
 <script>
     $(document).ready(function () {
-
         var lastSrNo = $('#tblGoodsDetail tr:last td:first').text();
         $('#idLastSrNo').val(lastSrNo);
-
-
-
-        
-        alert("Hi");
+        $('#addRoute').hide();
+        $(".Rootmgs").hide();
+       
             $.ajax({
             url: "@Url.Action("GetAvailableSizeCapacityOfVehicle", "TLoader")",
             contentType: "application/json",
@@ -267,7 +279,6 @@
                 success: function (data) {
                     $('#divVehicleCapcity').html(data);
 
-                   
             },
             error: function (data) {
                 alert("Error");
@@ -279,12 +290,129 @@
 
 
     });
+    $(document).on('change', '#SourceID', function (e) {
+       
+        $(".RootID").remove();
+        routeArray = [];
+        $('#addRoute').show();
+        var CityRootText = $("#SourceID option:selected").text();
+        var CityRootID = $("#SourceID option:selected").val();
+        var SeqNo = 1;
+        bindrow = '<span id=' + CityRootID + ' SeqNo=' + SeqNo + ' class="RootID"><i class="fa fa-times deleterootcity" aria-hidden="true" style="margin-right:3px;color: #f95555;"></i>' + CityRootText + '<i class="fa fa-arrow-right ArrowMargin" aria-hidden="true"></span>';
+        $('#showrootdetails').attr('SeqNo', SeqNo);
+        $('#showrootdetails').append(bindrow);
+        routeArray.push(CityRootID);
+
+    });
+    $(document).on('change', '#DestinationID', function (e) {
+
+        $(".RootID").remove();
+        routeArray = [];
+        $('#addRoute').show();
+        var CityRootText = $("#SourceID option:selected").text();
+        var CityRootID = $("#SourceID option:selected").val();
+        var SeqNo = 1;
+        bindrow = '<span id=' + CityRootID + ' SeqNo=' + SeqNo + ' class="RootID"><i class="fa fa-times deleterootcity" aria-hidden="true" style="margin-right:3px;color: #f95555;"></i>' + CityRootText + '<i class="fa fa-arrow-right ArrowMargin" aria-hidden="true"></span>';
+        $('#showrootdetails').attr('SeqNo', SeqNo);
+        $('#showrootdetails').append(bindrow);
+        routeArray.push(CityRootID);
+
+    });
+
+
+    var routeArray = new Array();
+    $('#addRoute').on("click", function (e) {
+        $('.Rootmgs').remove();
+        var CityRootText = $("#CityRootID option:selected").text();
+        var CityRootID = $("#CityRootID option:selected").val();
+        var bindrow;
+        var SeqNo = parseInt($('#showrootdetails').attr('SeqNo'));
+
+        if ($("#SourceID option:selected").val() == 0) {
+            alert("Please select Source");
+            return 0;
+        }
+        if (CityRootID == 0) {
+            alert("Please Select City for Route");
+            return 0;
+        }
+        
+        
+        //This code is for removing last arrow from root details
+        if (jQuery.inArray(CityRootID, routeArray) == -1) {
+            SeqNo = SeqNo + 1;
+            if (CityRootText == $("#DestinationID option:selected").text()) {
+                bindrow = '<span id=' + CityRootID + ' SeqNo=' + SeqNo + ' class="RootID"><i class="fa fa-times deleterootcity" aria-hidden="true" style="margin-right:3px;color: #f95555;"></i>' + CityRootText + '</span>';
+                $('#addRoute').hide();
+            }
+            else {
+
+                bindrow = '<span id=' + CityRootID + ' SeqNo=' + SeqNo + ' class="RootID"><i class="fa fa-times deleterootcity" aria-hidden="true" style="margin-right:3px;color: #f95555;"></i>' + CityRootText + '<i class="fa fa-arrow-right ArrowMargin" aria-hidden="true"></i></span>';
+            }
+            $('#showrootdetails').attr('SeqNo', SeqNo);
+            $('#showrootdetails').append(bindrow);
+            routeArray.push(CityRootID);
+        }
+        else {
+            alert(CityRootText + " is already in route");
+            return;
+        }
+
+    });
+
+
+    $(document).on('click', 'i.deleterootcity', function (e) {
+        e.preventDefault();
+        $(this).closest('span').remove();
+
+        var SeqNo = parseInt($('#showrootdetails').attr('SeqNo'));
+        SeqNo = SeqNo - 1;
+        $('#showrootdetails').attr('SeqNo', SeqNo);
+        $('#addRoute').show();
+    });
+
+
+    $(document).on('change', '#VehicleID', function (e) {
+        e.preventDefault();
+        $('#tblGoodsDetail tbody').empty();
+        var VehicleID = $("#VehicleID option:selected").val();
+        
+        alert("Hi");
+            $.ajax({
+            url: "@Url.Action("GetVehicleSizeCapacityWhereID", "TLoader")",
+            contentType: "application/json",
+            data: JSON.stringify({
+                VehicleID: VehicleID
+            }),
+            dataType: "text",
+            type: "POST",
+            async: true,
+                success: function (data) {
+                    $('#divVehicleCapcity').html(data);
+
+                   
+            },
+                error: function (xhr, errorType, exception) {
+                    alert("Error");
+                    alert("ErrorType :" + errorType);
+                    alert("Exception :" + exception);
+
+            },
+            complete: function () {
+
+            }
+        });
+
+
+    });
+
 
     $(document).on('click', '.clsDeleteRow', function (e) {
         e.preventDefault();
         alert("Delete");
         $(this).parents('tr').remove();
     });
+
     $(document).on('click', '.clsEditRow', function (e) {
         e.preventDefault();
 
@@ -339,8 +467,9 @@
 
 
     });
-     $(document).on('click', '#btnAddGoods', function (e) {
-         var bFlagValid = 1;
+
+    $(document).on('click', '#btnAddGoods', function (e) {
+        var bFlagValid = 1;
         var operationType = $('#hdnOperationType').val();
         var SrNo = parseInt($("#idLastSrNo").val());
         alert($("#idLastSrNo").val());
@@ -349,6 +478,7 @@
             SrNo = SrNo + 1;
         }
         else {
+
             //SrNo = editRecordSrNo
         }
 
@@ -374,7 +504,6 @@
              $("#ddlUnit").addClass('borderValidation');
          }
          if (height == null || height == "") {
-
              bFlagValid = 0;
              $("#txt_Height").addClass('borderValidation');
          }
@@ -384,12 +513,10 @@
              $("#txt_Width").addClass('borderValidation');
          }
          if (length == null || length == "") {
-
              bFlagValid = 0;
              $("#txt_Length").addClass('borderValidation');
          }
          if (weight == null || weight == "") {
-
              bFlagValid = 0;
              $("#txt_Weight").addClass('borderValidation');
          }
@@ -401,31 +528,35 @@
 
              return;
          }
-
+        
          /*....check if entered size and capacity does not exceed.*/
          var availableHeight = $("#lblHeight").text();
          var availableWidth = $("#lblWidth").text();
          var availableLength = $("#lblLength").text();
          var availableWeight = $("#lblCapacity").text();
-
+        
 
 
          /*......Conversion in feet.....*/
          var feetHeight = height * conversionFactor;
          var feetWidth = width * conversionFactor;
          var feetLength = length * conversionFactor;
+        
 
          var exceedMsg = "";
          exceedMsg = exceedMsg + (availableHeight < quantity * feetHeight ? "Height/" : "");
          exceedMsg = exceedMsg + (availableWidth < quantity * feetWidth ? "Width/" : "");
          exceedMsg = exceedMsg + (availableLength < quantity * feetLength ? "Length/" : "");
          exceedMsg = exceedMsg + (availableWeight < parseFloat(weight) ? "Weight" : "");
+        
+
 
          if (exceedMsg != "") {
              exceedMsg = exceedMsg + "exceeded. Please enter proper value according to Available size";
              alert(exceedMsg);
              return 0;
-         }
+        }
+       
 
 
 
@@ -463,12 +594,13 @@
             $('#tblGoodsDetail tbody tr:eq(' + rowindex + ') ').children('td.clsWeight').text(weight);
             $('#tblGoodsDetail tbody tr:eq(' + rowindex + ') ').children('td.clsQty').text(quantity);
             
-         }
+        }
+        
          var availableHeight = availableHeight - (quantity * feetHeight);
          var availableWidth = availableWidth - (quantity * feetWidth);
          var availableLength = availableLength - (quantity * feetLength);
          var availableWeight = availableWeight - weight;
-
+        
 
         $('#ddlMaterial').prop('selectedIndex', 0);
         $('#ddlUnit').prop('selectedIndex', 0);
@@ -486,47 +618,54 @@
 
     $(document).on('click', '#btnSubmit', function (e) {
         e.preventDefault();
+        
         alert("A");
         var bflagValid = 1;
         if ($("#SourceID option:selected").val() == null || $("#SourceID option:selected").val() == "") {
             bflagValid = 0;
             $("#SourceID").addClass('borderValidation');
-
+            
         }
+        
         if ($("#DestinationID option:selected").val() == null || $("#DestinationID option:selected").val() == "") {
             bflagValid = 0;
             $("#DestinationID").addClass('borderValidation');
-
+            
+           
         }
+        
         if ($("#StartDate").val() == null || $("#StartDate").val() == "") {
             bflagValid = 0;
             $("#StartDate").addClass('borderValidation');
-
+            
         }
-
+        
         if ($("#EndDate").val() == null || $("#EndDate").val() == "") {
             bflagValid = 0;
             $("#EndDate").addClass('borderValidation');
-
+            
+            
         }
-
-
+        
         if ($("#VehicleID option:selected").val() == null || $("#VehicleID option:selected").val() == "") {
             bflagValid = 0;
             $("#VehicleID").addClass('borderValidation');
+            
+            
         }
-        alert('B');
         
         if ($('#tblGoodsDetail >tbody>tr').length == 0) {
             bflagValid = 0;
             $("#tblGoodsDetail").addClass('borderValidation');
+            
 
         }
+        
         if (bflagValid == 0) {
             return 0;
 
         }
-        alert('c');
+        alert("B");
         //adding Load Grid Details In Array
         var idArrLoadDetails = [];
         $('#tblGoodsDetail tbody tr').each(function (k, v) {
@@ -541,12 +680,12 @@
                 trElement.find('td.clsLength').text() + "~" +
                 trElement.find('td.clsWeight').text() + "~" +
                 trElement.find('td.clsQty').text();
-            alert(tdVals);
             idArrLoadDetails.push(tdVals);
 
         });
-        alert('d');
-        var LoadDetails = [];
+        
+        alert("C");
+        var TripDetails = [];
         for (var i = 0; i < idArrLoadDetails.length; i++) {
             var arrElement = idArrLoadDetails[i].split("~");
             item = {}
@@ -559,9 +698,9 @@
             item["Length"] = arrElement[6];
             item["Weight"] = arrElement[7];
             item["Qty"] = arrElement[8];
-            LoadDetails.push(item);
+            TripDetails.push(item);
         }
-        alert('e');
+        
 
 
 
@@ -571,12 +710,12 @@
             url: '/TLoader/EditTrip',
             data:
             {
-                LoadID:@Model.TripID,
+                TripID:@Model.TripID,
                 SourceID: $("#SourceID option:selected").val(),
                 DestinationID: $("#DestinationID option:selected").val(),
                 VehicleID: $("#VehicleID option:selected").val(),
-                EndDate: $("#EndDate").val(),
-                StartDate: $("#StartDate").val(),
+                TripEndDate: $("#EndDate").val(),
+                TripStartDate: $("#StartDate").val(),
                 TripStatus: $("#TripStatus option:selected").val(),
                 //CityRootID: SaveRoot,
                 _tripDetails: TripDetails

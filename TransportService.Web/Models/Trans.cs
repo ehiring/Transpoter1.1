@@ -126,16 +126,16 @@ namespace TransportService.Web.Models
         
         public IEnumerable<TripDetail> TripDetails { get; set; }
         public IEnumerable<RouteDetails> RouteList { get; set; }
-        
+        public IEnumerable<CityArray> CityArray { get; set; }
     }
 
 
     public class CityArray
     {
         [Key]
-        public int CityId { get; set; }
+        public int CityID { get; set; }
         public int SequenceNo { get; set; }
-
+        public string CityName { get; set; }
 
     }
     public class AvalableSpace

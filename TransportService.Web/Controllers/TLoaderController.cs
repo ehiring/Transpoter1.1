@@ -15,6 +15,7 @@ namespace TransportService.Web.Controllers
 {
     public class TLoaderController : Controller
     {
+
         TripBusinessLayer _tripBusinessLayer;
         public TLoaderController()
         {
@@ -55,12 +56,13 @@ namespace TransportService.Web.Controllers
             ViewData["UOMList"] = _tripBusinessLayer.GetDropDownData("UOMList", 0);
             return View();
         }
+
         [HttpPost]
         public ActionResult SaveTrip(Transpoter T, List<CityArray> CityRootId, List<TripDetail> _tripDetails)
         {
             DataTable dtCityRoot = new DataTable();
 
-            dtCityRoot.Columns.Add("CityId", typeof(int));
+            dtCityRoot.Columns.Add("CityID", typeof(int));
             dtCityRoot.Columns.Add("SequenceNo", typeof(int));
 
             // Adding Contact Person In DT
@@ -71,7 +73,7 @@ namespace TransportService.Web.Controllers
                     foreach (var item in CityRootId)
                     {
                         DataRow dr_CityRoot = dtCityRoot.NewRow();
-                        dr_CityRoot["CityId"] = item.CityId;
+                        dr_CityRoot["CityID"] = item.CityID;
                         dr_CityRoot["SequenceNo"] = item.SequenceNo;
                         dtCityRoot.Rows.Add(dr_CityRoot);
                     }
@@ -157,6 +159,7 @@ namespace TransportService.Web.Controllers
 
             TranspoterEdit transpoterEdit = _tripBusinessLayer.GetTripByID(TripID);
             transpoterEdit.TripDetails = _tripBusinessLayer.GetTripDetailsByID(TripID);
+            transpoterEdit.CityArray = _tripBusinessLayer.GetRouteWhereTripID(TripID);
 
             return View(transpoterEdit);
         }
@@ -213,8 +216,9 @@ namespace TransportService.Web.Controllers
                     @TripEndDate ,
                     @Status ,
                     @AddedBy,
-                    @RouteCityIDs,
+                    --@RouteCityIDs,
                     @UDTable_TripDetails",
+          new SqlParameter("@TripID", transpoter.TripID ),
           new SqlParameter("@SourceID", transpoter.SourceID == null ? (object)DBNull.Value : transpoter.SourceID),
           new SqlParameter("@DestinationID", transpoter.DestinationID == null ? (object)DBNull.Value : transpoter.DestinationID),
           new SqlParameter("@VehicleID", transpoter.VehicleID == null ? (object)DBNull.Value : transpoter.VehicleID),
@@ -236,13 +240,13 @@ namespace TransportService.Web.Controllers
             ViewBag.Source = Source;
             return View();
         }
-
         public JsonResult GetCityAgainstTheSource(int TripID = 0, int SourceID = 0)
         {
             var list = _tripBusinessLayer.GetDropDownData("TripAndSequenceWiseCityList", SourceID, TripID);
             return Json(list);
 
         }
+        
         public ActionResult GetAvailableSpace(int? TripId, int? Source, int? Destination)
         {
             JobDbContext _db = new JobDbContext();
@@ -278,7 +282,6 @@ namespace TransportService.Web.Controllers
 
 
         }
-
         public ActionResult SearchLoads(int? page, string Source, string Destination)
         {
             Loader _loader = new Loader();
@@ -309,7 +312,6 @@ namespace TransportService.Web.Controllers
         [HttpPost]
         public ActionResult SaveSubTrip(int? sourceId, int? destinationId, int? TripId, List<TripDetail> _tripDetails)
         {
-
 
             DataTable dtTripDetail = new DataTable();
             dtTripDetail.Columns.Add("TripDetailID", typeof(int));
@@ -603,7 +605,32 @@ namespace TransportService.Web.Controllers
         }
 
 
-        
+        public ActionResult Test()
+        {
+            return View();
+
+        }
+
+        [HttpPost]
+        public ActionResult Test(Client client)
+        {
+            JobDbContext _jobDbContext = new JobDbContext();
+            var result = _jobDbContext.Database.ExecuteSqlCommand(@"exec USP_InsertClient
+                @ClientTypeID  ,
+                @Name ,
+                @Password ,
+                @Email ,
+                @Mobile  ",
+          new SqlParameter("@ClientTypeID", client.ClientTypeID ),
+          new SqlParameter("@Name", client.Name ),
+          new SqlParameter("@Email", client.Email),
+          new SqlParameter("@Mobile", client.Mobile));
+          return Json("Registration Sucessfull");
+
+            
+
+        }
+
 
     }
 }

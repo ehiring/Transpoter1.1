@@ -17,7 +17,7 @@ namespace TransportService.Web.BusinessLayer
         }
         public JobDbContext():base("Name=JobDbContext")
         {
-
+            
         }
         public DbSet<Transpoter> DBTransporter { get; set; }
         public DbSet<TranspoterEdit> DBTranspoterEdit { get; set; }
@@ -29,6 +29,8 @@ namespace TransportService.Web.BusinessLayer
         public DbSet<TripDetail> DBTripDetail { get; set; }
         public DbSet<MaterialList> DBMaterialList { get; set; }
         public DbSet<LoaderEdit> DBLoaderEdit { get; set; }
-        
+        public DbSet<CityArray> DBCityArray { get; set; }
+
+
     }
 }

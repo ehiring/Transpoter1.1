@@ -162,7 +162,7 @@ namespace TransportService.Web.Controllers
                     foreach (var item in CityRootId)
                     {
                         DataRow dr_CityRoot = dtCityRoot.NewRow();
-                        dr_CityRoot["CityId"] = item.CityId;
+                        dr_CityRoot["CityId"] = item.CityID;
                         dr_CityRoot["SequenceNo"] = item.SequenceNo;
                         dtCityRoot.Rows.Add(dr_CityRoot);
                     }

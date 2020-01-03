@@ -71,7 +71,14 @@ namespace TransportService.Web.BusinessLayer
         {
             return _jobDbContext.DBTripDetail.SqlQuery(@"exec USP_GetTripDetailsByID @TripID", new SqlParameter("@TripID", id)).ToList<TripDetail>();
         }
+        public IEnumerable<CityArray> GetRouteWhereTripID (int TripId)
+        {
 
+            return _jobDbContext.DBCityArray.SqlQuery("exec [USP_SelectRouteWhereTripID] @TripId",
+                   new SqlParameter("@TripId", TripId)).ToList<CityArray>();
+
+                   
+        }
         #endregion
 
         #region "Loader Methods"

@@ -116,7 +116,7 @@
                                     </div>*@
 
                                 <a class="btn-theme icon-left bg-navy-blue no-shadow d-none d-lg-inline-block align-self-center" href="#" role="button" data-toggle="modal" data-target="#user-login-popup"><i class="fas fa-home" style="color: #fff;"></i>  Log In</a>
-                                <a id="btnRegistration" class="btn-theme icon-left bg-navy-blue no-shadow d-none d-lg-inline-block align-self-center" href="#" role="button" data-toggle="modal" data-target="#user-reg-popup"><i class="far fa-user" style="color: #fff;"></i>  Register</a>
+                                <a id="btnRegistration" class="btn-theme icon-left bg-navy-blue no-shadow d-none d-lg-inline-block align-self-center popupTrigger" href="#" role="button" data-toggle="modal" data-target="#user-reg-popup"><i class="far fa-user" style="color: #fff;"></i>  Register</a>
                             </div>
                         </div>
                     </div>
@@ -125,6 +125,9 @@
         </div>
     </div>
 
+    @*.............................Registration Popup starts here.................................  *@
+    
+    @* ..................................Registration Ends Here...................... *@
 
 
     <header>
@@ -189,6 +192,8 @@
                 </div>
             </div>
         </div>
+
+
     </header>
 
 
@@ -297,6 +302,8 @@
                 $('#myModalContent').html(data);
                 $('#myModal').modal(options);
                 $('#myModal').modal('show');
+
+
 
             },
             error: function () {
