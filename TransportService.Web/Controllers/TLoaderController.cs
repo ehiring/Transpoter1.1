@@ -612,23 +612,28 @@ namespace TransportService.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Test(Client client)
+        public ActionResult Test(ClientRegister client)
         {
+            /*....ClientTypeId Logic here*/
             JobDbContext _jobDbContext = new JobDbContext();
-            var result = _jobDbContext.Database.ExecuteSqlCommand(@"exec USP_InsertClient
-                @ClientTypeID  ,
-                @Name ,
-                @Password ,
-                @Email ,
-                @Mobile  ",
-          new SqlParameter("@ClientTypeID", client.ClientTypeID ),
-          new SqlParameter("@Name", client.Name ),
-          new SqlParameter("@Email", client.Email),
-          new SqlParameter("@Mobile", client.Mobile));
+            var result = _jobDbContext.Database.ExecuteSqlCommand(@"exec USP_RegisterClient
+                                                                    @ClientTypeID ,
+                                                                    @Email ,
+                                                                    @Password ,
+                                                                    @Mobile ",
+                                                                    new SqlParameter("@ClientTypeID", client.ClientTypeID),
+                                                                    new SqlParameter("@Email", client.Email),
+                                                                    new SqlParameter("@Password", client.Password),
+                                                                    new SqlParameter("@Mobile", client.Mobile));
           return Json("Registration Sucessfull");
 
-            
+         }
 
+        public int GetUserIDWhereMobileNo(string MobileNo)
+        {
+            JobDbContext jobDbContext = new JobDbContext();
+            var result = jobDbContext.Database.SqlQuery<int>(@"exec USP_SelectUserIDWhereMobileNo @Mobile", new SqlParameter("@Mobile", MobileNo)).SingleOrDefault<int>();
+            return result;
         }
 
 

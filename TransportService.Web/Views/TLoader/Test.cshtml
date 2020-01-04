@@ -1,17 +1,17 @@
-﻿<div class="user-login-section">
+﻿@using TransportService.Web.Models
+<div class="user-login-section">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <ul class="ui-list nav nav-tabs mb-30" role="tablist">
-
-                    <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#register" role="tab" aria-selected="true">Loader</a>
+                <ul class="ui-list nav nav-tabs mb-30" id="lstClientType" role="tablist">
+                    <li class="nav-item" id="@enumClientType.Transporter.GetHashCode()">
+                        <a class="nav-link active selected" data-toggle="tab" href="#register" role="tab" aria-selected="true">@enumClientType.Transporter.ToString()</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#register" role="tab" aria-selected="false">Carrier</a>
+                    <li class="nav-item" id="@enumClientType.Loader.GetHashCode()">
+                        <a class="nav-link selected" data-toggle="tab" href="#register" role="tab" aria-selected="false">@enumClientType.Loader.ToString()</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#register" role="tab" aria-selected="false">Broker</a>
+                    <li class="nav-item" id="@enumClientType.Broker.GetHashCode()">
+                        <a class="nav-link selected" data-toggle="tab" href="#register" role="tab" aria-selected="false">@enumClientType.Broker.ToString()</a>
                     </li>
                 </ul>
                 <div class="login-wrapper">
@@ -22,14 +22,14 @@
                                 <div class="col-md-4">
                                     <!-- <span>Do you have Passport?</span> -->
                                     <label for="chkYes">
-                                        <input type="radio" id="chkYes" name="chkPassPort" onclick="ShowHideDiv()" />
-                                        Company
+                                        <input type="radio" value="@enumIsCompany.Company.GetHashCode()" name="rdbIsCompany" />
+                                        @enumIsCompany.Company.ToString()
                                     </label>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="chkNo">
-                                        <input type="radio" id="chkNo" name="chkPassPort" onclick="ShowHideDiv()" />
-                                        Individual
+                                        <input type="radio" value="@enumIsCompany.Individual.GetHashCode()" name="rdbIsCompany" />
+                                        @enumIsCompany.Individual.ToString()
                                     </label>
                                 </div>
                                 <hr />
@@ -48,23 +48,30 @@
                                 <div class="col-md-6">
                                     <form id="register-form" action="#" method="post">
                                         <div class="form-group">
-                                            <input type="text" name="user_name" id="txt_UserName" tabindex="1" class="form-control" placeholder="Username" value="">
+                                            <input type="email" name="user_name" id="txt_Email" tabindex="1" class="form-control" placeholder="Username" value="" title="Enter Email">
                                         </div>
                                         <div class="form-group">
-                                            <input type="number" name="number" id="txt_Number" tabindex="1" class="form-control" placeholder="Mobile Number" value="">
+                                            <input type="number" name="number" id="txt_MobileNumber" tabindex="1" class="form-control" placeholder="Mobile Number" value="" title="Enter Mobile No" maxlength="10">
+                                        </div>
+                                        <input id="hdnMobileExist" type="hidden" value="0">
+                                        <div id="divMobileValidation" class="form-group text-danger hidden">
+                                            That Mobile No already exist. Try again.
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" name="user_password" id="txt_Password" tabindex="2" class="form-control" placeholder="Password">
+                                            <input type="password" name="user_password" id="txt_Password" tabindex="2" class="form-control" placeholder="Password" title="Enter Password">
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" name="confirm-password" id="txt_ConfirmPassword" tabindex="2" class="form-control" placeholder="Confirm Password">
+                                            <input type="password" name="confirm-password" id="txt_ConfirmPassword" tabindex="2" class="form-control" placeholder="Confirm Password" title="Reenter Password">
+                                        </div>
+                                        <div id="divPasswordValidation" class="form-group text-danger hidden">
+                                            Those passwords doesn't match. Try again.
                                         </div>
                                         <div class="res-box text-left">
                                             <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
                                             <label for="remember">I've read and accept terms &amp; conditions</label>
                                         </div>
                                         <div class="res-box text-center mt-30">
-                                            <button type="submit" class="btn btn-primary" style="width:50%;margin-left: -25px;"><i class="lnr lnr-enter"></i>Sign Up</button>
+                                            <button id="btnSubmit" type="submit" class="btn btn-primary" style="width:50%;margin-left: -25px;"><i class="lnr lnr-enter"></i>Next</button>
                                         </div>
                                     </form>
                                     <div class="social-profile-login  text-left mt-20">
@@ -80,6 +87,7 @@
                                     <div class="signup-wrapper">
                                         <img src="images/others/login-1.png" alt="...">
                                         <p>Create an account to find the best Service for you.</p>
+
                                     </div>
                                 </div>
                             </div>
@@ -89,4 +97,150 @@
             </div>
         </div>
     </div>
+
+    <div id="divOTP" class="col-sm-6 hidden">
+        <table>
+            <tbody>
+                <tr>
+                    <td><label class="control-label pull-right">Enter OTP </label>  </td>
+                    <td class="col-sm-3">
+                        <input id="txt_OTP" type="text" class="form-control" name="altr_name" value="" >  
+                    </td>
+                    <td><input type="button" id="btnSubmit" class="btn btn-primary" name="regform" value="Sign Up"></td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
 </div>
+<script>
+    var ClientTypeID
+    $(document).on('click', '#lstClientType li', function (e) {
+        alert($(this).attr('id')); 
+        ClientTypeID = $(this).attr('id');
+        alert(ClientTypeID);
+        
+    });
+    $("#txt_MobileNumber").blur(function () {
+        
+        if ($('#txt_MobileNumber').val() != "" || $('#txt_MobileNumber').val() != null) {
+
+            $.ajax({
+                type: 'Get',
+                dataType: 'json',
+                url: '/TLoader/GetUserIDWhereMobileNo',
+                data:
+                {
+                    MobileNo: $('#txt_MobileNumber').val(),
+                },
+                success: function (response) {
+
+                    $('#hdnMobileExist').val(response);
+
+                    //window.location.href = "/TLoader/New_LoaderIndex";
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Error " + errorThrown);
+                }
+            });
+        }
+
+    });
+    $(document).on('click', '#btnSubmit', function (e) {
+        e.preventDefault();
+       
+
+        /*
+         * validation checking
+         * 
+         * */
+        if (ValidateInputs()==0) {
+            return;
+        }
+
+        var IsComapny = $('input[name="rdbIsCompany"]:checked').val();
+        var DBClientTypeID;
+        if (ClientTypeID == @enumClientType.Transporter.GetHashCode() && IsComapny == @enumIsCompany.Company.GetHashCode()) {
+            DBClientTypeID = @enumDBClientTypeID.Transporter.GetHashCode();
+        }
+        else if (ClientTypeID == @enumClientType.Loader.GetHashCode() && IsComapny == @enumIsCompany.Company.GetHashCode()) {
+            DBClientTypeID = @enumDBClientTypeID.Loader.GetHashCode();
+        }
+        else if (ClientTypeID == @enumClientType.Broker.GetHashCode() && IsComapny == @enumIsCompany.Company.GetHashCode()) {
+            DBClientTypeID = @enumDBClientTypeID.Corporater.GetHashCode();
+        }
+        else if (ClientTypeID == @enumClientType.Transporter.GetHashCode() && IsComapny == @enumIsCompany.Individual.GetHashCode()) {
+            DBClientTypeID = @enumDBClientTypeID.IndividualTransporter.GetHashCode();
+        }
+        else if (ClientTypeID == @enumClientType.Loader.GetHashCode() && IsComapny == @enumIsCompany.Individual.GetHashCode()) {
+            DBClientTypeID = @enumDBClientTypeID.IndividualLoader.GetHashCode();
+        }
+        else if (ClientTypeID == @enumClientType.Broker.GetHashCode() && IsComapny == @enumIsCompany.Individual.GetHashCode()) {
+            DBClientTypeID = @enumDBClientTypeID.Broker.GetHashCode();
+        }
+        
+
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/TLoader/Test',
+            data:
+            {
+                ClientTypeID: DBClientTypeID,
+                Email: $('#txt_Email').val(),
+                Password: $('#txt_Password').val(),
+                Mobile: $('#txt_MobileNumber').val()
+                
+            },
+            success: function (da) {
+                alert(da);
+
+                //window.location.href = "/TLoader/New_LoaderIndex";
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Error " + errorThrown);
+            }
+        });
+
+    });
+
+
+    function ValidateInputs() {
+        var IsValid = 1;
+        if ($('#txt_Email').val() == "" || $('#txt_Email').val() == null) {
+            $('#txt_Email').addClass('borderValidation');
+            IsValid = 0;
+        }
+        if ($('#txt_Password').val() == "" || $('#txt_Password').val() == null) {
+            $('#txt_Password').addClass('borderValidation');
+            IsValid = 0;
+        }
+        if ($('#txt_MobileNumber').val() == "" || $('#txt_MobileNumber').val() == null) {
+            $('#txt_MobileNumber').addClass('borderValidation');
+            IsValid = 0;
+        }
+        if ($('#txt_ConfirmPassword').val() == "" || $('#txt_ConfirmPassword').val() == null) {
+            $('#txt_ConfirmPassword').addClass('borderValidation');
+            IsValid = 0;
+        }
+        if (($('#txt_Password').val() != "" || $('#txt_Password').val() != null) || ($('#txt_ConfirmPassword').val() != "" || $('#txt_ConfirmPassword').val() != null)) {
+            if ($('#txt_Password').val() != $('#txt_ConfirmPassword').val()) {
+                $('#divPasswordValidation').removeClass('hidden');
+                IsValid = 0;
+            }
+
+        }
+        if ($('#hdnMobileExist').val()!=0 ) {
+            $('#divMobileValidation').removeClass('hidden');
+            IsValid = 0;
+
+        }
+
+        
+        
+
+        
+        
+        return IsValid;
+    }
+</script>

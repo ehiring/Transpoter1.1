@@ -10,6 +10,7 @@ namespace TransportService.Web.Models.Masters
         public int ClientTypeID { get; set; }
         public string  ClientTypeName { get; set; }
         public int IsActive { get; set; }
+        
 
     }
 }
