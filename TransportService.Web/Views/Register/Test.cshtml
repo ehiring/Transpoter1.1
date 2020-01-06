@@ -1,4 +1,5 @@
-﻿@using TransportService.Web.Models
+﻿
+@using TransportService.Web.Models
 <div class="user-login-section">
     <div class="container">
         <div class="row">
@@ -41,16 +42,16 @@
                                 </div>
                                 <hr />
                             </div>
-                            
+
                             <!-- <div id="companyEmail" style="display: none;background-color: pink;display: block;width:48%">
 
 
-        <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Company Email Address" value="" style="padding: 22px 0;
-        border-bottom: 1px solid #ddd;
-        border-top: none;
-        border-left: none;
-        border-right: none;">
-    </div> -->
+                                <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Company Email Address" value="" style="padding: 22px 0;
+                                border-bottom: 1px solid #ddd;
+                                border-top: none;
+                                border-left: none;
+                                border-right: none;">
+                            </div> -->
                             <div class="row">
                                 <div class="col-md-6">
                                     <form id="register-form" action="#" method="post">
@@ -115,7 +116,7 @@
                 <tr>
                     <td><label class="control-label pull-right">Enter OTP </label>  </td>
                     <td class="col-sm-3">
-                        <input id="txt_OTP" type="text" class="form-control" name="altr_name" value="" >  
+                        <input id="txt_OTP" type="text" class="form-control" name="altr_name" value="">
                     </td>
                     <td><input type="button" id="btnSubmit" class="btn btn-primary" name="regform" value="Sign Up"></td>
                 </tr>
@@ -142,7 +143,7 @@
             $.ajax({
                 type: 'Get',
                 dataType: 'json',
-                url: '/TLoader/GetUserIDWhereEmail',
+                url: '/Register/IsEmailExist',
                 data:
                 {
                     Email: $('#txt_Email').val(),
@@ -163,7 +164,7 @@
             $.ajax({
                 type: 'Get',
                 dataType: 'json',
-                url: '/TLoader/GetUserIDWhereMobileNo',
+                url: '/Register/IsMobileExist',
                 data:
                 {
                     MobileNo: $('#txt_MobileNumber').val(),
@@ -183,11 +184,11 @@
     });
     $(document).on('click', '#btnSubmit', function (e) {
         e.preventDefault();
-        
+
 
         /*
          * validation checking
-         * 
+         *
          * */
         if (ValidateInputs()==0) {
             return;
@@ -213,19 +214,19 @@
         else if (ClientTypeID == @enumClientType.Broker.GetHashCode() && IsComapny == @enumIsCompany.Individual.GetHashCode()) {
             DBClientTypeID = @enumDBClientTypeID.Broker.GetHashCode();
         }
-        
+
 
         $.ajax({
             type: 'POST',
             dataType: 'json',
-            url: '/TLoader/Test',
+            url: '/Register/Test',
             data:
             {
                 ClientTypeID: DBClientTypeID,
                 Email: $('#txt_Email').val(),
                 Password: $('#txt_Password').val(),
                 Mobile: $('#txt_MobileNumber').val()
-                
+
             },
             success: function (da) {
                 alert(da);
@@ -271,9 +272,9 @@
             }
 
         }
-        
 
-        //}
+
+        
         if ($('#hdnEmailExist').val() != 0) {
             $('#divEmailValidation').removeClass('hidden');
             IsValid = 0;

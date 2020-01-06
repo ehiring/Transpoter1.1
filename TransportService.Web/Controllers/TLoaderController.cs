@@ -616,17 +616,18 @@ namespace TransportService.Web.Controllers
         {
             /*....ClientTypeId Logic here*/
             JobDbContext _jobDbContext = new JobDbContext();
+
             var result = _jobDbContext.Database.ExecuteSqlCommand(@"exec USP_RegisterClient
                                                                     @ClientTypeID ,
                                                                     @Email ,
                                                                     @Password ,
                                                                     @Mobile ",
                                                                     new SqlParameter("@ClientTypeID", client.ClientTypeID),
-                                                                    new SqlParameter("@Email", client.Email),
+                                                                    new SqlParameter("@Email", client.Email == null ?(object) DBNull.Value:client.Email),
                                                                     new SqlParameter("@Password", client.Password),
                                                                     new SqlParameter("@Mobile", client.Mobile));
           return Json("Registration Sucessfull");
-
+          
          }
 
         public int GetUserIDWhereMobileNo(string MobileNo)
@@ -635,7 +636,25 @@ namespace TransportService.Web.Controllers
             var result = jobDbContext.Database.SqlQuery<int>(@"exec USP_SelectUserIDWhereMobileNo @Mobile", new SqlParameter("@Mobile", MobileNo)).SingleOrDefault<int>();
             return result;
         }
+        public int GetUserIDWhereEmail(string Email)
+        {
+            JobDbContext jobDbContext = new JobDbContext();
+            var result = jobDbContext.Database.SqlQuery<int>(@"exec USP_SelectUserIDWhereEmail @Email", new SqlParameter("@Email", Email)).SingleOrDefault<int>();
+            return result;
+        }
 
+
+        public ActionResult TestLogin()
+        {
+            return View();
+
+        }
+        public int GetUserIDWhereUserAndPassword(string UserName, string Password)
+        {                                        
+            JobDbContext jobDbContext = new JobDbContext();
+            var result = jobDbContext.Database.SqlQuery<int>(@"exec USP_SelectUserIDDWhereUserAndPassword @UserName, @Password", new SqlParameter("@UserName", UserName), new SqlParameter("@Password", Password)).SingleOrDefault<int>();
+            return result;
+        }
 
     }
 }

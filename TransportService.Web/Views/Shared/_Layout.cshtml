@@ -77,6 +77,25 @@
             text-decoration: underline;
             text-decoration-color: blue;
         }
+
+
+        /*input[type=text], input[type=number], input[type=email], textarea {
+            -webkit-transition: all 0.30s ease-in-out;
+            -moz-transition: all 0.30s ease-in-out;
+            -ms-transition: all 0.30s ease-in-out;
+            -o-transition: all 0.30s ease-in-out;
+            outline: none;
+            padding: 3px 0px 3px 3px;
+            margin: 5px 1px 3px 0px;
+            border: 1px solid #DDDDDD;
+        }
+
+            input[type=text]:focus, input[type=number]:focus, input[type=email]:focus, textarea:focus {
+                box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+                padding: 3px 0px 3px 3px;
+                margin: 5px 1px 3px 0px;
+                border: 1px solid blue;
+            }*/
     
     </style>
 </head>
@@ -177,7 +196,9 @@
                             <a href="#" data-toggle="dropdown" class="dropdown-toggle js-activated">Blog<b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="blog.html">Blog grid</a></li>
-                                <li><a href="blog-post.html">Blog post</a></li>
+                                <li>
+                                    @Html.ActionLink("Post A Vehicle", "AddTruck", "TLoader", new { @class = "nav-link", @style = "width: 100px;" })
+                                </li>
                             </ul>
                         </li>
                         <li> <a href="gallery.html">Gallery</a></li>

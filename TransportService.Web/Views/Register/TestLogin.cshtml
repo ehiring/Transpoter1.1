@@ -1,0 +1,107 @@
+﻿@model TransportService.Web.Models.Masters.LoginUser
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+    <div class="user-login-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="ui-list nav nav-tabs mb-30" role="tablist">
+                        <!-- <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#login" role="tab" aria-selected="true">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#register" role="tab" aria-selected="false">Register</a>
+                        </li> -->
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#login" role="tab" aria-selected="true">Loader</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#login" role="tab" aria-selected="false">Carrier</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#login" role="tab" aria-selected="false">Broker</a>
+                        </li>
+                    </ul>
+                    <div class="login-wrapper">
+                        <div class="ui-dash tab-content">
+                            <div class="tab-pane fade show active" id="login" role="tabpanel">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <form id="login-form" action="#" method="post">
+                                            <hr />
+                                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                            @if (ViewBag.Message != "")
+                                            {
+                                                <div class="text-danger">*@ViewBag.Message</div>
+                                            }
+                                                <div class="form-group">
+                                                    @Html.EditorFor(model => model.EmailID, new { htmlAttributes = new { @class = "form-control",@type="text", @tabindex="1", @placeholder = "Email Or Mobile No.", @required = "", @id = "txt_UserName" } })
+                                                    @Html.ValidationMessageFor(model => model.EmailID, "", new { @class = "text-danger" })
+
+                                                    @*<input type="text" name="username" id="txt_UserName" tabindex="1" class="form-control" placeholder="Email Or Mobile No." value="" required="">
+                                                    <span class="mandatory">*</span>*@
+
+                                                </div>
+                                                <div class="form-group">
+                                                    @*<input type="password" name="password" id="txt_Password" tabindex="2" class="form-control" placeholder="Password" required="">
+                                                    <span class="mandatory">*</span>*@
+
+                                                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @type = "password", @id = "txt_Password", @tabindex = "2", @placeholder = "Password" , @required = "" } })
+                                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                                </div>
+                                            <div id="divIsLogin" class="form-group text-danger hidden">
+                                                Incorrect Username or Password. Please Try Again.
+                                            </div>
+                                            <div class="row mt-20">
+                                                <div class="col-md-6 col-12 text-left">
+                                                    <div class="res-box">
+                                                        @*<input id="check-l" type="checkbox" name="check">
+                                                        <label for="check-l">Remember me</label>*@
+                                                        <div class="checkbox">
+                                                            @Html.EditorFor(model => model.RememberMe)
+                                                            @Html.ValidationMessageFor(model => model.RememberMe, "", new { @class = "text-danger", @type = "checkbox", id = "check-l" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-12 text-right">
+                                                    <div class="res-box sm-left">
+                                                        <a href="#" tabindex="5" class="forgot-password">Forgot Password?</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="res-box text-center mt-30" style="color:aqua">
+                                                <button id="btnLogin" type="submit" class="btn v8 btn-primary"><span class="lnr lnr-exit"></span> Log In</button>
+                                            </div>
+                                        </form>
+                                        <div class="social-profile-login  text-left mt-20">
+                                            <h5>or Login with</h5>
+                                            <ul class="social-btn">
+                                                <li class="bg-fb"><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                                <li class="bg-tt"><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                                <li class="bg-ig"><a href="#"><i class="fab fa-instagram"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="signup-wrapper">
+                                            <img src="images/others/login-1.png" alt="...">
+                                            <p>Welcome Back! Please Login to your Account for latest LOADS.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
