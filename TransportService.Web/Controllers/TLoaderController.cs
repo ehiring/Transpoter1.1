@@ -165,8 +165,35 @@ namespace TransportService.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditTrip(Transpoter transpoter, List<TripDetail> _tripDetails)
+        public ActionResult EditTrip(Transpoter transpoter, List<CityArray> CityRootId, List<TripDetail> _tripDetails)
         {
+            DataTable dtCityRoot = new DataTable();
+
+            dtCityRoot.Columns.Add("CityID", typeof(int));
+            dtCityRoot.Columns.Add("SequenceNo", typeof(int));
+
+            // Adding Contact Person In DT
+            if (CityRootId != null)
+            {
+                if (CityRootId.Count > 0)
+                {
+                    foreach (var item in CityRootId)
+                    {
+                        DataRow dr_CityRoot = dtCityRoot.NewRow();
+                        dr_CityRoot["CityID"] = item.CityID;
+                        dr_CityRoot["SequenceNo"] = item.SequenceNo;
+                        dtCityRoot.Rows.Add(dr_CityRoot);
+                    }
+                }
+            }
+
+            SqlParameter tvpParamCityRoot = new SqlParameter();
+            tvpParamCityRoot.ParameterName = "@RouteCityIDs";
+            tvpParamCityRoot.SqlDbType = System.Data.SqlDbType.Structured;
+            tvpParamCityRoot.Value = dtCityRoot;
+            tvpParamCityRoot.TypeName = "UDTable_RootCityIDs";
+
+
             DataTable dtTripDetail = new DataTable();
             dtTripDetail.Columns.Add("TripDetailID", typeof(int));
             dtTripDetail.Columns.Add("MaterialID", typeof(int));
@@ -216,7 +243,7 @@ namespace TransportService.Web.Controllers
                     @TripEndDate ,
                     @Status ,
                     @AddedBy,
-                    --@RouteCityIDs,
+                    @RouteCityIDs,
                     @UDTable_TripDetails",
           new SqlParameter("@TripID", transpoter.TripID ),
           new SqlParameter("@SourceID", transpoter.SourceID == null ? (object)DBNull.Value : transpoter.SourceID),
@@ -226,7 +253,7 @@ namespace TransportService.Web.Controllers
           new SqlParameter("@TripEndDate", transpoter.TripEndDate == null ? (object)DBNull.Value : transpoter.TripEndDate),
           new SqlParameter("@Status", transpoter.TripStatus),
           new SqlParameter("@AddedBy", 1),
-          //tvpParamCityRoot,
+          tvpParamCityRoot,
           tvpParamTripDetails);
           return Json("Trip Updated Sucessfull");
             
@@ -612,7 +639,7 @@ namespace TransportService.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Test(ClientRegister client)
+        public ActionResult Test(User _user)
         {
             /*....ClientTypeId Logic here*/
             JobDbContext _jobDbContext = new JobDbContext();
@@ -622,10 +649,10 @@ namespace TransportService.Web.Controllers
                                                                     @Email ,
                                                                     @Password ,
                                                                     @Mobile ",
-                                                                    new SqlParameter("@ClientTypeID", client.ClientTypeID),
-                                                                    new SqlParameter("@Email", client.Email == null ?(object) DBNull.Value:client.Email),
-                                                                    new SqlParameter("@Password", client.Password),
-                                                                    new SqlParameter("@Mobile", client.Mobile));
+                                                                    new SqlParameter("@ClientTypeID", _user.ClientTypeID),
+                                                                    new SqlParameter("@Email", _user.Email == null ?(object) DBNull.Value: _user.Email),
+                                                                    new SqlParameter("@Password", _user.Password),
+                                                                    new SqlParameter("@Mobile", _user.Mobile));
           return Json("Registration Sucessfull");
           
          }

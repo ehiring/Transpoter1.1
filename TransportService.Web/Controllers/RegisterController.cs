@@ -8,6 +8,7 @@ using System.Text;
 using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
+using System.Web.Security;
 using TransportService.Web.BusinessLayer;
 using TransportService.Web.Models.Masters;
 namespace TransportService.Web.Controllers
@@ -25,7 +26,7 @@ namespace TransportService.Web.Controllers
 
         }
         [HttpPost]
-        public ActionResult Test([Bind(Exclude = "IsEmailVerified,ActivationCode,PasswordHash")]ClientRegister _clientRegister)
+        public ActionResult Test([Bind(Exclude = "IsEmailVerified,ActivationCode,PasswordHash")]User _user)
         {
             bool Status = false;
             string message = "";
@@ -33,20 +34,17 @@ namespace TransportService.Web.Controllers
             // Model Validation 
             if (ModelState.IsValid)
             {
-               
-
-
-                #region Generate Activation Code 
-                _clientRegister.ActivationCode = Guid.NewGuid();
+                #region "Generate Activation Code "
+                _user.ActivationCode = Guid.NewGuid();
                 #endregion
 
-                #region  Password Hashing 
-                _clientRegister.PasswordHash = Crypto.Hash(_clientRegister.Password);
+                #region  "Password Hashing "
+                _user.PasswordHash = Crypto.Hash(_user.Password);
                 //_clientRegister.ConfirmPassword = Crypto.Hash(_clientRegister.ConfirmPassword); //
                 #endregion
 
 
-                #region Save to Database
+                #region "Save to Database"
                 using (JobDbContext jobDbContext = new JobDbContext())
                 {
                     //dc.Users.Add(user);
@@ -59,16 +57,16 @@ namespace TransportService.Web.Controllers
                                                                     @Password ,
                                                                     @PasswordHash,
                                                                     @Mobile ",
-                                                                    new SqlParameter("@ClientTypeID", _clientRegister.ClientTypeID),
-                                                                    new SqlParameter("@Email", _clientRegister.Email == null ? (object)DBNull.Value : _clientRegister.Email),
-                                                                    new SqlParameter("@Password", _clientRegister.Password),
-                                                                    new SqlParameter("@PasswordHash", _clientRegister.PasswordHash),
-                                                                    new SqlParameter("@Mobile", _clientRegister.Mobile));
+                                                                    new SqlParameter("@ClientTypeID", _user.ClientTypeID),
+                                                                    new SqlParameter("@Email", _user.Email == null ? (object)DBNull.Value : _user.Email),
+                                                                    new SqlParameter("@Password", _user.Password),
+                                                                    new SqlParameter("@PasswordHash", _user.PasswordHash),
+                                                                    new SqlParameter("@Mobile", _user.Mobile));
 
                     //Send Email to User
                     //SendVerificationLinkEmail(_clientRegister.Email, _clientRegister.ActivationCode.ToString());
                     message = "Registration successfully done. Account activation link " +
-                        " has been sent to your email id:" + _clientRegister.Email;
+                        " has been sent to your email id:" + _user.Email;
                     Status = true;
                 }
                 #endregion
@@ -81,24 +79,24 @@ namespace TransportService.Web.Controllers
             }
             ViewBag.Message = message;
             ViewBag.Status = Status;
-            return View(_clientRegister);
+            return View(_user);
 
         }
 
         public void SendVerificationLinkEmail(string email, string activationCode)
         {
-           
-                var verifyUrl = "/User/VerifyAccount/" + activationCode;
-                var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyUrl);
 
-                var fromEmail = new MailAddress("dotnetawesome@gmail.com", "Dotnet Awesome");
-                var toEmail = new MailAddress(email);
-                var fromEmailPassword = "********"; // Replace with actual password
-                string subject = "Your account is successfully created!";
+            var verifyUrl = "/User/VerifyAccount/" + activationCode;
+            var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyUrl);
 
-                string body = "<br/><br/>We are excited to tell you that your Dotnet Awesome account is" +
-                    " successfully created. Please click on the below link to verify your account" +
-                    " <br/><br/><a href='" + link + "'>" + link + "</a> ";
+            var fromEmail = new MailAddress("dotnetawesome@gmail.com", "Dotnet Awesome");
+            var toEmail = new MailAddress(email);
+            var fromEmailPassword = "********"; // Replace with actual password
+            string subject = "Your account is successfully created!";
+
+            string body = "<br/><br/>We are excited to tell you that your Dotnet Awesome account is" +
+                " successfully created. Please click on the below link to verify your account" +
+                " <br/><br/><a href='" + link + "'>" + link + "</a> ";
 
             var smtp = new SmtpClient
             {
@@ -142,7 +140,6 @@ namespace TransportService.Web.Controllers
             using (JobDbContext jobDbContext = new JobDbContext())
             {
                 return jobDbContext.Database.SqlQuery<int>(@"exec USP_SelectUserIDWhereMobileNo @Mobile", new SqlParameter("@Mobile", MobileNo)).SingleOrDefault<int>();
-
             }
         }
 
@@ -180,6 +177,69 @@ namespace TransportService.Web.Controllers
 
         [HttpGet]
         public ActionResult TestLogin()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public ActionResult TestLogin(LoginUser _loginUser, string ReturnUrl = "")
+        {
+            string message = "";
+            using (JobDbContext jobDbContext = new JobDbContext())
+            {
+                var v = jobDbContext.Database.SqlQuery<User>("exec USP_SelectPasswordHashWhereUserName @Username", new SqlParameter("@Username", _loginUser.UserName)).FirstOrDefault<User>();
+                if (v != null)
+                {
+
+                    /*  Is User Entered the OTP and verified
+                     
+                     */
+
+                    //if (!v.IsUserNameVerified)
+                    //{
+                    //    ViewBag.Message = "Please verify your email first";
+                    //    return View();
+                    //}
+                    if (string.Compare(Crypto.Hash(_loginUser.Password), v.PasswordHash) == 0)
+                    {
+                        int timeout = _loginUser.RememberMe ? 525600 : 20; // 525600 min = 1 year
+                        var ticket = new FormsAuthenticationTicket(_loginUser.UserName, _loginUser.RememberMe, timeout);
+                        string encrypted = FormsAuthentication.Encrypt(ticket);
+                        var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encrypted);
+                        cookie.Expires = DateTime.Now.AddMinutes(timeout);
+                        cookie.HttpOnly = true;
+                        Response.Cookies.Add(cookie);
+
+
+                        if (Url.IsLocalUrl(ReturnUrl))
+                        {
+                            return Redirect(ReturnUrl);
+                        }
+                        else
+                        {
+                            return RedirectToAction("LoginSuccess", "Register");
+                        }
+                        
+
+                    }
+                    else
+                    {
+                        message = "Invalid credential provided";
+                    }
+                }
+                else
+                {
+                    message = "Invalid credential provided";
+                }
+            }
+            ViewBag.Message = message;
+            return View();
+        }
+
+
+        [Authorize]
+        public ActionResult LoginSuccess()
         {
             return View();
         }

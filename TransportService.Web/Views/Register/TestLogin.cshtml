@@ -36,18 +36,17 @@
                                             <hr />
                                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                                            @if (ViewBag.Message != "")
-                                            {
-                                                <div class="text-danger">*@ViewBag.Message</div>
-                                            }
+                                                @if (ViewBag.Message != "")
+                                                {
+                                                    <div class="text-danger">*@ViewBag.Message</div>
+                                                }
                                                 <div class="form-group">
-                                                    @Html.EditorFor(model => model.EmailID, new { htmlAttributes = new { @class = "form-control",@type="text", @tabindex="1", @placeholder = "Email Or Mobile No.", @required = "", @id = "txt_UserName" } })
-                                                    @Html.ValidationMessageFor(model => model.EmailID, "", new { @class = "text-danger" })
-
+                                                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control",@type="text", @tabindex="1", @placeholder = "Email Or Mobile No.", @required = "", @id = "txt_UserName" } })
+                                                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
                                                     @*<input type="text" name="username" id="txt_UserName" tabindex="1" class="form-control" placeholder="Email Or Mobile No." value="" required="">
                                                     <span class="mandatory">*</span>*@
-
                                                 </div>
+
                                                 <div class="form-group">
                                                     @*<input type="password" name="password" id="txt_Password" tabindex="2" class="form-control" placeholder="Password" required="">
                                                     <span class="mandatory">*</span>*@
@@ -55,18 +54,20 @@
                                                     @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @type = "password", @id = "txt_Password", @tabindex = "2", @placeholder = "Password" , @required = "" } })
                                                     @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                                                 </div>
+
                                             <div id="divIsLogin" class="form-group text-danger hidden">
                                                 Incorrect Username or Password. Please Try Again.
                                             </div>
+
                                             <div class="row mt-20">
                                                 <div class="col-md-6 col-12 text-left">
                                                     <div class="res-box">
-                                                        @*<input id="check-l" type="checkbox" name="check">
-                                                        <label for="check-l">Remember me</label>*@
-                                                        <div class="checkbox">
+                                                        <input id="check-l" type="checkbox" name="check" value="@Model.RememberMe">
+                                                        <label for="check-l">Remember me</label>
+                                                        @*<div class="checkbox">
                                                             @Html.EditorFor(model => model.RememberMe)
                                                             @Html.ValidationMessageFor(model => model.RememberMe, "", new { @class = "text-danger", @type = "checkbox", id = "check-l" })
-                                                        </div>
+                                                        </div>*@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 col-12 text-right">
@@ -105,3 +106,27 @@
         </div>
     </div>
 }
+<script>
+    $(document).on('click', '#btnLogin', function (e) {
+        e.preventDefault();
+        alert("In Login");
+        $.ajax({
+            type: 'Post',
+            dataType: 'json',
+            url: '/Register/TestLogin',
+            data:
+            {
+                UserName: $('#txt_UserName').val(),
+                Password: $('#txt_Password').val(),
+            },
+            success: function (response) {
+                
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Error " + errorThrown);
+            }
+        });
+
+    });
+
+</script>

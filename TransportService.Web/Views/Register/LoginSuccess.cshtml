@@ -1,0 +1,15 @@
+﻿Welcome @HttpContext.Current.User.Identity.Name
+
+@if (Request.IsAuthenticated)
+{
+    <div><h1>Login Successful!!</h1></div>
+
+    @*using (Html.BeginForm("Logout", "User", FormMethod.Post, new { id = "logoutForm" }))
+        {
+            <a href="javascript:document.getElementById('logoutForm').submit()">Logout</a>
+        }*@
+}
+
+
+
+<h1>Success</h1>

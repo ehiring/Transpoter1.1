@@ -235,7 +235,6 @@
             type: "POST",
             async: true,
                 success: function (data) {
-
                 $('#grid2').html(data);
 
 
@@ -260,10 +259,10 @@
         var material = $("#ddlMaterial option:selected").text();
         var conversionFactor = $("#ddlUnit option:selected").val();
         var unit = $("#ddlUnit option:selected").text();
-        var height = $("#txt_Height").val();
-        var width = $("#txt_Width").val();
-        var length = $("#txt_Length").val();
-        var weight = $("#txt_Weight").val();
+        var height = parseFloat($("#txt_Height").val());
+        var width = parseFloat($("#txt_Width").val());
+        var length = parseFloat($("#txt_Length").val());
+        var weight = parseFloat($("#txt_Weight").val());
         var quantity = $("#txt_Quantity").val();
 
         if (materialID == 0) {
@@ -311,10 +310,10 @@
          * not exceed.
          * 
          * */
-        var availableHeight = $("#lblHeight").text();
-        var availableWidth = $("#lblWidth").text();
-        var availableLength = $("#lblLength").text();
-        var availableWeight = $("#lblCapacity").text();
+        var availableHeight = parseFloat($("#lblHeight").text());
+        var availableWidth = parseFloat($("#lblWidth").text());
+        var availableLength = parseFloat($("#lblLength").text());
+        var availableWeight = parseFloat($("#lblCapacity").text());
 
 
 

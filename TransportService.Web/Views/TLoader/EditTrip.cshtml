@@ -410,11 +410,38 @@
     $(document).on('click', '.clsDeleteRow', function (e) {
         e.preventDefault();
         alert("Delete");
+
+        var ConversionFactor = $(this).closest('tr').children('td.clsConversionFactor').text();
+        var height = $(this).closest('tr').children('td.clsHeight').text();
+        var width = $(this).closest('tr').children('td.clsWidth').text();
+        var length = $(this).closest('tr').children('td.clsLength').text();
+        var weight = $(this).closest('tr').children('td.clsWeight').text();
+        var quantity = $(this).closest('tr').children('td.clsQty').text();
+
+
+        var availableHeight = parseFloat($('#lblHeight').text());
+        var availableWidth = parseFloat($('#lblWidth').text());
+        var availableLength = parseFloat($('#lblLength').text());
+        var availableCapacity = parseFloat($('#lblCapacity').text());
+
+        availableHeight = availableHeight + (height * ConversionFactor * quantity);
+        availableWidth = availableWidth + (width * ConversionFactor * quantity);
+        availableLength = availableLength + (length * ConversionFactor * quantity);
+        availableCapacity = availableCapacity + parseFloat(weight);
+
+        $('#lblHeight').text(availableHeight);
+        $('#lblWidth').text(availableWidth);
+        $('#lblLength').text(availableLength);
+        $('#lblCapacity').text(availableCapacity);
+
         $(this).parents('tr').remove();
+
+
     });
 
     $(document).on('click', '.clsEditRow', function (e) {
         e.preventDefault();
+        //$('.clsEditRow').addClass('disableClick');
 
 
         var srNo = $(this).closest('tr').children('td.clsSrNo').text();
@@ -454,9 +481,9 @@
 
 
 
-        availableHeight = availableHeight + (height * ConversionFactor);
-        availableWidth = availableWidth + (width * ConversionFactor);
-        availableLength = availableLength + (length * ConversionFactor);
+        availableHeight = availableHeight + (height * ConversionFactor*quantity);
+        availableWidth = availableWidth + (width * ConversionFactor*quantity);
+        availableLength = availableLength + (length * ConversionFactor*quantity);
         availableCapacity = availableCapacity + parseFloat(weight);
 
         $('#lblHeight').text(availableHeight);
@@ -619,7 +646,7 @@
     $(document).on('click', '#btnSubmit', function (e) {
         e.preventDefault();
         
-        alert("A");
+        
         var bflagValid = 1;
         if ($("#SourceID option:selected").val() == null || $("#SourceID option:selected").val() == "") {
             bflagValid = 0;
@@ -665,7 +692,26 @@
             return 0;
 
         }
-        alert("B");
+
+
+
+        var idArrRoot = [];
+        $('.RootID').each(function (k, v) {
+            var tdVals = $(this).attr("id") + "~" + $(this).attr('SeqNo');
+            idArrRoot.push(tdVals);
+        });
+        // Adding City Root into array
+
+
+        var SaveRoot = [];
+        for (var i = 0; i < idArrRoot.length; i++) {
+            var arrElement = idArrRoot[i].split("~");
+            item = {}
+            item["CityID"] = arrElement[0];
+            item["SequenceNo"] = arrElement[1];
+            SaveRoot.push(item);
+        }
+     
         //adding Load Grid Details In Array
         var idArrLoadDetails = [];
         $('#tblGoodsDetail tbody tr').each(function (k, v) {
@@ -684,7 +730,7 @@
 
         });
         
-        alert("C");
+        
         var TripDetails = [];
         for (var i = 0; i < idArrLoadDetails.length; i++) {
             var arrElement = idArrLoadDetails[i].split("~");
@@ -717,7 +763,7 @@
                 TripEndDate: $("#EndDate").val(),
                 TripStartDate: $("#StartDate").val(),
                 TripStatus: $("#TripStatus option:selected").val(),
-                //CityRootID: SaveRoot,
+                CityRootID: SaveRoot,
                 _tripDetails: TripDetails
             },
             success: function (da) {
