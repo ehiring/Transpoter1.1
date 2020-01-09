@@ -23,10 +23,9 @@ namespace TransportService.Web.Models.Masters
 
         /*.....*/
         //public string IPAddress { get; set; }
-        public int? IsUserNameVerified { get; set; }
+        public bool IsUserNameVerified { get; set; }
         public Guid? ActivationCode { get; set; }
-
-
+        public int OTP { get; set; }
 
     }
     public class LoginUser

@@ -514,18 +514,33 @@
         <script>
             $(document).ready(function () {
                 
-                
-          
 
-           $('#DestinationID').on("change", function (e) {
+                $('#DestinationID').on("change", function (e) {
+
+                    var S;
+                    var D
+                    if ($("#SourceID option:selected").text() == "Select Source") {
+                        S = ""
+                    }
+                    else {
+                        S = $("#SourceID option:selected").text();
+
+                    }
+                    if ($("#DestinationID option:selected").text() == "Select Destination") {
+                        D = ""
+                    }
+                    else {
+                        D = $("#DestinationID option:selected").text();
+                    }
+
                 e.preventDefault();
                     $.ajax({
                     url: "@Url.Action("SearchTrips", "TLoader")",
                     contentType: "application/json",
                     data: JSON.stringify({
 
-                        Source: $("#SourceID option:selected").text(),
-                        Destination: $("#DestinationID option:selected").text(),
+                        Source: S,
+                        Destination: D,
                     }),
                     dataType: "text",
                     type: "POST",

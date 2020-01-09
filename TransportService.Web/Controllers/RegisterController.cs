@@ -34,8 +34,13 @@ namespace TransportService.Web.Controllers
             // Model Validation 
             if (ModelState.IsValid)
             {
-                #region "Generate Activation Code "
+                
+                #region "Generate Activation Code"
                 _user.ActivationCode = Guid.NewGuid();
+                #endregion
+
+                #region "Generate OTP"
+                _user.OTP = new JobDbContext().Database.SqlQuery<int>("USP_GenerateOTP").SingleOrDefault<int>();
                 #endregion
 
                 #region  "Password Hashing "
@@ -56,21 +61,31 @@ namespace TransportService.Web.Controllers
                                                                     @Email ,
                                                                     @Password ,
                                                                     @PasswordHash,
-                                                                    @Mobile ",
+                                                                    @Mobile ,
+                                                                    @ActivationCode,
+                                                                    @OTP",
                                                                     new SqlParameter("@ClientTypeID", _user.ClientTypeID),
                                                                     new SqlParameter("@Email", _user.Email == null ? (object)DBNull.Value : _user.Email),
                                                                     new SqlParameter("@Password", _user.Password),
                                                                     new SqlParameter("@PasswordHash", _user.PasswordHash),
-                                                                    new SqlParameter("@Mobile", _user.Mobile));
+                                                                    new SqlParameter("@Mobile", _user.Mobile),
+                                                                    new SqlParameter("@ActivationCode", _user.ActivationCode ),
+                                                                    new SqlParameter("@OTP", _user.ActivationCode ));
+                    
+
+                    SendOTPOnMobile(_user.Mobile,_user.OTP);
 
                     //Send Email to User
-                    //SendVerificationLinkEmail(_clientRegister.Email, _clientRegister.ActivationCode.ToString());
+                    if (_user.Email != null)
+                    {
+                        SendVerificationLinkEmail(_user.Email, _user.ActivationCode.ToString());
+                    }
+                    
                     message = "Registration successfully done. Account activation link " +
                         " has been sent to your email id:" + _user.Email;
                     Status = true;
                 }
                 #endregion
-
 
             }
             else
@@ -80,21 +95,25 @@ namespace TransportService.Web.Controllers
             ViewBag.Message = message;
             ViewBag.Status = Status;
             return View(_user);
+        }
+        public void SendOTPOnMobile(string MobileNo,int OTP)
+        {
+
 
         }
 
         public void SendVerificationLinkEmail(string email, string activationCode)
         {
 
-            var verifyUrl = "/User/VerifyAccount/" + activationCode;
+            var verifyUrl = "/Register/VerifyAccountByMail/" + activationCode;
             var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyUrl);
 
-            var fromEmail = new MailAddress("dotnetawesome@gmail.com", "Dotnet Awesome");
+            var fromEmail = new MailAddress("info@bhadaa.com", "Bhada.com");
             var toEmail = new MailAddress(email);
-            var fromEmailPassword = "********"; // Replace with actual password
+            var fromEmailPassword = "harishmn"; // Replace with actual password
             string subject = "Your account is successfully created!";
 
-            string body = "<br/><br/>We are excited to tell you that your Dotnet Awesome account is" +
+            string body = "<br/><br/>We are excited to tell you that your Truck Load account is" +
                 " successfully created. Please click on the below link to verify your account" +
                 " <br/><br/><a href='" + link + "'>" + link + "</a> ";
 
@@ -104,7 +123,8 @@ namespace TransportService.Web.Controllers
                 Port = 587,
                 EnableSsl = true,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = false,
+                //UseDefaultCredentials = false,
+                UseDefaultCredentials = true,
                 Credentials = new NetworkCredential(fromEmail.Address, fromEmailPassword)
             };
 
@@ -152,26 +172,24 @@ namespace TransportService.Web.Controllers
         /// <returns></returns>
 
         [HttpGet]
-        public ActionResult VerifyAccount(string id)
+        public ActionResult VerifyAccountByMail(string id)
         {
-            //bool Status = false;
-            //using (MyDatabaseEntities dc = new MyDatabaseEntities())
-            //{
-            //    dc.Configuration.ValidateOnSaveEnabled = false; // This line I have added here to avoid 
-            //                                                    // Confirm password does not match issue on save changes
-            //    var v = dc.Users.Where(a => a.ActivationCode == new Guid(id)).FirstOrDefault();
-            //    if (v != null)
-            //    {
-            //        v.IsEmailVerified = true;
-            //        dc.SaveChanges();
-            //        Status = true;
-            //    }
-            //    else
-            //    {
-            //        ViewBag.Message = "Invalid Request";
-            //    }
-            //}
-            //ViewBag.Status = Status;
+            bool Status = false;
+            using (JobDbContext _jobDbContext = new JobDbContext())
+            {
+                var v = _jobDbContext.Database.SqlQuery<User>("exec USP_SelectFromUserWhereActivationCode @ActivationCode ", new SqlParameter("@ActivationCode", id)).SingleOrDefault<User>();
+                if (v != null)
+                {
+                   v.IsUserNameVerified  = true;
+                   _jobDbContext.Database.ExecuteSqlCommand("exec USP_UpdateUserIsVerifiedByMail @ActivationCode", new SqlParameter("@ActivationCode", id));
+                   Status = true;
+                }
+                else
+                {
+                    ViewBag.Message = "Invalid Request";
+                }
+            }
+            ViewBag.Status = Status;
             return View();
         }
 
@@ -196,11 +214,11 @@ namespace TransportService.Web.Controllers
                      
                      */
 
-                    //if (!v.IsUserNameVerified)
-                    //{
-                    //    ViewBag.Message = "Please verify your email first";
-                    //    return View();
-                    //}
+                    if (!v.IsUserNameVerified)
+                    {
+                        ViewBag.Message = "Please verify your email first";
+                        return View();
+                    }
                     if (string.Compare(Crypto.Hash(_loginUser.Password), v.PasswordHash) == 0)
                     {
                         int timeout = _loginUser.RememberMe ? 525600 : 20; // 525600 min = 1 year

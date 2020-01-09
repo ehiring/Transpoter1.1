@@ -65,6 +65,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -138,6 +140,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="BusinessLayer\JobDbContext.cs" />
     <Compile Include="BusinessLayer\TripBusinessLayer.cs" />
+    <Compile Include="Connected Services\ASPSMSX2\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoaderController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
@@ -208,6 +215,12 @@
     <Content Include="assets\rs-plugin\css\settings.css" />
     <Content Include="assets\rs-plugin\js\jquery.themepunch.revolution.min.js" />
     <Content Include="assets\rs-plugin\js\jquery.themepunch.tools.min.js" />
+    <None Include="Connected Services\ASPSMSX2\configuration91.svcinfo" />
+    <None Include="Connected Services\ASPSMSX2\configuration.svcinfo" />
+    <None Include="Connected Services\ASPSMSX2\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -222,6 +235,10 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap.min.css.map" />
+    <None Include="Connected Services\ASPSMSX2\aspsmsx2.wsdl" />
+    <Content Include="Connected Services\ASPSMSX2\TransportService.Web.ASPSMSX2.vouchers.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\gridmvc.js" />
     <Content Include="Scripts\gridmvc.lang.fr.js" />
@@ -263,13 +280,11 @@
     <Content Include="Views\TLoader\New_LoaderIndex.cshtml" />
     <Content Include="Views\TLoader\_LoadList.cshtml" />
     <Content Include="Views\Shared\_Layout2.cshtml" />
-    <Content Include="Views\TLoader\Old_EditLoad.cshtml" />
     <Content Include="Views\TLoader\EditLoad.cshtml" />
     <Content Include="Views\TLoader\Test.cshtml" />
     <Content Include="Views\TLoader\AddLoad.cshtml" />
     <Content Include="Views\Home\Test.cshtml" />
     <Content Include="Views\Home\TestNew.cshtml" />
-    <Content Include="Views\TLoader\trail_load.cshtml" />
     <Content Include="Views\TLoader\AddTrip.cshtml" />
     <Content Include="Views\TLoader\AddSubTrip.cshtml" />
     <Content Include="Views\TLoader\_AvailabeLoadSpace.cshtml" />
@@ -279,11 +294,13 @@
     <Content Include="Views\TLoader\_Registration.cshtml" />
     <Content Include="Views\TLoader\EditTrip.cshtml" />
     <Content Include="Views\TLoader\_TripRoute.cshtml" />
-    <Content Include="Views\TLoader\AddTruck.cshtml" />
+    <Content Include="Views\TLoader\Old_AddTruck.cshtml" />
     <Content Include="Views\TLoader\TestLogin.cshtml" />
     <Content Include="Views\Register\Test.cshtml" />
     <Content Include="Views\Register\TestLogin.cshtml" />
     <Content Include="Views\Register\LoginSuccess.cshtml" />
+    <Content Include="Views\Register\VerifyAccount.cshtml" />
+    <Content Include="Views\TLoader\AddTruck.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -300,6 +317,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\ASPSMSX2\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -233,8 +233,9 @@ namespace TransportService.Web.Controllers
             tvpParamTripDetails.Value = dtTripDetail;
             tvpParamTripDetails.TypeName = "UDTable_TripDetails";
 
-            JobDbContext _jobDbContext = new JobDbContext();
-            var result = _jobDbContext.Database.ExecuteSqlCommand(@"exec USP_UpdateTripWhereID
+            using (JobDbContext _jobDbContext = new JobDbContext())
+            {
+                var result = _jobDbContext.Database.ExecuteSqlCommand(@"exec USP_UpdateTripWhereID
                     @TripID,
                     @SourceID, 
                     @DestinationID ,
@@ -245,17 +246,18 @@ namespace TransportService.Web.Controllers
                     @AddedBy,
                     @RouteCityIDs,
                     @UDTable_TripDetails",
-          new SqlParameter("@TripID", transpoter.TripID ),
-          new SqlParameter("@SourceID", transpoter.SourceID == null ? (object)DBNull.Value : transpoter.SourceID),
-          new SqlParameter("@DestinationID", transpoter.DestinationID == null ? (object)DBNull.Value : transpoter.DestinationID),
-          new SqlParameter("@VehicleID", transpoter.VehicleID == null ? (object)DBNull.Value : transpoter.VehicleID),
-          new SqlParameter("@TripStartDate", transpoter.TripStartDate == null ? (object)DBNull.Value : transpoter.TripStartDate),
-          new SqlParameter("@TripEndDate", transpoter.TripEndDate == null ? (object)DBNull.Value : transpoter.TripEndDate),
-          new SqlParameter("@Status", transpoter.TripStatus),
-          new SqlParameter("@AddedBy", 1),
-          tvpParamCityRoot,
-          tvpParamTripDetails);
-          return Json("Trip Updated Sucessfull");
+              new SqlParameter("@TripID", transpoter.TripID),
+              new SqlParameter("@SourceID", transpoter.SourceID == null ? (object)DBNull.Value : transpoter.SourceID),
+              new SqlParameter("@DestinationID", transpoter.DestinationID == null ? (object)DBNull.Value : transpoter.DestinationID),
+              new SqlParameter("@VehicleID", transpoter.VehicleID == null ? (object)DBNull.Value : transpoter.VehicleID),
+              new SqlParameter("@TripStartDate", transpoter.TripStartDate == null ? (object)DBNull.Value : transpoter.TripStartDate),
+              new SqlParameter("@TripEndDate", transpoter.TripEndDate == null ? (object)DBNull.Value : transpoter.TripEndDate),
+              new SqlParameter("@Status", transpoter.TripStatus),
+              new SqlParameter("@AddedBy", 1),
+              tvpParamCityRoot,
+              tvpParamTripDetails);
+            }
+            return Json("Trip Updated Sucessfull");
             
         }
         public ActionResult AddSubTrip(int? Source, int TripId = 0)
@@ -309,33 +311,8 @@ namespace TransportService.Web.Controllers
 
 
         }
-        public ActionResult SearchLoads(int? page, string Source, string Destination)
-        {
-            Loader _loader = new Loader();
-            _loader.Loaders = _tripBusinessLayer.GetLoaderList(page, Source,Destination);
-            _loader.LoadDetails = _tripBusinessLayer.GetLoadeDetails();
-            _loader.MaterialList = _tripBusinessLayer.GetMaterialList();
-
-            ViewData["CityList"] = _tripBusinessLayer.GetDropDownData("CityList", 0);
-            ViewData["SearchApplied"] = 0;
-
-            // return View();
-            return Request.IsAjaxRequest() ? (ActionResult)PartialView("_LoadList", _loader) : View("_LoadList", _loader);
-        }
-        public ActionResult New_LoaderIndex(int? page)
-        {
-            Loader _loader = new Loader();
-            _loader.Loaders = _tripBusinessLayer.GetLoaderList(page, "", "");
-            _loader.LoadDetails = _tripBusinessLayer.GetLoadeDetails();
-            _loader.MaterialList = _tripBusinessLayer.GetMaterialList();
-
-            ViewData["CityList"] = _tripBusinessLayer.GetDropDownData("CityList", 0);
-            ViewData["SearchApplied"] = 0;
-
-            // return View();
-            return Request.IsAjaxRequest() ? (ActionResult)PartialView("New_LoaderIndex", _loader) : View("New_LoaderIndex", _loader);
-        }
-
+       
+        
         [HttpPost]
         public ActionResult SaveSubTrip(int? sourceId, int? destinationId, int? TripId, List<TripDetail> _tripDetails)
         {
@@ -379,18 +356,19 @@ namespace TransportService.Web.Controllers
             tvpParamTripDetails.Value = dtTripDetail;
             tvpParamTripDetails.TypeName = "UDTable_TripDetails";
 
-            JobDbContext _db = new JobDbContext();
-            var result = _db.Database.ExecuteSqlCommand(@"exec USP_SaveSubtrip
-                  @SourceID 
-                 ,@DestinationID 
-                 ,@TripID 
-                 ,@UDTable_TripDetails",
-            new SqlParameter("@SourceID", sourceId == null ? (object)DBNull.Value : sourceId),
-            new SqlParameter("@DestinationID", destinationId == null ? (object)DBNull.Value : destinationId),
-            new SqlParameter("@TripID", TripId == null ? (object)DBNull.Value : TripId),
-            tvpParamTripDetails
-            );
-
+            using (JobDbContext _db = new JobDbContext())
+            {
+                    var result = _db.Database.ExecuteSqlCommand(@"exec USP_SaveSubtrip
+                         @SourceID 
+                        ,@DestinationID 
+                        ,@TripID 
+                        ,@UDTable_TripDetails",
+                        new SqlParameter("@SourceID", sourceId == null ? (object)DBNull.Value : sourceId),
+                        new SqlParameter("@DestinationID", destinationId == null ? (object)DBNull.Value : destinationId),
+                        new SqlParameter("@TripID", TripId == null ? (object)DBNull.Value : TripId),
+                    tvpParamTripDetails
+                   );
+            }
             return Json("Your SubTrip Booked Sucessfully");
 
         }
@@ -398,7 +376,34 @@ namespace TransportService.Web.Controllers
         #endregion
 
         #region "Load Methods"
+        public ActionResult New_LoaderIndex(int? page)
+        {
+            Loader _loader = new Loader();
+            _loader.Loaders = _tripBusinessLayer.GetLoaderList(page, "", "");
+            _loader.LoadDetails = _tripBusinessLayer.GetLoadeDetails();
+            _loader.MaterialList = _tripBusinessLayer.GetMaterialList();
 
+            ViewData["CityList"] = _tripBusinessLayer.GetDropDownData("CityList", 0);
+            ViewData["SearchApplied"] = 0;
+
+            // return View();
+            return Request.IsAjaxRequest() ? (ActionResult)PartialView("New_LoaderIndex", _loader) : View("New_LoaderIndex", _loader);
+        }
+
+
+        public ActionResult SearchLoads(int? page, string Source, string Destination)
+        {
+            Loader _loader = new Loader();
+            _loader.Loaders = _tripBusinessLayer.GetLoaderList(page, Source, Destination);
+            _loader.LoadDetails = _tripBusinessLayer.GetLoadeDetails();
+            _loader.MaterialList = _tripBusinessLayer.GetMaterialList();
+
+            ViewData["CityList"] = _tripBusinessLayer.GetDropDownData("CityList", 0);
+            ViewData["SearchApplied"] = 0;
+
+            // return View();
+            return Request.IsAjaxRequest() ? (ActionResult)PartialView("_LoadList", _loader) : View("_LoadList", _loader);
+        }
         public ActionResult AddLoad()
         {
             ViewData["CityList"] = _tripBusinessLayer.GetDropDownData("CityList", 0);
