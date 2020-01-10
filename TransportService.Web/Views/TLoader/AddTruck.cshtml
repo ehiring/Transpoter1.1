@@ -17,7 +17,6 @@
     <hr />
     <div class="row">
         <div class="col-sm-12 pull-left">
-           
             <input type="button" id="btnSubmit" class="btn btn-primary" name="regform" value="Add Truck">
         </div>
     </div>
@@ -216,7 +215,7 @@
         $.ajax({
             type: 'POST',
             dataType: 'json',
-            url: '/Loader/AddTruck1',
+            url: '/TLoader/AddTruck1',
             data:
             {
                 VehicleTypeID: $("#VehicleTypeID option:selected").val(),

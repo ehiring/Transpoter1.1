@@ -1,4 +1,5 @@
 ﻿@model TransportService.Web.Models.Activity.Loader
+ @using TransportService.Web.Models
 @{
     ViewBag.Title = "AddLoad";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -10,12 +11,12 @@
 @using (Html.BeginForm())
 {
 
-<div class="container-fluid">
+<div id="divLoad" class="container-fluid ">
     <hr />
     <div class="row">
         <div class="col-sm-12 pull-left">
             @*<input id="btnSubmit" type="submit" class="btn btn-primary" name="regform" value="Create Truck">*@
-            <input type="button" id="btnSubmit" class="btn btn-primary" name="regform" value="Add Load">
+            <input type="button" id="btnNext" class="btn btn-primary" name="regform" value="Estimate Price">
         </div>
     </div>
 
@@ -48,6 +49,7 @@
                             @Html.DropDownList("Destination", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select Destination", new { @class = "form-control", @id = "DestinationID", Title = "Select Destination" })
                             
                         </div>
+                        <label id="lblDistance"></label>
                     </div>
 
                     <div class="col-sm-6 form-group" >
@@ -65,9 +67,9 @@
                             <span class="input-group-addon"><i class="fas fa-shopping-cart"></i></span>
                             <select id="ddlLoadType" class="form-control" title="Select Load Type">
                                 <option value="0"> Select Load Type </option>
-                                <option value="Full Truck Load(Above 3000 Kg)"> Full Truck Load(Above 3000 Kg) </option>
-                                <option value="Part Truck Load(500-3000 Kg)">Part Truck Load(500-3000 Kg) </option>
-                                <option value="Parcel (Less than 500 Kg)">Parcel (Less than 500 Kg) </option>
+                                <option value="@constLoadType.FullTruckLoad"> @constLoadType.FullTruckLoad </option>
+                                <option value="@constLoadType.PartTruckLoad">@constLoadType.PartTruckLoad </option>
+                                <option value="@constLoadType.Parcel">@constLoadType.Parcel </option>
                             </select>
                         </div>
                     </div>
@@ -195,6 +197,7 @@
 
                     <div class="form-group">
                         <input type="hidden" id="RowCount" name="RowCount" value="0">
+                        <input type="hidden" id="hdnTotalWeight" name="TotalWeight" value="0">
                         <div>
                             <table class="table table-bordered" id="tblGoodsDetail" title="Enter Good Details">
                                 <thead>
@@ -227,7 +230,42 @@
     </div>
 
 
+</div>
+<div id="divQuotation" class="container-fluid hidden">
+    <hr/>
+    <div class="row">
+        <div class="col-sm-12 pull-left">
+            
+            <input type="button" id="btnSubmit" class="btn btn-primary" name="regform" value="Add Load">
+        </div>
+    </div>
 
+    <div class="row">
+        <hr />
+        <div class="col-lg-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h5 class="panel-title">Final Fare(Rs.) </h5>
+                </div>
+                <div class="panel-body" >
+                    <h3 style="color:blueviolet" id="divDoorToDoor"><i class="fa fa-inr"></i> </h3>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 hidden">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h5 class="panel-title">Warehouse To Warehouse Price(Rs.) </h5>
+                </div>
+                <div class="panel-body" id="divWarehouseToWarehouse">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
 
 </div>
 
@@ -236,6 +274,28 @@
         $(document).ready(function () {
             $('.goodstable').hide();
            
+        });
+
+        $(document).on('change', '#DestinationID', function (e) {
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/TLoader/GetDistanceForCities',
+                data:
+                {
+                    FromCity: $("#SourceID option:selected").val(),
+                    ToCity: $("#DestinationID option:selected").val(),
+                    
+                },
+                success: function (da) {
+                    alert(da);
+                    $('#lblDistance').text(da);
+                    
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Error " + errorThrown);
+                }
+            });
         });
         $(document).on('click', 'i.deleterow', function (e) {
             e.preventDefault();
@@ -315,8 +375,14 @@
                 '<td class="clsQuantity">' + quantity + '</td>' +
                 '<td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true" style="margin-top: 7px;"></i></td>' +
 
-                '</tr>'
+                '</tr>';
             $('#tblGoodsDetail  tbody').append(bindRow);
+
+
+            var totalWeight = parseFloat($('#hdnTotalWeight').val());
+            totalWeight = totalWeight + parseFloat(weight);
+            $('#hdnTotalWeight').val(totalWeight);
+
             $('#ddlMaterial').prop('selectedIndex', 0);
             $('#ddlUnit').prop('selectedIndex', 0);
             $("#txt_Height").val('');
@@ -332,10 +398,92 @@
             $("#txt_Weight").removeClass('borderValidation');
             $("#txt_Quantity").removeClass('borderValidation');
         });
-        $(document).on('click', '#btnSubmit', function (e) {
+        $(document).on('click', '#btnNext', function (e) {
             e.preventDefault();
             var bflagValid = 1;
+            if ($("#SourceID option:selected").val() == null || $("#SourceID option:selected").val() == "") {
+                bflagValid = 0;
+                $("#SourceID").addClass('borderValidation');
 
+            }
+            
+            if ($("#DestinationID option:selected").val() == null || $("#DestinationID option:selected").val() == "") {
+                bflagValid = 0;
+                $("#DestinationID").addClass('borderValidation');
+            }
+            
+            if ($("#PickUpDate").val() == null || $("#PickUpDate").val() == "") {
+                bflagValid = 0;
+                $("#PickUpDate").addClass('borderValidation');
+            }
+            
+            if ($("#ddlLoadType option:selected").val() == 0 || $("#ddlLoadType option:selected").val() == "") {
+                bflagValid = 0;
+                $("#ddlLoadType").addClass('borderValidation');
+            }
+            
+            if ($("#ddlSubService option:selected").val() == 0 || $("#ddlSubService option:selected").val() == "") {
+                bflagValid = 0;
+                $("#ddlSubService").addClass('borderValidation');
+            }
+            
+            if ($("#txt_Receiver").val() == null || $("#txt_Receiver").val() == "") {
+                bflagValid = 0;
+                $("#txt_Receiver").addClass('borderValidation');
+            }
+            if ($("#txt_Phone").val() == null || $("#txt_Phone").val() == "") {
+                bflagValid = 0;
+                $("#txt_Phone").addClass('borderValidation');
+            }
+            
+            if ($("#txt_Mail").val() == null || $("#txt_Mail").val() == "") {
+                bflagValid = 0;
+                $("#txt_Mail").addClass('borderValidation');
+            }
+            
+            if ($("#txt_Address").val() == null || $("#txt_Address").val() == "") {
+                bflagValid = 0;
+                $("#txt_Address").addClass('borderValidation');
+            }
+            
+            if ($('#tblGoodsDetail >tbody>tr').length == 0) {
+                bflagValid = 0;
+                $("#tblGoodsDetail").addClass('borderValidation');
+            }
+            if (bflagValid == 0) {
+                return 0;
+            }
+            
+            $('#divQuotation').removeClass('hidden');
+            $('#divLoad').addClass('hidden');
+           
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/TLoader/GetFullTruckQuotation',
+                data:
+                {
+                    Weight: $('#hdnTotalWeight').val(),
+                    Distance: $('#lblDistance').text(),
+                    LoadType: $("#ddlLoadType option:selected").val(),
+
+                },
+                success: function (da) {
+                    alert(da);
+                    $('#divDoorToDoor').append(da);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Error " + errorThrown);
+                }
+            });
+
+        });
+        
+            
+            
+        $(document).on('click', '#btnSubmit', function (e) {
+            e.preventDefault();
+           
             //adding Load Grid Details In Array
             var idArrLoadDetails = [];
             $('#tblGoodsDetail tbody tr').each(function (k, v) {
@@ -355,55 +503,6 @@
 
             });
 
-            if ($("#SourceID option:selected").val() == null || $("#SourceID option:selected").val() == "") {
-                bflagValid = 0;
-                $("#SourceID").addClass('borderValidation');
-                
-            }
-            if ($("#DestinationID option:selected").val() == null || $("#DestinationID option:selected").val() == "") {
-                bflagValid = 0;
-                $("#DestinationID").addClass('borderValidation');
-            }
-            if ($("#PickUpDate").val() == null || $("#PickUpDate").val() == "") {
-                bflagValid = 0;
-                $("#PickUpDate").addClass('borderValidation');
-            }
-            if ($("#ddlLoadType option:selected").val() == 0 || $("#ddlLoadType option:selected").val() == "") {
-                bflagValid = 0;
-                $("#ddlLoadType").addClass('borderValidation');
-            }
-            if ($("#ddlSubService option:selected").val() == 0 || $("#ddlSubService option:selected").val() == "") {
-                bflagValid = 0;
-                $("#ddlSubService").addClass('borderValidation');
-            }
-
-            if ($("#txt_Receiver").val() == null || $("#txt_Receiver").val() == "") {
-                bflagValid = 0;
-                $("#txt_Receiver").addClass('borderValidation');
-            }
-            if ($("#txt_Phone").val() == null || $("#txt_Phone").val() == "") {
-                bflagValid = 0;
-                $("#txt_Phone").addClass('borderValidation');
-            }
-            if ($("#txt_Mail").val() == null || $("#txt_Mail").val() == "") {
-                bflagValid = 0;
-                $("#txt_Mail").addClass('borderValidation');
-            }
-            if ($("#txt_Address").val() == null || $("#txt_Address").val() == "") {
-                bflagValid = 0;
-                $("#txt_Address").addClass('borderValidation');
-            }
-
-
-            if ($('#tblGoodsDetail >tbody>tr').length == 0) {
-                bflagValid = 0;
-                $("#tblGoodsDetail").addClass('borderValidation');
-            }
-
-            if (bflagValid == 0) {
-               
-                return 0;
-            }
             
 
             var LoadDetails = [];

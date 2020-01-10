@@ -145,6 +145,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\GoogleMapController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoaderController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
@@ -294,13 +295,14 @@
     <Content Include="Views\TLoader\_Registration.cshtml" />
     <Content Include="Views\TLoader\EditTrip.cshtml" />
     <Content Include="Views\TLoader\_TripRoute.cshtml" />
-    <Content Include="Views\TLoader\Old_AddTruck.cshtml" />
     <Content Include="Views\TLoader\TestLogin.cshtml" />
     <Content Include="Views\Register\Test.cshtml" />
     <Content Include="Views\Register\TestLogin.cshtml" />
     <Content Include="Views\Register\LoginSuccess.cshtml" />
     <Content Include="Views\Register\VerifyAccount.cshtml" />
     <Content Include="Views\TLoader\AddTruck.cshtml" />
+    <Content Include="Views\GoogleMap\Index.cshtml" />
+    <Content Include="Views\GoogleMap\demo1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

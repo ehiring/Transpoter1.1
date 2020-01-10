@@ -10,6 +10,7 @@ using TransportService.Web.BusinessLayer;
 using TransportService.Web.Models.Activity;
 using System.Data;
 using TransportService.Web.Models.Masters;
+using TransportService.Web.Models;
 
 namespace TransportService.Web.Controllers
 {
@@ -688,5 +689,27 @@ namespace TransportService.Web.Controllers
             return result;
         }
 
+        public decimal GetDistanceForCities(int FromCity, int ToCity)
+        {
+            using (JobDbContext jobDbContext = new JobDbContext())
+            {
+                return jobDbContext.Database.SqlQuery<decimal>("USP_GetDistanceForCities @FromCity ,@ToCity", new SqlParameter("@FromCity", FromCity), new SqlParameter("@ToCity", ToCity)).SingleOrDefault<decimal>();
+
+            }
+
+        }
+        
+        public decimal GetFullTruckQuotation(decimal Weight, decimal Distance,string strLoadType)
+        {
+            decimal TotalPrice = 0;
+            if (strLoadType == constLoadType.FullTruckLoad)
+            {
+                using (JobDbContext jobDbContext = new JobDbContext())
+                {
+                    TotalPrice = jobDbContext.Database.SqlQuery<decimal>("USP_GetFullTruckQuotation @Weight ,@Distance", new SqlParameter("@Weight", Weight), new SqlParameter("@Distance", Distance)).SingleOrDefault<decimal>();
+                }
+            }
+            return TotalPrice;
+        }
     }
 }

@@ -38,4 +38,12 @@ namespace TransportService.Web.Models
 
     }
 
+    public static class constLoadType
+    {
+        public const string FullTruckLoad = "Full Truck Load(Above 3000 Kg)";
+        public const string PartTruckLoad = "Part Truck Load(500-3000 Kg)";
+        public const string Parcel  = "Parcel (Less than 500 Kg)";
+
+    }
+
 }
