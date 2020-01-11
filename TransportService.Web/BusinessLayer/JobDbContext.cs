@@ -31,6 +31,6 @@ namespace TransportService.Web.BusinessLayer
         public DbSet<LoaderEdit> DBLoaderEdit { get; set; }
         public DbSet<CityArray> DBCityArray { get; set; }
 
-
+        public System.Data.Entity.DbSet<TransportService.Web.Models.Masters.VehicleType> VehicleTypes { get; set; }
     }
 }

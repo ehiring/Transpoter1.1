@@ -411,6 +411,7 @@ namespace TransportService.Web.Controllers
             //MaterialList
             ViewData["MaterialList"] = _tripBusinessLayer.GetDropDownData("MaterialList", 0);
             ViewData["UOMList"] = _tripBusinessLayer.GetDropDownData("UOMList", 0);
+            ViewData["VehicalTypeList"] = _tripBusinessLayer.GetDropDownData("VehicalTypeList");
 
             return View();
         }
@@ -581,9 +582,33 @@ namespace TransportService.Web.Controllers
             return Json("Load Updated Sucessfully");
 
         }
+
+        public int GetFullTruckQuotation(int VehicleTypeID, decimal Distance, string strLoadType)
+        {
+            decimal TotalPrice = 0;
+            if (strLoadType == constLoadType.FullTruckLoad)
+            {
+                using (JobDbContext jobDbContext = new JobDbContext())
+                {
+                    TotalPrice = jobDbContext.Database.SqlQuery<decimal>("USP_GetFullTruckQuotation @VehicleTypeID ,@Distance", new SqlParameter("@@VehicleTypeID", @VehicleTypeID), new SqlParameter("@Distance", Distance)).SingleOrDefault<decimal>();
+                }
+            }
+            return (int)TotalPrice;
+        }
+        public decimal GetDistanceForCities(int FromCity, int ToCity)
+        {
+            using (JobDbContext jobDbContext = new JobDbContext())
+            {
+                return jobDbContext.Database.SqlQuery<decimal>("USP_GetDistanceForCities @FromCity ,@ToCity", new SqlParameter("@FromCity", FromCity), new SqlParameter("@ToCity", ToCity)).SingleOrDefault<decimal>();
+
+            }
+
+        }
         #endregion
 
+        #region "Masters"
 
+       
 
         public ActionResult AddTruck()
         {
@@ -596,7 +621,7 @@ namespace TransportService.Web.Controllers
         {
             JobDbContext jobDbContext = new JobDbContext();
             var result = jobDbContext.Database.ExecuteSqlCommand(@"exec USP_AddVehicle @VehicleTypeID ,
-            @CapacityID ,
+            @Capacity ,
             @VehicleNo ,
             @Height ,
             @Width ,
@@ -610,7 +635,7 @@ namespace TransportService.Web.Controllers
             @Phone ,
             @ContactName ",
             new SqlParameter("@VehicleTypeID", _vehicle.VehicleTypeID),
-             new SqlParameter("@CapacityID", _vehicle.CapacityID),
+             new SqlParameter("@Capacity", _vehicle.Capacity),
               new SqlParameter("@VehicleNo", _vehicle.VehicleNo),
                new SqlParameter("@Height", _vehicle.Height == null ? (object)DBNull.Value : _vehicle.Height),
                 new SqlParameter("@Width", _vehicle.Width == null ? (object)DBNull.Value : _vehicle.Width),
@@ -626,6 +651,21 @@ namespace TransportService.Web.Controllers
             return Json("Truck Added Sucessfully");
         }
 
+
+        public ActionResult GetVehicleTypeByID(int VehicleTypeID)
+        {
+            
+                var vehicleType = new JobDbContext().Database.SqlQuery<VehicleType>("exec USP_GetSizeAndCapacityByVehicleTypeID @VehicleTypeID", new SqlParameter("@VehicleTypeID", VehicleTypeID)).SingleOrDefault<VehicleType>();
+                
+                return Request.IsAjaxRequest()
+                        ? (ActionResult)PartialView("_VehiclTypeDimension", vehicleType)
+                        : View("_VehiclTypeDimension", vehicleType);
+            
+           
+           
+        }
+
+        #endregion
 
         public ActionResult Registration()
         {
@@ -689,27 +729,8 @@ namespace TransportService.Web.Controllers
             return result;
         }
 
-        public decimal GetDistanceForCities(int FromCity, int ToCity)
-        {
-            using (JobDbContext jobDbContext = new JobDbContext())
-            {
-                return jobDbContext.Database.SqlQuery<decimal>("USP_GetDistanceForCities @FromCity ,@ToCity", new SqlParameter("@FromCity", FromCity), new SqlParameter("@ToCity", ToCity)).SingleOrDefault<decimal>();
-
-            }
-
-        }
+       
         
-        public decimal GetFullTruckQuotation(decimal Weight, decimal Distance,string strLoadType)
-        {
-            decimal TotalPrice = 0;
-            if (strLoadType == constLoadType.FullTruckLoad)
-            {
-                using (JobDbContext jobDbContext = new JobDbContext())
-                {
-                    TotalPrice = jobDbContext.Database.SqlQuery<decimal>("USP_GetFullTruckQuotation @Weight ,@Distance", new SqlParameter("@Weight", Weight), new SqlParameter("@Distance", Distance)).SingleOrDefault<decimal>();
-                }
-            }
-            return TotalPrice;
-        }
+        
     }
 }

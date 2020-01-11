@@ -11,7 +11,7 @@ namespace TransportService.Web.Models.Masters
     {
         public int VehicleID { get; set; }
         public int VehicleTypeID { get; set; }
-        public int CapacityID { get; set; }
+        public decimal? Capacity { get; set; }
         public string VehicleNo { get; set; }
         public decimal? Height { get; set; }
         public decimal? Width { get; set; }

@@ -303,6 +303,7 @@
     <Content Include="Views\TLoader\AddTruck.cshtml" />
     <Content Include="Views\GoogleMap\Index.cshtml" />
     <Content Include="Views\GoogleMap\demo1.cshtml" />
+    <Content Include="Views\TLoader\_VehiclTypeDimension.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -354,7 +354,7 @@ namespace TransportService.Web.Controllers
             @Phone ,
             @ContactName ",
             new SqlParameter("@VehicleTypeID", _vehicle.VehicleTypeID),
-             new SqlParameter("@CapacityID", _vehicle.CapacityID),
+             new SqlParameter("@Capacity", _vehicle.Capacity),
               new SqlParameter("@VehicleNo", _vehicle.VehicleNo),
                new SqlParameter("@Height", _vehicle.Height == null ? (object)DBNull.Value : _vehicle.Height),
                 new SqlParameter("@Width", _vehicle.Width == null ? (object)DBNull.Value : _vehicle.Width),

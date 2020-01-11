@@ -37,7 +37,7 @@
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
                             @Html.DropDownList("Source", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select Source", new { @class = "form-control", @id = "SourceID", Title = "Select Source" })
-                            
+
                         </div>
 
                     </div>
@@ -47,17 +47,17 @@
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
                             @Html.DropDownList("Destination", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select Destination", new { @class = "form-control", @id = "DestinationID", Title = "Select Destination" })
-                            
+
                         </div>
                         <label id="lblDistance"></label>
                     </div>
 
-                    <div class="col-sm-6 form-group" >
+                    <div class="col-sm-6 form-group">
                         <label>Pick Up Date:</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                             <input type="date" id="PickUpDate" class="form-control dropwidth" placeholder="YYYY-MM-DD" title="Select Pick Up Date" />
-                            
+
                         </div>
                     </div>
 
@@ -88,14 +88,24 @@
                     </div>
 
                     <div class="col-sm-6 form-group">
+                        <label><i class="red">*</i> Truck Type: </label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-truck"></i></span>
+                            @Html.DropDownList("TruckType", new SelectList((System.Collections.IEnumerable)ViewData["VehicalTypeList"], "Value", "Text"), "Select Truck Type", new { @class = "form-control", @id = "VehicleTypeID", Title = "VehicleTypeID" ,disabled= "disabled"})
+
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-6 form-group">
                         <label>Reciever Name:</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fas fa-user"></i></span>
-                            <input id="txt_Receiver" type="text" class="form-control " name="altr_name" value="" placeholder="Contact Name" title="Enter Reciever"  required="">
-                           
+                            <input id="txt_Receiver" type="text" class="form-control " name="altr_name" value="" placeholder="Contact Name" title="Enter Reciever" required="">
+
                         </div>
                     </div>
-                    
+
                     <div class="col-sm-6 form-group">
                         <label>Phone:</label>
                         <div class="input-group">
@@ -309,6 +319,7 @@
         });
         $(document).on('click', '#btnAddGoods', function (e) {
             var bFlagValid = 1;
+            //$('#VehicleTypeID').prop('disabled', false);
 
             var rowCount = parseInt($("#RowCount").val());
 
@@ -465,7 +476,7 @@
                 {
                     Weight: $('#hdnTotalWeight').val(),
                     Distance: $('#lblDistance').text(),
-                    LoadType: $("#ddlLoadType option:selected").val(),
+                    strLoadType: $("#ddlLoadType option:selected").val(),
 
                 },
                 success: function (da) {

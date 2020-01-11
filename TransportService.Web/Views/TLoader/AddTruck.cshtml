@@ -44,37 +44,40 @@
 
                         </div>
                     </div>
+                    <div id="divDimension">
 
-                    <div class="col-sm-6 form-group">
+                    </div>
+
+                    @*<div class="col-sm-6 form-group">
                         <label><i class="red">*</i> Truck Capacity </label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
                             @Html.DropDownList("Capacity", new SelectList((System.Collections.IEnumerable)ViewData["TruckCapacityList"], "Value", "Text"), "Select Capacity", new { @class = "form-control", @id = "CapacityID", Title = "CapacityID" })
                         </div>
-                    </div>
+                    </div>*@
 
-                    <div class="col-sm-6 form-group">
+                    @*<div class="col-sm-6 form-group">
                         <label>Length:</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-arrows-v"></i></span>
                             <input id="truck_length" type="text" class="form-control" name="truck_length" value="" placeholder="Length" onkeypress="return isAlphaNumeric(event,this.value);">
                         </div>
-                    </div>
+                    </div>*@
 
-                    <div class="col-sm-6 form-group">
+                    @*<div class="col-sm-6 form-group">
                         <label>Height:</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-arrows-h"></i></span>
                             <input id="truck_height" type="text" class="form-control" name="truck_height" value="" placeholder="Height" onkeypress="return isAlphaNumeric(event,this.value);">
                         </div>
-                    </div>
-                    <div class="col-sm-6 form-group">
+                    </div>*@
+                    @*<div class="col-sm-6 form-group">
                         <label>Width:</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-arrows-h"></i></span>
                             <input id="truck_width" type="text" class="form-control" name="truck_width" value="" placeholder="Width" onkeypress="return isAlphaNumeric(event,this.value);">
                         </div>
-                    </div>
+                    </div>*@
 
                     <div class="col-sm-10 form-group">
                         <label>Description</label>
@@ -191,6 +194,38 @@
     $(document).ready(function () {
     });
 
+    $('#VehicleTypeID').on('change', function myfunction() {
+        alert('Hi');
+        var value = $("#VehicleTypeID option:selected").val();
+        if (value != 0) {
+
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/TLoader/GetVehicleTypeByID',
+                data:
+                {
+                    VehicleTypeID: value
+                    
+                },
+                success: function (da) {
+                    alert('success');
+                    alert(da);
+                    
+                    $('#divDimension').html(da);
+
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('Error');
+                }
+            });
+        }
+
+    });
+
+
+
+
     $('#btnSubmit').on("click", function (e) {
         e.preventDefault();
         var bFlagvalid = 1;
@@ -199,10 +234,7 @@
             $("#register_number").addClass('borderValidation');
             bFlagvalid = 0;
         }
-        if ($("#CapacityID option:selected").val() == null || $("#CapacityID option:selected").val() == "") {
-            $("#CapacityID").addClass('borderValidation');
-            bFlagvalid = 0;
-        }
+       
         if ($("#VehicleTypeID option:selected").val() == null || $("#VehicleTypeID option:selected").val() == "") {
             $("#VehicleTypeID").addClass('borderValidation');
             bFlagvalid = 0;
@@ -219,11 +251,11 @@
             data:
             {
                 VehicleTypeID: $("#VehicleTypeID option:selected").val(),
-                CapacityID: $("#CapacityID option:selected").val(),
+                Capacity: $('#lblCapacity').text(),
                 VehicleNo: $("#register_number").val(),
-                Height: $("#truck_height").val(),
-                Width: $("#truck_width").val(),
-                Length: $("#truck_length").val(),
+                Height: $("#lblHeight").text(),
+                Width: $("#lblWidth").text(),
+                Length: $("#lblLength").text(),
                 Description: $("#truck_description").val(),
                 InsuredBy: $("#truck_insuredby").val(),
                 InsuranceStartDate: $("#StartDate").val(),
