@@ -83,7 +83,7 @@
                         <label>Description</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-file-text-o"></i></span>
-                            <textarea id="truck_description" class="form-control" name="truck_description" placeholder="Description" onkeypress="return isNonSpecialCharCheck(event);"></textarea>
+                            <textarea id="truck_description" class="form-control" name="truck_description" placeholder="Description" ></textarea>
                         </div>
                     </div>
                 </div>
@@ -194,7 +194,8 @@
     $(document).ready(function () {
     });
 
-    $('#VehicleTypeID').on('change', function myfunction() {
+    $('#VehicleTypeID').on('change', function (e) {
+        e.preventDefault();
         alert('Hi');
         var value = $("#VehicleTypeID option:selected").val();
         if (value != 0) {

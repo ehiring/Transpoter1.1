@@ -583,15 +583,12 @@ namespace TransportService.Web.Controllers
 
         }
 
-        public int GetFullTruckQuotation(int VehicleTypeID, decimal Distance, string strLoadType)
+        public int GetFullTruckQuotation(int VehicleTypeID, decimal Distance )
         {
             decimal TotalPrice = 0;
-            if (strLoadType == constLoadType.FullTruckLoad)
+            using (JobDbContext jobDbContext = new JobDbContext())
             {
-                using (JobDbContext jobDbContext = new JobDbContext())
-                {
-                    TotalPrice = jobDbContext.Database.SqlQuery<decimal>("USP_GetFullTruckQuotation @VehicleTypeID ,@Distance", new SqlParameter("@@VehicleTypeID", @VehicleTypeID), new SqlParameter("@Distance", Distance)).SingleOrDefault<decimal>();
-                }
+                    TotalPrice = jobDbContext.Database.SqlQuery<decimal>("USP_GetFullTruckQuotation @VehicleTypeID ,@Distance", new SqlParameter("@VehicleTypeID", VehicleTypeID), new SqlParameter("@Distance", Distance)).SingleOrDefault<decimal>();
             }
             return (int)TotalPrice;
         }
@@ -651,18 +648,10 @@ namespace TransportService.Web.Controllers
             return Json("Truck Added Sucessfully");
         }
 
-
         public ActionResult GetVehicleTypeByID(int VehicleTypeID)
         {
-            
-                var vehicleType = new JobDbContext().Database.SqlQuery<VehicleType>("exec USP_GetSizeAndCapacityByVehicleTypeID @VehicleTypeID", new SqlParameter("@VehicleTypeID", VehicleTypeID)).SingleOrDefault<VehicleType>();
-                
-                return Request.IsAjaxRequest()
-                        ? (ActionResult)PartialView("_VehiclTypeDimension", vehicleType)
-                        : View("_VehiclTypeDimension", vehicleType);
-            
-           
-           
+            var vehicleType = new JobDbContext().Database.SqlQuery<VehicleType>("exec USP_GetSizeAndCapacityByVehicleTypeID @VehicleTypeID", new SqlParameter("@VehicleTypeID", VehicleTypeID)).SingleOrDefault<VehicleType>();
+            return Request.IsAjaxRequest() ? (ActionResult)PartialView("_VehiclTypeDimension", vehicleType) : View("_VehiclTypeDimension", vehicleType);
         }
 
         #endregion

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
@@ -30,7 +29,7 @@ namespace TransportService.Web.Controllers
         {
             bool Status = false;
             string message = "";
-            //
+            
             // Model Validation 
             if (ModelState.IsValid)
             {
@@ -138,13 +137,13 @@ namespace TransportService.Web.Controllers
 
         }
 
-        public string Hash(string value)
-        {
-            return Convert.ToBase64String(
-                System.Security.Cryptography.SHA256.Create()
-                .ComputeHash(Encoding.UTF8.GetBytes(value))
-                );
-        }
+        //public string Hash(string value)
+        //{
+        //    return Convert.ToBase64String(
+        //        System.Security.Cryptography.SHA256.Create()
+        //        .ComputeHash(Encoding.UTF8.GetBytes(value))
+        //        );
+        //}
 
         public int IsEmailExist(string Email)
         {
@@ -200,7 +199,7 @@ namespace TransportService.Web.Controllers
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public ActionResult TestLogin(LoginUser _loginUser, string ReturnUrl = "")
         {
             string message = "";

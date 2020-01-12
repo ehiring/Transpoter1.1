@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "MainVehicleType";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div id="divLoad" class="container-fluid ">
+    <hr />
+    <div class="row">
+        <div class="col-sm-12 pull-left">
+            @*<input id="btnSubmit" type="submit" class="btn btn-primary" name="regform" value="Create Truck">*@
+            @*<input type="button" id="btnCreate" class="btn btn-primary" name="regform" value="Create New">*@
+            <span>@Html.ActionLink("Create New",null,null, new { @class = "linkDecoration",@id= "btnCreate" }) <br /></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h5 class="panel-title"><b>List</b> </h5>
+                </div>
+
+                <div class="panel-body" id="divList">
+                    @Html.Partial("_VehicleType")
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-lg-6" id="divModule">
+
+
+
+        </div>
+    </div>
+
+</div>
+<script>
+    $(document).on('click', '#btnCreate', function (e) {
+        e.preventDefault();
+
+
+
+    });
+    
+
+
+</script>

@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
@@ -207,7 +208,7 @@
 
                     <div class="form-group">
                         <input type="hidden" id="RowCount" name="RowCount" value="0">
-                        <input type="hidden" id="hdnTotalWeight" name="TotalWeight" value="0">
+                       
                         <div>
                             <table class="table table-bordered" id="tblGoodsDetail" title="Enter Good Details">
                                 <thead>
@@ -258,7 +259,7 @@
                     <h5 class="panel-title">Final Fare(Rs.) </h5>
                 </div>
                 <div class="panel-body" >
-                    <h3 style="color:blueviolet" id="divDoorToDoor"><i class="fa fa-inr"></i> </h3>
+                    <h3 style="color:blueviolet" id="divDoorToDoor"><i class="fa fa-inr"></i></h3>
                 </div>
             </div>
 
@@ -307,6 +308,17 @@
                 }
             });
         });
+        $(document).on('change', '#ddlLoadType', function (e) {
+            alert("OutSide");
+            if ($("#ddlLoadType option:selected").val() == "@constLoadType.FullTruckLoad") {
+                alert("Hi");
+                $('#VehicleTypeID').prop('disabled', false);
+            }
+            else {
+                $('#VehicleTypeID').prop('disabled', true);
+            }
+
+        });
         $(document).on('click', 'i.deleterow', function (e) {
             e.preventDefault();
             $(this).parents('tr').remove();
@@ -319,7 +331,7 @@
         });
         $(document).on('click', '#btnAddGoods', function (e) {
             var bFlagValid = 1;
-            //$('#VehicleTypeID').prop('disabled', false);
+            
 
             var rowCount = parseInt($("#RowCount").val());
 
@@ -389,10 +401,6 @@
                 '</tr>';
             $('#tblGoodsDetail  tbody').append(bindRow);
 
-
-            var totalWeight = parseFloat($('#hdnTotalWeight').val());
-            totalWeight = totalWeight + parseFloat(weight);
-            $('#hdnTotalWeight').val(totalWeight);
 
             $('#ddlMaterial').prop('selectedIndex', 0);
             $('#ddlUnit').prop('selectedIndex', 0);
@@ -467,26 +475,29 @@
             
             $('#divQuotation').removeClass('hidden');
             $('#divLoad').addClass('hidden');
-           
-            $.ajax({
-                type: 'POST',
-                dataType: 'json',
-                url: '/TLoader/GetFullTruckQuotation',
-                data:
-                {
-                    Weight: $('#hdnTotalWeight').val(),
-                    Distance: $('#lblDistance').text(),
-                    strLoadType: $("#ddlLoadType option:selected").val(),
+            if ($("#ddlLoadType option:selected").val() == "@constLoadType.FullTruckLoad") {
+                alert("Hi");
 
-                },
-                success: function (da) {
-                    alert(da);
-                    $('#divDoorToDoor').append(da);
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    alert("Error " + errorThrown);
-                }
-            });
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    url: '/TLoader/GetFullTruckQuotation',
+                    data:
+                    {
+                        VehicleTypeID: $("#VehicleTypeID option:selected").val(),
+                        Distance: $('#lblDistance').text()
+                    },
+                    success: function (da) {
+                        alert(da);
+                        $('#divDoorToDoor').append(da);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert("Error " + errorThrown);
+                    }
+                });
+            }
+           
+           
 
         });
         
