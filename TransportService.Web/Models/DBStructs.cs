@@ -13,17 +13,18 @@ namespace TransportService.Web.Models
            
         }
     }
-    public enum enumClientType
+    public enum enumRole
     {
-        Transporter=1,
-        Loader = 2,
-        Broker=3
+        Admin = 1,
+        Transporter=2,
+        Loader = 3,
+        Broker=4
 
     }
     public enum enumIsCompany
     {
         Individual = 0,
-        Company =1
+        Company =  1
 
     }
     public enum enumDBClientTypeID
@@ -45,5 +46,7 @@ namespace TransportService.Web.Models
         public const string Parcel  = "Parcel (Less than 500 Kg)";
 
     }
+   
+    
 
 }

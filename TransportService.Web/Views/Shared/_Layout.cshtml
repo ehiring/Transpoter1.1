@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using TransportService.Web.Models.Masters
+@using TransportService.Web.Models
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -149,7 +151,7 @@
     </div>
 
     @*.............................Registration Popup starts here.................................  *@
-    
+
     @* ..................................Registration Ends Here...................... *@
 
 
@@ -201,16 +203,22 @@
                             <ul class="dropdown-menu">
                                 <li><a href="blog.html">Blog grid</a></li>
                                 <li>
-                                    @Html.ActionLink("Post A Vehicle", "AddTruck", "TLoader", new { @class = "nav-link", @style = "width: 100px;" })
+
                                 </li>
                             </ul>
                         </li>
                         <li> <a href="gallery.html">Gallery</a></li>
-                        <li class="dropdown">
-                            <a href="#" data-toggle="dropdown" class="dropdown-toggle js-activated">Contact<b class="caret"></b></a>
+                        <li id="liMyProfile" class="dropdown hidden">
+                            <a href="#" data-toggle="dropdown" class="dropdown-toggle js-activated">MyProfile<b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="contact-01.html">Contact 1</a></li>
-                                <li><a href="contact-02.html">Contact 2</a></li>
+                                <li>
+                                    @*<a href="contact-01.html">Contact 1</a>*@
+                                    @Html.ActionLink("My Detail", "PersonalDetail", "TLoader", new { @class = "nav-link", @style = "width: 100px;" })
+                                </li>
+                                <li id="liAddTruck" class="hidden">
+                                    @*<a href="contact-02.html">Contact 2</a>*@
+                                    @Html.ActionLink("My Vehicle", "AddTruck", "TLoader", new { @class = "nav-link", @style = "width: 100px;" })
+                                </li>
                             </ul>
                         </li>
                     </ul>
@@ -315,25 +323,13 @@
 </body>
 </html>
 <script>
-    $('#btnRegistration').on("click", function (e) {
-        alert("Registration");
-        $.ajax({
-            type: "GET",
-            url: '/TLoader/Registration',
-            contentType: "application/json; charset=utf-8",
-            datatype: "json",
-            success: function (data) {
-                alert(data);
-                $('#myModalContent').html(data);
-                $('#myModal').modal(options);
-                $('#myModal').modal('show');
+    $(document).ready(function () {
+        if (@Session[UserColumns.UserID] != null) {
+            $('#liMyProfile').removeClass('hidden');
+        }
+        if (@Session[RoleColumns.RoleID] == @enumRole.Transporter.GetHashCode()) {
+            $('#liAddTruck').removeClass('hidden');
+        }
 
-
-
-            },
-            error: function () {
-                alert("Dynamic content load failed.");
-            }
-        }); 
-    });
+    })
 </script>

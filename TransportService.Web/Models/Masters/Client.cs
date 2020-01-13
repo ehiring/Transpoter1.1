@@ -25,5 +25,21 @@ namespace TransportService.Web.Models.Masters
         public string DocumentPath { get; set; }
         public int IsActive { get; set; }
     }
-    
+    public static class ClientColumns
+    {
+
+        public const string ClientID = "ClientID";
+        public const string ClientTypeID = "ClientTypeID";
+        public const string Name = "Name";
+        public const string Email = "Email";
+        public const string Mobile = "Mobile";
+        public const string Address1 = "Address1";
+        public const string Address2 = "Address2";
+        public const string ContactPerson = "ContactPerson";
+        public const string ContactPersonMobile = "ContactPersonMobile";
+        public const string GSTNumber = "GSTNumber";
+        public const string DocumentPath = "DocumentPath";
+        public const string IsActive = "IsActive";
+    }
+
 }

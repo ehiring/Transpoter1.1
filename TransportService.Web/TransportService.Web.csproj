@@ -167,6 +167,9 @@
     <Compile Include="Models\Masters\City.cs" />
     <Compile Include="Models\Masters\Client.cs" />
     <Compile Include="Models\Masters\ClientType.cs" />
+    <Compile Include="Models\Masters\Company.cs" />
+    <Compile Include="Models\Masters\CompanyTypeMaster.cs" />
+    <Compile Include="Models\Masters\Role.cs" />
     <Compile Include="Models\Masters\State.cs" />
     <Compile Include="Models\Masters\User.cs" />
     <Compile Include="Models\Masters\UserType.cs" />
@@ -283,7 +286,7 @@
     <Content Include="Views\TLoader\_LoadList.cshtml" />
     <Content Include="Views\Shared\_Layout2.cshtml" />
     <Content Include="Views\TLoader\EditLoad.cshtml" />
-    <Content Include="Views\TLoader\Test.cshtml" />
+    <Content Include="Views\TLoader\TRegisterUser.cshtml" />
     <Content Include="Views\TLoader\AddLoad.cshtml" />
     <Content Include="Views\Home\Test.cshtml" />
     <Content Include="Views\Home\TestNew.cshtml" />
@@ -296,7 +299,7 @@
     <Content Include="Views\TLoader\_Registration.cshtml" />
     <Content Include="Views\TLoader\EditTrip.cshtml" />
     <Content Include="Views\TLoader\_TripRoute.cshtml" />
-    <Content Include="Views\TLoader\TestLogin.cshtml" />
+    <Content Include="Views\TLoader\LoginUser.cshtml" />
     <Content Include="Views\Register\Test.cshtml" />
     <Content Include="Views\Register\TestLogin.cshtml" />
     <Content Include="Views\Register\LoginSuccess.cshtml" />
@@ -308,6 +311,9 @@
     <Content Include="Views\TMaster\_VehicleType.cshtml" />
     <Content Include="Views\TMaster\Index.cshtml" />
     <Content Include="Views\TMaster\Create.cshtml" />
+    <Content Include="Views\Register\RaghuLogin.cshtml" />
+    <Content Include="Views\TLoader\ContactPerson.cshtml" />
+    <Content Include="Views\TLoader\PersonalDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -583,6 +583,8 @@ namespace TransportService.Web.Controllers
 
         }
 
+        
+
         public int GetFullTruckQuotation(int VehicleTypeID, decimal Distance )
         {
             decimal TotalPrice = 0;
@@ -601,6 +603,8 @@ namespace TransportService.Web.Controllers
             }
 
         }
+
+
         #endregion
 
         #region "Masters"
@@ -667,14 +671,14 @@ namespace TransportService.Web.Controllers
         }
 
 
-        public ActionResult Test()
+        public ActionResult TRegisterUser()
         {
             return View();
 
         }
 
         [HttpPost]
-        public ActionResult Test(User _user)
+        public ActionResult TRegisterUser(User _user)
         {
             /*....ClientTypeId Logic here*/
             JobDbContext _jobDbContext = new JobDbContext();
@@ -706,10 +710,102 @@ namespace TransportService.Web.Controllers
         }
 
 
-        public ActionResult TestLogin()
+        public ActionResult LoginUser()
         {
             return View();
 
+        }
+        [HttpPost]
+        public ActionResult LoginUser(LoginUser L,string ReturnUrl)
+        {
+            using (JobDbContext jobDbContext = new JobDbContext())
+            {
+                var result = jobDbContext.Database.SqlQuery<LoginDetail>(@"exec usp_login @UserName,@Password",
+                new SqlParameter("@UserName", L.UserName == null ? (object)DBNull.Value : L.UserName),
+                new SqlParameter("@Password", L.Password == null ? (object)DBNull.Value : L.Password)).SingleOrDefault<LoginDetail>();
+                
+                if (result == null)
+                {
+                    ViewBag.error = "Please enter valid user Name password";
+                }
+                else
+                {
+
+                    /*...All ...*/
+                    Session[UserColumns.Mobile] = result.Mobile;
+                    Session[UserColumns.UserID] = result.UserID;
+                    Session[UserColumns.ClientID] = result.ClientID;
+                    Session[UserColumns.ClientTypeID] = result.ClientTypeID;
+                    Session[RoleColumns.RoleID] = result.RoleID;
+
+                    if (result.RoleID == enumRole.Transporter.GetHashCode())
+                    {
+                        return RedirectToAction("New_LoaderIndex");
+                        
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index");
+                    }
+
+                    
+                }
+            }
+            
+
+            return View();
+
+        }
+        public ActionResult ContactPerson()
+        {
+            return View();
+        }
+        public ActionResult PersonalDetail()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult PersonalDetail(User user,Client client,Company company)
+        {
+            using (JobDbContext jobDbContext = new JobDbContext())
+            {
+                var result = jobDbContext.Database.ExecuteSqlCommand(ExecuteUserProcedure.USP_UpdateClientAndUser,
+                                                                        new SqlParameter("@" + UserColumns.ClientID, client.ClientID),
+                                                                        new SqlParameter("@" + UserColumns.UserID, user.UserID),
+                                                                        new SqlParameter("@" + UserColumns.FirstName, user.FirstName),
+                                                                        new SqlParameter("@" + UserColumns.LastName, user.LastName),
+                                                                        new SqlParameter("@" + UserColumns.Password, user.Password),
+                                                                        new SqlParameter("@" + UserColumns.Email, user.Email),
+                                                                        new SqlParameter("@" + UserColumns.Address1, user.Address1),
+                                                                        new SqlParameter("@" + UserColumns.Address2, user.Address2),
+                                                                        new SqlParameter("@" + UserColumns.AlternateContactPerson, user.AlternateContactPerson),
+                                                                        new SqlParameter("@" + UserColumns.AlternateMobileNo, user.AlternateMobileNo),
+                                                                        new SqlParameter("@" + ClientColumns.GSTNumber, client.GSTNumber),
+                                                                        new SqlParameter("@" + ClientColumns.DocumentPath, client.DocumentPath),
+                                                                        new SqlParameter("@" + UserColumns.AdharCardNo, user.AdharCardNo),
+                                                                        new SqlParameter("@" + UserColumns.PanCardNo, user.PanCardNo),
+                                                                        new SqlParameter("@" + UserColumns.PinCode, user.PinCode),
+                                                                        new SqlParameter("@" + UserColumns.STD, user.STD),
+                                                                        new SqlParameter("@" + UserColumns.LandlineNo, user.LandlineNo),
+                                                                        new SqlParameter("@" + UserColumns.VehicleID, user.VehicleID),
+                                                                        new SqlParameter("@" + CompanyColumns.CompanyName, company.CompanyName),
+                                                                        new SqlParameter("@" + CompanyColumns.CompanyTypeID, company.CompanyTypeID),
+                                                                        new SqlParameter("@" + CompanyColumns.ServiceTaxNo, company.ServiceTaxNo),
+                                                                        new SqlParameter("@" + CompanyColumns.CompanyPanNo, company.CompanyPanNo),
+                                                                        new SqlParameter("@" + CompanyColumns.CompanyWebsite, company.CompanyWebsite));
+
+                if (result >0)
+                {
+                    return Json("Details saved successfully");
+                }
+                else
+                {
+                    return Json("Error in DBInsertion");
+                }
+
+            }
+
+            
         }
         public int GetUserIDWhereUserAndPassword(string UserName, string Password)
         {                                        
@@ -717,6 +813,7 @@ namespace TransportService.Web.Controllers
             var result = jobDbContext.Database.SqlQuery<int>(@"exec USP_SelectUserIDDWhereUserAndPassword @UserName, @Password", new SqlParameter("@UserName", UserName), new SqlParameter("@Password", Password)).SingleOrDefault<int>();
             return result;
         }
+
 
        
         

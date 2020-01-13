@@ -13,4 +13,12 @@ namespace TransportService.Web.Models.Masters
         
 
     }
+    public static class ClientTypeColumns
+    {
+        public const string ClientTypeID = "ClientTypeID";
+        public const string ClientTypeName = "ClientTypeName";
+        public const string IsActive = "IsActive";
+
+
+    }
 }

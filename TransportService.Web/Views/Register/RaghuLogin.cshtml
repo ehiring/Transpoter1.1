@@ -1,0 +1,62 @@
+﻿
+@{
+    Layout = null;
+}
+@model  Calibration.Models.Login
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <link href="~/Content/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/style.css" rel="stylesheet" />
+</head>
+<body class="bgcolor-grey">
+    <div class="container-fluid m-t-md">
+        <div class="row">
+            <div class="col-sm-offset-4 col-sm-4 form-container">
+                <div class="color-white fontsize40 text-center ibox">Calibration</div>
+                <div class="m-t-lg ibox-grey">
+                    <header style="margin-left: 140px;">
+                        <h3 class="color-white">Sign in</h3>
+                    </header>
+                    @using (Html.BeginForm("Login", "Login", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", @style = "margin-left:65px;margin-right:65px;" }))
+                    {
+                        <div class="form-data">
+                            <div class="form-group">
+                                @Html.TextBoxFor(a => a.UserName, new { @class = "form-control", placeholder = "UserName", title = "UserName", @id = "UserName" })
+                                @Html.ValidationMessageFor(m => m.UserName, "", new { @style = "color:Red;font-size:14px;" })
+
+                            </div>
+                            <div class="form-group">
+
+                                @Html.PasswordFor(a => a.Password, new { @class = "form-control", placeholder = "Password", title = "Password", @id = "Password" })
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @style = "color:Red;font-size:14px;" })
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" name="btnLogin" value="Login" id="btnLogin" class="btn btn-default btn-lg btn-block">
+                                @*<button type="submit" class="btn-blue"><span>Sign in</span></button>*@
+                            </div><span style="color:Red;font-size:14px;">@ViewBag.error</span>
+
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script type="text/javascript" src="~/js/jquery.js"></script>
+@*<script type="text/javascript" src="~/js/bootstrap.min.js"></script>*@
+<script type="text/javascript" src="~/js/script.js"></script>
+
