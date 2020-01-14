@@ -5,13 +5,13 @@
             <div class="col-md-12">
                 <ul class="ui-list nav nav-tabs mb-30" id="lstClientType" role="tablist">
                     <li class="nav-item" id="@enumRole.Transporter.GetHashCode()">
-                        <a class="nav-link active selected" data-toggle="tab" href="#register" role="tab" aria-selected="true">@enumClientType.Transporter.ToString()</a>
+                        <a class="nav-link active selected" data-toggle="tab" href="#register" role="tab" aria-selected="true">@enumRole.Transporter.ToString()</a>
                     </li>
                     <li class="nav-item" id="@enumRole.Loader.GetHashCode()">
-                        <a class="nav-link selected" data-toggle="tab" href="#register" role="tab" aria-selected="false">@enumClientType.Loader.ToString()</a>
+                        <a class="nav-link selected" data-toggle="tab" href="#register" role="tab" aria-selected="false">@enumRole.Loader.ToString()</a>
                     </li>
                     <li class="nav-item" id="@enumRole.Broker.GetHashCode()">
-                        <a class="nav-link selected" data-toggle="tab" href="#register" role="tab" aria-selected="false">@enumClientType.Broker.ToString()</a>
+                        <a class="nav-link selected" data-toggle="tab" href="#register" role="tab" aria-selected="false">@enumRole.Broker.ToString()</a>
                     </li>
                 </ul>
                 <div class="login-wrapper">
@@ -194,22 +194,22 @@
 
         var IsComapny = $('input[name="rdbIsCompany"]:checked').val();
         var DBClientTypeID;
-        if (ClientTypeID == @enumClientType.Transporter.GetHashCode() && IsComapny == @enumIsCompany.Company.GetHashCode()) {
+        if (ClientTypeID == @enumRole.Transporter.GetHashCode() && IsComapny == @enumIsCompany.Company.GetHashCode()) {
             DBClientTypeID = @enumDBClientTypeID.Transporter.GetHashCode();
         }
-        else if (ClientTypeID == @enumClientType.Loader.GetHashCode() && IsComapny == @enumIsCompany.Company.GetHashCode()) {
+        else if (ClientTypeID == @enumRole.Loader.GetHashCode() && IsComapny == @enumIsCompany.Company.GetHashCode()) {
             DBClientTypeID = @enumDBClientTypeID.Loader.GetHashCode();
         }
-        else if (ClientTypeID == @enumClientType.Broker.GetHashCode() && IsComapny == @enumIsCompany.Company.GetHashCode()) {
+        else if (ClientTypeID == @enumRole.Broker.GetHashCode() && IsComapny == @enumIsCompany.Company.GetHashCode()) {
             DBClientTypeID = @enumDBClientTypeID.Corporater.GetHashCode();
         }
-        else if (ClientTypeID == @enumClientType.Transporter.GetHashCode() && IsComapny == @enumIsCompany.Individual.GetHashCode()) {
+        else if (ClientTypeID == @enumRole.Transporter.GetHashCode() && IsComapny == @enumIsCompany.Individual.GetHashCode()) {
             DBClientTypeID = @enumDBClientTypeID.IndividualTransporter.GetHashCode();
         }
-        else if (ClientTypeID == @enumClientType.Loader.GetHashCode() && IsComapny == @enumIsCompany.Individual.GetHashCode()) {
+        else if (ClientTypeID == @enumRole.Loader.GetHashCode() && IsComapny == @enumIsCompany.Individual.GetHashCode()) {
             DBClientTypeID = @enumDBClientTypeID.IndividualLoader.GetHashCode();
         }
-        else if (ClientTypeID == @enumClientType.Broker.GetHashCode() && IsComapny == @enumIsCompany.Individual.GetHashCode()) {
+        else if (ClientTypeID == @enumRole.Broker.GetHashCode() && IsComapny == @enumIsCompany.Individual.GetHashCode()) {
             DBClientTypeID = @enumDBClientTypeID.Broker.GetHashCode();
         }
         

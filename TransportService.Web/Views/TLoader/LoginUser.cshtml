@@ -1,94 +1,46 @@
-﻿
-@model TransportService.Web.Models.Masters.LoginUser
+﻿@model TransportService.Web.Models.Masters.LoginUser
+@using (Html.BeginForm("LoginUser", "TLoader", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
 
-<div class="user-login-section">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12">
-                <ul class="ui-list nav nav-tabs mb-30" role="tablist">
-                    <!-- <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#login" role="tab" aria-selected="true">Login</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#register" role="tab" aria-selected="false">Register</a>
-        </li> -->
-                    <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#login" role="tab" aria-selected="true">Loader</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#login" role="tab" aria-selected="false">Carrier</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#login" role="tab" aria-selected="false">Broker</a>
-                    </li>
-                </ul>
-                @using (Html.BeginForm("LoginUser", "TLoader", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                {
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="panel-title text-center"> <h3><b>Sign in</b> </h3> to continue</div>
 
-                    <div class="login-wrapper">
-                        <div class="ui-dash tab-content">
-                            <div class="tab-pane fade show active" id="login" role="tabpanel">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <form id="login-form" action="#" method="post">
-                                            <div class="form-group">
-                                                @*<input type="text" name="username" id="txt_UserName" tabindex="1" class="form-control" placeholder="Email Or Mobile No." value="" required="">*@
-                                                <span class="mandatory">*</span>
-                                                @Html.TextBoxFor(a => a.UserName, new { @class = "form-control", placeholder = "Email Or Mobile No.", title = "UserName", @id = "txt_UserName" })
-                                                @Html.ValidationMessageFor(m => m.UserName, "", new { @style = "color:Red;font-size:14px;" })
+                    </div>
+                    <div class="panel-body" style="margin:5%">
+                        <div class="col-md-10 form-group">
 
-                                            </div>
-                                            <div class="form-group">
-                                                @*<input type="password" name="password" id="txt_Password" tabindex="2" class="form-control" placeholder="Password" required="">*@
-                                                <span class="mandatory">*</span>
-                                                @Html.PasswordFor(a => a.Password, new { @class = "form-control", placeholder = "Password", title = "Password", @id = "txt_Password" })
-                                                @Html.ValidationMessageFor(m => m.Password, "", new { @style = "color:Red;font-size:14px;" })
-                                            </div>
-                                            <div id="divIsLogin" class="form-group text-danger hidden">
-                                                Incorrect Username or Password. Please Try Again.
-                                            </div>
-                                            <div class="row mt-20">
-                                                <div class="col-md-6 col-12 text-left">
-                                                    <div class="res-box">
-                                                        <input id="check-l" type="checkbox" name="check">
-                                                        <label for="check-l">Remember me</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 col-12 text-right">
-                                                    <div class="res-box sm-left">
-                                                        <a href="#" tabindex="5" class="forgot-password">Forgot Password?</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="res-box text-center mt-30" style="color:aqua">
-                                                <button id="btnLogin" type="submit" value="Login" class="btn v8 btn-primary"><span class="lnr lnr-exit"></span> Log In</button>
-                                                @*<input type="submit" name="btnLogin" value="Login" id="btnLogin" class="btn btn-default btn-lg btn-block">*@
-                                            </div>
-                                            <span style="color:Red;font-size:14px;">@ViewBag.error</span>
-                                        </form>
-                                        <div class="social-profile-login  text-left mt-20">
-                                            <h5>or Login with</h5>
-                                            <ul class="social-btn">
-                                                <li class="bg-fb"><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                                <li class="bg-tt"><a href="#"><i class="fab fa-twitter"></i></a></li>
-                                                <li class="bg-ig"><a href="#"><i class="fab fa-instagram"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="signup-wrapper">
-                                            <img src="images/others/login-1.png" alt="...">
-                                            <p>Welcome Back! Please Login to your Account for latest LOADS.</p>
-                                        </div>
-                                    </div>
-                                </div>
+                            @Html.TextBoxFor(a => a.UserName, new { @class = "form-control", placeholder = "Email Or Mobile No.", title = "UserName", @id = "txt_UserName" })
+                            @Html.ValidationMessageFor(m => m.UserName, "", new { @style = "color:Red;font-size:14px;" })
+
+                        </div>
+                        <div class="col-md-10 form-group ">
+
+                            @Html.PasswordFor(a => a.Password, new { @class = "form-control", placeholder = "Password", title = "Password", @id = "txt_Password" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @style = "color:Red;font-size:14px;" })
+                        </div>
+                        <div class="col-md-10 form-group ">
+                            <div class="col-md-3">
+                                <input id="btnLogin" type="submit" class="btn btn-primary" value="Sign In" placeholder="">
+
+                            </div>
+                            <div class="col-md-6">
+                                @Html.ActionLink("Create New Account", "TRegisterUser", null, new { @class = "linkDecoration", @id = "btnChangePassword" })
                             </div>
 
 
                         </div>
+                        <span style="color:Red;font-size:14px;">@ViewBag.error</span>
+
                     </div>
-                }
+                </div>
+
             </div>
+
         </div>
+
     </div>
-</div>
+}

@@ -299,7 +299,6 @@
     <Content Include="Views\TLoader\_Registration.cshtml" />
     <Content Include="Views\TLoader\EditTrip.cshtml" />
     <Content Include="Views\TLoader\_TripRoute.cshtml" />
-    <Content Include="Views\TLoader\LoginUser.cshtml" />
     <Content Include="Views\Register\Test.cshtml" />
     <Content Include="Views\Register\TestLogin.cshtml" />
     <Content Include="Views\Register\LoginSuccess.cshtml" />
@@ -314,6 +313,7 @@
     <Content Include="Views\Register\RaghuLogin.cshtml" />
     <Content Include="Views\TLoader\ContactPerson.cshtml" />
     <Content Include="Views\TLoader\PersonalDetail.cshtml" />
+    <Content Include="Views\TLoader\LoginUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

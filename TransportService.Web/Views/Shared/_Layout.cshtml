@@ -324,12 +324,17 @@
 </html>
 <script>
     $(document).ready(function () {
-        if (@Session[UserColumns.UserID] != null) {
-            $('#liMyProfile').removeClass('hidden');
-        }
-        if (@Session[RoleColumns.RoleID] == @enumRole.Transporter.GetHashCode()) {
-            $('#liAddTruck').removeClass('hidden');
-        }
+        
+            var userID = "@Session[UserColumns.UserID]";
+            var RoleID = "@Session[RoleColumns.RoleID]";
+            if (userID != null || userID != "") {
 
-    })
+                $('#liMyProfile').removeClass('hidden');
+                if (RoleID == @enumRole.Transporter.GetHashCode()) {
+                    $('#liAddTruck').removeClass('hidden');
+                }
+            }
+        
+
+    });
 </script>

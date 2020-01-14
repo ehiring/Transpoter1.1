@@ -9,8 +9,8 @@ namespace TransportService.Web.Models.Masters
     {
         public int CompanyID { get; set; }
         public string CompanyName { get; set; }
-        public int CompanyTypeID { get; set; }
-        public int UserID { get; set; }
+        public int? CompanyTypeID { get; set; }
+        public int? UserID { get; set; }
         public string ServiceTaxNo { get; set; }
         public string CompanyPanNo { get; set; }
         public string CompanyWebsite { get; set; }

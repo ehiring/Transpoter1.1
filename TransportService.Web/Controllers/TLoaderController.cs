@@ -390,8 +390,6 @@ namespace TransportService.Web.Controllers
             // return View();
             return Request.IsAjaxRequest() ? (ActionResult)PartialView("New_LoaderIndex", _loader) : View("New_LoaderIndex", _loader);
         }
-
-
         public ActionResult SearchLoads(int? page, string Source, string Destination)
         {
             Loader _loader = new Loader();
@@ -733,6 +731,8 @@ namespace TransportService.Web.Controllers
 
                     /*...All ...*/
                     Session[UserColumns.Mobile] = result.Mobile;
+                    Session[UserColumns.Email] = result.Email;
+                    Session[UserColumns.Password] = result.Password;
                     Session[UserColumns.UserID] = result.UserID;
                     Session[UserColumns.ClientID] = result.ClientID;
                     Session[UserColumns.ClientTypeID] = result.ClientTypeID;
@@ -762,6 +762,7 @@ namespace TransportService.Web.Controllers
         }
         public ActionResult PersonalDetail()
         {
+            ViewData[DDLListNames.CompanyTypeList] = _tripBusinessLayer.GetDropDownData(DDLListNames.CompanyTypeList, 0);
             return View();
         }
         [HttpPost]
@@ -773,26 +774,26 @@ namespace TransportService.Web.Controllers
                                                                         new SqlParameter("@" + UserColumns.ClientID, client.ClientID),
                                                                         new SqlParameter("@" + UserColumns.UserID, user.UserID),
                                                                         new SqlParameter("@" + UserColumns.FirstName, user.FirstName),
-                                                                        new SqlParameter("@" + UserColumns.LastName, user.LastName),
+                                                                        new SqlParameter("@" + UserColumns.LastName, user.LastName == null ? (object)DBNull.Value : user.LastName),
                                                                         new SqlParameter("@" + UserColumns.Password, user.Password),
-                                                                        new SqlParameter("@" + UserColumns.Email, user.Email),
-                                                                        new SqlParameter("@" + UserColumns.Address1, user.Address1),
-                                                                        new SqlParameter("@" + UserColumns.Address2, user.Address2),
-                                                                        new SqlParameter("@" + UserColumns.AlternateContactPerson, user.AlternateContactPerson),
-                                                                        new SqlParameter("@" + UserColumns.AlternateMobileNo, user.AlternateMobileNo),
-                                                                        new SqlParameter("@" + ClientColumns.GSTNumber, client.GSTNumber),
-                                                                        new SqlParameter("@" + ClientColumns.DocumentPath, client.DocumentPath),
-                                                                        new SqlParameter("@" + UserColumns.AdharCardNo, user.AdharCardNo),
-                                                                        new SqlParameter("@" + UserColumns.PanCardNo, user.PanCardNo),
-                                                                        new SqlParameter("@" + UserColumns.PinCode, user.PinCode),
-                                                                        new SqlParameter("@" + UserColumns.STD, user.STD),
-                                                                        new SqlParameter("@" + UserColumns.LandlineNo, user.LandlineNo),
-                                                                        new SqlParameter("@" + UserColumns.VehicleID, user.VehicleID),
-                                                                        new SqlParameter("@" + CompanyColumns.CompanyName, company.CompanyName),
-                                                                        new SqlParameter("@" + CompanyColumns.CompanyTypeID, company.CompanyTypeID),
-                                                                        new SqlParameter("@" + CompanyColumns.ServiceTaxNo, company.ServiceTaxNo),
-                                                                        new SqlParameter("@" + CompanyColumns.CompanyPanNo, company.CompanyPanNo),
-                                                                        new SqlParameter("@" + CompanyColumns.CompanyWebsite, company.CompanyWebsite));
+                                                                        new SqlParameter("@" + UserColumns.Email, user.Email == null ? (object)DBNull.Value : user.Email),
+                                                                        new SqlParameter("@" + UserColumns.Address1, user.Address1 == null ?(object) DBNull.Value : user.Address1),
+                                                                        new SqlParameter("@" + UserColumns.Address2, user.Address2 == null ?(object) DBNull.Value : user.Address2),
+                                                                        new SqlParameter("@" + UserColumns.AlternateContactPerson, user.AlternateContactPerson == null ? (object)DBNull.Value : user.AlternateContactPerson),
+                                                                        new SqlParameter("@" + UserColumns.AlternateMobileNo, user.AlternateMobileNo == null ? (object)DBNull.Value : user.AlternateMobileNo),
+                                                                        new SqlParameter("@" + ClientColumns.GSTNumber, client.GSTNumber == null ? (object)DBNull.Value : client.GSTNumber),
+                                                                        new SqlParameter("@" + ClientColumns.DocumentPath, client.DocumentPath == null ? (object)DBNull.Value : client.DocumentPath),
+                                                                        new SqlParameter("@" + UserColumns.AdharCardNo, user.AdharCardNo == null ? (object)DBNull.Value : user.AdharCardNo),
+                                                                        new SqlParameter("@" + UserColumns.PanCardNo, user.PanCardNo == null ? (object)DBNull.Value : user.AdharCardNo),
+                                                                        new SqlParameter("@" + UserColumns.PinCode, user.PinCode == null ? (object)DBNull.Value : user.PinCode),
+                                                                        new SqlParameter("@" + UserColumns.STD, user.STD == null ? (object)DBNull.Value : user.STD),
+                                                                        new SqlParameter("@" + UserColumns.LandlineNo, user.LandlineNo == null ? (object)DBNull.Value : user.LandlineNo),
+                                                                        new SqlParameter("@" + UserColumns.VehicleID, user.VehicleID == null ? (object)DBNull.Value : user.VehicleID),
+                                                                        new SqlParameter("@" + CompanyColumns.CompanyName, company.CompanyName == null ? (object)DBNull.Value : company.CompanyName),
+                                                                        new SqlParameter("@" + CompanyColumns.CompanyTypeID, company.CompanyTypeID == null ? (object)DBNull.Value : company.CompanyTypeID),
+                                                                        new SqlParameter("@" + CompanyColumns.ServiceTaxNo, company.ServiceTaxNo == null ? (object)DBNull.Value : company.ServiceTaxNo),
+                                                                        new SqlParameter("@" + CompanyColumns.CompanyPanNo, company.CompanyPanNo == null ? (object)DBNull.Value : company.CompanyPanNo),
+                                                                        new SqlParameter("@" + CompanyColumns.CompanyWebsite, company.CompanyWebsite == null ? (object)DBNull.Value : company.CompanyWebsite));
 
                 if (result >0)
                 {

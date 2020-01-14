@@ -1,7 +1,7 @@
 ﻿@using TransportService.Web.Models.Masters
 @using TransportService.Web.Models
 
-<div id="ContentPlaceHolder1_hidediv" class="container" style="margin-top: 30px;">
+<div id="divPersonDetail" class="container" style="margin-top: 30px;">
     <div class="row job-card">
         <div class="col-md-12">
             <div class="PageDesc">
@@ -34,7 +34,7 @@
                             <span class="mandatory text-danger">*</span>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                <input name="Fname" type="text" id="ContentPlaceHolder1_txtFname" class="form-control capital" placeholder="Enter First Name">
+                                <input name="Fname" type="text" id="txtFirstName" class="form-control capital" placeholder="Enter First Name">
                                 <span id="ContentPlaceHolder1_rfvFname" class="validator" style="display:none;">Enter First Name</span>
                             </div>
                         </div>
@@ -44,7 +44,7 @@
                             <label>Enter Last Name</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                <input name="ctl00$ContentPlaceHolder1$txtLname" type="text" id="ContentPlaceHolder1_txtLname" class="form-control capital" placeholder="Enter Last Name">
+                                <input name="ctl00$ContentPlaceHolder1$txtLname" type="text" id="txtLastName" class="form-control capital" placeholder="Enter Last Name">
 
                             </div>
                         </div>
@@ -58,7 +58,7 @@
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-mobile-alt"></i></span>
                                 <span class="mandatory" style="margin-left: 38px;">*</span>
-                                <input name="ctl00$ContentPlaceHolder1$txtMobile" type="text" maxlength="10" id="ContentPlaceHolder1_txtMobile" class="form-control capital" minlength="10" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" placeholder="Please Enter Mobile No">
+                                <input name="ctl00$ContentPlaceHolder1$txtMobile" type="text" maxlength="10" id="txtMobile" disabled  class="form-control capital" minlength="10" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" placeholder="Please Enter Mobile No">
                                 <span id="ContentPlaceHolder1_RegularExpressionValidator2" class="validator" style="display:none;">Please Enter Valid Mobile Number</span>
                                 <span id="ContentPlaceHolder1_rfvMobile" class="validator" style="display:none;">Please Enter Mobile No</span>
                             </div>
@@ -67,11 +67,11 @@
 
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Email Id</label>
+                            <label>Email ID</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
                                 <span class="mandatory" style="margin-left: 15px;">*</span>
-                                <input name="ctl00$ContentPlaceHolder1$txtEmail" type="text" id="ContentPlaceHolder1_txtEmail" class="form-control capital" onchange="UserOrEmailAvailability()" placeholder="Please Enter Email Id">
+                                <input name="ctl00$ContentPlaceHolder1$txtEmail" type="text" id="txtEmail" class="form-control capital"  placeholder="Please Enter Email Id">
                             </div>
                         </div>
                     </div>
@@ -82,7 +82,7 @@
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="far fa-id-card"></i></span>
                                 <span class="mandatory" style="margin-left: 70px;">*</span>
-                                <input name="ctl00$ContentPlaceHolder1$txtRPassword" type="password" id="ContentPlaceHolder1_txtRPassword" class="form-control capital" placeholder="Retype Password">
+                                <input name="ctl00$ContentPlaceHolder1$txtRPassword" type="text" id="txtAdharCardNo" class="form-control capital" placeholder="Retype Password">
                                 <span id="ContentPlaceHolder1_RequiredFieldValidator2" class="validator" style="display:none;">Retype Password</span>
                                 <span id="ContentPlaceHolder1_CompareValidator1" class="validator" style="display:none;">Password Not Match</span>
                             </div>
@@ -95,22 +95,41 @@
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="far fa-id-card"></i></span>
                                 <span class="mandatory" style="margin-left: 50px;margin-top: -30px;">*</span>
-                                <input name="ctl00$ContentPlaceHolder1$txtpan" type="text" maxlength="10" id="ContentPlaceHolder1_txtpan" class="form-control capital" placeholder="PAN Card No.">
+                                <input name="ctl00$ContentPlaceHolder1$txtpan" type="text" maxlength="10" id="txtPanNo" class="form-control capital" placeholder="PAN Card No.">
                                 <span id="ContentPlaceHolder1_rfvPan" class="validator" style="display:none;">PAN Card No.</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
+               <div class="row">
+                   <div class="col-md-6">
+                       @Html.ActionLink("Change Password", null, null, new { @class = "linkDecoration", @id = "btnChangePassword" })
+                   </div>
 
-                <div class="row">
+               </div>
+
+                <div class="row hidden" id="divPassword">
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Enter Old Password</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                <span class="mandatory" style="margin-left: 65px;">*</span>
+                                <input name="ctl00$ContentPlaceHolder1$txtPassword" type="password" id="txtOldPassword" class="form-control capital" placeholder="Please Enter Password">
+                                <span id="ContentPlaceHolder1_RequiredFieldValidator1" class="validator" style="display:none;">Please Enter Password</span>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Enter Password</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-lock"></i></span>
                                 <span class="mandatory" style="margin-left: 65px;">*</span>
-                                <input name="ctl00$ContentPlaceHolder1$txtPassword" type="password" id="ContentPlaceHolder1_txtPassword" class="form-control capital" placeholder="Please Enter Password">
+                                <input name="ctl00$ContentPlaceHolder1$txtPassword" type="password" id="txtPassword" class="form-control capital" placeholder="Please Enter Password">
                                 <span id="ContentPlaceHolder1_RequiredFieldValidator1" class="validator" style="display:none;">Please Enter Password</span>
                             </div>
                         </div>
@@ -121,7 +140,7 @@
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-lock"></i></span>
                                 <span class="mandatory" style="margin-left: 75px;">*</span>
-                                <input name="ctl00$ContentPlaceHolder1$txtRPassword" type="password" id="ContentPlaceHolder1_txtRPassword" class="form-control capital" placeholder="Retype Password">
+                                <input name="ctl00$ContentPlaceHolder1$txtRPassword" type="password" id="txtRetypePassword" class="form-control capital" placeholder="Retype Password">
                                 <span id="ContentPlaceHolder1_RequiredFieldValidator2" class="validator" style="display:none;">Retype Password</span>
                                 <span id="ContentPlaceHolder1_CompareValidator1" class="validator" style="display:none;">Password Not Match</span>
                             </div>
@@ -130,7 +149,7 @@
 
 
                 </div>
-            </div>
+                </div>
 
         </div>
         <div class="col-md-6" style="border: 1px solid #E6E6E6;margin-top: 25px;">
@@ -148,7 +167,7 @@
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-city"></i></span>
                                 <span class="mandatory" style="margin-left: 25px;">*</span>
-                                <input type="text" id="txtDestinationRoute" name="txtcity" class="form-control capital" placeholder="Enter City" required="required" oninvalid=" " onchange=" " autocomplete="off">
+                                <input type="text" id="txtDestinationRoute" name="txtCity" class="form-control capital" placeholder="Enter City" required="required" oninvalid=" " onchange=" " autocomplete="off">
 
                             </div>
                         </div>
@@ -156,7 +175,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Enter Pincode</label>
-                            <input name="ctl00$ContentPlaceHolder1$txtpincode" type="text" maxlength="6" id="ContentPlaceHolder1_txtpincode" class="form-control capital" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" placeholder="Enter Pincode">
+                            <input name="ctl00$ContentPlaceHolder1$txtpincode" type="text" maxlength="6" id="txtPincode" class="form-control capital" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" placeholder="Enter Pincode">
                             <span id="ContentPlaceHolder1_rfvPincode" class="validator" style="display:none;">Enter Pincode</span>
                             <span class="mandatory">*</span>
                         </div>
@@ -169,7 +188,7 @@
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fas fa-address-card"></i></span>
                         <span id="ContentPlaceHolder1_rfvAddress" class="validator" style="display:none;">Please Enter Address</span>
-                        <textarea name="ctl00$ContentPlaceHolder1$txtaddress" rows="2" cols="20" id="ContentPlaceHolder1_txtaddress" class="form-control capital" placeholder="Please Enter Address" style="height:70px;"></textarea>
+                        <textarea name="ctl00$ContentPlaceHolder1$txtaddress" rows="2" cols="20" id="txtaddress" class="form-control capital" placeholder="Please Enter Address" style="height:70px;"></textarea>
                     </div>
                 </div>
             </div>
@@ -187,7 +206,7 @@
                         <div class="input-group">
                             <span class="input-group-addon"><i class="far fa-user"></i></span>
 
-                            <input name="ctl00$ContentPlaceHolder1$txtaperson" type="text" id="ContentPlaceHolder1_txtaperson" class="form-control capital" placeholder="Alternate Contact Person">
+                            <input name="ctl00$ContentPlaceHolder1$txtaperson" type="text" id="txtAlternatePerson" class="form-control capital" placeholder="Alternate Contact Person">
                         </div>
                     </div>
                 </div>
@@ -197,25 +216,34 @@
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fas fa-mobile-alt"></i></span>
 
-                            <input name="ctl00$ContentPlaceHolder1$txtamobile" type="text" maxlength="10" id="ContentPlaceHolder1_txtamobile" class="form-control capital" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" placeholder="Alternate Mobile Number">
+                            <input name="ctl00$ContentPlaceHolder1$txtamobile" type="text" maxlength="10" id="txtAlternateMobile" class="form-control capital" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" placeholder="Alternate Mobile Number">
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-lg-12">
                     <div class="row">
-                        <div class="col-md-5">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label>STD Code</label>
-                                <input name="ctl00$ContentPlaceHolder1$txtstdcode" type="text" maxlength="3" id="ContentPlaceHolder1_txtstdcode" class="form-control capital" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" placeholder="STD Code">
+                                <input name="ctl00$ContentPlaceHolder1$txtstdcode" type="text" maxlength="3" id="txtStdCode" class="form-control capital" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" placeholder="STD Code">
                             </div>
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-md-5">
                             <div class="form-group">
                                 <label>Landine No.</label>
-                                <input name="ctl00$ContentPlaceHolder1$txtlandline" type="text" maxlength="8" id="ContentPlaceHolder1_txtlandline" class="form-control capital" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" placeholder="Landine No.">
+                                <input name="ctl00$ContentPlaceHolder1$txtlandline" type="text" maxlength="8" id="txtLandLine" class="form-control capital" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" placeholder="Landine No.">
+                                
                             </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <span>
+                                <input type="button" value="Submit" class="btn btn-primary hidden" id="btnPersonSubmit" />
+                                @Html.ActionLink("Next", null, null, new {@class= "linkDecoration hidden",@id="btnNext" })
+                            </span>
+
                         </div>
                     </div>
 
@@ -238,30 +266,14 @@
             <div class="col-md-6">
                 <label style="color: #6E6C6C;">Company Name</label>
                 <span id="ContentPlaceHolder1_rfvCname" class="validator" style="display:none;">Enter Company Name</span>
-                <input name="ctl00$ContentPlaceHolder1$txtCname" type="text" id="ContentPlaceHolder1_txtCname" class="form-control capital" placeholder="Enter Company Name">
+                <input name="ctl00$ContentPlaceHolder1$txtCname" type="text" id="txtCompanyName" class="form-control capital" placeholder="Enter Company Name">
                 <span class="mandatory">*</span>
 
             </div>
             <div class="col-md-6">
                 <label style="color: #6E6C6C;">Company Type</label>
                 <span id="ContentPlaceHolder1_RequiredFieldValidator4" class="validator" style="display:none;">Company Type</span>
-                <select name="ctl00$ContentPlaceHolder1$ddllctype" id="ContentPlaceHolder1_ddllctype" class="form-control capital">
-                    <option selected="selected" value="Company Type">Company Type</option>
-                    <option value="Agro products mgf. / supplier">Agro products mgf. / supplier</option>
-                    <option value="Builders / Building material suppliers">Builders / Building material suppliers</option>
-                    <option value="Cement plant / Coal Plant">Cement / Coal Plant</option>
-                    <option value="Dealer / Commision agent / Distributor">Dealer / Commision agent / Distributor</option>
-                    <option value="Export/Import">Export / Import Firm</option>
-                    <option value="Job Work/Maintenance">Job/Maintenance</option>
-                    <option value="Manufacturing/Traders">Manufacturing/Traders</option>
-                    <option value="Machinery manufacturers/Machinery suppliers">Machinery Manufacturers / Suppliers</option>
-                    <option value="Print Media">Print/Media Related</option>
-                    <option value="Raw Material Supplier">Raw Material Supplier</option>
-                    <option value="Sales &amp; Service">Sales &amp; Service</option>
-                    <option value="Traders / Shop keeper / Merchant">Traders / Shop keeper / Merchant</option>
-                    <option value="Wood product mfg. / supplier / merchant">Wood Product Mfg. / Supplier / Merchant</option>
-
-                </select>
+                @Html.DropDownList("Company Type", new SelectList((System.Collections.IEnumerable)ViewData[DDLListNames.CompanyTypeList], "Value", "Text"), "Select Comapny Type", new { @class = "form-control", @id = "ddlCompanyType", Title = "Company Type" })
                 <span class="mandatory">*</span>
             </div>
         </div>
@@ -270,17 +282,17 @@
         <div id="ContentPlaceHolder1_ci2" class="row">
             <div class="col-md-6">
                 <label style="color: #6E6C6C;">Service Tax No.</label>
-                <input name="ctl00$ContentPlaceHolder1$txtSTax" type="text" id="ContentPlaceHolder1_txtSTax" class="form-control capital" placeholder="Service Tax No.">
+                <input name="ctl00$ContentPlaceHolder1$txtSTax" type="text" id="txtServiceTax" class="form-control capital" placeholder="Service Tax No.">
             </div>
             <div class="col-md-6">
                 <label style="color: #6E6C6C;">Company PAN No.</label>
-                <input name="ctl00$ContentPlaceHolder1$txtCPan" type="text" maxlength="10" id="ContentPlaceHolder1_txtCPan" class="form-control capital" placeholder="Company PAN No.">
+                <input name="ctl00$ContentPlaceHolder1$txtCPan" type="text" maxlength="10" id="txtCompanyPan" class="form-control capital" placeholder="Company PAN No.">
                 <span class="mandatory">*</span>
                 <span id="ContentPlaceHolder1_rfvCPan" class="validator" style="display:none;">Please Enter Company PAN Card Number</span>
             </div>
             <div class="col-md-6">
                 <label style="color: #6E6C6C;">Company Website</label>
-                <input name="ctl00$ContentPlaceHolder1$txtCWebsite" type="text" id="ContentPlaceHolder1_txtCWebsite" placeholder="Ex. www.example.com" class="form-control capital">
+                <input name="ctl00$ContentPlaceHolder1$txtCWebsite" type="text" id="txtCompanyWebsite" placeholder="Ex. www.example.com" class="form-control capital">
             </div>
         </div>
         <div class="gap"></div>
@@ -302,7 +314,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <b>Upload Profile Image</b>
-                            <input type="file" name="ctl00$ContentPlaceHolder1$FileUploadControl" id="ContentPlaceHolder1_FileUploadControl" class="fu">
+                            <input type="file" name="ctl00$ContentPlaceHolder1$FileUploadControl" id="txtFileUploadControl" class="fu">
 
                         </div>
                     </div>
@@ -320,7 +332,7 @@
                         <div id="ContentPlaceHolder1_UP1" style="padding-top: 35px;">
                             <div class="form-group">
                                 <label>Enter Below Captcha Verification Code</label>
-                                <input name="ctl00$ContentPlaceHolder1$txtcap" type="text" id="ContentPlaceHolder1_txtcap" class="form-control" placeholder="Enter Below Captcha Verification Code">
+                                <input name="ctl00$ContentPlaceHolder1$txtcap" type="text" id="txtCaptcha" class="form-control" placeholder="Enter Below Captcha Verification Code">
                             </div>
                             <table>
                                 <tbody>
@@ -329,7 +341,7 @@
                                             <img id="ContentPlaceHolder1_imgCaptcha" src="#">
                                         </td>
                                         <td valign="middle">
-                                            <input type="submit" name="ctl00$ContentPlaceHolder1$btnRefresh" value="Refresh" id="ContentPlaceHolder1_btnRefresh" class="captcharefresh">
+                                            <input type="submit" name="ctl00$ContentPlaceHolder1$btnRefresh" value="Submit" id="btnCompanySubmit" class="captcharefresh">
                                         </td>
                                     </tr>
                                     <tr></tr>
@@ -348,11 +360,239 @@
     </div>
 </div>
 <script>
+    var bIsPasswordChange = 0;
     $(document).ready(function () {
-        if (@Session[ClientTypeColumns.ClientTypeID] == @enumDBClientTypeID.Loader.GetHashCode() || @Session[ClientTypeColumns.ClientTypeID] == @enumDBClientTypeID.Transporter.GetHashCode()) {
-            $('#divCompany').removeClass('hidden');
+       
+        $('#txtMobile').val(@Session[UserColumns.Mobile]);
+        //$('#txtEmail').val(@Session[UserColumns.Email]);
+        if (@Session[ClientTypeColumns.ClientTypeID] == @enumDBClientTypeID.Loader.GetHashCode() || @Session[ClientTypeColumns.ClientTypeID] == @enumDBClientTypeID.Transporter.GetHashCode() ||@Session[ClientTypeColumns.ClientTypeID] == @enumDBClientTypeID.Corporater.GetHashCode()) {
+            $('#btnNext').removeClass('hidden');
+        }
+        else {
+            $('#btnPersonSubmit').removeClass('hidden');
         }
     });
+    $(document).on('click', '#btnNext', function (e) {
+        e.preventDefault();
+        
+        var bIsValid = 1;
+        bIsValid = PersonValidation();
+        if (bIsValid == 0) {
+            return;
+        }
 
+        
+        $('#divCompany').removeClass('hidden');
+        $('#divPersonDetail').addClass('hidden');
+
+
+
+
+
+    });
+    $(document).on('click', '#btnPersonSubmit', function (e) {
+        e.preventDefault();
+        
+        var bIsValid = 1;
+        bIsValid = PersonValidation();
+        if (bIsValid == 0) {
+            
+            return;
+        }
+        var p;
+        alert('A');
+        if (bIsPasswordChange == 1) {
+            
+            p = $('#txtPassword').val();
+        }
+        else {
+            
+            p = "@Session[UserColumns.Password]";
+        }
+        
+
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/TLoader/PersonalDetail',
+            data:
+            {
+                ClientID :@Session[UserColumns.ClientID],
+                UserID :@Session[UserColumns.UserID],
+                FirstName: $("#txtFirstName").val(),
+                LastName: $("#txtLastName").val(),
+                Password: p,
+                Email: $("#txtEmail").val(),
+                Address1: $("#txtaddress").val(),
+                AlternateContactPerson: $("#txtAlternatePerson").val(),
+                AlternateMobileNo: $("#txtAlternateMobile").val(),
+                //GSTNumber: $("#txtAddress").val(),
+                DocumentPath: $("#txtAddress").val(),
+                AdharCardNo: $("#txtAdharCardNo").val(),
+                PanCardNo: $("#txtPanNo").val(),
+                PinCode: $("#txtPincode").val(),
+                STD: $("#txtStdCode").val(),
+                LandlineNo: $("#txtLandLine").val()
+                
+            },
+            success: function (da) {
+                alert(da);
+                
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Error " + errorThrown);
+            }
+        });
+
+    });
+    $(document).on('click', '#btnCompanySubmit', function (e) {
+        e.preventDefault();
+        var bIsValid = 1;
+        if ($("#txtCompanyName").val() == null || $("#txtCompanyName").val() == "") {
+            
+            bIsValid = 0;
+            $("#txtCompanyName").addClass('borderValidation');
+        }
+        if ($("#ddlCompanyType option:selected").val() == 0 || $("#ddlCompanyType option:selected").val() == "") {
+            bflagValid = 0;
+            $("#ddlCompanyType").addClass('borderValidation');
+        }
+        if ($("#txtCompanyPan").val() == null || $("#txtCompanyPan").val() == "") {
+            
+            bIsValid = 0;
+            $("#txtCompanyPan").addClass('borderValidation');
+        }
+        if (bIsValid = 0) {
+            return;
+
+        }
+        var p;
+        
+        if (bIsPasswordChange == 1) {
+            
+            p = $('#txtPassword').val();
+        }
+        else {
+            
+            p = "@Session[UserColumns.Password]";
+        }
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/TLoader/PersonalDetail',
+            data:
+            {
+                ClientID :@Session[UserColumns.ClientID],
+                UserID :@Session[UserColumns.UserID],
+                FirstName: $("#txtFirstName").val(),
+                LastName: $("#txtLastName").val(),
+                Password: p,
+                Email: $("#txtEmail").val(),
+                Address1: $("#txtaddress").val(),
+                AlternateContactPerson: $("#txtAlternatePerson").val(),
+                AlternateMobileNo: $("#txtAlternateMobile").val(),
+                GSTNumber: $("#txtAddress").val(),
+                DocumentPath: $("#txtAddress").val(),
+                AdharCardNo: $("#txtAdharCardNo").val(),
+                PanCardNo: $("#txtPanNo").val(),
+                PinCode: $("#txtPincode").val(),
+                STD: $("#txtStdCode").val(),
+                LandlineNo: $("#txtLandLine").val(),
+                CompanyName: $("#txtCompanyName").val(),
+                CompanyTypeID: $("#ddlCompanyType option:selected").val(),
+                ServiceTaxNo: $("#txtServiceTax").val(),
+                CompanyPanNo: $("#txtCompanyPan").val(),
+                CompanyWebsite: $("#txtCompanyWebsite").val()
+            },
+            success: function (da) {
+                alert(da);
+                if (@Session[RoleColumns.RoleID] == @enumRole.Loader.GetHashCode()) {
+
+                    window.location.href = "/TLoader/New_LoaderIndex";
+                }
+                else {
+                    window.location.href = "/TLoader/Index";
+                }
+                
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Error " + errorThrown);
+            }
+        });
+
+
+
+    });
+    $(document).on('click', '#btnChangePassword', function (e) {
+        e.preventDefault();
+        $('#divPassword').removeClass('hidden');
+        $('#btnChangePassword').addClass('hidden');
+        bIsPasswordChange = 1;
+    });
+
+
+
+
+    function PersonValidation() {
+        var bIsValid = 1;
+
+
+        if ($("#txtFirstName").val() == null || $("#txtFirstName").val() == "") {
+            alert('1');
+            bIsValid = 0;
+            $("#txtFirstName").addClass('borderValidation');
+        }
+        if ($("#txtAdharCardNo").val() == null || $("#txtAdharCardNo").val() == "") {
+            alert('2');
+            bIsValid = 0;
+            $("#txtAdharCardNo").addClass('borderValidation');
+        }
+        if ($("#txtPanNo").val() == null || $("#txtPanNo").val() == "") {
+            alert('3');
+            bIsValid = 0;
+            $("#txtPanNo").addClass('borderValidation');
+        }
+        
+        if ($("#txtPincode").val() == null || $("#txtPincode").val() == "") {
+            alert('5');
+            bIsValid = 0;
+            $("#txtPincode").addClass('borderValidation');
+        }
+
+
+
+        if (bIsPasswordChange == 1) {
+
+            if ($("#txtOldPassword").val() == null || $("#txtOldPassword").val() == "") {
+                alert('6');
+                bIsValid = 0;
+                $("#txtOldPassword").addClass('borderValidation');
+            }
+            if ($("#txtPassword").val() == null || $("#txtPassword").val() == "") {
+                bIsValid = 0
+                alert('7');
+                $("#txtPassword").addClass('borderValidation');
+            }
+            if ($("#txtRetypePassword").val() == null || $("#txtRetypePassword").val() == "") {
+                alert('8');
+                bIsValid = 0;
+                $("#txtRetypePassword").addClass('borderValidation');
+            }
+            if ($("#txtOldPassword").val() != null || $("#txtOldPassword").val() != "") {
+                /*coding to check correct old password*/
+                @*if ($("#txtOldPassword").val() != @Session[UserColumns.Password]) {
+                    alert('Incorrect password');
+                    $("#txtOldPassword").addClass('borderValidation');
+                    $("#txtOldPassword").prop('title', 'Incorrect Password');
+                }*@
+            }
+            if (($("#txtPassword").val() != null || $("#txtPassword").val() != "") && ($("#txtRetypePassword").val() != null || $("#txtRetypePassword").val() != "")) {
+                alert('9'); /*coding to check wheather  the password match or not*/
+            }
+
+
+        }
+        return bIsValid;
+    }
     
 </script>

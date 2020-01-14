@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.ComponentModel.DataAnnotations;
 
 namespace TransportService.Web.Models.Masters
 {
@@ -40,6 +41,7 @@ namespace TransportService.Web.Models.Masters
     }
     public class LoginUser
     {
+        [Key]
         public string UserName { get; set; }
         public string Password { get; set; }
         public bool RememberMe { get; set; }
@@ -49,6 +51,8 @@ namespace TransportService.Web.Models.Masters
     {
         public int UserID { get; set; }
         public string Mobile { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
         public int ClientID { get; set; }
         public int ClientTypeID { get; set; }
         public int RoleID { get; set; }
@@ -107,8 +111,7 @@ namespace TransportService.Web.Models.Masters
                                                         @CompanyTypeID  ,
                                                         @ServiceTaxNo ,
                                                         @CompanyPanNo ,		
-                                                        @CompanyWebsite ,
-                                                        @IsActive";
+                                                        @CompanyWebsite ";
 
     }
 }

@@ -46,7 +46,12 @@ namespace TransportService.Web.Models
         public const string Parcel  = "Parcel (Less than 500 Kg)";
 
     }
-   
-    
+    public static class DDLListNames
+    {
+        public const string CompanyTypeList = "CompanyTypeList";
+        
+    }
+
+
 
 }
