@@ -41,6 +41,7 @@ namespace TransportService.Web.Models.Activity
         public string Email { get; set; }
         public string Address { get; set; }
         public int? TotalRows { get; set; }
+        public decimal? PrimaryQuotaionValue { get; set; }
         public IEnumerable<LoadDetail> LoadDetails { get; set; }
         public IEnumerable<MaterialList> MaterialList { get; set; }
         public StaticPagedList<Loader> Loaders { get; set; }

@@ -449,7 +449,6 @@
         e.preventDefault();
         var bIsValid = 1;
         if ($("#txtCompanyName").val() == null || $("#txtCompanyName").val() == "") {
-            
             bIsValid = 0;
             $("#txtCompanyName").addClass('borderValidation');
         }
@@ -458,13 +457,11 @@
             $("#ddlCompanyType").addClass('borderValidation');
         }
         if ($("#txtCompanyPan").val() == null || $("#txtCompanyPan").val() == "") {
-            
             bIsValid = 0;
             $("#txtCompanyPan").addClass('borderValidation');
         }
         if (bIsValid = 0) {
             return;
-
         }
         var p;
         
@@ -538,23 +535,23 @@
 
 
         if ($("#txtFirstName").val() == null || $("#txtFirstName").val() == "") {
-            alert('1');
+            
             bIsValid = 0;
             $("#txtFirstName").addClass('borderValidation');
         }
         if ($("#txtAdharCardNo").val() == null || $("#txtAdharCardNo").val() == "") {
-            alert('2');
+           
             bIsValid = 0;
             $("#txtAdharCardNo").addClass('borderValidation');
         }
         if ($("#txtPanNo").val() == null || $("#txtPanNo").val() == "") {
-            alert('3');
+            
             bIsValid = 0;
             $("#txtPanNo").addClass('borderValidation');
         }
         
         if ($("#txtPincode").val() == null || $("#txtPincode").val() == "") {
-            alert('5');
+            
             bIsValid = 0;
             $("#txtPincode").addClass('borderValidation');
         }
@@ -564,30 +561,37 @@
         if (bIsPasswordChange == 1) {
 
             if ($("#txtOldPassword").val() == null || $("#txtOldPassword").val() == "") {
-                alert('6');
+                
                 bIsValid = 0;
                 $("#txtOldPassword").addClass('borderValidation');
             }
             if ($("#txtPassword").val() == null || $("#txtPassword").val() == "") {
                 bIsValid = 0
-                alert('7');
+                
                 $("#txtPassword").addClass('borderValidation');
             }
             if ($("#txtRetypePassword").val() == null || $("#txtRetypePassword").val() == "") {
-                alert('8');
+                
                 bIsValid = 0;
                 $("#txtRetypePassword").addClass('borderValidation');
             }
             if ($("#txtOldPassword").val() != null || $("#txtOldPassword").val() != "") {
                 /*coding to check correct old password*/
-                @*if ($("#txtOldPassword").val() != @Session[UserColumns.Password]) {
+                if ($("#txtOldPassword").val() != "@Session[UserColumns.Password]") {
                     alert('Incorrect password');
+                    bIsValid = 0;
                     $("#txtOldPassword").addClass('borderValidation');
                     $("#txtOldPassword").prop('title', 'Incorrect Password');
-                }*@
+                }
             }
             if (($("#txtPassword").val() != null || $("#txtPassword").val() != "") && ($("#txtRetypePassword").val() != null || $("#txtRetypePassword").val() != "")) {
-                alert('9'); /*coding to check wheather  the password match or not*/
+                 /*coding to check wheather  the password match or not*/
+                if ($("#txtPassword").val() != $("#txtRetypePassword").val()) {
+                    alert('Password Not Match');
+                    bIsValid = 0;
+                    $("#txtRetypePassword").addClass('borderValidation');
+                    $("#txtRetypePassword").prop('title', 'Password Not Match');
+                }
             }
 
 

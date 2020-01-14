@@ -135,13 +135,13 @@
                                 <a href="#"><i class="fa fa-twitter"></i></a>
                                 <a href="#"><i class="fa fa-youtube-play"></i></a>
                                 @*<div class="d-inline-flex order-lg-last">
-                                        <a class="btn-theme icon-left bg-navy-blue no-shadow d-none d-lg-inline-block align-self-center" href="#" role="button" data-toggle="modal" data-target="#user-login-popup"><i class="fas fa-home" style="color: #fff;"></i>  Log In</a>
-                                        <a class="btn-theme icon-left bg-navy-blue no-shadow d-none d-lg-inline-block align-self-center" href="#" role="button" data-toggle="modal" data-target="#user-reg-popup"><i class="far fa-user" style="color: #fff;"></i>  Register</a>
+            <a class="btn-theme icon-left bg-navy-blue no-shadow d-none d-lg-inline-block align-self-center" href="#" role="button" data-toggle="modal" data-target="#user-login-popup"><i class="fas fa-home" style="color: #fff;"></i>  Log In</a>
+            <a class="btn-theme icon-left bg-navy-blue no-shadow d-none d-lg-inline-block align-self-center" href="#" role="button" data-toggle="modal" data-target="#user-reg-popup"><i class="far fa-user" style="color: #fff;"></i>  Register</a>
 
-                                    </div>*@
+        </div>*@
 
-                                <a class="btn-theme icon-left bg-navy-blue no-shadow d-none d-lg-inline-block align-self-center" href="#" role="button" data-toggle="modal" data-target="#user-login-popup"><i class="fas fa-home" style="color: #fff;"></i>  Log In</a>
-                                <a id="btnRegistration" class="btn-theme icon-left bg-navy-blue no-shadow d-none d-lg-inline-block align-self-center popupTrigger" href="#" role="button" data-toggle="modal" data-target="#user-reg-popup"><i class="far fa-user" style="color: #fff;"></i>  Register</a>
+                                @*<a class="btn-theme icon-left bg-navy-blue no-shadow d-none d-lg-inline-block align-self-center" href="#" role="button" data-toggle="modal" data-target="#user-login-popup"><i class="fas fa-home" style="color: #fff;"></i>  Log In</a>*@
+                                @Html.ActionLink("Log In", "LoginUser", null, new { @class = "btn-theme icon-left bg-navy-blue no-shadow d-none d-lg-inline-block align-self-center" })
                             </div>
                         </div>
                     </div>
@@ -324,17 +324,21 @@
 </html>
 <script>
     $(document).ready(function () {
-        
+        if (@Session[UserColumns.UserID] != null || "@Session[UserColumns.UserID]" != "") {
             var userID = "@Session[UserColumns.UserID]";
             var RoleID = "@Session[RoleColumns.RoleID]";
             if (userID != null || userID != "") {
-
+           
                 $('#liMyProfile').removeClass('hidden');
                 if (RoleID == @enumRole.Transporter.GetHashCode()) {
                     $('#liAddTruck').removeClass('hidden');
                 }
             }
         
+
+        }
+
+            
 
     });
 </script>

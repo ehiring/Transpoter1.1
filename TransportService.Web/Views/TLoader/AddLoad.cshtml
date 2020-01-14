@@ -258,8 +258,9 @@
                 <div class="panel-heading">
                     <h5 class="panel-title">Final Fare(Rs.) </h5>
                 </div>
-                <div class="panel-body" >
-                    <h3 style="color:blueviolet" id="divDoorToDoor"><i class="fa fa-inr"></i></h3>
+                <div class="panel-body">
+                    <h3  style="color:blueviolet" id="divDoorToDoor"> <label class="sc-brqgnP bKUXLW" id="lblQuotation"></label></h3>
+                    @*<i class="fa fa-inr"></i>*@
                 </div>
             </div>
 
@@ -489,7 +490,7 @@
                     },
                     success: function (da) {
                         alert(da);
-                        $('#divDoorToDoor').append(da);
+                        $('#lblQuotation').text(da);
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
                         alert("Error " + errorThrown);
@@ -558,6 +559,7 @@
                     ContactNo: $("#txt_Phone").val(),
                     Email: $("#txt_Mail").val(),
                     Address: $("#txt_Address").val(),
+                    PrimaryQuotaionValue : $("#lblQuotation").text(),
                     _loadDetails: LoadDetails
                 },
                 success: function (da) {

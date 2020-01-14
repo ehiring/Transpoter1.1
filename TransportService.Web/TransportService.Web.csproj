@@ -145,6 +145,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\BingMapController.cs" />
     <Compile Include="Controllers\GoogleMapController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoaderController.cs" />
@@ -176,6 +177,7 @@
     <Compile Include="Models\Masters\Vehicle.cs" />
     <Compile Include="Models\Masters\VehicleType.cs" />
     <Compile Include="Models\Trans.cs" />
+    <Compile Include="Models\Transaction\Quoatation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -314,6 +316,7 @@
     <Content Include="Views\TLoader\ContactPerson.cshtml" />
     <Content Include="Views\TLoader\PersonalDetail.cshtml" />
     <Content Include="Views\TLoader\LoginUser.cshtml" />
+    <Content Include="Views\BingMap\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

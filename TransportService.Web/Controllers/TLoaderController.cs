@@ -11,6 +11,7 @@ using TransportService.Web.Models.Activity;
 using System.Data;
 using TransportService.Web.Models.Masters;
 using TransportService.Web.Models;
+using TransportService.Web.Models.Transaction;
 
 namespace TransportService.Web.Controllers
 {
@@ -415,7 +416,7 @@ namespace TransportService.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddLoad(Loader _loader, List<LoadDetail> _loadDetails)
+        public ActionResult AddLoad(Loader _loader, List<LoadDetail> _loadDetails, Quoatation quoatation)
         {
 
                 //Adding Load Details In DT
@@ -471,6 +472,7 @@ namespace TransportService.Web.Controllers
                         @Status ,
                         @AddedBy ,
                         @Receiver,
+                        @Quotation,
                         @UDTable_LoadDetails",
                   new SqlParameter("@SourceID", _loader.SourceID),
                   new SqlParameter("@DestinationID", _loader.DestinationID),
@@ -483,6 +485,7 @@ namespace TransportService.Web.Controllers
                    new SqlParameter("@Status", 1),
                   new SqlParameter("@AddedBy", 1),/*.....UserID 1 is Loader*/
                   new SqlParameter("@Receiver", _loader.Receiver),
+                  new SqlParameter("@Quotation", quoatation.PrimaryQuotaionValue),
                   tvpParamLoadDetails);
                     return Json("Load Added Sucessfully");
                 
