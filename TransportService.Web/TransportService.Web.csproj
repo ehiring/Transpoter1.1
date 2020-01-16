@@ -146,6 +146,7 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Controllers\BingMapController.cs" />
+    <Compile Include="Controllers\GoogleMap1Controller.cs" />
     <Compile Include="Controllers\GoogleMapController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoaderController.cs" />
@@ -317,6 +318,7 @@
     <Content Include="Views\TLoader\PersonalDetail.cshtml" />
     <Content Include="Views\TLoader\LoginUser.cshtml" />
     <Content Include="Views\BingMap\Index.cshtml" />
+    <Content Include="Views\GoogleMap1\Distance.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

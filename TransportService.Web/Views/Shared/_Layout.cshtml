@@ -182,7 +182,7 @@
                                     @Html.ActionLink("Find A Load", "New_LoaderIndex", "TLoader", new { @class = "nav-link", @style = "width: 100px;" })
                                 </li>
                                 <li>
-                                    @Html.ActionLink("Post A Load", "AddLoad", "TLoader", new { @class = "nav-link", @style = "width: 100px;" })
+                                    @Html.ActionLink("Post A Load", "AddLoad", "TLoader", new { @class = "nav-link ", @style = "width: 100px;",@id="btnAddLoad" })
                                 </li>
                             </ul>
                         </li>
@@ -194,7 +194,7 @@
                                     @Html.ActionLink("Find A Truck", "Index", "TLoader", new { @class = "nav-link", @style = "width: 100px;" })
                                 </li>
                                 <li>
-                                    @Html.ActionLink("Post A Truck", "AddTrip", "TLoader", new { @class = "nav-link", @style = "width: 100px;" })
+                                    @Html.ActionLink("Post A Truck", "AddTrip", "TLoader", new { @class = "nav-link ", @style = "width: 100px;",@id="btnAddTrip" })
                                 </li>
                             </ul>
                         </li>
@@ -324,12 +324,14 @@
 </html>
 <script>
     $(document).ready(function () {
+        
         if (@Session[UserColumns.UserID] != null || "@Session[UserColumns.UserID]" != "") {
             var userID = "@Session[UserColumns.UserID]";
             var RoleID = "@Session[RoleColumns.RoleID]";
             if (userID != null || userID != "") {
            
                 $('#liMyProfile').removeClass('hidden');
+
                 if (RoleID == @enumRole.Transporter.GetHashCode()) {
                     $('#liAddTruck').removeClass('hidden');
                 }
@@ -338,7 +340,9 @@
 
         }
 
-            
-
     });
+    
+        
+   
+    
 </script>

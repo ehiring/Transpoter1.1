@@ -162,14 +162,14 @@
                             <label>Heigth</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-up"></i></span>
-                                <input id="txt_Height" type="number" class="form-control" name="altr_name" value="" placeholder="Height" title="Enter Height">
+                                <input id="txt_Height" type="number" class="form-control"  value="" placeholder="Height" title="Enter Height">
                             </div>
                         </div>
                         <div class="col-sm-6 form-group">
                             <label>Width</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-right"></i></span>
-                                <input id="txt_Width" type="number" class="form-control" name="altr_name" value="" placeholder="Width" title="Enter Width">
+                                <input id="txt_Width" type="number" class="form-control"  value="" placeholder="Width" title="Enter Width">
                             </div>
                         </div>
 
@@ -177,21 +177,21 @@
                             <label>Length</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-down"></i></span>
-                                <input id="txt_Length" type="number" class="form-control" name="altr_name" value="" placeholder="Length" title="Enter Length">
+                                <input id="txt_Length" type="number" class="form-control"  value="" placeholder="Length" title="Enter Length">
                             </div>
                         </div>
                         <div class="col-sm-6 form-group">
                             <label>Quantity</label>
                             <div class="input-group">
 
-                                <input id="txt_Quantity" type="number" class="form-control" name="altr_name" value="" placeholder="Quantity" title="Enter Quantity">
+                                <input id="txt_Quantity" type="number" class="form-control"  value="" placeholder="Quantity" title="Enter Quantity">
                             </div>
                         </div>
                         <div class="col-sm-6 form-group">
                             <label>Total Weight(Tonn)</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-glass"></i></span>
-                                <input id="txt_Weight" type="number" class="form-control" name="altr_name" value="" placeholder="Weigtht" title="Enter Weight">
+                                <input id="txt_Weight" type="number" class="form-control"  value="" placeholder="Weigtht" title="Enter Weight">
                             </div>
                         </div>
 
@@ -207,9 +207,11 @@
 
                         <div class="form-group">
                             <input type="hidden" id="RowCount" name="RowCount" value="0">
+                            
 
                             <div>
                                 <input type="hidden" id="idLastSrNo" name="LastSrNo" value="">
+                                <input type="hidden" id="hdnRowNo"  value="0">
                                 <table class="table table-bordered" id="tblGoodsDetail" title="Enter Good Details">
                                     <thead>
                                         <tr>
@@ -442,7 +444,9 @@
     $(document).on('click', '.clsEditRow', function (e) {
         e.preventDefault();
         //$('.clsEditRow').addClass('disableClick');
-
+        //tblGoodsDetail
+        //$('.clsEditRow').prop('disabled', true); /*Its working but throwing exception...*/
+        //$('#tblGoodsDetail').prop('disabled', true);
 
         var srNo = $(this).closest('tr').children('td.clsSrNo').text();
         var materialID = $(this).closest('tr').children('td.clsMaterialID').text();
@@ -457,9 +461,11 @@
 
         $('#hdnOperationType').val('U');
         $('#hdnUpdateSrNo').val(srNo);
-        $("#ddlMaterial option[value = '" + materialID + "']").attr("selected", "selected");
-        $("#ddlUnit option[value = '" + ConversionFactor + "']").attr("selected", "selected");
-        //$("#ddlMaterial").val(materialID);
+        //$("#ddlMaterial option[value = '" + materialID + "']").attr("selected", "selected");
+        //$("#ddlUnit option[value = '" + ConversionFactor + "']").attr("selected", "selected");
+        alert('materialID is'+ materialID);
+        //$("#ddlMaterial").val(materialID).change();
+        $("#ddlMaterial option[value = '"+materialID+"']").prop("selected", "selected");
         $("#txt_Height").val(height);
         $("#txt_Width").val(width);
         $("#txt_Length").val(length);
@@ -467,18 +473,11 @@
         $("#txt_Quantity").val(quantity);
         var row = $(this).closest('tr').index();
         $('#hdnRowNo').val(row);
-
-
+        
         var availableHeight = parseFloat($('#lblHeight').text());
         var availableWidth = parseFloat($('#lblWidth').text());
         var availableLength = parseFloat($('#lblLength').text());
         var availableCapacity = parseFloat($('#lblCapacity').text());
-
-        alert('availableHeight :' + $('#lblHeight').text());
-        alert('availableWidth :' + availableWidth);
-        alert('availableLength :' + availableLength);
-        alert('availableCapacity :' + availableCapacity);
-
 
 
         availableHeight = availableHeight + (height * ConversionFactor*quantity);
