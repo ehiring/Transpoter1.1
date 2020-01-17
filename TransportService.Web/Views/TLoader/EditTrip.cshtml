@@ -162,14 +162,14 @@
                             <label>Heigth</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-up"></i></span>
-                                <input id="txt_Height" type="number" class="form-control"  value="" placeholder="Height" title="Enter Height">
+                                <input id="txt_Height" type="number" class="form-control" value="" placeholder="Height" title="Enter Height">
                             </div>
                         </div>
                         <div class="col-sm-6 form-group">
                             <label>Width</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-right"></i></span>
-                                <input id="txt_Width" type="number" class="form-control"  value="" placeholder="Width" title="Enter Width">
+                                <input id="txt_Width" type="number" class="form-control" value="" placeholder="Width" title="Enter Width">
                             </div>
                         </div>
 
@@ -177,24 +177,30 @@
                             <label>Length</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-down"></i></span>
-                                <input id="txt_Length" type="number" class="form-control"  value="" placeholder="Length" title="Enter Length">
+                                <input id="txt_Length" type="number" class="form-control" value="" placeholder="Length" title="Enter Length">
                             </div>
                         </div>
                         <div class="col-sm-6 form-group">
                             <label>Quantity</label>
                             <div class="input-group">
 
-                                <input id="txt_Quantity" type="number" class="form-control"  value="" placeholder="Quantity" title="Enter Quantity">
+                                <input id="txt_Quantity" type="number" class="form-control" value="" placeholder="Quantity" title="Enter Quantity">
                             </div>
                         </div>
                         <div class="col-sm-6 form-group">
                             <label>Total Weight(Tonn)</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-glass"></i></span>
-                                <input id="txt_Weight" type="number" class="form-control"  value="" placeholder="Weigtht" title="Enter Weight">
+                                <input id="txt_Weight" type="number" class="form-control" value="" placeholder="Weigtht" title="Enter Weight">
                             </div>
                         </div>
-
+                        <div class="col-sm-6 form-group">
+                            <label>Material Value(INR)</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-inr"></i></span>
+                                <input id="txt_MaterialValue" type="number" class="form-control" value="" placeholder="Material Value in INR">
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-sm-3">
                                 <div class="form-group">
@@ -207,11 +213,11 @@
 
                         <div class="form-group">
                             <input type="hidden" id="RowCount" name="RowCount" value="0">
-                            
+
 
                             <div>
                                 <input type="hidden" id="idLastSrNo" name="LastSrNo" value="">
-                                <input type="hidden" id="hdnRowNo"  value="0">
+                                <input type="hidden" id="hdnRowNo" value="0">
                                 <table class="table table-bordered" id="tblGoodsDetail" title="Enter Good Details">
                                     <thead>
                                         <tr>
@@ -225,29 +231,31 @@
                                             <th>Length</th>
                                             <th>Weight</th>
                                             <th>Qty</th>
+                                            <th>Price</th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach (var item in Model.TripDetails)
                                         {
-                                            <tr>
-                                                <td class="clsSrNo">@item.TripDetailID</td>
-                                                <td style="display:none" class="clsMaterialID"> @item.MaterialID</td>
-                                                <td class="clsMaterialName">@item.MaterialName</td>
-                                                <td style="display:none" class="clsConversionFactor"> @item.ConversionFactor</td>
-                                                <td class="clsUnitOfMeasure">@item.UnitOfMeasure </td>
-                                                <td class="clsHeight">@item.Height</td>
-                                                <td class="clsWidth">@item.Width</td>
-                                                <td class="clsLength">@item.Length</td>
-                                                <td class="clsWeight">@item.Weight</td>
-                                                <td class="clsQty">@item.Qty</td>
-                                                <td>
-                                                    @Html.ActionLink("Edit", null, null, new { @class = "clsEditRow" }) |
-                                                    @Html.ActionLink("Delete", null, null, new { @class = "clsDeleteRow" })
-                                                </td>
+                                        <tr>
+                                            <td class="clsSrNo">@item.TripDetailID</td>
+                                            <td style="display:none" class="clsMaterialID"> @item.MaterialID</td>
+                                            <td class="clsMaterialName">@item.MaterialName</td>
+                                            <td style="display:none" class="clsConversionFactor"> @item.ConversionFactor</td>
+                                            <td class="clsUnitOfMeasure">@item.UnitOfMeasure </td>
+                                            <td class="clsHeight">@item.Height</td>
+                                            <td class="clsWidth">@item.Width</td>
+                                            <td class="clsLength">@item.Length</td>
+                                            <td class="clsWeight">@item.Weight</td>
+                                            <td class="clsQty">@item.Qty</td>
+                                            <td class="clsMaterialValue">@item.MaterialValue</td>
+                                            <td>
+                                                @Html.ActionLink("Edit", null, null, new { @class = "clsEditRow" }) |
+                                                @Html.ActionLink("Delete", null, null, new { @class = "clsDeleteRow" })
+                                            </td>
 
-                                            </tr>
+                                        </tr>
                                         }
                                     </tbody>
                                 </table>
@@ -457,6 +465,7 @@
         var length = $(this).closest('tr').children('td.clsLength').text();
         var weight = $(this).closest('tr').children('td.clsWeight').text();
         var quantity = $(this).closest('tr').children('td.clsQty').text();
+        var materialValue = $(this).closest('tr').children('td.clsMaterialValue').text();
         
 
         $('#hdnOperationType').val('U');
@@ -471,6 +480,7 @@
         $("#txt_Length").val(length);
         $("#txt_Weight").val(weight);
         $("#txt_Quantity").val(quantity);
+        $("#txt_MaterialValue").val(materialValue);
         var row = $(this).closest('tr').index();
         $('#hdnRowNo').val(row);
         
@@ -518,6 +528,7 @@
         var length = $("#txt_Length").val();
         var weight = $("#txt_Weight").val();
         var quantity = $("#txt_Quantity").val();
+        var materialValue = $("#txt_MaterialValue").val();
 
         
 
@@ -549,7 +560,12 @@
          if (quantity == null || quantity == "") {
              bFlagValid = 0;
              $("#txt_Quantity").addClass('borderValidation');
-         }
+        }
+
+        if (materialValue == null || materialValue == "") {
+            bFlagValid = 0;
+            $("#txt_MaterialValue").addClass('borderValidation');
+        }
          if (bFlagValid == 0) {
 
              return;
@@ -598,6 +614,7 @@
                 '<td class="clsLength">' + length + '</td>' +
                 '<td class="clsWeight">' + weight + '</td>' +
                 '<td class="clsQty">' + quantity + '</td>' +
+                '<td class="clsMaterialValue">' + materialValue + '</td>' +
                 '<td>' +
                 '@Html.ActionLink("Edit",null, null, new { @class = "clsEditRow" }) | @Html.ActionLink("Delete", null, null, new { @class = "clsDeleteRow" })' +
                 '</td >' +
@@ -619,6 +636,7 @@
             $('#tblGoodsDetail tbody tr:eq(' + rowindex + ') ').children('td.clsLength').text(length);
             $('#tblGoodsDetail tbody tr:eq(' + rowindex + ') ').children('td.clsWeight').text(weight);
             $('#tblGoodsDetail tbody tr:eq(' + rowindex + ') ').children('td.clsQty').text(quantity);
+            $('#tblGoodsDetail tbody tr:eq(' + rowindex + ') ').children('td.clsMaterialValue').text(materialValue);
             
         }
         
@@ -634,7 +652,8 @@
         $("#txt_Width").val('');
         $("#txt_Length").val('');
         $("#txt_Weight").val('');
-        $("#txt_Quantity").val('')
+        $("#txt_Quantity").val('');
+        $("#txt_MaterialValue").val('');
          $('#hdnOperationType').val('I');
          $("#lblHeight").text(availableHeight);
          $("#lblWidth").text(availableWidth);
@@ -724,7 +743,8 @@
                 trElement.find('td.clsWidth').text() + "~" +
                 trElement.find('td.clsLength').text() + "~" +
                 trElement.find('td.clsWeight').text() + "~" +
-                trElement.find('td.clsQty').text();
+                trElement.find('td.clsQty').text() + "~" +
+                trElement.find('td.clsMaterialValue').text();
             idArrLoadDetails.push(tdVals);
 
         });
@@ -743,6 +763,7 @@
             item["Length"] = arrElement[6];
             item["Weight"] = arrElement[7];
             item["Qty"] = arrElement[8];
+            item["MaterialValue"] = arrElement[9];
             TripDetails.push(item);
         }
         

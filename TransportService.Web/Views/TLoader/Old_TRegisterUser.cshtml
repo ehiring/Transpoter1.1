@@ -1,0 +1,299 @@
+﻿@using TransportService.Web.Models
+<div class="user-login-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="ui-list nav nav-tabs mb-30" id="lstClientType" role="tablist">
+                    <li class="nav-item" id="@enumRole.Transporter.GetHashCode()">
+                        <a class="nav-link active selected" data-toggle="tab" href="#register" role="tab" aria-selected="true">@enumRole.Transporter.ToString()</a>
+                    </li>
+                    <li class="nav-item" id="@enumRole.Loader.GetHashCode()">
+                        <a class="nav-link selected" data-toggle="tab" href="#register" role="tab" aria-selected="false">@enumRole.Loader.ToString()</a>
+                    </li>
+                    <li class="nav-item" id="@enumRole.Broker.GetHashCode()">
+                        <a class="nav-link selected" data-toggle="tab" href="#register" role="tab" aria-selected="false">@enumRole.Broker.ToString()</a>
+                    </li>
+                </ul>
+                <div class="login-wrapper">
+                    <div class="ui-dash tab-content">
+                        <div class="tab-pane fade show active" id="register" role="tabpanel">
+                            <div>
+                                <div class="row" style="margin-bottom: 20px;">
+                                    <div class="col-md-4">
+
+                                        <label for="chkYes">
+                                            <input type="radio" value="@enumIsCompany.Company.GetHashCode()" name="rdbIsCompany" />
+                                            @enumIsCompany.Company.ToString()
+                                        </label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="chkNo">
+                                            <input type="radio" value="@enumIsCompany.Individual.GetHashCode()" name="rdbIsCompany" />
+                                            @enumIsCompany.Individual.ToString()
+                                        </label>
+                                    </div>
+
+
+                                </div>
+                                <div id="divIsCompanyValidation" class="form-group text-danger hidden">
+                                    Please select Company / Individual
+                                </div>
+                                <hr />
+                            </div>
+                            
+                            <!-- <div id="companyEmail" style="display: none;background-color: pink;display: block;width:48%">
+
+
+        <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Company Email Address" value="" style="padding: 22px 0;
+        border-bottom: 1px solid #ddd;
+        border-top: none;
+        border-left: none;
+        border-right: none;">
+    </div> -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <form id="register-form" action="#" method="post">
+                                        <input id="hdnEmailExist" type="hidden" value="0">
+                                        <div class="form-group">
+                                            <input type="email" name="user_name" id="txt_Email" tabindex="1" class="form-control" placeholder="Username" value="" title="Enter Email">
+                                        </div>
+                                        <div id="divEmailValidation" class="form-group text-danger hidden">
+                                            That Email already exist. Try again.
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="number" name="number" id="txt_MobileNumber" tabindex="1" class="form-control" placeholder="Mobile Number" value="" title="Enter Mobile No" maxlength=10>
+                                        </div>
+                                        <input id="hdnMobileExist" type="hidden" value="0">
+                                        <div id="divMobileValidation" class="form-group text-danger hidden">
+                                            That Mobile No already exist. Try again.
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" name="user_password" id="txt_Password" tabindex="2" class="form-control" placeholder="Password" title="Enter Password">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" name="confirm-password" id="txt_ConfirmPassword" tabindex="2" class="form-control" placeholder="Confirm Password" title="Reenter Password">
+                                        </div>
+                                        <div id="divPasswordValidation" class="form-group text-danger hidden">
+                                            Those passwords doesn't match. Try again.
+                                        </div>
+                                        <div class="res-box text-left">
+                                            <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
+                                            <label for="remember">I've read and accept terms &amp; conditions</label>
+                                        </div>
+                                        <div class="res-box text-center mt-30">
+                                            <button id="btnSubmit" type="submit" class="btn btn-primary" style="width:50%;margin-left: -25px;"><i class="lnr lnr-enter"></i>Next</button>
+                                        </div>
+                                    </form>
+                                    <div class="social-profile-login  text-left mt-20">
+                                        <h5>or Sign Up with</h5>
+                                        <ul class="social-btn">
+                                            <li class="bg-fb"><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                            <li class="bg-tt"><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                            <li class="bg-ig"><a href="#"><i class="fab fa-instagram"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="signup-wrapper">
+                                        <img src="images/others/login-1.png" alt="...">
+                                        <p>Create an account to find the best Service for you.</p>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="divOTP" class="col-sm-6 hidden">
+        <table>
+            <tbody>
+                <tr>
+                    <td><label class="control-label pull-right">Enter OTP </label>  </td>
+                    <td class="col-sm-3">
+                        <input id="txt_OTP" type="text" class="form-control" name="altr_name" value="" >  
+                    </td>
+                    <td><input type="button" id="btnSubmit" class="btn btn-primary" name="regform" value="Sign Up"></td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<script>
+    var ClientTypeID
+
+
+    $(document).on('click', '#lstClientType li', function (e) {
+        ClientTypeID = $(this).attr('id');
+    });
+    $('input[type=radio][name=rdbIsCompany]').on('change', function () {
+        if (!$('#divIsCompanyValidation').hasClass('hidden')) {
+            $('#divIsCompanyValidation').addClass('hidden');
+        }
+    });
+    $("#txt_Email").blur(function () {
+        if ($('#txt_Email').val() != "" || $('#txt_Email').val() != null) {
+
+            $.ajax({
+                type: 'Get',
+                dataType: 'json',
+                url: '/TLoader/GetUserIDWhereEmail',
+                data:
+                {
+                    Email: $('#txt_Email').val(),
+                },
+                success: function (response) {
+                    $('#hdnEmailExist').val(response);
+                    //window.location.href = "/TLoader/New_LoaderIndex";
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Error " + errorThrown);
+                }
+            });
+        }
+    });
+    $("#txt_MobileNumber").blur(function () {
+        if ($('#txt_MobileNumber').val() != "" || $('#txt_MobileNumber').val() != null) {
+
+            $.ajax({
+                type: 'Get',
+                dataType: 'json',
+                url: '/TLoader/GetUserIDWhereMobileNo',
+                data:
+                {
+                    MobileNo: $('#txt_MobileNumber').val(),
+                },
+                success: function (response) {
+
+                    $('#hdnMobileExist').val(response);
+
+                    //window.location.href = "/TLoader/New_LoaderIndex";
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Error " + errorThrown);
+                }
+            });
+        }
+
+    });
+
+    $(document).on('click', '#btnSubmit', function (e) {
+        e.preventDefault();
+        
+
+        /*
+         * validation checking
+         * 
+         * */
+        if (ValidateInputs()==0) {
+            return;
+        }
+
+        var IsComapny = $('input[name="rdbIsCompany"]:checked').val();
+        var DBClientTypeID;
+        if (ClientTypeID == @enumRole.Transporter.GetHashCode() && IsComapny == @enumIsCompany.Company.GetHashCode()) {
+            DBClientTypeID = @enumDBClientTypeID.Transporter.GetHashCode();
+        }
+        else if (ClientTypeID == @enumRole.Loader.GetHashCode() && IsComapny == @enumIsCompany.Company.GetHashCode()) {
+            DBClientTypeID = @enumDBClientTypeID.Loader.GetHashCode();
+        }
+        else if (ClientTypeID == @enumRole.Broker.GetHashCode() && IsComapny == @enumIsCompany.Company.GetHashCode()) {
+            DBClientTypeID = @enumDBClientTypeID.Corporater.GetHashCode();
+        }
+        else if (ClientTypeID == @enumRole.Transporter.GetHashCode() && IsComapny == @enumIsCompany.Individual.GetHashCode()) {
+            DBClientTypeID = @enumDBClientTypeID.IndividualTransporter.GetHashCode();
+        }
+        else if (ClientTypeID == @enumRole.Loader.GetHashCode() && IsComapny == @enumIsCompany.Individual.GetHashCode()) {
+            DBClientTypeID = @enumDBClientTypeID.IndividualLoader.GetHashCode();
+        }
+        else if (ClientTypeID == @enumRole.Broker.GetHashCode() && IsComapny == @enumIsCompany.Individual.GetHashCode()) {
+            DBClientTypeID = @enumDBClientTypeID.Broker.GetHashCode();
+        }
+        
+
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/TLoader/Test',
+            data:
+            {
+                ClientTypeID: DBClientTypeID,
+                Email: $('#txt_Email').val(),
+                Password: $('#txt_Password').val(),
+                Mobile: $('#txt_MobileNumber').val()
+                
+            },
+            success: function (da) {
+                alert(da);
+
+                //window.location.href = "/TLoader/New_LoaderIndex";
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Error " + errorThrown);
+            }
+        });
+
+    });
+
+
+    function ValidateInputs() {
+        var IsValid = 1;
+        //if ($('#txt_Email').val() == "" || $('#txt_Email').val() == null) {
+        //    $('#txt_Email').addClass('borderValidation');
+        //    IsValid = 0;
+        //}
+
+        if ($('input[name="rdbIsCompany"]:checked').val() == null || $('input[name="rdbIsCompany"]:checked').val== "") {
+            $('#divIsCompanyValidation').removeClass('hidden');
+            IsValid = 0;
+
+        }
+        if ($('#txt_Password').val() == "" || $('#txt_Password').val() == null) {
+            $('#txt_Password').addClass('borderValidation');
+            IsValid = 0;
+        }
+        if ($('#txt_MobileNumber').val() == "" || $('#txt_MobileNumber').val() == null) {
+            $('#txt_MobileNumber').addClass('borderValidation');
+            IsValid = 0;
+        }
+        if ($('#txt_ConfirmPassword').val() == "" || $('#txt_ConfirmPassword').val() == null) {
+            $('#txt_ConfirmPassword').addClass('borderValidation');
+            IsValid = 0;
+        }
+        if (($('#txt_Password').val() != "" || $('#txt_Password').val() != null) || ($('#txt_ConfirmPassword').val() != "" || $('#txt_ConfirmPassword').val() != null)) {
+            if ($('#txt_Password').val() != $('#txt_ConfirmPassword').val()) {
+                $('#divPasswordValidation').removeClass('hidden');
+                IsValid = 0;
+            }
+
+        }
+        
+
+        //}
+        if ($('#hdnEmailExist').val() != 0) {
+            $('#divEmailValidation').removeClass('hidden');
+            IsValid = 0;
+
+        }
+        else {
+            if (!$('#divEmailValidation').hasClass('hidden')) {
+                $('#divEmailValidation').addClass('hidden');
+            }
+        }
+        if ($('#hdnMobileExist').val()!=0 ) {
+            $('#divMobileValidation').removeClass('hidden');
+            IsValid = 0;
+
+        }
+        else {
+            if (!$('#divMobileValidation').hasClass('hidden')) {
+                $('#divMobileValidation').addClass('hidden');
+            }
+        }
+        return IsValid;
+    }
+</script>

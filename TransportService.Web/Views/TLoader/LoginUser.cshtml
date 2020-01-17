@@ -1,46 +1,209 @@
 ﻿@model TransportService.Web.Models.Masters.LoginUser
+@{
+    ViewBag.Title = "NewLogin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<head>
+
+
+
+    @*Date 17-1-2020: New UI for Login*@
+
+    <link href="~/assets/css/loginStyle.css" rel="stylesheet" />
+    <link href="~/assets/css/materialize.css" rel="stylesheet" />
+    <link href="~/assets/css/normalize.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+
+
+    @*Date:17-1-2020 :  New LoginUI*@
+    <script src="~/assets/js/loginScript.js"></script>
+    <script src="~/assets/js/materialize.min.js"></script>
+    <script src="~/assets/js/routie.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <style>
+
+        .dropbtn {
+            background-color: #3498DB;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+
+            .dropbtn:hover, .dropbtn:focus {
+                background-color: #2980B9;
+            }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .reg-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            overflow: auto;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+            .reg-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+
+        .dropdown a:hover {
+            background-color: #ddd;
+        }
+
+        .show {
+            display: block;
+        }
+    </style>
+</head>
+
+
+
+
 @using (Html.BeginForm("LoginUser", "TLoader", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <div class="panel-title text-center"> <h3><b>Sign in</b> </h3> to continue</div>
-
+    <div class="row gmailStyle">
+        <div class="container-fluid">
+            <div class="valign-wrapper screenHeight">
+                <div class="col card s12 m8 l6 xl4 autoMargin setMaxWidth ">
+                    <div class="row hidden" id="progress-bar">
+                        <div class="progress mar-no">
+                            <div class="indeterminate"></div>
+                        </div>
                     </div>
-                    <div class="panel-body" style="margin:5%">
-                        <div class="col-md-10 form-group">
+                    <div class="clearfix mar-all pad-all"></div>
 
-                            @Html.TextBoxFor(a => a.UserName, new { @class = "form-control", placeholder = "Email Or Mobile No.", title = "UserName", @id = "txt_UserName" })
-                            @Html.ValidationMessageFor(m => m.UserName, "", new { @style = "color:Red;font-size:14px;" })
+                    <!-- <img src="images/Googlelogo.png" class="logoImage" /> -->
+                    <h4 style="margin-left: 130px;color: #f97316;margin-top: -15px;">Bhadaa.com</h4>
+                    <h5 class="center-align mar-top mar-bottom formTitle">Sign In</h5>
+                    <p class="center-align pad-no mar-no">
+                        to continue to
+                        <a href="bhadaa.html"
+                           style="text-decoration-line: underline;text-decoration-style:solid;">bhadaa.com</a>
+                    </p>
 
-                        </div>
-                        <div class="col-md-10 form-group ">
+                    <div class="clearfix mar-all pad-all"></div>
 
-                            @Html.PasswordFor(a => a.Password, new { @class = "form-control", placeholder = "Password", title = "Password", @id = "txt_Password" })
-                            @Html.ValidationMessageFor(m => m.Password, "", new { @style = "color:Red;font-size:14px;" })
-                        </div>
-                        <div class="col-md-10 form-group ">
-                            <div class="col-md-3">
-                                <input id="btnLogin" type="submit" class="btn btn-primary" value="Sign In" placeholder="">
+                    <div id="formContainer" class="goRight" style="margin-top: -30px;">
 
+                        <div class="loginForm">
+                            <div class="input-fields-div autoMargin">
+                                <div class="input-field">
+                                    @*<input id="txt_UserName" type="text" class="validate">*@
+                                  
+                                    @Html.TextBoxFor(a => a.UserName, new { @class = "validate",   @id = "txt_UserName" })
+                                    @Html.ValidationMessageFor(m => m.UserName, "", new { @style = "color:Red;font-size:14px;" })
+                                    <label for="txt_UserName">Email or Phone</label>
+                                </div>
+                                <div id="divPassword" class="input-field scale-transition scale-out">
+                                    @*<input id="txt_Password" type="password" class="validate ">*@
+                                    @Html.PasswordFor(a => a.Password, new { @class = "validate", @id = "txt_Password" })
+                                    @Html.ValidationMessageFor(m => m.Password, "", new { @style = "color:Red;font-size:14px;" })
+                                    <label for="txt_Password">Password</label>
+                                    <a href="javascript:void(0)" class="showPassword" onclick="showPassword()">
+                                        <i class="material-icons md-18">visibility</i>
+                                    </a>
+                                </div>
+                                <div id="enterOTPDiv" class="input-field scale-transition scale-out">
+                                    <input id="enter_OTP" type="text" class="validate">
+                                    <label for="enter_OTP">OTP</label>
+                                </div>
+                                <div id="ForgetPswdDiv" class="input-field scale-transition scale-out">
+                                    <input id="enter_Password" type="text" class="validate">
+                                    <label for="enter_Password">Forget</label>
+                                </div>
+                                <a id="btnShowPassword" class="passwordOrOTP" data-PassOTP="Password">I have password</a>
+                                <!-- <p>You can join us now by<br />
+                                <a href="#createAccountNow" class="createAccountNow">Creating a account</a></p> -->
+                                <p class="dropdown1">
+                                    You can join us now by<br />
+
+
+                                    <a onclick="drpFunction()" class="dropbtn1" style="cursor: pointer;">Create Account</a>
+                                    <div id="regDropdown" class="reg-content" style="margin-top: -8px;">
+                                        @*<a href="#createAccountNow" class="createAccountNow">Individual</a>
+                                            <a href="#createAccountNow" class="createAccountNow">Buisness</a>*@
+
+                                        @Html.ActionLink("Individual", "TRegisterUser", "TLoader", new { @IsCompany = 0 }, new { @class = "createAccountNow" })
+                                        @Html.ActionLink("Buisness", "TRegisterUser", "TLoader", new { @IsCompany = 1 }, new { @class = "createAccountNow" })
+                                    </div>
+
+
+
+                                </p>
                             </div>
-                            <div class="col-md-6">
-                                @Html.ActionLink("Create New Account", "TRegisterUser", null, new { @class = "linkDecoration", @id = "btnChangePassword" })
+                            <div class="input-fields-div autoMargin right-align">
+                                <!-- <a href="#bhadaa.html" class="loginNextBtn waves-effect waves-light btn">Get OTP</a> -->
+                                <button type="submit" id="btnLogin"
+                                        class="loginBtn waves-effect waves-light btn hide">
+                                    <a href="#loginNow" class="loginNow" style="color: #fff;">LOG IN</a>
+                                </button>
                             </div>
 
-
                         </div>
-                        <span style="color:Red;font-size:14px;">@ViewBag.error</span>
 
+
+                        <div class="clearfix"></div>
                     </div>
+
+
+                    <div class="clearfix mar-all pad-all"></div>
                 </div>
-
             </div>
-
         </div>
-
     </div>
 }
+
+    <script>
+        /* When the user clicks on the button,
+        toggle between hiding and showing the dropdown content */
+        function drpFunction() {
+            document.getElementById("regDropdown").classList.toggle("show");
+        }
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function (event) {
+            if (!event.target.matches('.dropbtn1')) {
+                var dropdowns1 = document.getElementsByClassName("reg-content");
+                var i;
+                for (i = 0; i < dropdowns1.length; i++) {
+                    var openDropdown = dropdowns1[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
+    <script>
+        $(document).on('click', '#btnShowPassword', function (e) {
+
+            $('#divPassword').removeClass('scale-out');
+
+            $('#btnLogin').removeClass('hide');
+            $('#btnShowPassword').addClass('hidden');
+
+
+        })
+
+    </script>
+
+
+
+

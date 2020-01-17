@@ -12,6 +12,7 @@ using System.Data;
 using TransportService.Web.Models.Masters;
 using TransportService.Web.Models;
 using TransportService.Web.Models.Transaction;
+using System.Web.Helpers;
 
 namespace TransportService.Web.Controllers
 {
@@ -98,6 +99,7 @@ namespace TransportService.Web.Controllers
             dtTripDetail.Columns.Add("Weight", typeof(decimal));
             dtTripDetail.Columns.Add("Qty", typeof(int));
             dtTripDetail.Columns.Add("ConversionFactor", typeof(decimal));
+            dtTripDetail.Columns.Add("MaterialValue", typeof(decimal));
 
 
             if (_tripDetails != null)
@@ -116,6 +118,7 @@ namespace TransportService.Web.Controllers
                         dr_LoadDetail["Length"] = item.Length;
                         dr_LoadDetail["Weight"] = item.Weight;
                         dr_LoadDetail["Qty"] = item.Qty;
+                        dr_LoadDetail["MaterialValue"] = item.MaterialValue;
                         dtTripDetail.Rows.Add(dr_LoadDetail);
                     }
                 }
@@ -158,13 +161,14 @@ namespace TransportService.Web.Controllers
             ViewData["MaterialList"] = _tripBusinessLayer.GetDropDownData("MaterialList", 0);
             ViewData["UOMList"] = _tripBusinessLayer.GetDropDownData("UOMList", 0);
 
-
             TranspoterEdit transpoterEdit = _tripBusinessLayer.GetTripByID(TripID);
             transpoterEdit.TripDetails = _tripBusinessLayer.GetTripDetailsByID(TripID);
             transpoterEdit.CityArray = _tripBusinessLayer.GetRouteWhereTripID(TripID);
 
             return View(transpoterEdit);
         }
+
+
 
         [HttpPost]
         public ActionResult EditTrip(Transpoter transpoter, List<CityArray> CityRootId, List<TripDetail> _tripDetails)
@@ -206,6 +210,7 @@ namespace TransportService.Web.Controllers
             dtTripDetail.Columns.Add("Weight", typeof(decimal));
             dtTripDetail.Columns.Add("Qty", typeof(int));
             dtTripDetail.Columns.Add("ConversionFactor", typeof(decimal));
+            dtTripDetail.Columns.Add("MaterialValue", typeof(decimal));
 
 
             if (_tripDetails != null)
@@ -224,6 +229,7 @@ namespace TransportService.Web.Controllers
                         dr_LoadDetail["Length"] = item.Length;
                         dr_LoadDetail["Weight"] = item.Weight;
                         dr_LoadDetail["Qty"] = item.Qty;
+                        dr_LoadDetail["MaterialValue"] = item.MaterialValue;
                         dtTripDetail.Rows.Add(dr_LoadDetail);
                     }
                 }
@@ -661,40 +667,69 @@ namespace TransportService.Web.Controllers
 
         #endregion
 
-        public ActionResult Registration()
-        {
-            return PartialView("_Registration");
-        }
+        #region "LoginRegister"
 
-        public ActionResult RegistrationNew()
+       
+
+        
+       
+
+
+        public ActionResult TRegisterUser(int IsCompany)
         {
+            ViewBag.IsCompany = IsCompany;
             return View();
-        }
-
-
-        public ActionResult TRegisterUser()
-        {
-            return View();
-
         }
 
         [HttpPost]
         public ActionResult TRegisterUser(User _user)
         {
-            /*....ClientTypeId Logic here*/
-            JobDbContext _jobDbContext = new JobDbContext();
 
-            var result = _jobDbContext.Database.ExecuteSqlCommand(@"exec USP_RegisterClient
-                                                                    @ClientTypeID ,
-                                                                    @Email ,
-                                                                    @Password ,
-                                                                    @Mobile ",
+            #region "Generate Activation Code"
+            _user.ActivationCode = Guid.NewGuid();
+            #endregion
+
+            #region "Generate OTP"
+            _user.OTP = new JobDbContext().Database.SqlQuery<int>("USP_GenerateOTP").SingleOrDefault<int>();
+            #endregion
+
+            #region  "Password Hashing "
+            _user.PasswordHash = Crypto.Hash(_user.Password);
+            //_clientRegister.ConfirmPassword = Crypto.Hash(_clientRegister.ConfirmPassword); //
+            #endregion
+
+
+            using (JobDbContext _jobDbContext = new JobDbContext())
+            {
+
+
+
+                var result = _jobDbContext.Database.ExecuteSqlCommand(@"exec USP_RegisterClient
+                                                                        @ClientTypeID  ,
+                                                                        @Email ,
+                                                                        @Password ,
+                                                                        @PasswordHash ,
+                                                                        @Mobile  ,
+                                                                        @ActivationCode ,
+                                                                        @OTP ",
                                                                     new SqlParameter("@ClientTypeID", _user.ClientTypeID),
-                                                                    new SqlParameter("@Email", _user.Email == null ?(object) DBNull.Value: _user.Email),
+                                                                    new SqlParameter("@Email", _user.Email == null ? (object)DBNull.Value : _user.Email),
                                                                     new SqlParameter("@Password", _user.Password),
-                                                                    new SqlParameter("@Mobile", _user.Mobile));
-          return Json("Registration Sucessfull");
-          
+                                                                    new SqlParameter("@Mobile", _user.Mobile),
+                                                                    new SqlParameter("@PasswordHash", _user.PasswordHash),
+                                                                    new SqlParameter("@ActivationCode", _user.ActivationCode),
+                                                                    new SqlParameter("@OTP", _user.OTP));
+                                                                    
+                if (result > 0)
+                {
+                    return Json("Registration Sucessfull");
+                }
+                else
+                {
+                    return Json("Registration Failed");
+                }
+            }
+                      
          }
 
         public int GetUserIDWhereMobileNo(string MobileNo)
@@ -743,12 +778,13 @@ namespace TransportService.Web.Controllers
 
                     if (result.RoleID == enumRole.Transporter.GetHashCode())
                     {
-                        return RedirectToAction("New_LoaderIndex");
-                        
+                        return RedirectToAction("Index");
                     }
                     else
                     {
-                        return RedirectToAction("Index");
+                        return RedirectToAction("New_LoaderIndex");
+
+                        
                     }
 
                     
@@ -819,8 +855,21 @@ namespace TransportService.Web.Controllers
         }
 
 
-       
-        
-        
+        public ActionResult NewLogin()
+        {
+            return View();
+
+        }
+        public ActionResult NewRegister()
+        {
+            return View();
+
+        }
+
+
+        #endregion
+
+
+
     }
 }

@@ -1,188 +1,286 @@
 ﻿@using TransportService.Web.Models
-<div class="user-login-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <ul class="ui-list nav nav-tabs mb-30" id="lstClientType" role="tablist">
-                    <li class="nav-item" id="@enumRole.Transporter.GetHashCode()">
-                        <a class="nav-link active selected" data-toggle="tab" href="#register" role="tab" aria-selected="true">@enumRole.Transporter.ToString()</a>
-                    </li>
-                    <li class="nav-item" id="@enumRole.Loader.GetHashCode()">
-                        <a class="nav-link selected" data-toggle="tab" href="#register" role="tab" aria-selected="false">@enumRole.Loader.ToString()</a>
-                    </li>
-                    <li class="nav-item" id="@enumRole.Broker.GetHashCode()">
-                        <a class="nav-link selected" data-toggle="tab" href="#register" role="tab" aria-selected="false">@enumRole.Broker.ToString()</a>
-                    </li>
-                </ul>
-                <div class="login-wrapper">
-                    <div class="ui-dash tab-content">
-                        <div class="tab-pane fade show active" id="register" role="tabpanel">
-                            <div>
-                                <div class="row" style="margin-bottom: 20px;">
-                                    <div class="col-md-4">
+@{
+    ViewBag.Title = "NewLoginPallavi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
-                                        <label for="chkYes">
-                                            <input type="radio" value="@enumIsCompany.Company.GetHashCode()" name="rdbIsCompany" />
-                                            @enumIsCompany.Company.ToString()
-                                        </label>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="chkNo">
-                                            <input type="radio" value="@enumIsCompany.Individual.GetHashCode()" name="rdbIsCompany" />
-                                            @enumIsCompany.Individual.ToString()
-                                        </label>
-                                    </div>
+<html>
+
+<head>
+
+    @*Date 17-1-2020: New UI for Login*@
+
+    <link href="~/assets/css/loginStyle.css" rel="stylesheet" />
+    <link href="~/assets/css/materialize.css" rel="stylesheet" />
+    <link href="~/assets/css/normalize.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
 
 
-                                </div>
-                                <div id="divIsCompanyValidation" class="form-group text-danger hidden">
-                                    Please select Company / Individual
-                                </div>
-                                <hr />
-                            </div>
-                            
-                            <!-- <div id="companyEmail" style="display: none;background-color: pink;display: block;width:48%">
+    @*Date:17-1-2020 :New LoginUI*@
+    <script src="~/assets/js/loginScript.js"></script>
+    <script src="~/assets/js/materialize.min.js"></script>
+    <script src="~/assets/js/routie.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
+    <style>
 
-        <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Company Email Address" value="" style="padding: 22px 0;
-        border-bottom: 1px solid #ddd;
-        border-top: none;
-        border-left: none;
-        border-right: none;">
-    </div> -->
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <form id="register-form" action="#" method="post">
-                                        <input id="hdnEmailExist" type="hidden" value="0">
-                                        <div class="form-group">
-                                            <input type="email" name="user_name" id="txt_Email" tabindex="1" class="form-control" placeholder="Username" value="" title="Enter Email">
-                                        </div>
-                                        <div id="divEmailValidation" class="form-group text-danger hidden">
-                                            That Email already exist. Try again.
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="number" name="number" id="txt_MobileNumber" tabindex="1" class="form-control" placeholder="Mobile Number" value="" title="Enter Mobile No" maxlength=10>
-                                        </div>
-                                        <input id="hdnMobileExist" type="hidden" value="0">
-                                        <div id="divMobileValidation" class="form-group text-danger hidden">
-                                            That Mobile No already exist. Try again.
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" name="user_password" id="txt_Password" tabindex="2" class="form-control" placeholder="Password" title="Enter Password">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" name="confirm-password" id="txt_ConfirmPassword" tabindex="2" class="form-control" placeholder="Confirm Password" title="Reenter Password">
-                                        </div>
-                                        <div id="divPasswordValidation" class="form-group text-danger hidden">
-                                            Those passwords doesn't match. Try again.
-                                        </div>
-                                        <div class="res-box text-left">
-                                            <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
-                                            <label for="remember">I've read and accept terms &amp; conditions</label>
-                                        </div>
-                                        <div class="res-box text-center mt-30">
-                                            <button id="btnSubmit" type="submit" class="btn btn-primary" style="width:50%;margin-left: -25px;"><i class="lnr lnr-enter"></i>Next</button>
-                                        </div>
-                                    </form>
-                                    <div class="social-profile-login  text-left mt-20">
-                                        <h5>or Sign Up with</h5>
-                                        <ul class="social-btn">
-                                            <li class="bg-fb"><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                            <li class="bg-tt"><a href="#"><i class="fab fa-twitter"></i></a></li>
-                                            <li class="bg-ig"><a href="#"><i class="fab fa-instagram"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="signup-wrapper">
-                                        <img src="images/others/login-1.png" alt="...">
-                                        <p>Create an account to find the best Service for you.</p>
+        .dropbtn {
+            background-color: #3498DB;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
 
-                                    </div>
-                                </div>
-                            </div>
+            .dropbtn:hover, .dropbtn:focus {
+                background-color: #2980B9;
+            }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .reg-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            overflow: auto;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+            .reg-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+
+        .dropdown a:hover {
+            background-color: #ddd;
+        }
+
+        .show {
+            display: block;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <div class="row gmailStyle">
+        <div class="container-fluid">
+            <div class="valign-wrapper screenHeight">
+                <div class="col card s12 m8 l6 xl4 autoMargin setMaxWidth ">
+                    <div class="row hidden" id="progress-bar">
+                        <div class="progress mar-no">
+                            <div class="indeterminate"></div>
                         </div>
                     </div>
+                    <div class="clearfix mar-all pad-all"></div>
+
+                    <!-- <img src="images/Googlelogo.png" class="logoImage" /> -->
+                    <h4 style="margin-left: 130px;color: #f97316;margin-top: -15px;">Bhadaa.com</h4>
+                    <h5 class="center-align mar-top mar-bottom formTitle">Sign In</h5>
+                    <p class="center-align pad-no mar-no">
+                        to continue to
+                        <a href="bhadaa.html"
+                           style="text-decoration-line: underline;text-decoration-style:solid;">bhadaa.com</a>
+                    </p>
+
+                    <div class="clearfix mar-all pad-all"></div>
+
+                    <div id="formContainer" class="goRight" style="margin-top: -30px;">
+
+                        <form class="signUpForm">
+                            <div class="input-fields-div autoMargin">
+                                <!-- <div class="row input-inline-field">
+        <div class="input-field col s6">
+            <input id="first_name" type="text" class="validate">
+            <label for="first_name">First Name</label>
+        </div>
+        <div class="input-field col s6">
+            <input id="last_name" type="text" class="validate">
+            <label for="last_name">Last Name</label>
+        </div>
+    </div> -->
+
+                                <div class="input-field">
+                                    <input id="hdnEmailExist" type="hidden" value="0">
+                                    <input id="txt_Email" type="text" class="validate">
+                                    <label for="txt_Email">Email ID</label>
+                                    <div id="divEmailValidation" class="form-group text-danger hidden">
+                                        That Email already exist. Try again.
+                                    </div>
+                                    <span class="helper-text" data-error="wrong" data-success="right">
+                                        You can pick your
+                                        <strong>Email</strong> or <strong>Mobile</strong> numer as Username
+                                    </span>
+                                </div>
+                                <div class="input-field">
+                                    <input id="hdnMobileExist" type="hidden" value="0">
+                                    <input id="txt_MobileNumber" type="text" class="validate">
+                                    <label for="txt_MobileNumber">Mobile No</label>
+                                    <div id="divMobileValidation" class="form-group text-danger hidden">
+                                        That Mobile No already exist. Try again.
+                                    </div>
+
+
+
+
+
+                                </div>
+                                <div class="row input-inline-field">
+                                    <div id="reg_passwordDiv" class="input-field col s6">
+                                        <input id="txt_Password" type="password" class="validate">
+                                        <label for="txt_Password">Password</label>
+                                        <a href="javascript:void(0)" class="showPassword" onclick="showPassword()">
+                                            <i class="material-icons md-18">visibility</i>
+                                        </a>
+                                    </div>
+                                    <div id="rePasswordDiv" class="input-field col s6">
+                                        <input id="txt_ConfirmPassword" type="password" class="validate">
+                                        <label for="txt_ConfirmPassword">Confirm</label>
+                                    </div>
+                                    <div class="input-field col s12 mar-no">
+                                        <span class="helper-text" data-error="wrong" data-success="right">
+                                            Use 8 or more
+                                            characters with a mix of letters, numbers & symbols
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6 ">
+                                    
+                                    <div class="input-group">
+                                        
+                                        <select id="ddlType" class="form-control" title="Select User Type">
+                                            <option value="0"> Select User Type </option>
+                                            <option value="@enumRole.Transporter.GetHashCode()"> @enumRole.Transporter.ToString() </option>
+                                            <option value="@enumRole.Loader.GetHashCode()">@enumRole.Loader.ToString()</option>
+                                            <option value="@enumRole.Broker.GetHashCode()">@enumRole.Broker.ToString() </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                @*<div   class="row">
+                                    <div class=" col-sm-4" >
+                                        <input type="radio" class="radio" name="chk_type" value="Shipper" checked=""> Shipper
+                                       
+                                    </div>
+                                    <div class="input-field col-sm-4" >
+                                        <input type="radio" class="radio" name="chk_type" value="Transporter"> Transporter
+                                    </div>
+                                    <div class="input-field col-sm-4" >
+                                        <input type="radio" class="radio" name="chk_type" value="Broker"> Broker
+                                    </div>
+
+                                </div>*@
+
+                                <div class="row">
+                                    <p>I have an account <a href="/TLoader/LoginUser" class="backToLogin">Login Now</a></p>
+                                </div>
+                                
+
+                                <div class="input-fields-div autoMargin right-align">
+                                    <button type="submit" id="btnSubmit"
+                                            class="registerBtn waves-effect waves-light btn">
+                                        Register
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="clearfix"></div>
+                    </div>
+
+
+                    <div class="clearfix mar-all pad-all"></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="divOTP" class="col-sm-6 hidden">
-        <table>
-            <tbody>
-                <tr>
-                    <td><label class="control-label pull-right">Enter OTP </label>  </td>
-                    <td class="col-sm-3">
-                        <input id="txt_OTP" type="text" class="form-control" name="altr_name" value="" >  
-                    </td>
-                    <td><input type="button" id="btnSubmit" class="btn btn-primary" name="regform" value="Sign Up"></td>
-                </tr>
-            </tbody>
-        </table>
 
-    </div>
-</div>
-<script>
-    var ClientTypeID
-
-
-    $(document).on('click', '#lstClientType li', function (e) {
-        ClientTypeID = $(this).attr('id');
-    });
-    $('input[type=radio][name=rdbIsCompany]').on('change', function () {
-        if (!$('#divIsCompanyValidation').hasClass('hidden')) {
-            $('#divIsCompanyValidation').addClass('hidden');
+    <script>
+        /* When the user clicks on the button,
+        toggle between hiding and showing the dropdown content */
+        function drpFunction() {
+            document.getElementById("regDropdown").classList.toggle("show");
         }
-    });
-    $("#txt_Email").blur(function () {
-        if ($('#txt_Email').val() != "" || $('#txt_Email').val() != null) {
 
-            $.ajax({
-                type: 'Get',
-                dataType: 'json',
-                url: '/TLoader/GetUserIDWhereEmail',
-                data:
-                {
-                    Email: $('#txt_Email').val(),
-                },
-                success: function (response) {
-                    $('#hdnEmailExist').val(response);
-                    //window.location.href = "/TLoader/New_LoaderIndex";
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    alert("Error " + errorThrown);
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function (event) {
+            if (!event.target.matches('.dropbtn1')) {
+                var dropdowns1 = document.getElementsByClassName("reg-content");
+                var i;
+                for (i = 0; i < dropdowns1.length; i++) {
+                    var openDropdown = dropdowns1[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
                 }
-            });
+            }
         }
-    });
-    $("#txt_MobileNumber").blur(function () {
-        if ($('#txt_MobileNumber').val() != "" || $('#txt_MobileNumber').val() != null) {
+    </script>
+    <script>
+        $("#txt_Email").blur(function () {
+            if ($('#txt_Email').val() != "" || $('#txt_Email').val() != null) {
 
-            $.ajax({
-                type: 'Get',
-                dataType: 'json',
-                url: '/TLoader/GetUserIDWhereMobileNo',
-                data:
-                {
-                    MobileNo: $('#txt_MobileNumber').val(),
-                },
-                success: function (response) {
+                $.ajax({
+                    type: 'Get',
+                    dataType: 'json',
+                    url: '/TLoader/GetUserIDWhereEmail',
+                    data:
+                    {
+                        Email: $('#txt_Email').val(),
+                    },
+                    success: function (response) {
+                        $('#hdnEmailExist').val(response);
+                        //window.location.href = "/TLoader/New_LoaderIndex";
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert("Error " + errorThrown);
+                    }
+                });
+            }
+        });
 
-                    $('#hdnMobileExist').val(response);
+        $("#txt_MobileNumber").blur(function () {
+            if ($('#txt_MobileNumber').val() != "" || $('#txt_MobileNumber').val() != null) {
 
-                    //window.location.href = "/TLoader/New_LoaderIndex";
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    alert("Error " + errorThrown);
-                }
-            });
-        }
+                $.ajax({
+                    type: 'Get',
+                    dataType: 'json',
+                    url: '/TLoader/GetUserIDWhereMobileNo',
+                    data:
+                    {
+                        MobileNo: $('#txt_MobileNumber').val(),
+                    },
+                    success: function (response) {
 
-    });
-    $(document).on('click', '#btnSubmit', function (e) {
+                        $('#hdnMobileExist').val(response);
+
+                        //window.location.href = "/TLoader/New_LoaderIndex";
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert("Error " + errorThrown);
+                    }
+                });
+            }
+
+        });
+
+
+
+
+  $(document).on('click', '#btnSubmit', function (e) {
         e.preventDefault();
-        
+      
 
         /*
          * validation checking
@@ -192,7 +290,8 @@
             return;
         }
 
-        var IsComapny = $('input[name="rdbIsCompany"]:checked').val();
+      var IsComapny = @ViewBag.IsCompany;
+      var ClientTypeID = $("#ddlType option:selected").val();
         var DBClientTypeID;
         if (ClientTypeID == @enumRole.Transporter.GetHashCode() && IsComapny == @enumIsCompany.Company.GetHashCode()) {
             DBClientTypeID = @enumDBClientTypeID.Transporter.GetHashCode();
@@ -217,7 +316,7 @@
         $.ajax({
             type: 'POST',
             dataType: 'json',
-            url: '/TLoader/Test',
+            url: '/TLoader/TRegisterUser',
             data:
             {
                 ClientTypeID: DBClientTypeID,
@@ -232,67 +331,81 @@
                 //window.location.href = "/TLoader/New_LoaderIndex";
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("Error " + errorThrown);
+                    alert("Error " + errorThrown);
             }
         });
 
     });
 
 
-    function ValidateInputs() {
-        var IsValid = 1;
-        //if ($('#txt_Email').val() == "" || $('#txt_Email').val() == null) {
-        //    $('#txt_Email').addClass('borderValidation');
-        //    IsValid = 0;
-        //}
 
-        if ($('input[name="rdbIsCompany"]:checked').val() == null || $('input[name="rdbIsCompany"]:checked').val== "") {
-            $('#divIsCompanyValidation').removeClass('hidden');
-            IsValid = 0;
-
-        }
-        if ($('#txt_Password').val() == "" || $('#txt_Password').val() == null) {
-            $('#txt_Password').addClass('borderValidation');
-            IsValid = 0;
-        }
-        if ($('#txt_MobileNumber').val() == "" || $('#txt_MobileNumber').val() == null) {
-            $('#txt_MobileNumber').addClass('borderValidation');
-            IsValid = 0;
-        }
-        if ($('#txt_ConfirmPassword').val() == "" || $('#txt_ConfirmPassword').val() == null) {
-            $('#txt_ConfirmPassword').addClass('borderValidation');
-            IsValid = 0;
-        }
-        if (($('#txt_Password').val() != "" || $('#txt_Password').val() != null) || ($('#txt_ConfirmPassword').val() != "" || $('#txt_ConfirmPassword').val() != null)) {
-            if ($('#txt_Password').val() != $('#txt_ConfirmPassword').val()) {
-                $('#divPasswordValidation').removeClass('hidden');
+        function ValidateInputs() {
+            var IsValid = 1;
+            if ($('#txt_Email').val() == "" || $('#txt_Email').val() == null) {
+                alert("hi");
+                $('#txt_Email').addClass('borderValidation');
                 IsValid = 0;
             }
 
-        }
-        
+            //if ($('input[name="rdbIsCompany"]:checked').val() == null || $('input[name="rdbIsCompany"]:checked').val == "") {
+            //    $('#divIsCompanyValidation').removeClass('hidden');
+            //    IsValid = 0;
 
-        //}
-        if ($('#hdnEmailExist').val() != 0) {
-            $('#divEmailValidation').removeClass('hidden');
-            IsValid = 0;
-
-        }
-        else {
-            if (!$('#divEmailValidation').hasClass('hidden')) {
-                $('#divEmailValidation').addClass('hidden');
+            //}
+            if ($('#txt_Password').val() == "" || $('#txt_Password').val() == null) {
+                $('#txt_Password').addClass('borderValidation');
+                IsValid = 0;
             }
-        }
-        if ($('#hdnMobileExist').val()!=0 ) {
-            $('#divMobileValidation').removeClass('hidden');
-            IsValid = 0;
-
-        }
-        else {
-            if (!$('#divMobileValidation').hasClass('hidden')) {
-                $('#divMobileValidation').addClass('hidden');
+            if ($('#txt_MobileNumber').val() == "" || $('#txt_MobileNumber').val() == null) {
+                $('#txt_MobileNumber').addClass('borderValidation');
+                IsValid = 0;
             }
+            if ($('#txt_ConfirmPassword').val() == "" || $('#txt_ConfirmPassword').val() == null) {
+                $('#txt_ConfirmPassword').addClass('borderValidation');
+                IsValid = 0;
+            }
+            if (($('#txt_Password').val() != "" || $('#txt_Password').val() != null) || ($('#txt_ConfirmPassword').val() != "" || $('#txt_ConfirmPassword').val() != null)) {
+                if ($('#txt_Password').val() != $('#txt_ConfirmPassword').val()) {
+                    $('#divPasswordValidation').removeClass('hidden');
+                    IsValid = 0;
+                }
+
+            }
+
+
+            //}
+            if ($('#hdnEmailExist').val() != 0) {
+                $('#divEmailValidation').removeClass('hidden');
+                IsValid = 0;
+
+            }
+            else {
+                if (!$('#divEmailValidation').hasClass('hidden')) {
+                    $('#divEmailValidation').addClass('hidden');
+                }
+            }
+            if ($('#hdnMobileExist').val() != 0) {
+                $('#divMobileValidation').removeClass('hidden');
+                IsValid = 0;
+
+            }
+            else {
+                if (!$('#divMobileValidation').hasClass('hidden')) {
+                    $('#divMobileValidation').addClass('hidden');
+                }
+            }
+            return IsValid;
         }
-        return IsValid;
-    }
-</script>
+
+    </script>
+
+
+
+
+</body>
+
+</html>
+
+
+
+

@@ -18,6 +18,7 @@ namespace TransportService.Web.Models.Activity
         public decimal Width { get; set; }
         public decimal Height { get; set; }
         public decimal Weight { get; set; }
+        public decimal? MaterialValue { get; set; }
         public int Qty { get; set; }
         public decimal ConversionFactor { get; set; }
 

@@ -1,0 +1,220 @@
+﻿<!DOCTYPE>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>New Gmail Style Login Form with Material CSS and jQuery - Demo</title>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet">
+	<!--<link rel="stylesheet" type="text/css" href="./bhadaa/css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="./bhadaa/css/materialize.min.css">
+	<link rel="stylesheet" type="text/css" href="./bhadaa/css/loginStyle.css">-->
+	<!-- <link rel="stylesheet" id="logistic-pro-style-css" href="./bhadaa/css/style.css" type="text/css" media="all"> -->
+
+	<style>
+		.dropbtn {
+		  background-color: #3498DB;
+		  color: white;
+		  padding: 16px;
+		  font-size: 16px;
+		  border: none;
+		  cursor: pointer;
+		}
+		
+		.dropbtn:hover, .dropbtn:focus {
+		  background-color: #2980B9;
+		}
+		
+		.dropdown {
+		  position: relative;
+		  display: inline-block;
+		}
+		
+		.reg-content {
+		  display: none;
+		  position: absolute;
+		  background-color: #f1f1f1;
+		  min-width: 160px;
+		  overflow: auto;
+		  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+		  z-index: 1;
+		}
+		
+		.reg-content a {
+		  color: black;
+		  padding: 12px 16px;
+		  text-decoration: none;
+		  display: block;
+		}
+		
+		.dropdown a:hover {background-color: #ddd;}
+		
+		.show {display: block;}
+		</style>
+</head>
+
+<body>
+	<div class="row gmailStyle" >
+		<div class="container-fluid">
+			<div class="valign-wrapper screenHeight">
+				<div class="col card s12 m8 l6 xl4 autoMargin setMaxWidth overflowHidden">
+					<div class="row hidden" id="progress-bar">
+						<div class="progress mar-no">
+							<div class="indeterminate"></div>
+						</div>
+					</div>
+					<div class="clearfix mar-all pad-all"></div>
+
+					<!-- <img src="images/Googlelogo.png" class="logoImage" /> -->
+					<h4 style="margin-left: 130px;color: #f97316;margin-top: -15px;">Bhadaa.com</h4>
+					<h5 class="center-align mar-top mar-bottom formTitle">Sign In</h5>
+					<p class="center-align pad-no mar-no">to continue to
+						<a href="bhadaa.html"
+							style="text-decoration-line: underline;text-decoration-style:solid;">bhadaa.com</a></p>
+
+					<div class="clearfix mar-all pad-all"></div>
+
+					<div id="formContainer" class="goRight" style="margin-top: -30px;">
+
+						<form class="loginForm">
+							<div class="input-fields-div autoMargin">
+								<div class="input-field">
+									<input id="user_name" type="text" class="validate">
+									<label for="user_name">Email or Phone</label>
+								</div>
+								<div id="passwordDiv" class="input-field scale-transition scale-out">
+									<input id="pass_word" type="password" class="validate">
+									<label for="pass_word">Password</label>
+									<a href="javascript:void(0)" class="showPassword" onclick="showPassword()">
+										<i class="material-icons md-18">visibility</i></a>
+								</div>
+								<div id="enterOTPDiv" class="input-field scale-transition scale-out">
+									<input id="enter_OTP" type="text" class="validate">
+									<label for="enter_OTP">OTP</label>
+								</div>
+								<div id="ForgetPswdDiv" class="input-field scale-transition scale-out">
+									<input id="enter_Password" type="text" class="validate">
+									<label for="enter_Password">Forget</label>
+								</div>
+								<a href="#hasPassword" class="passwordOrOTP" data-PassOTP="Password"
+									onClick="passwordOrOTP(this)">I have password</a>
+								<!-- <p>You can join us now by<br />
+									<a href="#createAccountNow" class="createAccountNow">Creating a account</a></p> -->
+									<p class="dropdown1">You can join us now by<br />
+										<a onclick="drpFunction()" class="dropbtn1" style="cursor: pointer;">Create Account</a>
+										<div id="regDropdown" class="reg-content" style="margin-top: -8px;">
+										  <a href="#createAccountNow" class="createAccountNow" onclick="createAccountNow()">Individual</a>
+										  <a href="#createAccountNow" class="createAccountNow" onclick="createAccountNow()">Buisness</a>
+										  
+										</div>
+									  </p>
+							</div>
+							<div class="input-fields-div autoMargin right-align">
+								<!-- <a href="#bhadaa.html" class="loginNextBtn waves-effect waves-light btn">Get OTP</a> -->
+								<button type="submit" onclick="login()"
+									class="loginBtn waves-effect waves-light btn hide">
+									<a href="#loginNow" class="loginNow" style="color: #fff;">LOG IN</a>
+								</button>
+							</div>
+
+						</form>
+
+						<form class="signUpForm">
+							<div class="input-fields-div autoMargin">
+								<!-- <div class="row input-inline-field">
+									<div class="input-field col s6">
+										<input id="first_name" type="text" class="validate">
+										<label for="first_name">First Name</label>
+									</div>
+									<div class="input-field col s6">
+										<input id="last_name" type="text" class="validate">
+										<label for="last_name">Last Name</label>
+									</div>
+								</div> -->
+								<div class="input-field">
+									<input id="reg_user_name" type="text" class="validate">
+									<label for="reg_user_name">Email Id</label>
+									<span class="helper-text" data-error="wrong" data-success="right">You can pick your
+										<strong>Email</strong> or <strong>Mobile</strong> numer as Username</span>
+								</div>
+								<div class="input-field">
+									<input id="reg_user_name" type="text" class="validate">
+									<label for="reg_user_name">Mobile No</label>
+									<!-- <span class="helper-text" data-error="wrong" data-success="right">You can pick your
+										<strong>Email</strong> or <strong>Mobile</strong> numer as Username</span> -->
+								</div>
+								<!-- <div class="row input-inline-field">
+									<div class="input-field col s6">
+										<input id="Pancard" type="text" class="validate">
+										<label for="Pancard">Pancard No</label>
+									</div>
+									<div class="input-field col s6">
+										<input id="Aadharcard" type="text" class="validate">
+										<label for="Aadharcard">Aadharcard No</label>
+									</div>
+								</div> -->
+								<div class="row input-inline-field">
+									<div id="reg_passwordDiv" class="input-field col s6">
+										<input id="reg_pass_word" type="password" class="validate">
+										<label for="reg_pass_word">Password</label>
+										<a href="javascript:void(0)" class="showPassword" onclick="showPassword()"><i
+												class="material-icons md-18">visibility</i></a>
+									</div>
+									<div id="rePasswordDiv" class="input-field col s6">
+										<input id="re_pass_word" type="password" class="validate">
+										<label for="re_pass_word">Confirm</label>
+									</div>
+									<div class="input-field col s12 mar-no">
+										<span class="helper-text" data-error="wrong" data-success="right">Use 8 or more
+											characters with a mix of letters, numbers & symbols</span>
+									</div>
+								</div>
+								<p>I have an account <a href="#" class="backToLogin">Login Now</a></p>
+							</div>
+							<div class="input-fields-div autoMargin right-align">
+								<button type="submit" onclick="register()"
+									class="registerBtn waves-effect waves-light btn">Register</button>
+							</div>
+						</form>
+						<div class="clearfix"></div>
+					</div>
+
+
+					<div class="clearfix mar-all pad-all"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
+	<script>
+		/* When the user clicks on the button, 
+		toggle between hiding and showing the dropdown content */
+		function drpFunction() {
+		  document.getElementById("regDropdown").classList.toggle("show");
+		}
+		
+		// Close the dropdown if the user clicks outside of it
+		window.onclick = function(event) {
+		  if (!event.target.matches('.dropbtn1')) {
+			var dropdowns1 = document.getElementsByClassName("reg-content");
+			var i;
+			for (i = 0; i < dropdowns1.length; i++) {
+			  var openDropdown = dropdowns1[i];
+			  if (openDropdown.classList.contains('show')) {
+				openDropdown.classList.remove('show');
+			  }
+			}
+		  }
+		}
+		</script>
+
+	<script type="text/javascript" src="./bhadaa/js/materialize.min.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="./bhadaa/js/routie.min.js"></script>
+	<script type="text/javascript" src="./bhadaa/js/loginScript.js"></script>
+</body>
+
+</html>

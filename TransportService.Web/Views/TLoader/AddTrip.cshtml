@@ -178,7 +178,13 @@
                             <input id="txt_Weight" type="number" class="form-control" name="altr_name" value="" placeholder="Weigtht" title="Enter Weight">
                         </div>
                     </div>
-
+                    <div class="col-sm-6 form-group">
+                        <label>Material Value(INR)</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-inr"></i></span>
+                            <input id="txt_MaterialValue" type="number" class="form-control" value="" placeholder="Material Value in INR">
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-sm-3">
                             <div class="form-group">
@@ -191,7 +197,7 @@
 
                     <div class="form-group">
                         <input type="hidden" id="RowCount" name="RowCount" value="0">
-                       
+
                         <div>
                             <table class="table table-bordered" id="tblGoodsDetail" title="Enter Good Details">
                                 <thead>
@@ -205,7 +211,8 @@
                                         <th>Width</th>
                                         <th>Length</th>
                                         <th>Weight(Tonn)</th>
-                                        <th>Quantity</th>
+                                        <th>Qty</th>
+                                        <th>Price</th>
                                         <th></th>
 
                                     </tr>
@@ -351,6 +358,7 @@
         var length = $("#txt_Length").val();
         var weight = $("#txt_Weight").val();
         var quantity = $("#txt_Quantity").val();
+        var materialValue = $("#txt_MaterialValue").val();
 
         if (materialID == 0) {
             bFlagValid = 0;
@@ -384,6 +392,12 @@
         if (quantity == null || quantity == "") {
             bFlagValid = 0;
             $("#txt_Quantity").addClass('borderValidation');
+        }
+
+
+        if (materialValue == null || materialValue == "") {
+            bFlagValid = 0;
+            $("#txt_MaterialValue").addClass('borderValidation');
         }
 
         if (bFlagValid == 0) {
@@ -431,6 +445,7 @@
             '<td class="clslength">' + length + '</td>' +
             '<td class="clsWeight">' + weight + '</td>' +
             '<td class="clsQuantity">' + quantity + '</td>' +
+            '<td class="clsMaterialValue">' + materialValue + '</td>' +
             '<td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true" style="margin-top: 7px;"></i></td>' +
             '</tr>'
         $('#tblGoodsDetail  tbody').append(bindRow);
@@ -582,7 +597,8 @@
                 trElement.find('td.clsWidth').text() + "~" +
                 trElement.find('td.clslength').text() + "~" +
                 trElement.find('td.clsWeight').text() + "~" +
-                trElement.find('td.clsQuantity').text();
+                trElement.find('td.clsQuantity').text() + "~" +
+                trElement.find('td.clsMaterialValue').text(); 
             idArrLoadDetails.push(tdVals);
 
 
@@ -601,6 +617,7 @@
             item["Length"] = arrElement[6];
             item["Weight"] = arrElement[7];
             item["Qty"] = arrElement[8];
+            item["MaterialValue"] = arrElement[9];
             TripDetails.push(item);
         }
         
