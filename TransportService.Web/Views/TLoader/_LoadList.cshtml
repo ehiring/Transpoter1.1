@@ -2,7 +2,9 @@
 
 
 @model  TransportService.Web.Models.Activity.Loader
-
+@using TransportService.Web.Models.Masters
+@using TransportService.Web.Models
+@using System
 @using PagedList;
 @using PagedList.Mvc;
 @using GridMvc.Html
@@ -33,7 +35,11 @@
                                                     <span class="sc-chPdSV glJpds" title="!9 Feet Container" style="color: darkgray;">@item1.LoadType</span>
                                                     @*<span class="sc-kgoBCf cQRYis">| 16/12/2019</span>*@
                                                     <span class="sc-kgoBCf cQRYis" style="font-family:sans-serif">| @item1.PickUpDate</span>
-                                                    <span >@Html.ActionLink("Edit Load", "EditLoad", new { LoadID = item1.LoadID }, new { @class = "linkDecoration" }) <br /></span>
+                                                    @if (Session[UserColumns.UserID] != null && Convert.ToInt32(Session[UserColumns.UserID]) == item1.AddedBy)
+                                                    {
+                                                        <span>@Html.ActionLink("Edit Load", "EditLoad", new { LoadID = item1.LoadID }, new { @class = "linkDecoration" }) <br /></span>
+                                                    }
+
                                                 </p>
 
                                                 <ul class="sc-kGXeez sOzzB">
@@ -73,8 +79,24 @@
                                                     </ul>
                                                 </ul>
                                                 @*<a class="sc-cMljjf drsecP pull-left">Edit Load</a>*@
-                                                
-                                                <a class="sc-cMljjf drsecP pull-right">Book Now</a>
+
+                                                @if (Session[UserColumns.UserID] == null)
+                                                {
+                                                    @*<a class="sc-cMljjf drsecP pull-right">Book Now</a>*@
+                                                    @*@Html.ActionLink("Book Now", "AddSubTrip", new { Source = item1.SourceID, TripId = item1.TripID }, new { @Class = "sc-cMljjf drsecP" }) <br />*@
+                                                    @Html.ActionLink("Book Now", "BookLoad", new { SourceID = item1.SourceID, LoadID = item1.LoadID }, new { @Class = "sc-cMljjf drsecP" }) <br />
+                                                }
+                                                else
+                                                {
+
+                                                    if (Convert.ToInt32(Session[RoleColumns.RoleID]) == enumRole.Transporter.GetHashCode())
+                                                    {
+                                                        @*<a class="sc-cMljjf drsecP pull-right">Book Now</a>*@
+                                                        @Html.ActionLink("Book Now", "BookLoad", new { SourceID = item1.SourceID, LoadID = item1.LoadID }, new { @Class = "sc-cMljjf drsecP" }) <br />
+                                                    }
+                                                }
+
+
                                             </div>
 
                                         </div>

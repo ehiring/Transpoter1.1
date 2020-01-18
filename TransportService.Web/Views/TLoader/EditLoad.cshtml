@@ -154,35 +154,43 @@
                             <label>Heigth</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-up"></i></span>
-                                <input id="txt_Height" type="number" class="form-control"  value="" placeholder="Height">
+                                <input id="txt_Height" type="number" class="form-control" value="" placeholder="Height">
                             </div>
                         </div>
                         <div class="col-sm-6 form-group">
                             <label>Width</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-right"></i></span>
-                                <input id="txt_Width" type="number" class="form-control"  value="" placeholder="Width">
+                                <input id="txt_Width" type="number" class="form-control" value="" placeholder="Width">
                             </div>
                         </div>
                         <div class="col-sm-6 form-group">
                             <label>Length</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-down"></i></span>
-                                <input id="txt_Length" type="number" class="form-control"  value="" placeholder="Length">
+                                <input id="txt_Length" type="number" class="form-control" value="" placeholder="Length">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 form-group">
+                            <label>Quantity</label>
+                            <div class="input-group">
+
+                                <input id="txt_Quantity" type="number" class="form-control" value="" placeholder="Quantity">
                             </div>
                         </div>
                         <div class="col-sm-6 form-group">
                             <label>Weight(Tonn)</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-glass"></i></span>
-                                <input id="txt_Weight" type="number" class="form-control"  value="" placeholder="Weigtht">
+                                <input id="txt_Weight" type="number" class="form-control" value="" placeholder="Weigtht">
                             </div>
                         </div>
                         <div class="col-sm-6 form-group">
-                            <label>Quantity</label>
+                            <label>Material Value(INR)</label>
                             <div class="input-group">
-
-                                <input id="txt_Quantity" type="number" class="form-control"  value="" placeholder="Quantity">
+                                <span class="input-group-addon"><i class="fa fa-inr"></i></span>
+                                <input id="txt_MaterialValue" type="number" class="form-control" value="" placeholder="Material Value in INR">
                             </div>
                         </div>
                         <div class="row">
@@ -214,6 +222,7 @@
                                             <th>Length</th>
                                             <th>Weight</th>
                                             <th>Qty</th>
+                                            <th>Price</th>
                                             <th>Action</th>
                                             <th style="display:none">Operation</th>
 
@@ -222,23 +231,24 @@
                                     <tbody>
                                         @foreach (var item in Model.LoadDetails)
                                         {
-                                            <tr>
-                                                <td class="clsSrNo">@item.LoadDetailID</td>
-                                                <td style="display:none" class="clsMaterialID"> @item.MaterialID</td>
-                                                <td class="clsMaterialName">@item.MaterialName</td>
-                                                <td style="display:none" class="clsConversionFactor"> @item.ConversionFactor</td>
-                                                <td class="clsUnitOfMeasure">@item.UnitOfMeasure </td>
-                                                <td class="clsHeight">@item.Height</td>
-                                                <td class="clsWidth">@item.Width</td>
-                                                <td class="clsLength">@item.Length</td> 
-                                                <td class="clsWeight">@item.Weight</td>
-                                                <td class="clsQty">@item.Qty</td>
-                                                <td>
-                                                    @Html.ActionLink("Edit", null, null, new { @class = "clsEditRow" }) |
-                                                    @Html.ActionLink("Delete", null,null, new { @id = Model.LoadID }, new { @class = "clsDeleteRow" })
-                                                </td>
-                                                
-                                            </tr>
+                                        <tr>
+                                            <td class="clsSrNo">@item.LoadDetailID</td>
+                                            <td style="display:none" class="clsMaterialID"> @item.MaterialID</td>
+                                            <td class="clsMaterialName">@item.MaterialName</td>
+                                            <td style="display:none" class="clsConversionFactor"> @item.ConversionFactor</td>
+                                            <td class="clsUnitOfMeasure">@item.UnitOfMeasure </td>
+                                            <td class="clsHeight">@item.Height</td>
+                                            <td class="clsWidth">@item.Width</td>
+                                            <td class="clsLength">@item.Length</td>
+                                            <td class="clsWeight">@item.Weight</td>
+                                            <td class="clsQty">@item.Qty</td>
+                                            <td class="clsMaterialValue">@item.MaterialValue</td>
+                                            <td>
+                                                @Html.ActionLink("Edit", null, null, new { @class = "clsEditRow" }) |
+                                                @Html.ActionLink("Delete", null, null, new { @id = Model.LoadID }, new { @class = "clsDeleteRow" })
+                                            </td>
+
+                                        </tr>
                                         }
 
                                     </tbody>
@@ -251,7 +261,6 @@
                 </div>
             </div>
         </div>
-
 
         <div class="row">
             @Html.ActionLink("Back to List", "New_LoaderIndex")
@@ -292,6 +301,7 @@
         var length = $("#txt_Length").val();
         var weight = $("#txt_Weight").val();
         var quantity = $("#txt_Quantity").val();
+        var materialValue = $("#txt_MaterialValue").val();
 
         htmlValidation = (materialID == 0 ? "CargoType/" : "");
         htmlValidation = htmlValidation + (conversionFactor == 0 ? "Unit/" : "");
@@ -300,6 +310,7 @@
         htmlValidation = htmlValidation + ((length == null || length == "") ? "Length/" : "");
         htmlValidation = htmlValidation + ((weight == null || weight == "") ? "Weight/" : "");
         htmlValidation = htmlValidation + ((quantity == null || quantity == "") ? "Quantity" : "");
+        htmlValidation = htmlValidation + ((materialValue == null || materialValue == "") ? "Material Value" : "");
 
         if (htmlValidation.length != 0) {
             alert("Please fill the fields (" + htmlValidation + ")");
@@ -317,6 +328,7 @@
                 '<td class="clsLength">' + length + '</td>' +
                 '<td class="clsWeight">' + weight + '</td>' +
                 '<td class="clsQty">' + quantity + '</td>' +
+                '<td class="clsMaterialValue">' + materialValue + '</td>' +
                 '<td>' +
                 '@Html.ActionLink("Edit",null, null, new { @class = "clsEditRow" }) | @Html.ActionLink("Delete", null, null, new { @class = "clsDeleteRow" })' +
                 '</td >' +
@@ -338,6 +350,7 @@
             $('#tblGoodsDetail tbody tr:eq(' + rowindex + ') ').children('td.clsLength').text(length);
             $('#tblGoodsDetail tbody tr:eq(' + rowindex + ') ').children('td.clsWeight').text(weight);
             $('#tblGoodsDetail tbody tr:eq(' + rowindex + ') ').children('td.clsQty').text(quantity);
+            $('#tblGoodsDetail tbody tr:eq(' + rowindex + ') ').children('td.clsMaterialValue').text(materialValue);
             
             }
 
@@ -349,6 +362,7 @@
         $("#txt_Length").val('');
         $("#txt_Weight").val('');
         $("#txt_Quantity").val('')
+        $("#txt_MaterialValue").val('');
         $('#hdnOperationType').val('I');
     });
     $(document).on('click', '.clsDeleteRow', function (e) {
@@ -369,6 +383,7 @@
         var length = $(this).closest('tr').children('td.clsLength').text();
         var weight = $(this).closest('tr').children('td.clsWeight').text();
         var quantity = $(this).closest('tr').children('td.clsQty').text();
+        var materialValue = $(this).closest('tr').children('td.clsMaterialValue').text();
         
         
         $('#hdnOperationType').val('U');
@@ -381,6 +396,7 @@
         $("#txt_Length").val(length);
         $("#txt_Weight").val(weight);
         $("#txt_Quantity").val(quantity);
+        $("#txt_MaterialValue").val(materialValue);
         var row = $(this).closest('tr').index();
         $('#hdnRowNo').val(row);
         
@@ -453,7 +469,8 @@
                 trElement.find('td.clsWidth').text() + "~" +
                 trElement.find('td.clsLength').text() + "~" +
                 trElement.find('td.clsWeight').text() + "~" +
-                trElement.find('td.clsQty').text();
+                trElement.find('td.clsQty').text() + "~" +
+                trElement.find('td.clsMaterialValue').text();
             alert(tdVals);
             idArrLoadDetails.push(tdVals);
 
@@ -472,6 +489,7 @@
             item["Length"] = arrElement[6];
             item["Weight"] = arrElement[7];
             item["Qty"] = arrElement[8];
+            item["MaterialValue"] = arrElement[9];
             LoadDetails.push(item);
         }
 

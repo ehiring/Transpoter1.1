@@ -1,5 +1,6 @@
 ﻿@using TransportService.Web.Models.Masters
 @using TransportService.Web.Models
+@using System
 <!DOCTYPE html>
 <html>
 <head>
@@ -147,7 +148,20 @@
         </div>*@
 
                                 @*<a class="btn-theme icon-left bg-navy-blue no-shadow d-none d-lg-inline-block align-self-center" href="#" role="button" data-toggle="modal" data-target="#user-login-popup"><i class="fas fa-home" style="color: #fff;"></i>  Log In</a>*@
-                                @Html.ActionLink("Log In", "LoginUser", null, new { @class = "btn-theme icon-left bg-navy-blue no-shadow d-none d-lg-inline-block align-self-center" })
+                                @Html.ActionLink("Log In", "LoginUser", null, new { @class = "btn-theme icon-left bg-navy-blue no-shadow d-none d-lg-inline-block align-self-center", @id = "btnSignIn" })
+
+                                <div id="divLogInMenus" class="th-item hidden">
+                                    <div class="btn-group">
+                                        <button class="btn btn-default btn-xs dropdown-toggle js-activated" type="button" data-toggle="dropdown" id="btnLoginUserName">  <span class="caret"></span> </button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                @*<a href="#" id="btnLogOut">Log Out</a>*@
+                                                @Html.ActionLink("Log Out", "LogOut", null, new { @class = "btn-theme icon-left bg-navy-blue no-shadow d-none d-lg-inline-block align-self-center", @id = "btnSignIn" })
+                                            </li>
+                                           
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -184,11 +198,22 @@
                             <a href="#" data-toggle="dropdown" class="dropdown-toggle js-activated">Load<b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li>
-
                                     @Html.ActionLink("Find A Load", "New_LoaderIndex", "TLoader", new { @class = "nav-link", @style = "width: 100px;" })
                                 </li>
                                 <li>
-                                    @Html.ActionLink("Post A Load", "AddLoad", "TLoader", new { @class = "nav-link ", @style = "width: 100px;",@id="btnAddLoad" })
+                                    @if (Session[UserColumns.UserID] == null)
+                                    {
+                                        @Html.ActionLink("Post A Load", "AddLoad", "TLoader", new { @class = "nav-link ", @style = "width: 100px;", @id = "btnAddLoad" })
+                                    }
+                                    else
+                                    {
+                                         if (Convert.ToInt32( Session[RoleColumns.RoleID]) == enumRole.Loader.GetHashCode())
+                                        {
+                                            @Html.ActionLink("Post A Load", "AddLoad", "TLoader", new { @class = "nav-link ", @style = "width: 100px;", @id = "btnAddLoad" })
+                                        }
+
+                                    }
+
                                 </li>
                             </ul>
                         </li>
@@ -200,8 +225,19 @@
                                     @Html.ActionLink("Find A Truck", "Index", "TLoader", new { @class = "nav-link", @style = "width: 100px;" })
                                 </li>
                                 <li>
-                                    @Html.ActionLink("Post A Truck", "AddTrip", "TLoader", new { @class = "nav-link ", @style = "width: 100px;",@id="btnAddTrip" })
-                                </li>
+                                    @if (Session[UserColumns.UserID] == null)
+                                    {
+
+                                        @Html.ActionLink("Post A Truck", "AddTrip", "TLoader", new { @class = "nav-link ", @style = "width: 100px;", @id = "btnAddTrip" })
+                                    }
+                                    else
+                                    {
+                                        if (Convert.ToInt32(Session[RoleColumns.RoleID]) == enumRole.Transporter.GetHashCode())
+                                        {
+                                            @Html.ActionLink("Post A Truck", "AddTrip", "TLoader", new { @class = "nav-link ", @style = "width: 100px;", @id = "btnAddTrip" })
+                                        }
+                                    }
+                                        </li>
                             </ul>
                         </li>
                         <li class="dropdown">
@@ -214,19 +250,21 @@
                             </ul>
                         </li>
                         <li> <a href="gallery.html">Gallery</a></li>
-                        <li id="liMyProfile" class="dropdown hidden">
-                            <a href="#" data-toggle="dropdown" class="dropdown-toggle js-activated">MyProfile<b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    @*<a href="contact-01.html">Contact 1</a>*@
-                                    @Html.ActionLink("My Detail", "PersonalDetail", "TLoader", new { @class = "nav-link", @style = "width: 100px;" })
-                                </li>
-                                <li id="liAddTruck" class="hidden">
-                                    @*<a href="contact-02.html">Contact 2</a>*@
-                                    @Html.ActionLink("My Vehicle", "AddTruck", "TLoader", new { @class = "nav-link", @style = "width: 100px;" })
-                                </li>
-                            </ul>
-                        </li>
+
+                            <li id="liMyProfile" class="dropdown hidden">
+                                <a href="#" data-toggle="dropdown" class="dropdown-toggle js-activated">MyProfile<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        @*<a href="contact-01.html">Contact 1</a>*@
+                                        @Html.ActionLink("My Detail", "PersonalDetail", "TLoader", new { @class = "nav-link", @style = "width: 100px;" })
+                                    </li>
+                                    <li id="liAddTruck" class="hidden">
+                                        @*<a href="contact-02.html">Contact 2</a>*@
+                                        @Html.ActionLink("My Vehicle", "AddTruck", "TLoader", new { @class = "nav-link", @style = "width: 100px;" })
+                                    </li>
+                                </ul>
+                            </li>
+                        
                     </ul>
                 </div>
             </div>
@@ -337,16 +375,34 @@
             if (userID != null || userID != "") {
            
                 $('#liMyProfile').removeClass('hidden');
+                $('#btnSignIn').addClass('hidden');
+                $('#divLogInMenus').removeClass('hidden');
+                $('#btnLoginUserName').text("@Session[UserColumns.Mobile]");
+          
 
                 if (RoleID == @enumRole.Transporter.GetHashCode()) {
                     $('#liAddTruck').removeClass('hidden');
                 }
+
             }
         
 
         }
 
     });
+
+    //$(document).on('click', '#btnLogOut', function (e) {
+    //    e.preventDefault();
+    //    alert('Hi');
+    //    $('#liMyProfile').addClass('hidden');
+    //    $('#btnSignIn').removeClass('hidden');
+    //    $('#divLogInMenus').addClass('hidden');
+        
+        
+        
+               
+       
+    //})
     
         
    

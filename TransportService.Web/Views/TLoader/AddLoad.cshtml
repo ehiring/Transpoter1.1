@@ -235,7 +235,8 @@
                                         <th>Width</th>
                                         <th>Length</th>
                                         <th>Weight(Tonn)</th>
-                                        <th>Quantity</th>
+                                        <th>Qty</th>
+                                        <th>Price</th>
                                         <th></th>
 
 
@@ -387,6 +388,7 @@
             var length = $("#txt_Length").val();
             var weight = $("#txt_Weight").val();
             var quantity = $("#txt_Quantity").val();
+            var materialValue = $("#txt_MaterialValue").val();
 
             if (materialID == 0) {
                 bFlagValid = 0;
@@ -420,7 +422,10 @@
                 bFlagValid = 0;
                 $("#txt_Quantity").addClass('borderValidation');
             }
-
+            if (materialValue == null || materialValue == "") {
+                bFlagValid = 0;
+                $("#txt_MaterialValue").addClass('borderValidation');
+            }
             if (bFlagValid == 0) {
 
                 return;
@@ -437,6 +442,7 @@
                 '<td class="clslength">' + length + '</td>' +
                 '<td class="clsWeight">' + weight + '</td>' +
                 '<td class="clsQuantity">' + quantity + '</td>' +
+                '<td class="clsMaterialValue">' + materialValue + '</td>' +
                 '<td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true" style="margin-top: 7px;"></i></td>' +
 
                 '</tr>';
@@ -450,6 +456,8 @@
             $("#txt_Length").val('');
             $("#txt_Weight").val('');
             $("#txt_Quantity").val('');
+            $("#txt_MaterialValue").val('');
+            $("#txt_MaterialValue").removeClass('borderValidation');
             $("#ddlMaterial").removeClass('borderValidation');
             $("#ddlUnit").removeClass('borderValidation');
             $("#txt_Height").removeClass('borderValidation');
@@ -560,8 +568,9 @@
                     trElement.find('td.clsWidth').text() + "~" +
                     trElement.find('td.clslength').text() + "~" +
                     trElement.find('td.clsWeight').text() + "~" +
-                    trElement.find('td.clsQuantity').text();
-                alert(tdVals);
+                    trElement.find('td.clsQuantity').text() + "~" +
+                    trElement.find('td.clsMaterialValue').text(); 
+                
                 idArrLoadDetails.push(tdVals);
 
             });
@@ -581,6 +590,7 @@
                 item["Length"] = arrElement[6];
                 item["Weight"] = arrElement[7];
                 item["Qty"] = arrElement[8];
+                item["MaterialValue"] = arrElement[9];
                 LoadDetails.push(item);
             }
 

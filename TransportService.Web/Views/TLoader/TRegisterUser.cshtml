@@ -280,7 +280,7 @@
 
   $(document).on('click', '#btnSubmit', function (e) {
         e.preventDefault();
-      
+      alert('A');
 
         /*
          * validation checking
@@ -288,8 +288,9 @@
          * */
         if (ValidateInputs()==0) {
             return;
-        }
-
+      }
+      alert('B');
+        
       var IsComapny = @ViewBag.IsCompany;
       var ClientTypeID = $("#ddlType option:selected").val();
         var DBClientTypeID;
@@ -328,7 +329,7 @@
             success: function (da) {
                 alert(da);
 
-                //window.location.href = "/TLoader/New_LoaderIndex";
+                window.location.href = "/TLoader/LoginUser";
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("Error " + errorThrown);

@@ -29,7 +29,7 @@ namespace TransportService.Web.Controllers
 
         public ActionResult Index(int? page)
         {
-
+            
             Transpoter _transpoter = new Transpoter();
             _transpoter.TransDetails = _tripBusinessLayer.GetTripDetails(page, "", "");
             _transpoter.SubTDetails = _tripBusinessLayer.GetSubTripDetails();
@@ -53,11 +53,21 @@ namespace TransportService.Web.Controllers
         }
         public ActionResult AddTrip()
         {
-            ViewData["CityList"] = _tripBusinessLayer.GetDropDownData("CityList", 0);
-            ViewData["VehicleList"] = _tripBusinessLayer.GetDropDownData("VehicleList", 1); //pass @val= ownerID i.e. Login ClientID
-            ViewData["MaterialList"] = _tripBusinessLayer.GetDropDownData("MaterialList", 0);
-            ViewData["UOMList"] = _tripBusinessLayer.GetDropDownData("UOMList", 0);
-            return View();
+
+            if (Session[UserColumns.UserID] != null)
+            {
+                ViewData["CityList"] = _tripBusinessLayer.GetDropDownData("CityList", 0);
+                ViewData["VehicleList"] = _tripBusinessLayer.GetDropDownData("VehicleList", Convert.ToInt32(Session[ClientColumns.ClientID])); //pass @val= ownerID i.e. Login ClientID
+                ViewData["MaterialList"] = _tripBusinessLayer.GetDropDownData("MaterialList", 0);
+                ViewData["UOMList"] = _tripBusinessLayer.GetDropDownData("UOMList", 0);
+                return View();
+            }
+            else
+            {
+
+                return RedirectToAction("LoginUser");
+            }
+
         }
 
         [HttpPost]
@@ -147,7 +157,7 @@ namespace TransportService.Web.Controllers
           new SqlParameter("@TripStartDate", T.TripStartDate == null ? (object)DBNull.Value : T.TripStartDate),
           new SqlParameter("@TripEndDate", T.TripEndDate == null ? (object)DBNull.Value : T.TripEndDate),
           new SqlParameter("@Status", T.TripStatus),
-          new SqlParameter("@AddedBy", 1),
+          new SqlParameter("@AddedBy", Session[UserColumns.UserID]),
           tvpParamCityRoot,
           tvpParamTripDetails);
             return Json("Trip Posted Sucessfull");
@@ -157,7 +167,7 @@ namespace TransportService.Web.Controllers
         public ActionResult EditTrip(int TripID)
         {
             ViewData["CityList"] = _tripBusinessLayer.GetDropDownData("CityList", 0);
-            ViewData["VehicleList"] = _tripBusinessLayer.GetDropDownData("VehicleList", 1); //pass @val= ownerID i.e. Login ClientID
+            ViewData["VehicleList"] = _tripBusinessLayer.GetDropDownData("VehicleList",Convert.ToInt32( Session[ClientColumns.ClientID])); //pass @val= ownerID i.e. Login ClientID
             ViewData["MaterialList"] = _tripBusinessLayer.GetDropDownData("MaterialList", 0);
             ViewData["UOMList"] = _tripBusinessLayer.GetDropDownData("UOMList", 0);
 
@@ -261,7 +271,7 @@ namespace TransportService.Web.Controllers
               new SqlParameter("@TripStartDate", transpoter.TripStartDate == null ? (object)DBNull.Value : transpoter.TripStartDate),
               new SqlParameter("@TripEndDate", transpoter.TripEndDate == null ? (object)DBNull.Value : transpoter.TripEndDate),
               new SqlParameter("@Status", transpoter.TripStatus),
-              new SqlParameter("@AddedBy", 1),
+              new SqlParameter("@AddedBy", Session[UserColumns.UserID]),
               tvpParamCityRoot,
               tvpParamTripDetails);
             }
@@ -270,12 +280,19 @@ namespace TransportService.Web.Controllers
         }
         public ActionResult AddSubTrip(int? Source, int TripId = 0)
         {
-            ViewData["TripWiseCityList"] = _tripBusinessLayer.GetDropDownData("TripWiseCityList", 0, TripId);
-            ViewData["MaterialList"] = _tripBusinessLayer.GetDropDownData("MaterialList", 0);
-            ViewData["UOMList"] = _tripBusinessLayer.GetDropDownData("UOMList", 0);
-            ViewBag.tripid = TripId;
-            ViewBag.Source = Source;
-            return View();
+            if (Session[UserColumns.UserID] != null)
+            {
+                ViewData["TripWiseCityList"] = _tripBusinessLayer.GetDropDownData("TripWiseCityList", 0, TripId);
+                ViewData["MaterialList"] = _tripBusinessLayer.GetDropDownData("MaterialList", 0);
+                ViewData["UOMList"] = _tripBusinessLayer.GetDropDownData("UOMList", 0);
+                ViewBag.tripid = TripId;
+                ViewBag.Source = Source;
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LoginUser");
+            }
         }
         public JsonResult GetCityAgainstTheSource(int TripID = 0, int SourceID = 0)
         {
@@ -412,13 +429,21 @@ namespace TransportService.Web.Controllers
         }
         public ActionResult AddLoad()
         {
-            ViewData["CityList"] = _tripBusinessLayer.GetDropDownData("CityList", 0);
+            if (Session[UserColumns.UserID] != null)
+            {
+                ViewData["CityList"] = _tripBusinessLayer.GetDropDownData("CityList", 0);
             //MaterialList
             ViewData["MaterialList"] = _tripBusinessLayer.GetDropDownData("MaterialList", 0);
             ViewData["UOMList"] = _tripBusinessLayer.GetDropDownData("UOMList", 0);
             ViewData["VehicalTypeList"] = _tripBusinessLayer.GetDropDownData("VehicalTypeList");
+                return View();
 
-            return View();
+            }
+            else
+            {
+                return RedirectToAction("LoginUser");
+            }
+
         }
 
         [HttpPost]
@@ -438,6 +463,7 @@ namespace TransportService.Web.Controllers
                     dtLoadDetail.Columns.Add("Weight", typeof(decimal));
                     dtLoadDetail.Columns.Add("Qty", typeof(int));
                     dtLoadDetail.Columns.Add("ConversionFactor", typeof(decimal));
+                    dtLoadDetail.Columns.Add("MaterialValue", typeof(decimal));
             if (_loadDetails != null)
                     {
                         if (_loadDetails.Count > 0)
@@ -454,6 +480,7 @@ namespace TransportService.Web.Controllers
                                 dr_LoadDetail["Weight"] = item.Weight;
                                 dr_LoadDetail["Qty"] = item.Qty;
                                 dr_LoadDetail["ConversionFactor"] = item.ConversionFactor;
+                                dr_LoadDetail["MaterialValue"] = item.MaterialValue;
                         dtLoadDetail.Rows.Add(dr_LoadDetail);
                             }
                         }
@@ -488,8 +515,8 @@ namespace TransportService.Web.Controllers
                   new SqlParameter("@ContactNo", _loader.ContactNo),
                   new SqlParameter("@Email", _loader.Email),
                   new SqlParameter("@Address", _loader.Address),
-                   new SqlParameter("@Status", 1),
-                  new SqlParameter("@AddedBy", 1),/*.....UserID 1 is Loader*/
+                   new SqlParameter("@Status", 0),
+                  new SqlParameter("@AddedBy", Session[UserColumns.UserID]),/*.....UserID 1 is Loader*/
                   new SqlParameter("@Receiver", _loader.Receiver),
                   new SqlParameter("@Quotation", quoatation.PrimaryQuotaionValue),
                   tvpParamLoadDetails);
@@ -530,6 +557,7 @@ namespace TransportService.Web.Controllers
             dtLoadDetail.Columns.Add("Weight", typeof(decimal));
             dtLoadDetail.Columns.Add("Qty", typeof(int));
             dtLoadDetail.Columns.Add("ConversionFactor", typeof(decimal));
+            dtLoadDetail.Columns.Add("MaterialValue", typeof(decimal));
 
             if (_loadDetails != null)
             {
@@ -547,6 +575,7 @@ namespace TransportService.Web.Controllers
                         dr_LoadDetail["Weight"] = item.Weight;
                         dr_LoadDetail["Qty"] = item.Qty;
                         dr_LoadDetail["ConversionFactor"] = item.ConversionFactor;
+                        dr_LoadDetail["MaterialValue"] = item.ConversionFactor;
                         dtLoadDetail.Rows.Add(dr_LoadDetail);
                     }
                 }
@@ -583,14 +612,25 @@ namespace TransportService.Web.Controllers
           new SqlParameter("@Email", _loader.Email),
           new SqlParameter("@Address", _loader.Address),
            new SqlParameter("@Status", _loader.Status == null ? 0:_loader.Status),
-          new SqlParameter("@AddedBy", 1),/*.....UserID 1 is Loader*/
+          new SqlParameter("@AddedBy", Session[UserColumns.UserID]),/*.....UserID 1 is Loader*/
           new SqlParameter("@Receiver", _loader.Receiver),
           tvpParamLoadDetails);
             return Json("Load Updated Sucessfully");
 
         }
 
-        
+        public ActionResult BookLoad(int SourceID,int LoadID)
+        {
+            if (Session[UserColumns.UserID] != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LoginUser");
+            }
+
+        }
 
         public int GetFullTruckQuotation(int VehicleTypeID, decimal Distance )
         {
@@ -620,20 +660,24 @@ namespace TransportService.Web.Controllers
 
         public ActionResult AddTruck()
         {
-            ViewData["TruckCapacityList"] = _tripBusinessLayer.GetDropDownData("TruckCapacityList");
-            ViewData["VehicalTypeList"] = _tripBusinessLayer.GetDropDownData("VehicalTypeList");
-            return View();
+            if (Convert.ToInt32(Session[RoleColumns.RoleID]) == enumRole.Transporter.GetHashCode())
+            {
+                ViewData["TruckCapacityList"] = _tripBusinessLayer.GetDropDownData("TruckCapacityList");
+                ViewData["VehicalTypeList"] = _tripBusinessLayer.GetDropDownData("VehicalTypeList");
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LoginUser");
+            }
+            
         }
         [HttpPost]
         public ActionResult AddTruck1(Vehicle _vehicle)
         {
             JobDbContext jobDbContext = new JobDbContext();
             var result = jobDbContext.Database.ExecuteSqlCommand(@"exec USP_AddVehicle @VehicleTypeID ,
-            @Capacity ,
             @VehicleNo ,
-            @Height ,
-            @Width ,
-            @Length ,
             @Description ,
             @InsuredBy  ,
             @InsuranceStartDate ,
@@ -643,16 +687,12 @@ namespace TransportService.Web.Controllers
             @Phone ,
             @ContactName ",
             new SqlParameter("@VehicleTypeID", _vehicle.VehicleTypeID),
-             new SqlParameter("@Capacity", _vehicle.Capacity),
               new SqlParameter("@VehicleNo", _vehicle.VehicleNo),
-               new SqlParameter("@Height", _vehicle.Height == null ? (object)DBNull.Value : _vehicle.Height),
-                new SqlParameter("@Width", _vehicle.Width == null ? (object)DBNull.Value : _vehicle.Width),
-                 new SqlParameter("@Length", _vehicle.Length == null ? (object)DBNull.Value : _vehicle.Length),
                   new SqlParameter("@Description", _vehicle.Description == null ? (object)DBNull.Value : _vehicle.Description),
                    new SqlParameter("@InsuredBy", _vehicle.InsuredBy == null ? (object)DBNull.Value : _vehicle.InsuredBy),
                     new SqlParameter("@InsuranceStartDate", _vehicle.InsuranceStartDate == null ? (object)DBNull.Value : _vehicle.InsuranceStartDate),
                      new SqlParameter("@InsuranceExpDate", _vehicle.InsuranceExpDate == null ? (object)DBNull.Value : _vehicle.InsuranceExpDate),
-                      new SqlParameter("@OwnerID", _vehicle.OwnerID == null ? (object)DBNull.Value : _vehicle.OwnerID),
+                      new SqlParameter("@OwnerID", Session[ClientColumns.ClientID]),
                        new SqlParameter("@GPSStatus", _vehicle.GPSStatus == null ? (object)DBNull.Value : _vehicle.GPSStatus),
                         new SqlParameter("@Phone", _vehicle.Phone == null ? (object)DBNull.Value : _vehicle.Phone),
                         new SqlParameter("@ContactName", _vehicle.ContactName == null ? (object)DBNull.Value : _vehicle.ContactName));
@@ -669,12 +709,6 @@ namespace TransportService.Web.Controllers
 
         #region "LoginRegister"
 
-       
-
-        
-       
-
-
         public ActionResult TRegisterUser(int IsCompany)
         {
             ViewBag.IsCompany = IsCompany;
@@ -690,7 +724,14 @@ namespace TransportService.Web.Controllers
             #endregion
 
             #region "Generate OTP"
-            _user.OTP = new JobDbContext().Database.SqlQuery<int>("USP_GenerateOTP").SingleOrDefault<int>();
+            using (JobDbContext jobDbContext= new JobDbContext())
+            {
+
+                var OTP = jobDbContext.Database.SqlQuery<int>("USP_GenerateOTP").SingleOrDefault<int>();
+                _user.OTP = OTP;
+            }
+
+           
             #endregion
 
             #region  "Password Hashing "
@@ -766,8 +807,7 @@ namespace TransportService.Web.Controllers
                 }
                 else
                 {
-
-                    /*...All ...*/
+                    
                     Session[UserColumns.Mobile] = result.Mobile;
                     Session[UserColumns.Email] = result.Email;
                     Session[UserColumns.Password] = result.Password;
@@ -778,13 +818,13 @@ namespace TransportService.Web.Controllers
 
                     if (result.RoleID == enumRole.Transporter.GetHashCode())
                     {
-                        return RedirectToAction("Index");
+                        return RedirectToAction("New_LoaderIndex");
+                        
                     }
                     else
                     {
-                        return RedirectToAction("New_LoaderIndex");
+                        return RedirectToAction("Index");
 
-                        
                     }
 
                     
@@ -794,6 +834,18 @@ namespace TransportService.Web.Controllers
 
             return View();
 
+        }
+
+        public ActionResult LogOut()
+        {
+            Session[UserColumns.Mobile] = null;
+            Session[UserColumns.Email] = null;
+            Session[UserColumns.Password] = null;
+            Session[UserColumns.UserID] = null;
+            Session[UserColumns.ClientID] = null;
+            Session[UserColumns.ClientTypeID] = null;
+            Session[RoleColumns.RoleID] = null;
+            return RedirectToAction("Index");
         }
         public ActionResult ContactPerson()
         {

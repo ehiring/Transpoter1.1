@@ -89,7 +89,7 @@ namespace TransportService.Web.BusinessLayer
             var pageIndex = (page ?? 1);
             const int pageSize = 4;
             int totalcount = 4;
-            Transpoter Llist = new Transpoter();
+            
             IEnumerable<Loader> result = _jobDbContext.DBLoader.SqlQuery(@"exec USP_GetLoaderList @pPageIndex, @pPageSize,@Source,@Destination",
                                                                         new SqlParameter("@pPageIndex", pageIndex),
                                                                         new SqlParameter("@pPageSize", pageSize),

@@ -36,7 +36,7 @@ namespace TransportService.Web.Models.Activity
         public string SubService { get; set; }
         public int? Status { get; set; }
         public string LoadStatus { get; set; }
-        public int? AddedBy { get; set; }
+        public int AddedBy { get; set; }
         public string ContactNo { get; set; }
         public string Email { get; set; }
         public string Address { get; set; }

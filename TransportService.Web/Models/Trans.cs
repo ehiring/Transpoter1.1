@@ -91,6 +91,7 @@ namespace TransportService.Web.Models
         public string Route_Details { get; set; }
         public string TripStatus { get; set; }
         public int? TotalRows { get; set; }
+        public int AddedBy { get; set; }
         public IEnumerable<TripDetail> TripDetails { get; set; }
         public IEnumerable<RouteDetails> RouteList { get; set; }
         public StaticPagedList<Transpoter> TransDetails { get; set; }

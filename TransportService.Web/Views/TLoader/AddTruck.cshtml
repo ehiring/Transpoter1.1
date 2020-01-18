@@ -194,35 +194,40 @@
     $(document).ready(function () {
     });
 
-    $('#VehicleTypeID').on('change', function (e) {
-        e.preventDefault();
-        alert('Hi');
-        var value = $("#VehicleTypeID option:selected").val();
-        if (value != 0) {
+    //$('#VehicleTypeID').on('change', function (e) {
+    //    e.preventDefault();
+    //    alert('Hi');
+    //    var value = $("#VehicleTypeID option:selected").val();
+    //    if (value != 0) {
 
-            $.ajax({
-                type: 'POST',
-                dataType: 'json',
-                url: '/TLoader/GetVehicleTypeByID',
-                data:
-                {
-                    VehicleTypeID: value
+    //        $.ajax({
+    //            type: 'POST',
+    //            dataType: 'text',
+    //            url: '/TLoader/GetVehicleTypeByID',
+    //            contentType: "application/json",
+    //            data:JSON.stringify(
+    //            {
+    //                VehicleTypeID: value
                     
-                },
-                success: function (da) {
-                    alert('success');
-                    alert(da);
+    //            }),
+    //            success: function (da) {
+    //                alert('success');
+    //                alert(da);
                     
-                    $('#divDimension').html(da);
+    //                $('#divDimension').html(da);
 
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    alert('Error');
-                }
-            });
-        }
+    //            },
+    //            async:true,
+    //            error: function (XMLHttpRequest, textStatus, errorThrown) {
+    //                alert('Error');
+    //                alert(XMLHttpRequest.responseText);
+    //                alert(textStatus);
+    //                alert(errorThrown);
+    //            }
+    //        });
+    //    }
 
-    });
+    //});
 
 
 
@@ -252,16 +257,15 @@
             data:
             {
                 VehicleTypeID: $("#VehicleTypeID option:selected").val(),
-                Capacity: $('#lblCapacity').text(),
+                //Capacity: $('#lblCapacity').text(),
                 VehicleNo: $("#register_number").val(),
-                Height: $("#lblHeight").text(),
-                Width: $("#lblWidth").text(),
-                Length: $("#lblLength").text(),
+                //Height: $("#lblHeight").text(),
+                //Width: $("#lblWidth").text(),
+                //Length: $("#lblLength").text(),
                 Description: $("#truck_description").val(),
                 InsuredBy: $("#truck_insuredby").val(),
                 InsuranceStartDate: $("#StartDate").val(),
                 InsuranceExpDate: $("#EndDate").val(),
-                OwnerID: 1,
                 GPSStatus: $("#gpsstatus").val(),
                 Phone: $("#truck_phone").val(),
                 ContactName: $("#altr_name").val()
@@ -270,11 +274,21 @@
             },
             success: function (da) {
                 alert(da);
-
+                ResetData();
 
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
             }
         });
     });
+    function ResetData() {
+         $("#register_number").val('');
+         $("#truck_description").val('');
+         $("#truck_insuredby").val('');
+         $("#StartDate").val('');
+         $("#EndDate").val('');
+         $("#gpsstatus").val('');
+         $("#truck_phone").val('');
+         $("#altr_name").val('');
+    }
 </script>

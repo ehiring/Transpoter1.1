@@ -328,6 +328,7 @@
     <Content Include="Views\GoogleMap1\Distance.cshtml" />
     <Content Include="Views\TLoader\LoginUser.cshtml" />
     <Content Include="Views\TLoader\TRegisterUser.cshtml" />
+    <Content Include="Views\TLoader\BookLoad.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
