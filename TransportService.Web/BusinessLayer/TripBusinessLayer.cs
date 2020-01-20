@@ -27,8 +27,6 @@ namespace TransportService.Web.BusinessLayer
 
         #region "Trip Methods"
 
-       
-
         public StaticPagedList<Transpoter> GetTripDetails(int? page, string Source = "", string Destination = "")
         {
             

@@ -150,6 +150,7 @@
     <Compile Include="Controllers\GoogleMapController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoaderController.cs" />
+    <Compile Include="Controllers\PlaceAutoCompleteController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\TLoaderController.cs" />
     <Compile Include="Controllers\TMasterController.cs" />
@@ -329,6 +330,8 @@
     <Content Include="Views\TLoader\LoginUser.cshtml" />
     <Content Include="Views\TLoader\TRegisterUser.cshtml" />
     <Content Include="Views\TLoader\BookLoad.cshtml" />
+    <Content Include="Views\PlaceAutoComplete\Index.cshtml" />
+    <Content Include="Views\GoogleMap1\ShowMap.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -15,6 +15,7 @@
     @Html.AntiForgeryToken()
 <div class="container-fluid">
     <hr />
+    <input type="hidden" id="hdnIsTripCall" value="@ViewBag.IsTripCall"
     <div class="row">
         <div class="col-sm-12 pull-left">
             <input type="button" id="btnSubmit" class="btn btn-primary" name="regform" value="Add Truck">
@@ -192,6 +193,8 @@
 <script>
 
     $(document).ready(function () {
+        alert('IsTripCall' + $('#hdnIsTripCall').val());
+        
     });
 
     //$('#VehicleTypeID').on('change', function (e) {
@@ -274,7 +277,14 @@
             },
             success: function (da) {
                 alert(da);
-                ResetData();
+                alert($('#hdnIsTripCall').val());
+                if ($('#hdnIsTripCall').val()=="1") {
+                    window.location.href = "/TLoader/AddTrip";
+                }
+                else {
+                    ResetData();
+                }
+                
 
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {

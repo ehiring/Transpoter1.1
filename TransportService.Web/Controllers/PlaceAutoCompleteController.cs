@@ -6,22 +6,12 @@ using System.Web.Mvc;
 
 namespace TransportService.Web.Controllers
 {
-    public class GoogleMap1Controller : Controller
+    public class PlaceAutoCompleteController : Controller
     {
-        // GET: GoogleMap1
+        // GET: PlaceAutoComplete
         public ActionResult Index()
         {
             return View();
         }
-
-        public ActionResult Distance()
-        {
-            return View();
-        }
-        public ActionResult ShowMap()
-        {
-            return View();
-        }
-
     }
 }

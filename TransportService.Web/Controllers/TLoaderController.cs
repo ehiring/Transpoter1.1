@@ -64,7 +64,6 @@ namespace TransportService.Web.Controllers
             }
             else
             {
-
                 return RedirectToAction("LoginUser");
             }
 
@@ -502,7 +501,7 @@ namespace TransportService.Web.Controllers
                         @ContactNo ,
                         @Email ,
                         @Address ,
-                        @Status ,
+                     
                         @AddedBy ,
                         @Receiver,
                         @Quotation,
@@ -515,8 +514,7 @@ namespace TransportService.Web.Controllers
                   new SqlParameter("@ContactNo", _loader.ContactNo),
                   new SqlParameter("@Email", _loader.Email),
                   new SqlParameter("@Address", _loader.Address),
-                   new SqlParameter("@Status", 0),
-                  new SqlParameter("@AddedBy", Session[UserColumns.UserID]),/*.....UserID 1 is Loader*/
+                  new SqlParameter("@AddedBy", Session[UserColumns.UserID]),
                   new SqlParameter("@Receiver", _loader.Receiver),
                   new SqlParameter("@Quotation", quoatation.PrimaryQuotaionValue),
                   tvpParamLoadDetails);
@@ -575,7 +573,7 @@ namespace TransportService.Web.Controllers
                         dr_LoadDetail["Weight"] = item.Weight;
                         dr_LoadDetail["Qty"] = item.Qty;
                         dr_LoadDetail["ConversionFactor"] = item.ConversionFactor;
-                        dr_LoadDetail["MaterialValue"] = item.ConversionFactor;
+                        dr_LoadDetail["MaterialValue"] = item.MaterialValue;
                         dtLoadDetail.Rows.Add(dr_LoadDetail);
                     }
                 }
@@ -656,14 +654,13 @@ namespace TransportService.Web.Controllers
 
         #region "Masters"
 
-       
-
-        public ActionResult AddTruck()
+        public ActionResult AddTruck(int isTripCall )
         {
             if (Convert.ToInt32(Session[RoleColumns.RoleID]) == enumRole.Transporter.GetHashCode())
             {
                 ViewData["TruckCapacityList"] = _tripBusinessLayer.GetDropDownData("TruckCapacityList");
                 ViewData["VehicalTypeList"] = _tripBusinessLayer.GetDropDownData("VehicalTypeList");
+                ViewBag.IsTripCall = isTripCall;
                 return View();
             }
             else
@@ -695,7 +692,7 @@ namespace TransportService.Web.Controllers
                       new SqlParameter("@OwnerID", Session[ClientColumns.ClientID]),
                        new SqlParameter("@GPSStatus", _vehicle.GPSStatus == null ? (object)DBNull.Value : _vehicle.GPSStatus),
                         new SqlParameter("@Phone", _vehicle.Phone == null ? (object)DBNull.Value : _vehicle.Phone),
-                        new SqlParameter("@ContactName", _vehicle.ContactName == null ? (object)DBNull.Value : _vehicle.ContactName));
+                        new SqlParameter("@ContactName", _vehicle.ContactName ?? (object)DBNull.Value));
             return Json("Truck Added Sucessfully");
         }
 
