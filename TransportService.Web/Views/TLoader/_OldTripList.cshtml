@@ -1,0 +1,159 @@
+﻿
+
+
+@model  TransportService.Web.Models.Transpoter
+@using TransportService.Web.Models.Masters
+@using TransportService.Web.Models
+
+@using PagedList;
+@using PagedList.Mvc;
+@using GridMvc.Html
+
+
+<div class="col-sm-12">
+
+    @foreach (var item1 in Model.TransDetails)
+    {
+        <div>
+            <div>
+                <div class="sc-fYxtnH cPxaEJ">
+                    <div class="sc-tilXH ipziHM">
+                        <div class="sc-kTUwUJ dmMRtR">
+
+                            <div class="sc-kTUwUJ dmMRtR">
+                                <div class="sc-dnqmqq bDsesi">
+                                    <div class="BusViewContainer">
+                                        <div class="sc-iwsKbI gTUxim">
+                                            <div class="sc-gZMcBi gkRcqz">
+                                                <span class="sc-gqjmRU izTLmu">@item1.Source&nbsp;</span>
+                                                <span class="sc-jzJRlG btSGRi"> 15h 58m</span>
+                                                <span class="sc-fjdhpX laKnSQ">@item1.Destination&nbsp;</span>
+                                            </div>
+
+
+                                            <div class="sc-cSHVUG kBaSPa">
+                                                <p class="sc-kAzzGY eVnWFt">
+                                                    <span class="sc-chPdSV glJpds" title="!9 Feet Container" style="color: darkgray;">@item1.VehicleType</span>
+                                                    <span class="sc-kgoBCf cQRYis">| Start Date @item1.TripStartDate | End Date @item1.TripEndDate</span>
+                                                    @if (Session[UserColumns.UserID] != null && Convert.ToInt32(Session[UserColumns.UserID]) == item1.AddedBy)
+                                                    {
+                                                        <span>@Html.ActionLink("Edit Trip", "EditTrip", new { TripID = item1.TripID }, new { @class = "linkDecoration" }) <br /></span>
+                                                    }
+                                                </p>
+
+                                                <ul class="sc-kGXeez sOzzB">
+                                                    <ul class="sc-kpOJdX bFqegh">
+                                                        <span class="sc-jKJlTe jhvond sc-ckVGcZ fYVOJz"></span> 3 Ton Available
+                                                    </ul>
+                                                    <ul class="sc-kpOJdX bFqegh">
+                                                        <span>@item1.Route_Details</span>
+                                                    </ul>
+                                                </ul>
+
+                                                <ul class="sc-eNQAEJ bFIowg">
+                                                    <p class="sc-kkGfuU dfuvAZ">
+                                                        <span class="sc-iAyFgw krClWy" high="true">
+                                                            <span class="sc-hSdWYo eXbDWv">4.7</span>/5
+                                                        </span>
+                                                    </p>
+
+                                                    <li class="sc-hMqMXs kEmCaG">Policies</li>
+                                                    <li class="sc-hMqMXs kEmCaG">Pickups &amp; Drops</li>
+                                                    <li class="sc-hMqMXs kEmCaG">5 Photos</li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="sc-eHgmQL qdAhs">
+                                                <div>
+                                                    <div>
+                                                        <span data-placeholder="true" class="sc-brqgnP bKUXLW">1285</span>
+                                                    </div>
+                                                    <p class="sc-csuQGl dKyclB">
+                                                        <span class="sc-Rmtcm gnTLhn sc-ckVGcZ kvMNaU"></span>
+                                                    </p>
+                                                </div>
+                                                <ul class="sc-kGXeez sOzzB">
+                                                    <ul class="sc-dxgOiQ BhRgU">
+                                                        <span class="sc-jKJlTe jhvond sc-ckVGcZ gYzbWd"></span> @item1.TripStatus
+                                                    </ul>
+                                                </ul>
+                                                @if (Session[UserColumns.UserID] == null)
+                                                {
+                                                    @Html.ActionLink("Book Now", "AddSubTrip", new { Source = item1.SourceID, TripId = item1.TripID }, new { @Class = "sc-cMljjf drsecP" }) <br />
+
+                                                }
+                                                else
+                                                {
+                                                    if (Convert.ToInt32(Session[RoleColumns.RoleID]) == enumRole.Loader.GetHashCode())
+                                                    {
+                                                      @Html.ActionLink("Book Now", "AddSubTrip", new { Source = item1.SourceID, TripId = item1.TripID }, new { @Class = "sc-cMljjf drsecP" }) <br />
+                                                    }
+
+                                                }
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+
+<div class="row">
+    <div class="col-sm-12 ">
+        <div class="pnl-pagination m-b-md1">
+            <div class="pull-right">
+
+                @Html.PagedListPager((IPagedList)Model.TransDetails, page => Url.Action("", "", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions() { MaximumPageNumbersToDisplay = 4, DisplayPageCountAndCurrentLocation = true }, new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "mgrid", OnComplete = "PagedOnComplete" }))
+
+                @if (Model.TransDetails.Count() == 0)
+                {
+                    <ul class="pagination pull-right"></ul>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+      $('#SearchShipmentTruck .pagination li a').on('click', function (e) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+                if ($("#SourceID option:selected").text() == "Select Source") {
+                    var S = ""
+                }
+                if ($("#DestinationID option:selected").text() == "Select Source") {
+                    var D = ""
+                }
+            var temp = $(this).attr('href');
+            var pageid = temp.replace('/?page=', '');
+            $.ajax({
+                url: "@Url.Action("SearchTrips", "TLoader")",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    page: pageid,
+                    Source: S,
+                    Destination: D,
+                }),
+                dataType: "text",
+                type: "POST",
+                async: true,
+                success: function (data) {
+                    $('#SearchShipmentTruck').html(data);
+                },
+                error: function (data) {
+                },
+                complete: function () {
+                }
+            });
+         });
+</script>

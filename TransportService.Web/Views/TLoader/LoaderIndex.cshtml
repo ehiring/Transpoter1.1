@@ -2,8 +2,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@model  TransportService.Web.Models.Transpoter
-
+@model  TransportService.Web.Models.Activity.Loader
 @using PagedList;
 @using PagedList.Mvc;
 @using GridMvc.Html
@@ -15,10 +14,10 @@
 <!-- SERACH lIST -->
 
 <section class="searchList mt50">
-    <div class="container" >
+    <div class="container">
         <div class="row">
             <div class="col-sm-12">
-                <h2 class="lined-heading"><span>Available Trips</span></h2>
+                <h2 class="lined-heading"><span>Available Loads</span></h2>
             </div>
             <div id="content">
                 <!-- Start Content -->
@@ -53,41 +52,7 @@
                         </div>
                         <!-- </div> -->
                         <div class="row" id="SearchShipmentTruck">
-                            @Html.Partial("_TripList")
-                        </div>
-
-
-                        <div id="collapse1" class="panel-collapse collapse" class="sc-gPEVay iURMXd" style="background-color: #fff;">
-                            <span class="upArrow policies">&nbsp;</span>
-                            <a class="btnClose latoBold font12 deepskyBlueText" href="javascript:void(0);">Close</a>
-                            <div class="sc-jlyJG hZYYwk">
-                                <div class="policiesLeft">
-                                    <p class="cancellaton latoBold font12 capText darkGreyText makeFlex spaceBetween appendBottom5">
-                                        <span>
-                                            <span class="sprite cancellationIcon"></span> Sub Route Trips
-                                        </span>
-                                        <span>Type</span>
-                                    </p>
-                                    <div class="cancellationCharges">
-                                        <p class="makeFlex spaceBetween latoRegular font12 darkGreyText">
-                                            <span class="sprite activePolicy"></span>
-                                            <span>Pune to Nashik Phata</span>
-                                            <span>Boxes </span>
-                                        </p>
-                                        <p class="makeFlex spaceBetween latoRegular font12 darkGreyText">
-                                            <span class="sprite activePolicy"></span>
-                                            <span>Nashik Phata to Rajguru Nagar</span>
-                                            <span>Cotton</span>
-                                        </p>
-
-                                    </div>
-                                </div>
-                                <div class="policiesRight pushRight">
-                                    <p class="latoBold font12 capText darkGreyText appendBottom10">OTHER CONDITIONS</p>
-                                    <p class="latoRegular font12 darkGreyText txtTnc">* The penalty is calculated based on total seat worth 799</p>
-
-                                </div>
-                            </div>
+                            @Html.Partial("_LoadList")
                         </div>
 
                     </div>
@@ -127,7 +92,7 @@
 
                 e.preventDefault();
                     $.ajax({
-                    url: "@Url.Action("SearchTrips", "TLoader")",
+                    url: "@Url.Action("SearchLoads", "TLoader")",
                     contentType: "application/json",
                     data: JSON.stringify({
 

@@ -45,7 +45,6 @@ namespace TransportService.Web.BusinessLayer
                 totalcount = Convert.ToInt32(result.FirstOrDefault().TotalRows);
 
             }
-
             var itemAsIPagedList = new StaticPagedList<Transpoter>(result, pageIndex, pageSize, totalcount);
             return itemAsIPagedList;
         }

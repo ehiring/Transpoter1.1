@@ -1,4 +1,4 @@
-﻿
+﻿@using TransportService.Web.Models
 @{
                 /**/
 
@@ -162,18 +162,7 @@
                         <label>Select Proof Types</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-eye"></i></span>
-                            <select name="selectprooftype[]" id="selectprooftype1" class="form-control">
-                                <option value="5">Vehicle RC</option>
-                                <option value="6">C Book</option>
-                                <option value="7">Chassis Number</option>
-                                <option value="9">Vehicle Proof</option>
-                                <option value="10">Insurance Proof</option>
-                                <option value="11">Permit Proof</option>
-                                <option value="20">Fitness Proof</option>
-                                <option value="21">Pollution Proof</option>
-                                <option value="22">SecureSignleDocs</option>
-                                <option value="23">SecureBulkDocs</option>
-                            </select>
+                            @Html.DropDownList("Proof Type", new SelectList((System.Collections.IEnumerable)ViewData[DDLListNames.ProofTypeList], "Value", "Text"), "Select Proof Type", new { @class = "form-control", @id = "ProofTypeID", Title = "Select ProofType" })
                         </div>
                     </div>
                     <div class="col-sm-10">
@@ -194,7 +183,6 @@
 
     $(document).ready(function () {
         alert('IsTripCall' + $('#hdnIsTripCall').val());
-        
     });
 
     //$('#VehicleTypeID').on('change', function (e) {
@@ -271,7 +259,8 @@
                 InsuranceExpDate: $("#EndDate").val(),
                 GPSStatus: $("#gpsstatus").val(),
                 Phone: $("#truck_phone").val(),
-                ContactName: $("#altr_name").val()
+                ContactName: $("#altr_name").val(),
+                postedFile: $("#upload_file1")
                 //DocumentPath :
 
             },

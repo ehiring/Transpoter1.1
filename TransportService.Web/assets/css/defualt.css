@@ -1,0 +1,40 @@
+a, a:hover, a:focus, .header-area .logo-bar .info-box .icon, .slider-grids .tt-slider-title, .icons, .choose-box:hover .iconbox i, .choose-box:hover h4, .choose-title:hover h2, .comment li a, .comment li a:hover, .error-text, .footer-area .contact-info li:hover, .footer-content .column h2 a:hover, .footer-content .column h2:hover, .footer-content .links-widget li a:hover, .footer-content .links-widget li:hover, .footer-content .news-widget .news-post a:hover, .header-area .logo-bar .info-box .icon, .header-area .logo-bar .info-box div.text:hover, .icons, .latest-news h4 a:hover, .latest-news h4:hover, .navigation .navbar-default .navbar-nav>li>a:hover, .news-detail h2 a:hover, .news-detail h2:hover, .portfolio-details a, .portfolio-details a i, .portfolio-info .links a, .services-box-2 i, .services-box-2:hover h4, .services-box-2:hover h4 a, .services-text:hover h4, .services-text:hover h4 a, .side-bar .widget ul li a:hover, .slider-caption h1, .slider-grids .tt-slider-title, a, a:focus, a:hover, footer-area .contact-info li a:hover { }
+#main-navigation .navbar-nav li.active, .navigation .dropdown-menu>li>a:focus, .navigation .dropdown-menu>li>a:hover, .navigation-2 .dropdown-menu>li>a:focus, .navigation-2 .dropdown-menu>li>a:hover, .navigation-2 .navbar-default .navbar-nav>.open>a, .navigation-2 .navbar-default .navbar-nav>.open>a:focus, .navigation-2 .navbar-default .navbar-nav>.open>a:hover, .navigation-2 .navbar-default .navbar-nav>li>a:focus, .navigation-2 .navbar-default .navbar-nav>li>a:hover, .navigation-2 .navbar-default .navbar-toggle .icon-bar, .top-bar .social-icons li a:hover {  background-color:#f36621!important }
+.navigation .navbar-default .navbar-nav>.open>a, .navigation .navbar-default .navbar-nav>.open>a:focus, .navigation .navbar-default .navbar-nav>.open>a:hover { }
+#blog .sticky .news-box { border:2px solid #f36621 }
+#today, #today a { background-color:#f36621; color:#fff!important }
+#today td:hover { background-color:#f36621!important }
+.btn-colored, .btn-colored:hover { background-color:#333!important }
+.top-bar .nav-right>li>a:hover { color:#f36621!important }
+.btn-colored:hover { border-color:#333!important; color:#fff!important }
+.profile-tabs .nav-tabs>.active>a, .profile-tabs .nav-tabs>.active>a:focus, .profile-tabs .nav-tabs>.active>a:hover, .profile-tabs .nav-tabs>li>a:hover { background:#f36621!important }
+.btn-primary, .nav-right .dropdown-menu li a:focus, .nav-right .dropdown-menu li a:hover { background-color:#424041!important }
+.profile-tabs .nav-tabs { border-color:-moz-use-text-color -moz-use-text-color #f36621!important }
+.profile-usermenu ul li.active a { border-left:2px solid #f36621!important }
+.btn-primary { border-color:#424041!important; color:#fff!important }
+.btn-primary:hover { background-color:#f36621!important; border-color:#f36621!important; color:#fff!important }
+#banner.hero-3 .form button { background:#f36621!important }
+#banner.hero-3 .form button:hover { background:#424041!important }
+.process-icon { box-shadow:0 0 0 2px #f36621!important }
+.process-icon i { color:#f36621!important }
+.our-process ul li:hover .process-icon { background:#f36621!important }
+.our-app .btn:hover { background-color:#f36621!important; border:1px solid #f36621!important }
+.parallex-small, .quotation-box-1, .quote .quotation-box { background:#262523!important }
+.services-grid::before, .services-grid:hover, clients-grid:hover { border:2px solid #f36621!important }
+blockquote { border-left:5px solid #f36621!important }
+.parallex::before { background:rgba(49,54,57,.9)!important }
+#clients .owl-next, #clients .owl-prev, #post-slider .owl-next, #post-slider .owl-prev, #services .owl-next, #services .owl-prev, #testimonials .owl-next, #testimonials .owl-prev, .date>span { background-color:#f36621!important }
+.news-detail h2, .news-detail h2 a, .slider-caption .btn:hover { color:#323232!important }
+#clients .owl-next:hover, #clients .owl-prev:hover, #post-slider .owl-next:hover, #post-slider .owl-prev:hover, #services .owl-next:hover, #services .owl-prev:hover, #testimonials .owl-next:hover, #testimonials .owl-prev:hover { background-color:#333!important }
+.clients-grid:hover { border:2px solid #f36621!important }
+.social-links-two a:hover { background:#f36621!important; border-color:#f36621!important; color:#fff!important }
+.top-bar.color-scheme .social-icons li a:hover { background:0 0!important }
+.accordion-box .accordion .accord-btn.active, .post-bottom .social-icons a:hover, .team-content, ul.side-bar-list li a.active, ul.side-bar-list li a:hover { background:#f36621!important }
+.custom-heading h2::before, .side-bar .widget h2::before { background-color:#f36621!important }
+.services-box-2 i { border:3px solid #f36621!important }
+.accordion-box .accordion .accord-btn.active { border-color:#f36621!important; color:#fff!important }
+.pagination li:hover>a, .pagination>.active>a, .pagination>.active>a:hover { background-color:#f36621!important; border-color:#f36621!important; color:#fff!important }
+.post-bottom .tag_cloud a:hover, .side-bar .widget .tag_cloud a:hover { color:#fff!important; background:#f36621!important; border:1px solid #f36621!important }
+.post-bottom .social-icons a:hover { color:#fff!important }
+.main-top .scroll-down::after, .main-top .scroll-down::before { border-bottom:2px solid #f36621!important; border-right:2px solid #f36621!important }
+.main-top span#js-rotating { color:#f36621!important }

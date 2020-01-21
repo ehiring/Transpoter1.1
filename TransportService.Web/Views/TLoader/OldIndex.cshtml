@@ -1,0 +1,606 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model  TransportService.Web.Models.Transpoter
+
+@using PagedList;
+@using PagedList.Mvc;
+@using GridMvc.Html
+
+<!-- Revolution Slider -->
+<section class="revolution-slider">
+    <!-- <div class="bannercontainer"> -->
+    <div class="banner">
+
+    </div>
+    <!-- </div> -->
+</section>
+<style>
+    .pagination
+    {
+        width:350px;
+    }
+</style>
+
+<!-- Reservation form -->
+<section id="reservation-form">
+    <!-- <div class="container"> -->
+    <div class="row">
+        <div class="col-md-12">
+            <form class="form-inline reservation-horizontal clearfix" role="form" method="post" action="" name="reservationform" id="reservationform">
+                <!-- Error message -->
+                <div id="message"></div>
+                <div class="row">
+                    <div class="col-sm-1">
+                        <div class="form-group">
+                            <label for="room"> Who I Am</label>
+                            <!-- <div class="popover-icon" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="right" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."> <i class="fa fa-info-circle fa-lg"> </i> </div> -->
+                            <select class="form-control" name="room" id="room">
+                                <option selected="selected" disabled="disabled">Who I Am</option>
+                                <option value="Single" selected="selected">Transporter</option>
+                                <option value="Double">Loader</option>
+                                <option value="Deluxe">Broker</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="email" accesskey="E">Source</label>
+                            @Html.DropDownList("model.SourceId", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select Source", new { @class = "form-control", @id = "SourceID", Title = "SourceId", @style = "margin-right: 10px;width: 165px;" })
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="email" accesskey="E">Destination</label>
+                            @Html.DropDownList("model.DestinationId", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select Destination", new { @class = "form-control", @id = "DestinationID", Title = "DestinationId", @style = "margin-right: 10px;width: 165px;" })
+                        </div>
+                    </div>
+
+                    <div class="col-sm-1">
+                        <div class="form-group">
+                            <label for="checkin">Check-in</label>
+                            <!-- <div class="popover-icon" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="right" data-content="Check-In is from 11:00"> <i class="fa fa-info-circle fa-lg"> </i> </div> -->
+                            <i class="fa fa-calendar infield"></i>
+                            <input name="checkin" type="text" id="checkin" value="" class="form-control" placeholder="Check-in" />
+                        </div>
+                    </div>
+                    <div class="col-sm-1">
+                        <div class="form-group">
+                            <label for="room">Load Type</label>
+                            <!-- <div class="popover-icon" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="right" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."> <i class="fa fa-info-circle fa-lg"> </i> </div> -->
+                            <select class="form-control" name="room" id="room">
+                                <option selected="selected" disabled="disabled">Select Type</option>
+                                <option value="Single">Full Load</option>
+                                <option value="Double">Part Load</option>
+                                <option value="Deluxe">Near By</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-1">
+                        <div class="form-group">
+                            <label for="room">Within KM</label>
+                            <!-- <div class="popover-icon" data-container="body" data-toggle="popover" data-trigger="hover" data-placement="right" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."> <i class="fa fa-info-circle fa-lg"> </i> </div> -->
+                            <select class="form-control" name="room" id="room">
+                                <option selected="selected" disabled="disabled">Select KM</option>
+                                <option value="Single">5 KM</option>
+                                <option value="Double">10 KM</option>
+                                <option value="Deluxe">15 KM</option>
+                                <option value="Double">20 KM</option>
+                                <option value="Deluxe">25 KM</option>
+                                <option value="Double">50 KM</option>
+                                <option value="Double">75 KM</option>
+                                <option value="Double">100 KM</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2">
+                        <button type="submit" class="btn btn-primary btn-block">Search Now</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- </div> -->
+</section>
+
+<!-- Rooms -->
+<section class="rooms mt50">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h2 class="lined-heading"><span>Available Trips</span></h2>
+            </div>
+
+            <div id="content">
+                <!-- Start Content -->
+                <div class="container">
+                    <!--Start Container-->
+                    <div class="row Border">
+                        <div class="col-sm-12">
+                            @*<div class="row places">
+            <div class="col-sm-12" style="margin-top:10px;" align="right">
+                Chennai
+                <input type="hidden" id="citysrc" value="Chennai"> - Madurai
+                <input type="hidden" id="citydest" value="Madurai"> 17-12-2019
+                <input type="hidden" id="citydate" value="17-12-2019">
+                <input type="hidden" id="statesrc" value="Tamil Nadu">
+                <input type="hidden" id="statedest" value="Tamil Nadu">
+                <span class="btn btn-primary btn-md search">Modify Search</span>
+            </div>
+        </div>
+
+        <div class="row ModifySearch Border" align="center">
+
+            <form action="https://www.nammavaagan.com/lorries/searchtrucks" id="searchlorry" name="searchlorry" role="form" method="post" accept-charset="utf-8">
+                <div style="display:none;">
+                    <input type="hidden" name="_method" value="POST">
+                </div>
+                <input type="hidden" name="data[lorries][lorry_trip_id]" id="lry_trip_id" value="">
+                <input type="hidden" name="data[lorries][loads]" id="loads" value="0">
+                <input type="hidden" id="searchtype" name="search_type" value="Outstation">
+                <input type="hidden" name="data[lorries][loadgt]" id="loadsgrt" value="0">
+                <input type="hidden" name="data[lorries][loadval]" id="loadsval" value="0">
+                <input type="hidden" name="data[kilometers]" id="dvDistance">
+
+                <div class="col-sm-2">
+
+                    <input type="text" name="data[src]" id="outFrom" placeholder="Source City" style="width:170px;" class="ui-autocomplete-input" autocomplete="off">
+                    <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
+                    <div class="errorDiv" id="invalid-outFrom"></div>
+                </div>
+
+                <div class="col-sm-2">
+
+                    <input type="text" name="data[desc]" id="outTo" placeholder="Destination City" onblur="showLocation()" style="width:170px;" class="ui-autocomplete-input" autocomplete="off">
+                    <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
+                    <div class="errorDiv" id="invalid-outTo"></div>
+
+                </div>
+
+                <div class="col-sm-2">
+
+                    <input name="onward" id="outonward" type="text" placeholder="Onward Date" style="width:170px;" class="hasDatepicker">
+                    <div class="errorDiv" id="invalid-outonward">
+
+                    </div>
+
+                </div>
+
+                <div class="col-sm-2">
+                    <input type="submit" class="btn btn-system btn-small" id="SubmitButton" value="Search Truck" style="margin-top:10px;">
+                </div>
+
+            </form>
+
+        </div>*@
+                            <div class="row" id="SearchShipmentTruck">
+                                @Html.Partial("_TripList")
+                            </div>
+                           
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="paging"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-sm-12" style="text-align:right; font-size:14px; color:#1586A5; margin-top:10px;">
+                                    <b>&nbsp;&nbsp;&nbsp;Total Records: 2</b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <b> </b>
+                </div>
+                <b></b>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="myModal" role="dialog" data-backdrop="static" data-keyboard="false" style="display: none;">
+
+        
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4>Truck Trip Details</h4>
+            </div>
+
+            <input type="hidden" name="data[TmpLoadDetail][id]" id="id">
+            <div class="modal-body" style="background-color:#FFFFFF">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div style="margin-left:30px;margin-top:15px;">
+                            <!-- <img src="./Nammavaagan.com_ Lorry, Truck, Load Booking Website_files/no_image.jpg" class="Popimg_L BoxSdwFul"> -->
+                        </div>
+                    </div>
+
+                    <div class="col-sm-9">
+                        <input type="hidden" name="data[loads]" id="loads" value="home">
+                        <ul class="nav nav-tabs recently">
+                            <li class="TrpDetLi">
+                                <a href="https://www.nammavaagan.com/#Lorry" data-toggle="tab" style="margin-left:0px;" aria-expanded="false"><b>Lorry Details</b></a>
+                            </li>
+
+                            <li class="TrpDetLi active">
+                                <a href="https://www.nammavaagan.com/#Load" data-toggle="tab" aria-expanded="true"><b>Trip Details</b></a>
+                            </li>
+
+                            <li class="Senmsgli">
+                                <a href="https://www.nammavaagan.com/#Trip" data-toggle="tab"><b>Send Message</b></a>
+                            </li>
+
+                        </ul>
+
+                        <div class="tab-content">
+                            <div class="tab-pane fade" id="Lorry">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <h4 class="classic-title">
+                                            <span>Transport Details</span>
+                                        </h4>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <b>Transport Name</b>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <b>:</b>AREO PACK AND SPACERS
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <b>Mobile Number</b>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <b>:</b> 97XXXXXX47
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-3"><b>Driver Name</b></div>
+                                    <div class="col-sm-3"><b>:</b> AREO PACK AND SPACERS DRIVER</div>
+                                    <div class="col-sm-3"><b>Driver Number</b></div>
+                                    <div class="col-sm-3"><b>:</b> 97XXXXXX47</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <h4 class="classic-title">
+                                            <span>Vehicle Details</span>
+                                        </h4>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-3"><b>Lorry ID</b></div>
+                                    <div class="col-sm-3"><b style="color:#0000CC;">: LRY24230</b></div>
+                                    <div class="col-sm-3"><b>Vehicle Goods Type</b></div>
+                                    <div class="col-sm-3"><b>:</b> Any</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-3"><b>Vehicle Category</b></div>
+                                    <div class="col-sm-3"><b>:</b> LCV - 2 to 7 tons</div>
+                                    <div class="col-sm-3"><b>Vehicle Model</b></div>
+                                    <div class="col-sm-3"><b>:</b> 19FT CONTAINER</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-3"><b>Vehicle Number</b></div>
+                                    <div class="col-sm-3"><b>:</b> TN58Z0678</div>
+                                    <div class="col-sm-3"><b>Vehicle BodyType</b></div>
+                                    <div class="col-sm-3"><b>:</b> Closed</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-3"><b>Vehicle Capacity</b></div>
+                                    <div class="col-sm-3"><b>:</b> 7 Ton</div>
+                                    <div class="col-sm-3"><b>Available Capacity</b></div>
+                                    <div class="col-sm-3"><b>:</b> 7 Ton</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-3"><b>Trip Type</b></div>
+                                    <div class="col-sm-3"><b>:</b> Occasionally</div>
+                                    <div class="col-sm-3"><b>Vehicle LoadType</b></div>
+                                    <div class="col-sm-3"><b>:</b> Any</div>
+                                    <div class="col-sm-3"><b>Vehicle Permit</b></div>
+                                    <div class="col-sm-3"><b>:</b> Local</div>
+                                    <div class="col-sm-3"><b>Vehicle Tracking</b></div>
+                                    <div class="col-sm-3"><b>:</b> No</div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade active in" id="Load">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <h4 class="classic-title">
+                                            <span>Trip Details</span>
+                                        </h4>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-3"><b>Ship Type</b></div>
+                                    <div class="col-sm-3"><b>:</b> Outstation</div>
+                                    <div class="col-sm-3"><b>Savaary Type</b></div>
+                                    <div class="col-sm-3"><b>:</b>  OneWay</div>
+                                    <div class="col-sm-3"><b>Available Date</b></div>
+                                    <div class="col-sm-3"><b>:</b> 16-12-2019</div>
+                                    <div class="col-sm-3"><b>Closing Time</b></div>
+                                    <div class="col-sm-3"><b>:</b> 10:00 PM</div>
+                                    <div class="col-sm-3"><b>Shipping LoadType</b></div>
+                                    <div class="col-sm-3"><b>:</b> Full Load</div>
+                                    <div class="col-sm-3"><b>Rental Type</b></div>
+                                    <div class="col-sm-3"><b>:</b> Trip Base</div>
+                                    <div class="col-sm-3"><b>Fare</b></div>
+                                    <div class="col-sm-3"><b>:</b> Rs 13,000</div>
+                                    <div class="col-sm-3"><b>Kilometer</b></div>
+                                    <div class="col-sm-3"><b>:</b>  N/A</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h4 class="classic-title">
+                                            <span>From</span>
+                                        </h4>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <h4 class="classic-title">
+                                            <span>To</span>
+                                        </h4>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-3"><b>State</b></div>
+                                    <div class="col-sm-3"><b>:</b> Tamil Nadu</div>
+                                    <div class="col-sm-3"><b>State</b></div>
+                                    <div class="col-sm-3"><b>:</b> Tamil Nadu</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-3"><b>City</b></div>
+                                    <div class="col-sm-3"><b>:</b> Madurai</div>
+                                    <div class="col-sm-3"><b>City</b></div>
+                                    <div class="col-sm-3"><b>:</b> Chennai</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-3"><b>Area</b></div>
+                                    <div class="col-sm-3"><b>:</b> Kochadai </div>
+                                    <div class="col-sm-3"><b>Area</b></div>
+                                    <div class="col-sm-3"><b>:</b> Chennai.</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-3"><b>Pincode</b></div>
+                                    <div class="col-sm-3"><b>:</b> 625016</div>
+                                    <div class="col-sm-3"><b>Pincode</b></div>
+                                    <div class="col-sm-3"><b>:</b> 600001</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-3"><b>Pickup point</b></div>
+                                    <div class="col-sm-3"><b>:</b> KOCHADAI MADURAI</div>
+                                    <div class="col-sm-3"><b>Dropping point</b></div>
+                                    <div class="col-sm-3"><b>:</b> ANYWHERE IN CHENNAI</div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="Trip">
+                                <form action="https://www.nammavaagan.com/lorries/ajax_lrytrp_prv/home" id="customer" name="customer" role="form" method="post" accept-charset="utf-8">
+                                    <div style="display:none;">
+                                        <input type="hidden" name="_method" value="POST">
+                                    </div>
+                                    <input type="hidden" name="data[Customer][view_id]" value="LRY24230" id="CustomerViewId">
+                                    <input type="hidden" name="data[Customer][view_type]" value="LorryShipment" id="CustomerViewType">
+                                    <input type="hidden" name="data[Customer][onward_date]" value="16-12-2019" id="CustomerOnwardDate">
+                                    <input type="hidden" name="data[msg]" value="Message">
+                                    <input type="hidden" name="data[lrytrp_id]" value="3245">
+                                    <input type="hidden" name="data[model]" value="19FT CONTAINER">
+
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <h4 class="classic-title"><span>Send Your Details</span></h4>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-4">Name</div>
+                                        <div class="col-sm-8">
+                                            <input name="data[Customer][cust_name]" id="cust_name" style="width:100%;" placeholder="Name" maxlength="20" type="text">
+                                            <div class="errorDiv" id="invalid-cust_name"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-4">Mobile Number</div>
+                                        <div class="col-sm-8">
+                                            <input name="data[Customer][mob_no]" id="mob_number" placeholder="Mobile Number" style="width:100%;" maxlength="15" type="text">
+                                            <div class="errorDiv" id="invalid-mob_number"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-4">Comment</div>
+                                        <div class="col-sm-8">
+                                            <textarea name="data[Customer][description]" id="dec" placeholder="I saw your Lorry Details in Nammavaagan.com,I have a requirement so kindly contact me" style="width:100%;height: 80px;" cols="30" rows="6"></textarea>
+                                            <div class="errorDiv" id="invalid-dec"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-12" align="center">
+                                            <a href="javascript:void(0);">
+                                                <input type="submit" id="ltprv-bk" value="Back" data-dismiss="modal" class="btn btn-system btn-small">
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="row HourChrg submitDet">
+                    <div class="col-sm-2">
+                        <b>Vehicle Description</b>
+                    </div>
+                    <div class="col-sm-10">
+                        <b>:</b> AREO PACK AND SPACERS READY TO TRAVEL YOUR VALUABLE PRODUCTS FROM MADURAI TO CHENNAI
+                    </div>
+                </div>
+
+                <div class="row HourChrg submitDet">
+                    <div class="col-sm-2">
+                        <b>Route</b>
+                    </div>
+                    <div class="col-sm-10">
+                        <b>:</b> N/A
+                    </div>
+                </div>
+
+                <div class="row HourChrg submitDet Note">
+                    <div class="col-sm-2">
+                        <b>Note</b>
+                    </div>
+                    <div class="col-sm-10">
+                        <b class="Notes"> : </b>If customer book the truck for partload then trip fare calculated based on weightage
+                    </div>
+                </div>
+
+                <div class="submitDet">
+
+                    <div class="row Continue">
+                        <div class="col-sm-12" align="center">
+
+                            <a href="javascript:void(0);">
+                                <input type="submit" id="ltprv-bk" value="Back" data-dismiss="modal" class="btn btn-system btn-small">
+                            </a>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- </div> -->
+        <script>
+            $(document).ready(function () {
+                
+
+                $('#DestinationID').on("change", function (e) {
+
+                    var S;
+                    var D
+                    if ($("#SourceID option:selected").text() == "Select Source") {
+                        S = ""
+                    }
+                    else {
+                        S = $("#SourceID option:selected").text();
+
+                    }
+                    if ($("#DestinationID option:selected").text() == "Select Destination") {
+                        D = ""
+                    }
+                    else {
+                        D = $("#DestinationID option:selected").text();
+                    }
+
+                e.preventDefault();
+                    $.ajax({
+                    url: "@Url.Action("SearchTrips", "TLoader")",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+
+                        Source: S,
+                        Destination: D,
+                    }),
+                    dataType: "text",
+                    type: "POST",
+                    async: true,
+                     success: function (data) {                        
+                         $("#SearchShipmentTruck").html(data);                     
+
+                    },
+                    error: function (data) {
+
+                    },
+                    complete: function () {
+
+                    }
+                });
+
+         });
+    });
+ 
+
+        </script>
+
+        <script type="text/javascript">
+            function tripbkload(lrytrp_id) {
+                var base_path = $('#base_path').val();
+                if (lrytrp_id != "") {
+                    $.ajax({
+                        url: base_path + "lorries/ajax_srctruckbookload/",
+                        type: 'post',
+                        data: "lrytrp_id=" + lrytrp_id,
+                        beforeSend: function () { $('#load_img').css('visibility', 'visible'); },
+                        success: function (result) {
+                            if (result) {
+                                $('#bookprv-' + lrytrp_id).attr('disabled', true);
+                                $("#loadet-" + lrytrp_id).html(result);
+                            }
+                        },
+                        complete: function () { $('#load_img').css('visibility', 'hidden'); }
+                    });
+                }
+            }
+            function showalert() {
+                alert("You Can't to book because your distance is too low to book this lorry");
+            }
+        </script>
+
+    </div>
+
+</section>
+
+<!-- Call To Action -->
+<section id="call-to-action" class="mt100">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-sm-8 col-xs-12">
+                <h2>This is a Call to Action! Need a hotel/resort/inn template?</h2>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-12">
+                <a href="http://themeforest.net/item/starhotel-responsive-hotel-booking-template/7784956" target="_blank" class="btn btn-default btn-lg pull-right">Purchase hotel template</a>
+            </div>
+        </div>
+    </div>
+</section>

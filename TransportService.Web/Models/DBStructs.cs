@@ -49,7 +49,10 @@ namespace TransportService.Web.Models
     public static class DDLListNames
     {
         public const string CompanyTypeList = "CompanyTypeList";
+        public const string ProofTypeList = "ProofTypeList";
         
+            public const string VehicalTypeList = "VehicalTypeList";
+
     }
 
 

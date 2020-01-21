@@ -10,9 +10,9 @@ using TransportService.Web.BusinessLayer;
 using TransportService.Web.Models.Activity;
 using System.Data;
 using TransportService.Web.Models.Masters;
-using TransportService.Web.Models;
 using TransportService.Web.Models.Transaction;
 using System.Web.Helpers;
+using System.IO;
 
 namespace TransportService.Web.Controllers
 {
@@ -277,6 +277,7 @@ namespace TransportService.Web.Controllers
             return Json("Trip Updated Sucessfull");
             
         }
+  
         public ActionResult AddSubTrip(int? Source, int TripId = 0)
         {
             if (Session[UserColumns.UserID] != null)
@@ -293,7 +294,7 @@ namespace TransportService.Web.Controllers
                 return RedirectToAction("LoginUser");
             }
         }
-        public JsonResult GetCityAgainstTheSource(int TripID = 0, int SourceID = 0)
+            public JsonResult GetCityAgainstTheSource(int TripID = 0, int SourceID = 0)
         {
             var list = _tripBusinessLayer.GetDropDownData("TripAndSequenceWiseCityList", SourceID, TripID);
             return Json(list);
@@ -400,7 +401,7 @@ namespace TransportService.Web.Controllers
         #endregion
 
         #region "Load Methods"
-        public ActionResult New_LoaderIndex(int? page)
+        public ActionResult LoaderIndex(int? page)
         {
             Loader _loader = new Loader();
             _loader.Loaders = _tripBusinessLayer.GetLoaderList(page, "", "");
@@ -411,7 +412,7 @@ namespace TransportService.Web.Controllers
             ViewData["SearchApplied"] = 0;
 
             // return View();
-            return Request.IsAjaxRequest() ? (ActionResult)PartialView("New_LoaderIndex", _loader) : View("New_LoaderIndex", _loader);
+            return Request.IsAjaxRequest() ? (ActionResult)PartialView("LoaderIndex", _loader) : View("LoaderIndex", _loader);
         }
         public ActionResult SearchLoads(int? page, string Source, string Destination)
         {
@@ -423,7 +424,7 @@ namespace TransportService.Web.Controllers
             ViewData["CityList"] = _tripBusinessLayer.GetDropDownData("CityList", 0);
             ViewData["SearchApplied"] = 0;
 
-            // return View();
+            //return View();
             return Request.IsAjaxRequest() ? (ActionResult)PartialView("_LoadList", _loader) : View("_LoadList", _loader);
         }
         public ActionResult AddLoad()
@@ -431,10 +432,10 @@ namespace TransportService.Web.Controllers
             if (Session[UserColumns.UserID] != null)
             {
                 ViewData["CityList"] = _tripBusinessLayer.GetDropDownData("CityList", 0);
-            //MaterialList
-            ViewData["MaterialList"] = _tripBusinessLayer.GetDropDownData("MaterialList", 0);
-            ViewData["UOMList"] = _tripBusinessLayer.GetDropDownData("UOMList", 0);
-            ViewData["VehicalTypeList"] = _tripBusinessLayer.GetDropDownData("VehicalTypeList");
+                //MaterialList
+                ViewData["MaterialList"] = _tripBusinessLayer.GetDropDownData("MaterialList", 0);
+                ViewData["UOMList"] = _tripBusinessLayer.GetDropDownData("UOMList", 0);
+                ViewData["VehicalTypeList"] = _tripBusinessLayer.GetDropDownData("VehicalTypeList");
                 return View();
 
             }
@@ -659,7 +660,8 @@ namespace TransportService.Web.Controllers
             if (Convert.ToInt32(Session[RoleColumns.RoleID]) == enumRole.Transporter.GetHashCode())
             {
                 ViewData["TruckCapacityList"] = _tripBusinessLayer.GetDropDownData("TruckCapacityList");
-                ViewData["VehicalTypeList"] = _tripBusinessLayer.GetDropDownData("VehicalTypeList");
+                ViewData[DDLListNames.VehicalTypeList] = _tripBusinessLayer.GetDropDownData(DDLListNames.VehicalTypeList);
+                ViewData[DDLListNames.ProofTypeList] = _tripBusinessLayer.GetDropDownData(DDLListNames.ProofTypeList);
                 ViewBag.IsTripCall = isTripCall;
                 return View();
             }
@@ -670,30 +672,46 @@ namespace TransportService.Web.Controllers
             
         }
         [HttpPost]
-        public ActionResult AddTruck1(Vehicle _vehicle)
+        public ActionResult AddTruck1(Vehicle _vehicle, HttpPostedFile postedFile)
         {
-            JobDbContext jobDbContext = new JobDbContext();
-            var result = jobDbContext.Database.ExecuteSqlCommand(@"exec USP_AddVehicle @VehicleTypeID ,
-            @VehicleNo ,
-            @Description ,
-            @InsuredBy  ,
-            @InsuranceStartDate ,
-            @InsuranceExpDate ,
-            @OwnerID ,
-            @GPSStatus ,
-            @Phone ,
-            @ContactName ",
-            new SqlParameter("@VehicleTypeID", _vehicle.VehicleTypeID),
-              new SqlParameter("@VehicleNo", _vehicle.VehicleNo),
-                  new SqlParameter("@Description", _vehicle.Description == null ? (object)DBNull.Value : _vehicle.Description),
-                   new SqlParameter("@InsuredBy", _vehicle.InsuredBy == null ? (object)DBNull.Value : _vehicle.InsuredBy),
-                    new SqlParameter("@InsuranceStartDate", _vehicle.InsuranceStartDate == null ? (object)DBNull.Value : _vehicle.InsuranceStartDate),
-                     new SqlParameter("@InsuranceExpDate", _vehicle.InsuranceExpDate == null ? (object)DBNull.Value : _vehicle.InsuranceExpDate),
-                      new SqlParameter("@OwnerID", Session[ClientColumns.ClientID]),
-                       new SqlParameter("@GPSStatus", _vehicle.GPSStatus == null ? (object)DBNull.Value : _vehicle.GPSStatus),
-                        new SqlParameter("@Phone", _vehicle.Phone == null ? (object)DBNull.Value : _vehicle.Phone),
-                        new SqlParameter("@ContactName", _vehicle.ContactName ?? (object)DBNull.Value));
-            return Json("Truck Added Sucessfully");
+
+            byte[] bytes;
+            using (BinaryReader br = new BinaryReader(postedFile.InputStream))
+            {
+                bytes = br.ReadBytes(postedFile.ContentLength);
+            }
+            using (JobDbContext jobDbContext = new JobDbContext())
+            { 
+                 var result = jobDbContext.Database.ExecuteSqlCommand(@"exec USP_AddVehicle @VehicleTypeID ,
+                                                                                        @VehicleNo ,
+                                                                                        @Description ,
+                                                                                        @InsuredBy  ,
+                                                                                        @InsuranceStartDate ,
+                                                                                        @InsuranceExpDate ,
+                                                                                        @OwnerID ,
+                                                                                        @GPSStatus ,
+                                                                                        @Phone ,
+                                                                                        @ContactName ,
+                                                                                        @ProofTypeID ,
+                                                                                        @DocumentName ,
+                                                                                        @ContentType ,
+                                                                                        @Data ",
+                                                                                        new SqlParameter("@VehicleTypeID", _vehicle.VehicleTypeID),
+                                                                                        new SqlParameter("@VehicleNo", _vehicle.VehicleNo),
+                                                                                        new SqlParameter("@Description", _vehicle.Description == null ? (object)DBNull.Value : _vehicle.Description),
+                                                                                        new SqlParameter("@InsuredBy", _vehicle.InsuredBy == null ? (object)DBNull.Value : _vehicle.InsuredBy),
+                                                                                        new SqlParameter("@InsuranceStartDate", _vehicle.InsuranceStartDate == null ? (object)DBNull.Value : _vehicle.InsuranceStartDate),
+                                                                                        new SqlParameter("@InsuranceExpDate", _vehicle.InsuranceExpDate == null ? (object)DBNull.Value : _vehicle.InsuranceExpDate),
+                                                                                        new SqlParameter("@OwnerID", Session[ClientColumns.ClientID]),
+                                                                                        new SqlParameter("@GPSStatus", _vehicle.GPSStatus == null ? (object)DBNull.Value : _vehicle.GPSStatus),
+                                                                                        new SqlParameter("@Phone", _vehicle.Phone == null ? (object)DBNull.Value : _vehicle.Phone),
+                                                                                        new SqlParameter("@ContactName", _vehicle.ContactName ?? (object)DBNull.Value),
+                                                                                        new SqlParameter("@ProofTypeID", _vehicle.ProofTypeID ?? (object)DBNull.Value),
+                                                                                        new SqlParameter("@DocumentName", Path.GetFileName(postedFile.FileName)),
+                                                                                        new SqlParameter("@ContentType", postedFile.ContentType));
+
+                    return Json("Truck Added Sucessfully");
+            }
         }
 
         public ActionResult GetVehicleTypeByID(int VehicleTypeID)
@@ -739,9 +757,6 @@ namespace TransportService.Web.Controllers
 
             using (JobDbContext _jobDbContext = new JobDbContext())
             {
-
-
-
                 var result = _jobDbContext.Database.ExecuteSqlCommand(@"exec USP_RegisterClient
                                                                         @ClientTypeID  ,
                                                                         @Email ,
