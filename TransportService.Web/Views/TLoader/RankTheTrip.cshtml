@@ -1,0 +1,194 @@
+﻿
+@model IEnumerable<TransportService.Web.Models.Masters.RankingCriteria>
+@using TransportService.Web.Models.Masters
+
+@{
+    ViewBag.Title = "RankTheTrip";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .Font-md{
+        font-size:14px;
+    }
+</style>
+<div class="container-fluid">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h5 class="panel-title"><b>Rate Your Trip</b> </h5>
+        </div>
+        <div class="panel-body">
+            <table id="tblQuestion">
+                <tbody>
+                    @{
+                        int SrNo = 0;
+
+                        foreach (RankingCriteria item in Model)
+                        {
+                            string groupName = "Group";
+                            SrNo = SrNo + 1;
+                            groupName = groupName + item.CriteriaQuestionID.ToString();
+                            <tr>
+                                <td class="clsSrNo"><label data-role="label" data-i18n-text="control_label_38248107" class="col-sm-1 Font-md">@SrNo</label></td>
+                                <td class="clsCriteriaQuestionID hidden">@item.CriteriaQuestionID</td>
+                                <td class="clsCriteriaQuestion">
+                                    <label data-role="label" class="Font-md" id="lblQuestion" data-i18n-text="control_label_38248107">@item.CriteriaQuestion</label>
+                                </td>
+                                <td class="clsAnswer4">
+                                    <div data-role="input-row" data-is-last-row="1" data-fill-colspan="0" class="radio-inline ">
+                                        <div data-role="choice" data-size="full">
+                                            <label data-role="choice" id="lblAnswer4">
+                                                <input type="radio" id="rdbAnswer4" name="@groupName" value="@item.Answer4Value" data-index="3" data-role="i123-input" Text="@item.Answer4">
+                                                <label data-role="radio" for="rdbAnswer4" aria-labelledby="lblAnswer4" role="radio"></label>
+                                                <span data-role="option-text" class="Font-md" data-i18n-html="control_label_38248107_choice_3" data-skip-markdown="true">@item.Answer4</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td class="clsAnswer3">
+                                    <div data-role="input-row" data-fill-colspan="0" class="radio-inline ">
+                                        <div data-role="choice" data-size="full">
+                                            <label data-role="choice" id="lblAnswer3">
+                                                <input type="radio" id="rdbAnswer3" name="@groupName" value="@item.Answer3Value" data-index="2" data-role="i123-input" Text="@item.Answer3">
+                                                <label data-role="radio" for="rdbAnswer3" aria-labelledby="lblAnswer3" role="radio"></label>
+                                                <span data-role="option-text" class="Font-md" data-i18n-html="control_label_38248107_choice_2" data-skip-markdown="true">@item.Answer3</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="clsAnswer2">
+                                    <div data-role="input-row" data-fill-colspan="0" class="radio-inline ">
+                                        <div data-role="choice" data-size="full">
+                                            <label data-role="choice" id="lblAnswer2">
+                                                <input type="radio" id="rdbAnswer2" name="@groupName" value="@item.Answer2Value" data-index="1" data-role="i123-input" Text="@item.Answer2">
+                                                <label data-role="radio" for="rdbAnswer2" aria-labelledby="lblAnswer2" role="radio"></label>
+                                                <span data-role="option-text" class="Font-md" data-i18n-html="control_label_38248107_choice_1" data-skip-markdown="true">@item.Answer2</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="clsAnswer1">
+                                    @*<div data-type="radio">*@
+                                    <div data-role="input-row" data-is-first-row="1" data-fill-colspan="0" class="radio-inline ">
+                                        <div data-role="choice" data-size="full">
+                                            <label data-role="choice" id="lblAnswer1">
+                                                <input type="radio" id="rdbAnswer1" name="@groupName" value="@item.Answer1Value" data-index="0" data-role="i123-input" Text="@item.Answer1">
+                                                <label data-role="radio" for="rdbAnswer1" aria-labelledby="lblAnswer1" role="radio"></label>
+                                                <span data-role="option-text" class="Font-md" data-i18n-html="control_label_38248107_choice_0" data-skip-markdown="true">@item.Answer1</span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <label data-role="error" id="radio-00000010-error-acc" data-is-empty="1"></label>
+                                    @*</div>*@
+
+                                </td>
+
+                            </tr>
+                        }
+                    }
+
+
+                </tbody>
+               
+            </table>
+            <div class="row">
+                <div class="col text-center">
+                    <input type="button" id="btnSubmit" value="Submit" class="btn btnAction"/>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+</div>
+<script>
+    var GroupList = []; 
+    $(document).on("click", "#btnSubmit", function (e) {
+        //var value = $("input[name='rdbGroup']:checked").val();
+        //var text = $("input[name='rdbGroup']:checked").attr('Text');
+        var ArrRankingCriteriaDetails = [];
+
+        $('#tblQuestion tbody tr').each(function (k, v) {
+            var groupName = "Group";
+            var trElement = $(this);
+            groupName = groupName + trElement.find('td.clsCriteriaQuestionID').text();
+            var AnswerValue = $("input[name='" + groupName + "']:checked").val();
+            var Answer = $("input[name='" + groupName + "']:checked").attr('Text');
+
+
+            //var tdGroupVal = trElement.index() + "~" + groupName;
+            GroupList.push(groupName);
+
+            var tdVals = trElement.find('td.clsSrNo').text() + "~" +
+                trElement.find('td.clsCriteriaQuestionID').text() + "~" +
+                Answer + "~" +
+                AnswerValue + "~";
+                ArrRankingCriteriaDetails.push(tdVals);
+
+
+        });
+        var isValid = 1;
+        for (var i = 0; i < GroupList.length; i++) {
+            if (!$("input[name='" + GroupList[i] + "']:checked").val()) {
+                isValid = 0;
+                break;
+            }
+        }
+
+        if (isValid == 0) {
+            alert("Answer all the Questions");
+            return;
+
+        }
+        
+
+
+
+        var tripRankingDetails = [];
+        for (var i = 0; i < ArrRankingCriteriaDetails.length; i++) {
+            var arrElement = ArrRankingCriteriaDetails[i].split("~");
+            item = {}
+            item["SerialNo"] = arrElement[0];
+            item["CriteriaQuestionID"] = arrElement[1];
+            item["Answer"] = arrElement[2];
+            item["AnswerValue"] = arrElement[3];
+            
+            tripRankingDetails.push(item);
+        }
+
+
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/TLoader/RankTheTrip',
+            data:
+            {
+                TripID: 1057,
+                tripRankingDetails: tripRankingDetails
+               
+            },
+            success: function (da) {
+                alert(da);
+                ClearData();
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Error");
+            }
+        });
+
+        
+    });
+    function ClearData() {
+
+        for (var i = 0; i < GroupList.length; i++)
+        {
+            //var arrElement = GroupList[i].split("~");
+            //var groupName = arrElement[1];
+            var groupName = GroupList[i];
+            $("input:radio[name='"+groupName+"']").each(function () { $(this).prop('checked', false); });
+
+        }
+    }
+</script>
+
+    

@@ -12,10 +12,210 @@
         width: 350px;
     }
 </style>
-<!-- SERACH lIST -->
 
+
+
+
+<!-- SEARCH-SECTION -->
+<div ng-app="myApp2" id="CntCar" ng-controller="CarlistCntl2" style="margin-top: -60px;">
+    <div class="banner_inner">
+        <ul class="nav nav-pills">
+            <li class="active"><a class="btn btn-primary btn-sm" data-toggle="pill" href="#load">Loader </a></li>
+            <li><a class="btn btn-sm transport-button" data-toggle="pill" href="#truck">SHIPPER </a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="load" class="tab-pane fade in active">
+                <div class="banner_inner search_bg_cab">
+                    <form id="formTransfer" method="post">
+
+                        <div class="clr"></div>
+                        <!-- <div class="search_bg_cab"></div> -->
+
+                        <div class="c_col_1" id="dvOutSource">
+                            <input class="input_city_c clsAirAuto" id="ddlSource" name="SourceCity" type="text" autocomplete="off" placeholder="From" />
+                            <div id="swap" class="swipe-cab"></div>
+                        </div>
+                        <div class="c_col_1" id="dvOutSource">
+                            <input class="input_city_c clsAirAuto" id="ddlSource" name="SourceCity" type="text" autocomplete="off" placeholder="To" />
+
+                        </div>
+                        <div class="c_col_2">
+                            <input type="text" id="txtDate" class="input_cld_c" name="travelDate1" autocomplete="off" onkeypress="return false" placeholder="Departure" />
+                            <span class="dte_icn"></span>
+                        </div>
+                        <div class="c_col_1-rentl">
+                            <div class="slct-pac">
+                                <select id="sltPackage" class="select_box_pac-ren" name="RentalPkg">
+                                    <option value="">Load Type</option>
+                                    <option value="1_10">Part Load</option>
+                                    <option value="2_20">Full Load</option>
+                                    <option value="3_40">Near By</option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="c_col_2-rentl">
+                            <div class="slct-pac1">
+                                <select id="sltPackage" class="select_box_pac-ren1" name="RentalPkg">
+                                    <option value="">Within KM</option>
+                                    <option value="1_10">10 km</option>
+                                    <option value="2_20">20 km</option>
+                                    <option value="3_40">30 km</option>
+                                    <option value="4_40">40 km</option>
+                                    <option value="5_50">50 km</option>
+                                    <option value="6_60">60 km</option>
+                                    <option value="7_70">70 km</option>
+                                    <option value="8_80">80 km</option>
+                                    <option value="9_90">90 km</option>
+                                    <option value="10_100">100 km</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="c_col_v4">
+                            <div class="src_btn_cab" ng-click="validate();">
+                                Search
+                            </div>
+                        </div>
+
+
+                    </form>
+                    <div class="clr"></div>
+                </div>
+            </div>
+            <div id="truck" class="tab-pane fade in ">
+                <div class="banner_inner search_bg_cab">
+                    <form id="formTransfer" method="post">
+
+                        <div class="clr"></div>
+                        <!-- <div class="search_bg_cab"></div> -->
+
+                        <div class="c_col_1" id="dvOutSource">
+                            <input class="input_city_c clsAirAuto" id="ddlSource" name="SourceCity" type="text" autocomplete="off" placeholder="From" />
+                            <div id="swap" class="swipe-cab"></div>
+                        </div>
+                        <div class="c_col_1" id="dvOutSource">
+                            <input class="input_city_c clsAirAuto" id="ddlSource" name="SourceCity" type="text" autocomplete="off" placeholder="To" />
+
+                        </div>
+                        <div class="c_col_2">
+                            <input type="text" id="txtDate" class="input_cld_c" name="travelDate1" autocomplete="off" onkeypress="return false" placeholder="Departure" />
+                            <span class="dte_icn"></span>
+                        </div>
+                        <div class="c_col_1-rentl">
+                            <div class="slct-pac">
+                                <select id="sltPackage" class="select_box_pac-ren" name="RentalPkg">
+                                    <option value="">Truck Type</option>
+                                    <option value="1_10">Part Load</option>
+                                    <option value="2_20">Full Load</option>
+                                    <option value="3_40">Near By</option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="c_col_2-rentl">
+                            <div class="slct-pac1">
+                                <select id="sltPackage" class="select_box_pac-ren1" name="RentalPkg">
+                                    <option value="">Within KM</option>
+                                    <option value="1_10">10 km</option>
+                                    <option value="2_20">20 km</option>
+                                    <option value="3_40">30 km</option>
+                                    <option value="4_40">40 km</option>
+                                    <option value="5_50">50 km</option>
+                                    <option value="6_60">60 km</option>
+                                    <option value="7_70">70 km</option>
+                                    <option value="8_80">80 km</option>
+                                    <option value="9_90">90 km</option>
+                                    <option value="10_100">100 km</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="c_col_v4">
+                            <div class="src_btn_cab" ng-click="validate();">
+                                Search
+                            </div>
+                        </div>
+
+
+                    </form>
+                    <div class="clr"></div>
+                </div>
+            </div>
+        </div>
+        <!-- <div id="nav" style="width: 25%;margin-left: 550px;">
+                   <a class="btn btn-primary btn-sm " data-target="#request-quote" data-toggle="modal">Loader </a>
+                   <a href="#" target="_blank" data-toggle="modal"
+                     class="btn btn-sm transport-button" id="directory"><span>SHIPPER</span> </a>
+                 </div>
+               <div class="clr"></div>-->
+        <!-- SEARCH-FORM START -->
+        <!-- <div class="banner_inner search_bg_cab">
+            <form id="formTransfer" method="post" >
+
+                <div class="clr"></div>
+
+                    <div class="c_col_1" id="dvOutSource">
+                        <input class="input_city_c clsAirAuto" id="ddlSource" name="SourceCity" type="text" autocomplete="off" placeholder="From" />
+                        <div id="swap" class="swipe-cab"></div>
+                    </div>
+                    <div class="c_col_1" id="dvOutSource">
+
+                        <input class="input_city_c clsAirAuto" id="ddlSource" name="SourceCity" type="text" autocomplete="off" placeholder="To" />
+
+                    </div>
+                    <div class="c_col_2">
+
+                        <input type="text" id="txtDate" class="input_cld_c" name="travelDate1" autocomplete="off" onkeypress="return false" placeholder="Departure" />
+
+                        <span class="dte_icn"></span>
+                    </div>
+
+                    <div class="c_col_1-rentl" >
+                        <div class="slct-pac">
+                            <select id="sltPackage" class="select_box_pac-ren" name="RentalPkg">
+                                <option value="">Load Type</option>
+                                <option value="1_10">Part Load</option>
+                                <option value="2_20">Full Load</option>
+                                <option value="3_40">Near By</option>
+
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="c_col_2-rentl" >
+                        <div class="slct-pac1">
+                            <select id="sltPackage" class="select_box_pac-ren1" name="RentalPkg">
+                                <option value="">Within KM</option>
+                                <option value="1_10">10 km</option>
+                                <option value="2_20">20 km</option>
+                                <option value="3_40">30 km</option>
+                                <option value="4_40">40 km</option>
+                                <option value="5_50">50 km</option>
+                                <option value="6_60">60 km</option>
+                                <option value="7_70">70 km</option>
+                                <option value="8_80">80 km</option>
+                                <option value="9_90">90 km</option>
+                                <option value="10_100">100 km</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="c_col_v4">
+                        <div class="src_btn_cab" ng-click="validate();">
+                            Search
+                        </div>
+                    </div>
+
+
+            </form>
+            <div class="clr"></div>
+        </div> -->
+        <!-- SEARCH-FORM END -->
+        <div class="clr"></div>
+    </div>
+</div>
+<!-- SERACH lIST -->
 <section class="searchList mt50">
-    <div class="container" >
+    <div class="container">
         <div class="row">
             <div class="col-sm-12">
                 <h2 class="lined-heading"><span>Available Trips</span></h2>

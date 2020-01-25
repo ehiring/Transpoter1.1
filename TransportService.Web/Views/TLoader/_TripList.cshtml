@@ -63,7 +63,7 @@
 
             @if (Session[UserColumns.UserID] == null)
             {
-                @Html.ActionLink("Book Now", "AddSubTrip", new { Source = item1.SourceID, TripId = item1.TripID }, new { @Class = "drsecP" }) <br />
+                @Html.ActionLink("Book Now", "LoginUser", null, new { @Class = "drsecP" }) <br />
 
             }
             else

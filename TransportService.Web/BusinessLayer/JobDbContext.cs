@@ -30,8 +30,8 @@ namespace TransportService.Web.BusinessLayer
         public DbSet<MaterialList> DBMaterialList { get; set; }
         public DbSet<LoaderEdit> DBLoaderEdit { get; set; }
         public DbSet<CityArray> DBCityArray { get; set; }
-        
-
+        public DbSet<TruckDocuments> DBTruckDocuments { get; set; }
         public DbSet<VehicleType> VehicleTypes { get; set; }
+        public DbSet<RankingCriteria> DBRankingCriterias { get; set; }
     }
 }

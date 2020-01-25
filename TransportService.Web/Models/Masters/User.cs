@@ -12,6 +12,7 @@ namespace TransportService.Web.Models.Masters
         public int? UserTypeID { get; set; }
         public int ClientID { get; set; }
         public int ClientTypeID { get; set; }
+        public int? CityID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Password { get; set; }
@@ -36,7 +37,7 @@ namespace TransportService.Web.Models.Masters
         //public string IPAddress { get; set; }
         public bool IsUserNameVerified { get; set; }
         public Guid? ActivationCode { get; set; }
-        public int OTP { get; set; }
+        public int? OTP { get; set; }
 
     }
     public class LoginUser
@@ -58,6 +59,21 @@ namespace TransportService.Web.Models.Masters
         public int RoleID { get; set; }
 
     }
+
+    public class UserDocuments
+    {
+        public int DocumentID { get; set; }
+        public int DocumentTypeID { get; set; }
+        public string DocumentName { get; set; }
+        public string ContentType { get; set; }
+        public byte[] Data { get; set; }
+        public int UserID { get; set; }
+        
+
+    }
+
+
+
 
     public static class UserColumns
     {
@@ -89,14 +105,14 @@ namespace TransportService.Web.Models.Masters
     {
 
         public const string USP_UpdateClientAndUser = @"exec USP_UpdateClientAndUser 
-                                                        @ClientID ,
-                                                        @UserID ,
-                                                        @FirstName   ,
-                                                        @LastName   ,
-                                                        @Password ,
-                                                        @Email  ,
-                                                        @Address1   ,
-                                                        @Address2  ,
+                                                        @ClientID,
+                                                        @UserID,
+                                                        @FirstName,
+                                                        @LastName,
+                                                        @Password,
+                                                        @Email,
+                                                        @Address1,
+                                                        @Address2,
                                                         @AlternateContactPerson  ,
                                                         @AlternateMobileNo ,
                                                         @GSTNumber  ,
@@ -111,7 +127,10 @@ namespace TransportService.Web.Models.Masters
                                                         @CompanyTypeID  ,
                                                         @ServiceTaxNo ,
                                                         @CompanyPanNo ,		
-                                                        @CompanyWebsite ";
+                                                        @CompanyWebsite,
+                                                        @DocumentName ,
+                                                        @ContentType ,
+                                                        @Data ";
 
     }
 }

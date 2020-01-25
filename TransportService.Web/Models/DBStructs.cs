@@ -50,8 +50,16 @@ namespace TransportService.Web.Models
     {
         public const string CompanyTypeList = "CompanyTypeList";
         public const string ProofTypeList = "ProofTypeList";
+        public const string VehicalTypeList = "VehicalTypeList";
+        public const string CityList = "CityList";
+
+    }
+    public static class ModelsNames
+    {
+        public const string User = "User";
+        public const string Company = "Company";
+        public const string UserDocuments = "UserDocuments";
         
-            public const string VehicalTypeList = "VehicalTypeList";
 
     }
 

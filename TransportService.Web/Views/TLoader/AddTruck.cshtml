@@ -1,4 +1,6 @@
 ﻿@using TransportService.Web.Models
+@using System
+@using TransportService.Web.Models.Masters
 @{
                 /**/
 
@@ -10,10 +12,10 @@
 
 @model TransportService.Web.Models.Masters.Vehicle
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
-@using (Html.BeginForm())
+@using (Html.BeginForm("AddTruck1","TLoader",FormMethod.Post,new { enctype="multipart/form-data"}))
 {
     @Html.AntiForgeryToken()
-<div class="container-fluid">
+    <div class="container-fluid">
     <hr />
     <input type="hidden" id="hdnIsTripCall" value="@ViewBag.IsTripCall"
     <div class="row">
@@ -222,9 +224,13 @@
 
 
 
+    
+
+
 
     $('#btnSubmit').on("click", function (e) {
         e.preventDefault();
+        alert('Hi');
         var bFlagvalid = 1;
         
         if ($("#register_number").val() == null || $("#register_number").val() == "") {
@@ -239,44 +245,38 @@
         if( bFlagvalid== 0) {
             return 0;
         }
+        alert('A');
+
+        var formData = new FormData();
+        var file = document.getElementById("upload_file1").files[0];
+        formData.append("VehicleTypeID", $("#VehicleTypeID option:selected").val());
+        formData.append("ProofTypeID", $("#ProofTypeID option:selected").val());
+        formData.append("VehicleNo", $("#register_number").val());
+        formData.append("Description", $("#truck_description").val());
+        formData.append("InsuredBy", $("#truck_insuredby").val());
+        formData.append("InsuranceStartDate", $("#StartDate").val());
+        formData.append("InsuranceExpDate", $("#EndDate").val());
+        formData.append("GPSStatus", $("#gpsstatus option:selected").val());
+        formData.append("Phone", $("#truck_phone").val());
+        formData.append("ContactName", $("#altr_name").val());
+        formData.append("postedFile", file);
+        alert('B');
+        
         
 
         $.ajax({
-            type: 'POST',
+            type: "POST",
+            url: '@Url.Action("AddTruck1","TLoader")',
+            data: formData,
             dataType: 'json',
-            url: '/TLoader/AddTruck1',
-            data:
-            {
-                VehicleTypeID: $("#VehicleTypeID option:selected").val(),
-                //Capacity: $('#lblCapacity').text(),
-                VehicleNo: $("#register_number").val(),
-                //Height: $("#lblHeight").text(),
-                //Width: $("#lblWidth").text(),
-                //Length: $("#lblLength").text(),
-                Description: $("#truck_description").val(),
-                InsuredBy: $("#truck_insuredby").val(),
-                InsuranceStartDate: $("#StartDate").val(),
-                InsuranceExpDate: $("#EndDate").val(),
-                GPSStatus: $("#gpsstatus").val(),
-                Phone: $("#truck_phone").val(),
-                ContactName: $("#altr_name").val(),
-                postedFile: $("#upload_file1")
-                //DocumentPath :
-
-            },
-            success: function (da) {
-                alert(da);
-                alert($('#hdnIsTripCall').val());
-                if ($('#hdnIsTripCall').val()=="1") {
-                    window.location.href = "/TLoader/AddTrip";
-                }
-                else {
-                    ResetData();
-                }
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                alert(response);
                 
-
             },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            error: function (error) {
+                alert('Error');
             }
         });
     });

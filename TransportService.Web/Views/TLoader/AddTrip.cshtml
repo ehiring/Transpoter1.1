@@ -24,12 +24,12 @@
             
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h5 class="panel-title"><b>Trip Details</b> </h5>
+                    <h5 class="panel-title"><b>Trip Details</b></h5>
                 </div>
                 <div class="panel-body">
 
                     <div class="col-sm-6 form-group">
-                        <label><i class="red">*</i> Source  </label>
+                        <label><i class="red">*</i> Source</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
                             @Html.DropDownList("Source", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select Source", new { @class = "form-control", @id = "SourceID", Title = "Select Source" })
@@ -236,6 +236,7 @@
 </div>
 }
 <script>
+    var routeArray = new Array();
     $(document).on('change', '#SourceID', function (e) {
         //$('.Rootmgs').remove();
         $('#showrootdetails').find('span').remove()
@@ -289,7 +290,7 @@
 
 
 
-    var routeArray = new Array();
+    
 
     $('#addRoute').on("click", function (e) {
         $('.Rootmgs').remove();
@@ -336,13 +337,18 @@
     });
 
     $(document).on('click', 'i.deleterootcity', function (e) {
-        e.preventDefault();
-        $(this).closest('span').remove();
-        
-        var SeqNo = parseInt($('#showrootdetails').attr('SeqNo'));
-        SeqNo = SeqNo - 1;
-        $('#showrootdetails').attr('SeqNo', SeqNo);
-        $('#addRoute').show();
+        var thisCityID = parseInt($(this).closest('span').attr('id'));
+        if (thisCityID != parseInt($("#SourceID option:selected").val())) {
+            $(this).closest('span').remove();
+
+            var SeqNo = parseInt($('#showrootdetails').attr('SeqNo'));
+            SeqNo = SeqNo - 1;
+            $('#showrootdetails').attr('SeqNo', SeqNo);
+            $('#addRoute').show();
+        }
+        else {
+            return;
+        }
     });
     $(document).on('click', '#btnAddGoods', function (e) {
         

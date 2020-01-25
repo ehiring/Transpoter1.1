@@ -1,0 +1,41 @@
+﻿@using TransportService.Web.Models.Masters
+@model IEnumerable<TransportService.Web.Models.Masters.TruckDocuments>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+    {
+        <span>Select Image:</span>
+        <select name="ImageId" onchange="document.forms[0].submit();">
+            <option value="0">Please select</option>
+            @foreach (TruckDocuments image in Model)
+            {
+                if (image.IsSelected)
+                {
+                    <option value="@image.DocumentID" selected="selected">@image.DocumentName</option>
+                }
+                else
+                {
+                    <option value="@image.DocumentID">@image.DocumentName</option>
+                }
+            }
+        </select>
+    }
+    @if (ViewBag.Base64String != null)
+    {
+        <hr />
+        <img alt="" src="@ViewBag.Base64String" style="height:100px;width:100px;" />
+    }
+</body>
+</html>
+

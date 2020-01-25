@@ -505,6 +505,7 @@ namespace TransportService.Web.Controllers
                      
                         @AddedBy ,
                         @Receiver,
+                        @VehicleTypeID,
                         @Quotation,
                         @UDTable_LoadDetails",
                   new SqlParameter("@SourceID", _loader.SourceID),
@@ -517,6 +518,7 @@ namespace TransportService.Web.Controllers
                   new SqlParameter("@Address", _loader.Address),
                   new SqlParameter("@AddedBy", Session[UserColumns.UserID]),
                   new SqlParameter("@Receiver", _loader.Receiver),
+                  new SqlParameter("@VehicleTypeID", _loader.VehicleTypeID),
                   new SqlParameter("@Quotation", quoatation.PrimaryQuotaionValue),
                   tvpParamLoadDetails);
                     return Json("Load Added Sucessfully");
@@ -600,6 +602,7 @@ namespace TransportService.Web.Controllers
                         @Status ,
                         @AddedBy ,
                         @Receiver,
+                        @VehicleTypeID,
                         @UDTable_LoadDetails",
           new SqlParameter("@LoadID", _loader.LoadID),
           new SqlParameter("@SourceID", _loader.SourceID),
@@ -613,16 +616,30 @@ namespace TransportService.Web.Controllers
            new SqlParameter("@Status", _loader.Status == null ? 0:_loader.Status),
           new SqlParameter("@AddedBy", Session[UserColumns.UserID]),/*.....UserID 1 is Loader*/
           new SqlParameter("@Receiver", _loader.Receiver),
+          new SqlParameter("@VehicleTypeID", _loader.VehicleTypeID),
           tvpParamLoadDetails);
             return Json("Load Updated Sucessfully");
 
         }
 
-        public ActionResult BookLoad(int SourceID,int LoadID)
+        public ActionResult BookLoad(int LoadID,string LoadType)
         {
             if (Session[UserColumns.UserID] != null)
             {
-                return View();
+                ViewData["CityList"] = _tripBusinessLayer.GetDropDownData("CityList", 0);
+                if (LoadType == constLoadType.FullTruckLoad)
+                {
+
+                }
+                else
+                {
+                    ViewData["VehicleList"] = _tripBusinessLayer.GetDropDownData("VehicleList", Convert.ToInt32(Session[ClientColumns.ClientID])); //pass @val= ownerID i.e. Login ClientID
+                }
+                LoaderEdit loaderEdit = new LoaderEdit();
+                loaderEdit = _tripBusinessLayer.GetLoaderByID(LoadID);
+                loaderEdit.LoadDetails = _tripBusinessLayer.GetLoadDetailsByID(LoadID);
+                return View(loaderEdit);
+                
             }
             else
             {
@@ -672,7 +689,7 @@ namespace TransportService.Web.Controllers
             
         }
         [HttpPost]
-        public ActionResult AddTruck1(Vehicle _vehicle, HttpPostedFile postedFile)
+        public ActionResult AddTruck1(Vehicle _vehicle, HttpPostedFileBase postedFile)
         {
 
             byte[] bytes;
@@ -681,8 +698,8 @@ namespace TransportService.Web.Controllers
                 bytes = br.ReadBytes(postedFile.ContentLength);
             }
             using (JobDbContext jobDbContext = new JobDbContext())
-            { 
-                 var result = jobDbContext.Database.ExecuteSqlCommand(@"exec USP_AddVehicle @VehicleTypeID ,
+            {
+                var result = jobDbContext.Database.ExecuteSqlCommand(@"exec USP_AddVehicle @VehicleTypeID ,
                                                                                         @VehicleNo ,
                                                                                         @Description ,
                                                                                         @InsuredBy  ,
@@ -691,26 +708,27 @@ namespace TransportService.Web.Controllers
                                                                                         @OwnerID ,
                                                                                         @GPSStatus ,
                                                                                         @Phone ,
-                                                                                        @ContactName ,
-                                                                                        @ProofTypeID ,
-                                                                                        @DocumentName ,
-                                                                                        @ContentType ,
-                                                                                        @Data ",
-                                                                                        new SqlParameter("@VehicleTypeID", _vehicle.VehicleTypeID),
-                                                                                        new SqlParameter("@VehicleNo", _vehicle.VehicleNo),
-                                                                                        new SqlParameter("@Description", _vehicle.Description == null ? (object)DBNull.Value : _vehicle.Description),
-                                                                                        new SqlParameter("@InsuredBy", _vehicle.InsuredBy == null ? (object)DBNull.Value : _vehicle.InsuredBy),
-                                                                                        new SqlParameter("@InsuranceStartDate", _vehicle.InsuranceStartDate == null ? (object)DBNull.Value : _vehicle.InsuranceStartDate),
-                                                                                        new SqlParameter("@InsuranceExpDate", _vehicle.InsuranceExpDate == null ? (object)DBNull.Value : _vehicle.InsuranceExpDate),
-                                                                                        new SqlParameter("@OwnerID", Session[ClientColumns.ClientID]),
-                                                                                        new SqlParameter("@GPSStatus", _vehicle.GPSStatus == null ? (object)DBNull.Value : _vehicle.GPSStatus),
-                                                                                        new SqlParameter("@Phone", _vehicle.Phone == null ? (object)DBNull.Value : _vehicle.Phone),
-                                                                                        new SqlParameter("@ContactName", _vehicle.ContactName ?? (object)DBNull.Value),
+                                                                                        @ContactName,
+                                                                                       @ProofTypeID,
+                                                                                       @DocumentName,
+                                                                                       @ContentType,
+                                                                                       @Data ",
+                                                                                       new SqlParameter("@VehicleTypeID", _vehicle.VehicleTypeID),
+                                                                                       new SqlParameter("@VehicleNo", _vehicle.VehicleNo),
+                                                                                       new SqlParameter("@Description", _vehicle.Description == null ? (object)DBNull.Value : _vehicle.Description),
+                                                                                       new SqlParameter("@InsuredBy", _vehicle.InsuredBy == null ? (object)DBNull.Value : _vehicle.InsuredBy),
+                                                                                       new SqlParameter("@InsuranceStartDate", _vehicle.InsuranceStartDate == null ? (object)DBNull.Value : _vehicle.InsuranceStartDate),
+                                                                                       new SqlParameter("@InsuranceExpDate", _vehicle.InsuranceExpDate == null ? (object)DBNull.Value : _vehicle.InsuranceExpDate),
+                                                                                       new SqlParameter("@OwnerID", Session[ClientColumns.ClientID]),
+                                                                                       new SqlParameter("@GPSStatus", _vehicle.GPSStatus == null ? (object)DBNull.Value : _vehicle.GPSStatus),
+                                                                                       new SqlParameter("@Phone", _vehicle.Phone == null ? (object)DBNull.Value : _vehicle.Phone),
+                                                                                       new SqlParameter("@ContactName", _vehicle.ContactName ?? (object)DBNull.Value),
                                                                                         new SqlParameter("@ProofTypeID", _vehicle.ProofTypeID ?? (object)DBNull.Value),
                                                                                         new SqlParameter("@DocumentName", Path.GetFileName(postedFile.FileName)),
-                                                                                        new SqlParameter("@ContentType", postedFile.ContentType));
+                                                                                        new SqlParameter("@ContentType", postedFile.ContentType),
+                                                                                        new SqlParameter("@Data", bytes));
 
-                    return Json("Truck Added Sucessfully");
+                return Json("Truck Added Sucessfully");
             }
         }
 
@@ -830,7 +848,7 @@ namespace TransportService.Web.Controllers
 
                     if (result.RoleID == enumRole.Transporter.GetHashCode())
                     {
-                        return RedirectToAction("New_LoaderIndex");
+                        return RedirectToAction("LoaderIndex");
                         
                     }
                     else
@@ -863,14 +881,48 @@ namespace TransportService.Web.Controllers
         {
             return View();
         }
+        public ActionResult LoadPersonalDetail()
+        {
+            ViewData["CityList"] = _tripBusinessLayer.GetDropDownData("CityList", 0);
+            ViewData[DDLListNames.CompanyTypeList] = _tripBusinessLayer.GetDropDownData(DDLListNames.CompanyTypeList, 0);
+
+            using (JobDbContext jobDbContext = new JobDbContext())
+            {
+                User user = jobDbContext.Database.SqlQuery<User>("exec USP_SelectAllFromUserWhereID @UserID",
+                                                                                    new SqlParameter("@UserID", Session[UserColumns.UserID])).FirstOrDefault<User>();
+                ViewData[ModelsNames.User] = user;
+                Company company = jobDbContext.Database.SqlQuery<Company>("exec USP_SelectAllFromCompanyWhereClientID @ClientID",
+                                                                                        new SqlParameter("@ClientID", Session[ClientColumns.ClientID])).FirstOrDefault<Company>();
+                ViewData[ModelsNames.Company] = company;
+                UserDocuments userDocuments = jobDbContext.Database.SqlQuery<UserDocuments>("exec USP_SelectAllFromUserDocumentsWhereUserID @UserID",
+                                                                                        new SqlParameter("@UserID", Session[ClientColumns.ClientID])).FirstOrDefault<UserDocuments>();
+                ViewData[ModelsNames.UserDocuments] = userDocuments;
+
+            }
+
+             
+
+            return View();
+        }
+
         public ActionResult PersonalDetail()
         {
+            ViewData[DDLListNames.CityList] = _tripBusinessLayer.GetDropDownData(DDLListNames.CityList, 0);
             ViewData[DDLListNames.CompanyTypeList] = _tripBusinessLayer.GetDropDownData(DDLListNames.CompanyTypeList, 0);
             return View();
         }
+
+
+
         [HttpPost]
-        public ActionResult PersonalDetail(User user,Client client,Company company)
+        public ActionResult PersonalDetail(User user,Client client,Company company,HttpPostedFileBase postedFile)
         {
+            byte[] bytes;
+            using (BinaryReader br = new BinaryReader(postedFile.InputStream))
+            {
+                bytes = br.ReadBytes(postedFile.ContentLength);
+            }
+
             using (JobDbContext jobDbContext = new JobDbContext())
             {
                 var result = jobDbContext.Database.ExecuteSqlCommand(ExecuteUserProcedure.USP_UpdateClientAndUser,
@@ -896,7 +948,10 @@ namespace TransportService.Web.Controllers
                                                                         new SqlParameter("@" + CompanyColumns.CompanyTypeID, company.CompanyTypeID == null ? (object)DBNull.Value : company.CompanyTypeID),
                                                                         new SqlParameter("@" + CompanyColumns.ServiceTaxNo, company.ServiceTaxNo == null ? (object)DBNull.Value : company.ServiceTaxNo),
                                                                         new SqlParameter("@" + CompanyColumns.CompanyPanNo, company.CompanyPanNo == null ? (object)DBNull.Value : company.CompanyPanNo),
-                                                                        new SqlParameter("@" + CompanyColumns.CompanyWebsite, company.CompanyWebsite == null ? (object)DBNull.Value : company.CompanyWebsite));
+                                                                        new SqlParameter("@" + CompanyColumns.CompanyWebsite, company.CompanyWebsite == null ? (object)DBNull.Value : company.CompanyWebsite),
+                                                                        new SqlParameter("@DocumentName", Path.GetFileName(postedFile.FileName)),
+                                                                        new SqlParameter("@ContentType", postedFile.ContentType),
+                                                                        new SqlParameter("@Data", bytes));
 
                 if (result >0)
                 {
@@ -931,6 +986,69 @@ namespace TransportService.Web.Controllers
         }
 
 
+        #endregion
+
+        #region "Other"
+        public ActionResult RankTheTrip()
+        {
+           
+                using (JobDbContext jobDbContext = new JobDbContext())
+                {
+                List<RankingCriteria> rankingCriterias = jobDbContext.DBRankingCriterias.SqlQuery("USP_SelectAllFromRankingCriteria").ToList<RankingCriteria>();
+                return View(rankingCriterias);
+                }
+            
+
+        }
+        [HttpPost]
+        public ActionResult RankTheTrip(int TripID,List<TripRankingDetail> tripRankingDetails)
+        {
+            DataTable dtTripRankingDetails = new DataTable();
+            dtTripRankingDetails.Columns.Add("SerialNo", typeof(int));
+            dtTripRankingDetails.Columns.Add("CriteriaQuestionID", typeof(int));
+            dtTripRankingDetails.Columns.Add("Answer", typeof(string));
+            dtTripRankingDetails.Columns.Add("AnswerValue", typeof(decimal));
+
+
+            if (tripRankingDetails != null)
+            {
+                if (tripRankingDetails.Count > 0)
+                {
+                    foreach (var item in tripRankingDetails)
+                    {
+                        DataRow dr_RankingDetails = dtTripRankingDetails.NewRow();
+                        dr_RankingDetails["SerialNo"] = item.SerialNo;
+                        dr_RankingDetails["CriteriaQuestionID"] = item.CriteriaQuestionID;
+                        dr_RankingDetails["Answer"] = item.Answer;
+                        dr_RankingDetails["AnswerValue"] = item.AnswerValue;
+                        dtTripRankingDetails.Rows.Add(dr_RankingDetails);
+                    }
+                }
+            }
+            SqlParameter tvpParamRankingDetails = new SqlParameter();
+            tvpParamRankingDetails.ParameterName = "@UDTable_TripRankingDetail";
+            tvpParamRankingDetails.SqlDbType = System.Data.SqlDbType.Structured;
+            tvpParamRankingDetails.Value = dtTripRankingDetails;
+            tvpParamRankingDetails.TypeName = "UDTable_TripRankingDetail";
+
+
+            using (JobDbContext jobDbContext = new JobDbContext())
+            {
+                var result = jobDbContext.Database.ExecuteSqlCommand(@"exec USP_InsertRankingWhereTripID
+                                                                            @TripID ,
+                                                                            @SubTripID ,
+                                                                            @LoaderID ,
+                                                                            @UDTable_TripRankingDetail ",
+                                                                            new SqlParameter("@TripID",TripID),
+                                                                            new SqlParameter("@SubTripID",DBNull.Value),
+                                                                            //new SqlParameter("@TransporterID",4),//ClientID of AddedBy of Trip
+                                                                            new SqlParameter("@LoaderID",1),//
+                                                                            tvpParamRankingDetails);
+
+                return Json("Your Rating is done Succesfully");
+            }
+
+        }
         #endregion
 
 

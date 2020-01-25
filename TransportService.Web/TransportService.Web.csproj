@@ -152,6 +152,7 @@
     <Compile Include="Controllers\LoaderController.cs" />
     <Compile Include="Controllers\PlaceAutoCompleteController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
+    <Compile Include="Controllers\ShowDatabaseImageController.cs" />
     <Compile Include="Controllers\TLoaderController.cs" />
     <Compile Include="Controllers\TMasterController.cs" />
     <Compile Include="Global.asax.cs">
@@ -164,6 +165,7 @@
     <Compile Include="Models\Activity\Trip.cs" />
     <Compile Include="Models\Activity\TripAndSubTripDetails.cs" />
     <Compile Include="Models\Activity\TripDetail.cs" />
+    <Compile Include="Models\Activity\TripRankingDetail.cs" />
     <Compile Include="Models\DBStructs.cs" />
     <Compile Include="Models\ErrorHandler.cs" />
     <Compile Include="Models\Masters\CargoType.cs" />
@@ -172,8 +174,10 @@
     <Compile Include="Models\Masters\ClientType.cs" />
     <Compile Include="Models\Masters\Company.cs" />
     <Compile Include="Models\Masters\CompanyTypeMaster.cs" />
+    <Compile Include="Models\Masters\RankingCriteria.cs" />
     <Compile Include="Models\Masters\Role.cs" />
     <Compile Include="Models\Masters\State.cs" />
+    <Compile Include="Models\Masters\TruckDocuments.cs" />
     <Compile Include="Models\Masters\User.cs" />
     <Compile Include="Models\Masters\UserType.cs" />
     <Compile Include="Models\Masters\Vehicle.cs" />
@@ -355,7 +359,7 @@
     <Content Include="Views\TMaster\Create.cshtml" />
     <Content Include="Views\Register\RaghuLogin.cshtml" />
     <Content Include="Views\TLoader\ContactPerson.cshtml" />
-    <Content Include="Views\TLoader\PersonalDetail.cshtml" />
+    <Content Include="Views\TLoader\LoadPersonalDetail.cshtml" />
     <Content Include="Views\TLoader\Old_LoginUser.cshtml" />
     <Content Include="Views\BingMap\Index.cshtml" />
     <Content Include="Views\GoogleMap1\Distance.cshtml" />
@@ -369,6 +373,9 @@
     <Content Include="Views\TLoader\_TripList.cshtml" />
     <Content Include="Views\TLoader\LoaderIndex.cshtml" />
     <Content Include="Views\TLoader\_LoadList.cshtml" />
+    <Content Include="Views\ShowDatabaseImage\Index.cshtml" />
+    <Content Include="Views\TLoader\PersonalDetail.cshtml" />
+    <Content Include="Views\TLoader\RankTheTrip.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

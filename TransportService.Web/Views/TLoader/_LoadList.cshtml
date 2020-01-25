@@ -62,23 +62,25 @@
             </ul>
             @*<a class=" drsecP">Select Seats</a>*@
 
+
+
+
             @if (Session[UserColumns.UserID] == null)
             {
-                @Html.ActionLink("Book Now", "BookLoad", new { Source = item1.SourceID, LoadID = item1.LoadID }, new { @Class = "drsecP" }) <br />
+                @Html.ActionLink("Book Now", "LoginUser", null, new { @Class = "drsecP" }) <br />
 
             }
             else
             {
-                if (Convert.ToInt32(Session[RoleColumns.RoleID]) == enumRole.Loader.GetHashCode())
+                if (Convert.ToInt32(Session[RoleColumns.RoleID]) == enumRole.Transporter.GetHashCode())
                 {
-                    @Html.ActionLink("Book Now", "BookLoad", new { Source = item1.SourceID, LoadID = item1.LoadID }, new { @Class = "drsecP" }) <br />
-                }
-                else
-                {
-
+                    @Html.ActionLink("Book Now", "BookLoad", new {  LoadID = item1.LoadID }, new { @Class = "drsecP" }) <br />
+                    //@Html.ActionLink("Book Now", "AddTrip", "TLoader", new { isBookLoad = true },new { @Class= "drsecP" })
                 }
 
             }
+
+
         </div>
 
     </div>
@@ -87,9 +89,7 @@
     <div class="col-sm-12 ">
         <div class="pnl-pagination m-b-md1">
             <div class="pull-right">
-
                 @Html.PagedListPager((IPagedList)Model.Loaders, page => Url.Action("", "", new { page }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions() { MaximumPageNumbersToDisplay = 4, DisplayPageCountAndCurrentLocation = true }, new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "mgrid", OnComplete = "PagedOnComplete" }))
-
                 @if (Model.Loaders.Count() == 0)
                 {
                     <ul class="pagination pull-right"></ul>

@@ -162,6 +162,7 @@
     </style>
     <!-- #endregion -->
 </head>
+
 <body data-whatinput="mouse" cz-shortcut-listen="true">
     <!--  TOP-HEADER -->
     <div class="visible-xs" style="background-color:#e4e4e4;padding:10px 0px 10px 0px">
@@ -206,20 +207,63 @@
                     <div class="collapse navbar-collapse" id="main-navigation">
                         <ul class="nav navbar-nav navbar-right custom-nav">
                             <li> <a href="#home.html" class="">Home</a> </li>
+                            @*<li class="dropdown">
+            <a href="#Loader" class="dropdown-toggle " data-hover="dropdown" data-toggle="dropdown" data-animations="fadeInUp">Loader <span class="fa fa-angle-down"></span></a>
+            <ul class="dropdown-menu dropdownhover-bottom">
+                <li class=""> <a href="#" class="">Find Truck</a> </li>
+                <li class=""> <a href="#" class="">Post Load</a> </li>
+                <li class=""> <a href="#" class="">Get Quote</a> </li>
+                <li class=""> <a href="#" class="">Distance Calculator</a> </li>
+            </ul>
+        </li>*@
                             <li class="dropdown">
-                                <a href="#Loader" class="dropdown-toggle " data-hover="dropdown" data-toggle="dropdown" data-animations="fadeInUp">Loader <span class="fa fa-angle-down"></span></a>
+                                <a href="#">Loader <span class="fa fa-angle-down"></span></a>
                                 <ul class="dropdown-menu dropdownhover-bottom">
-                                    <li class=""> <a href="#" class="">Find Truck</a> </li>
-                                    <li class=""> <a href="#" class="">Post Load</a> </li>
+                                    <li class="">
+                                        @*<a href="#" class="">Find Truck</a>*@
+                                        @Html.ActionLink("Find Truck", "Index", "TLoader")
+                                    </li>
+                                    <li class="">
+                                        @*<a href="#" class="">Post Load</a>*@
+                                        @if (Session[UserColumns.UserID] == null)
+                                        {
+                                            @Html.ActionLink("Post Load", "AddLoad", "TLoader")
+                                        }
+                                        else
+                                        {
+                                            if (Convert.ToInt32(Session[RoleColumns.RoleID]) == enumRole.Loader.GetHashCode())
+                                            {
+                                                @Html.ActionLink("Post Load", "AddLoad", "TLoader")
+                                            }
+
+                                        }
+                                    </li>
                                     <li class=""> <a href="#" class="">Get Quote</a> </li>
                                     <li class=""> <a href="#" class="">Distance Calculator</a> </li>
                                 </ul>
                             </li>
+
                             <li class="dropdown">
-                                <a href="#Trucker" class="dropdown-toggle " data-hover="dropdown" data-toggle="dropdown" data-animations="fadeInUp">Trucker <span class="fa fa-angle-down"></span></a>
+                                <a href="#Trucker" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown" data-animations="fadeInUp">Trucker <span class="fa fa-angle-down"></span></a>
                                 <ul class="dropdown-menu dropdownhover-bottom">
-                                    <li class=""> <a href="#" class="">Find Load</a> </li>
-                                    <li class=""> <a href="#" class="">Post Truck</a> </li>
+                                    <li class="">
+                                        @*<a href="#" class="">Find Load</a>*@
+                                        @Html.ActionLink("Find Load", "LoaderIndex", "TLoader")
+                                    </li>
+                                    <li class="">
+                                        @*<a href="#" class="">Post Truck</a>*@
+                                        @if (Session[UserColumns.UserID] == null)
+                                        {
+                                            @Html.ActionLink("Post Truck", "AddTrip", "TLoader")
+                                        }
+                                        else
+                                        {
+                                            if (Convert.ToInt32(Session[RoleColumns.RoleID]) == enumRole.Transporter.GetHashCode())
+                                            {
+                                                @Html.ActionLink("Post Truck", "AddTrip", new { isBookLoad = false })
+                                            }
+                                        }
+                                    </li>
                                     <li class=""> <a href="#" class="">Get Quote</a> </li>
                                     <li class=""> <a href="#" class="">Distance Calculator</a></li>
                                 </ul>
@@ -227,8 +271,12 @@
                             <li class="dropdown">
                                 <a href="#Broker" class="dropdown-toggle " data-hover="dropdown" data-toggle="dropdown" data-animations="fadeInUp">Broker <span class="fa fa-angle-down"></span></a>
                                 <ul class="dropdown-menu dropdownhover-bottom">
-                                    <li class=""> <a href="#" class="">Find Load</a> </li>
-                                    <li class=""> <a href="#" class="">Find Truck</a> </li>
+                                    <li class="">
+                                        <a href="#" class="">Find Load</a>
+                                    </li>
+                                    <li class="">
+                                        <a href="#" class="">Find Truck</a>
+                                    </li>
                                     <li class=""> <a href="#" class="">Post Load</a> </li>
                                     <li class=""> <a href="#" class="">Post Truck</a> </li>
                                     <li class=""> <a href="#" class="">Get Quote</a> </li>
@@ -243,14 +291,36 @@
                                 </ul>
                             </li>
                             <li> <a href="http://www.bhadaa.com/suppliers" class="">About Us </a> </li>
+
+                            @*Temparary added for testing purpose*@
+                            @*<li>@Html.ActionLink("Find Load", "LoaderIndex", "TLoader")</li>
+                            <li>@Html.ActionLink("Post Truck", "AddTrip", new { isBookLoad  =false})</li>*@
+                            @*Temparary added for testing purpose*@
+
+
                             <li class="">
                                 @*<a href="login.html" class=""><span style=" border:1px solid #8D9092 ; padding:5px; border-radius:2px">Log in</span></a>*@
-                                @Html.ActionLink("Log In", "LoginUser", null, new { @class = "btn-theme icon-left bg-navy-blue no-shadow d-none d-lg-inline-block align-self-center", @id = "btnSignIn" })
-                                @*@if(Session[UserColumns.UserID] == null)
-        {
-            @Html.ActionLink("Log In", "LoginUser", null, new { @class = "btn-theme icon-left bg-navy-blue no-shadow d-none d-lg-inline-block align-self-center", @id = "btnSignIn" })
-        }*@
+                                @*@Html.ActionLink("Log In", "LoginUser", null, new { @class = "btn-theme icon-left bg-navy-blue no-shadow d-none d-lg-inline-block align-self-center", @id = "btnSignIn" })*@
+                                @if (Session[UserColumns.UserID] == null)
+                                {
+                                    @Html.ActionLink("Log In", "LoginUser", null, new { @class = "btn-theme icon-left bg-navy-blue no-shadow d-none d-lg-inline-block align-self-center", @id = "btnSignIn" })
+                                }
+                                else
+                                {
+                                    @Html.ActionLink("Log Out", "LogOut", null, new { @class = "btn-theme icon-left bg-navy-blue no-shadow d-none d-lg-inline-block align-self-center", @id = "btnSignIn" })
+                                }
                             </li>
+                            @*<li class="">
+            @Html.ActionLink("My Vehicle", "AddTruck", new { isTripCall = 0 })
+        </li>*@
+
+
+                            @if (Session[UserColumns.UserID] != null)
+                            {
+                                <li>
+                                    @Html.ActionLink("My Detail", "PersonalDetail", "TLoader", new { @class = "nav-link", @style = "width: 100px;" })
+                                </li>
+                            }
 
                             <li class="hidden-xs">
                                 <a href="tel:+919881700017">
@@ -296,203 +366,7 @@
             </div>
         </div>
     </section>
-    <!-- SEARCH-SECTION -->
-    <div ng-app="myApp2" id="CntCar" ng-controller="CarlistCntl2" style="margin-top: -60px;">
-        <div class="banner_inner">
-            <ul class="nav nav-pills">
-                <li class="active"><a class="btn btn-primary btn-sm" data-toggle="pill" href="#load">Loader </a></li>
-                <li><a class="btn btn-sm transport-button" data-toggle="pill" href="#truck">SHIPPER </a></li>
-            </ul>
-            <div class="tab-content">
-                <div id="load" class="tab-pane fade in active">
-                    <div class="banner_inner search_bg_cab">
-                        <form id="formTransfer" method="post">
-
-                            <div class="clr"></div>
-                            <!-- <div class="search_bg_cab"></div> -->
-
-                            <div class="c_col_1" id="dvOutSource">
-                                <input class="input_city_c clsAirAuto" id="ddlSource" name="SourceCity" type="text" autocomplete="off" placeholder="From" />
-                                <div id="swap" class="swipe-cab"></div>
-                            </div>
-                            <div class="c_col_1" id="dvOutSource">
-                                <input class="input_city_c clsAirAuto" id="ddlSource" name="SourceCity" type="text" autocomplete="off" placeholder="To" />
-
-                            </div>
-                            <div class="c_col_2">
-                                <input type="text" id="txtDate" class="input_cld_c" name="travelDate1" autocomplete="off" onkeypress="return false" placeholder="Departure" />
-                                <span class="dte_icn"></span>
-                            </div>
-                            <div class="c_col_1-rentl">
-                                <div class="slct-pac">
-                                    <select id="sltPackage" class="select_box_pac-ren" name="RentalPkg">
-                                        <option value="">Load Type</option>
-                                        <option value="1_10">Part Load</option>
-                                        <option value="2_20">Full Load</option>
-                                        <option value="3_40">Near By</option>
-
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="c_col_2-rentl">
-                                <div class="slct-pac1">
-                                    <select id="sltPackage" class="select_box_pac-ren1" name="RentalPkg">
-                                        <option value="">Within KM</option>
-                                        <option value="1_10">10 km</option>
-                                        <option value="2_20">20 km</option>
-                                        <option value="3_40">30 km</option>
-                                        <option value="4_40">40 km</option>
-                                        <option value="5_50">50 km</option>
-                                        <option value="6_60">60 km</option>
-                                        <option value="7_70">70 km</option>
-                                        <option value="8_80">80 km</option>
-                                        <option value="9_90">90 km</option>
-                                        <option value="10_100">100 km</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="c_col_v4">
-                                <div class="src_btn_cab" ng-click="validate();">
-                                    Search
-                                </div>
-                            </div>
-
-
-                        </form>
-                        <div class="clr"></div>
-                    </div>
-                </div>
-                <div id="truck" class="tab-pane fade in ">
-                    <div class="banner_inner search_bg_cab">
-                        <form id="formTransfer" method="post">
-
-                            <div class="clr"></div>
-                            <!-- <div class="search_bg_cab"></div> -->
-
-                            <div class="c_col_1" id="dvOutSource">
-                                <input class="input_city_c clsAirAuto" id="ddlSource" name="SourceCity" type="text" autocomplete="off" placeholder="From" />
-                                <div id="swap" class="swipe-cab"></div>
-                            </div>
-                            <div class="c_col_1" id="dvOutSource">
-                                <input class="input_city_c clsAirAuto" id="ddlSource" name="SourceCity" type="text" autocomplete="off" placeholder="To" />
-
-                            </div>
-                            <div class="c_col_2">
-                                <input type="text" id="txtDate" class="input_cld_c" name="travelDate1" autocomplete="off" onkeypress="return false" placeholder="Departure" />
-                                <span class="dte_icn"></span>
-                            </div>
-                            <div class="c_col_1-rentl">
-                                <div class="slct-pac">
-                                    <select id="sltPackage" class="select_box_pac-ren" name="RentalPkg">
-                                        <option value="">Truck Type</option>
-                                        <option value="1_10">Part Load</option>
-                                        <option value="2_20">Full Load</option>
-                                        <option value="3_40">Near By</option>
-
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="c_col_2-rentl">
-                                <div class="slct-pac1">
-                                    <select id="sltPackage" class="select_box_pac-ren1" name="RentalPkg">
-                                        <option value="">Within KM</option>
-                                        <option value="1_10">10 km</option>
-                                        <option value="2_20">20 km</option>
-                                        <option value="3_40">30 km</option>
-                                        <option value="4_40">40 km</option>
-                                        <option value="5_50">50 km</option>
-                                        <option value="6_60">60 km</option>
-                                        <option value="7_70">70 km</option>
-                                        <option value="8_80">80 km</option>
-                                        <option value="9_90">90 km</option>
-                                        <option value="10_100">100 km</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="c_col_v4">
-                                <div class="src_btn_cab" ng-click="validate();">
-                                    Search
-                                </div>
-                            </div>
-
-
-                        </form>
-                        <div class="clr"></div>
-                    </div>
-                </div>
-            </div>
-            <!-- <div id="nav" style="width: 25%;margin-left: 550px;">
-                       <a class="btn btn-primary btn-sm " data-target="#request-quote" data-toggle="modal">Loader </a>
-                       <a href="#" target="_blank" data-toggle="modal"
-                         class="btn btn-sm transport-button" id="directory"><span>SHIPPER</span> </a>
-                     </div>
-                   <div class="clr"></div>-->
-            <!-- SEARCH-FORM START -->
-            <!-- <div class="banner_inner search_bg_cab">
-                <form id="formTransfer" method="post" >
-
-                    <div class="clr"></div>
-
-                        <div class="c_col_1" id="dvOutSource">
-                            <input class="input_city_c clsAirAuto" id="ddlSource" name="SourceCity" type="text" autocomplete="off" placeholder="From" />
-                            <div id="swap" class="swipe-cab"></div>
-                        </div>
-                        <div class="c_col_1" id="dvOutSource">
-
-                            <input class="input_city_c clsAirAuto" id="ddlSource" name="SourceCity" type="text" autocomplete="off" placeholder="To" />
-
-                        </div>
-                        <div class="c_col_2">
-
-                            <input type="text" id="txtDate" class="input_cld_c" name="travelDate1" autocomplete="off" onkeypress="return false" placeholder="Departure" />
-
-                            <span class="dte_icn"></span>
-                        </div>
-
-                        <div class="c_col_1-rentl" >
-                            <div class="slct-pac">
-                                <select id="sltPackage" class="select_box_pac-ren" name="RentalPkg">
-                                    <option value="">Load Type</option>
-                                    <option value="1_10">Part Load</option>
-                                    <option value="2_20">Full Load</option>
-                                    <option value="3_40">Near By</option>
-
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="c_col_2-rentl" >
-                            <div class="slct-pac1">
-                                <select id="sltPackage" class="select_box_pac-ren1" name="RentalPkg">
-                                    <option value="">Within KM</option>
-                                    <option value="1_10">10 km</option>
-                                    <option value="2_20">20 km</option>
-                                    <option value="3_40">30 km</option>
-                                    <option value="4_40">40 km</option>
-                                    <option value="5_50">50 km</option>
-                                    <option value="6_60">60 km</option>
-                                    <option value="7_70">70 km</option>
-                                    <option value="8_80">80 km</option>
-                                    <option value="9_90">90 km</option>
-                                    <option value="10_100">100 km</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="c_col_v4">
-                            <div class="src_btn_cab" ng-click="validate();">
-                                Search
-                            </div>
-                        </div>
-
-
-                </form>
-                <div class="clr"></div>
-            </div> -->
-            <!-- SEARCH-FORM END -->
-            <div class="clr"></div>
-        </div>
-    </div>
+   
     <div>
         @RenderBody()
     </div>

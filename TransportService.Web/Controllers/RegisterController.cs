@@ -95,7 +95,7 @@ namespace TransportService.Web.Controllers
             ViewBag.Status = Status;
             return View(_user);
         }
-        public void SendOTPOnMobile(string MobileNo,int OTP)
+        public void SendOTPOnMobile(string MobileNo,int? OTP)
         {
 
 

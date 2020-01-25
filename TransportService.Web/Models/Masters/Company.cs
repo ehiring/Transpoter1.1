@@ -14,7 +14,7 @@ namespace TransportService.Web.Models.Masters
         public string ServiceTaxNo { get; set; }
         public string CompanyPanNo { get; set; }
         public string CompanyWebsite { get; set; }
-        public string IsActive { get; set; }
+        public bool IsActive { get; set; }
     }
     public static class CompanyColumns
     {

@@ -373,12 +373,18 @@
 
     $(document).on('click', 'i.deleterootcity', function (e) {
         e.preventDefault();
-        $(this).closest('span').remove();
+        var thisCityID = parseInt($(this).closest('span').attr('id'));
+        if (thisCityID != parseInt($("#SourceID option:selected").val())) {
+            $(this).closest('span').remove();
 
-        var SeqNo = parseInt($('#showrootdetails').attr('SeqNo'));
-        SeqNo = SeqNo - 1;
-        $('#showrootdetails').attr('SeqNo', SeqNo);
-        $('#addRoute').show();
+            var SeqNo = parseInt($('#showrootdetails').attr('SeqNo'));
+            SeqNo = SeqNo - 1;
+            $('#showrootdetails').attr('SeqNo', SeqNo);
+            $('#addRoute').show();
+        }
+        else {
+            return;
+        }
     });
 
 
