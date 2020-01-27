@@ -2,17 +2,17 @@
 var app = angular.module('myApp2', []);
 app.controller('CarlistCntl2', ['$scope', '$http', '$sce', '$compile', function ($scope, $http, $sce, $compile) {
 
-   
+
     $scope.CheckSessionExp = function (value) {
         if (value == "SEXP") {
             location.href = "/SessionExpired";
         }
     }
- 
+
 
     $scope.outtimeChange = function () {
-        
-       $scope.getOutResultlatest = [];
+
+        $scope.getOutResultlatest = [];
         $scope.tariffId = "";
         $.ajax({
             type: "GET",
@@ -43,7 +43,7 @@ app.controller('CarlistCntl2', ['$scope', '$http', '$sce', '$compile', function 
             error: function (response) {
             }
         });
-    }    
+    }
 
     $("#txtDate").datepicker({
         minDate: -0,
@@ -75,7 +75,7 @@ app.controller('CarlistCntl2', ['$scope', '$http', '$sce', '$compile', function 
     $scope.validate = function () {
         debugger;
         var result = true;
-        
+
         if ($('#hdnTravelType').val() == "1") {
             if ($("#ddlSource").val() == "") {
                 alert("Select Source City");
@@ -88,7 +88,7 @@ app.controller('CarlistCntl2', ['$scope', '$http', '$sce', '$compile', function 
                 result = false;
                 return false;
             }
-          
+
 
             if ($("#hdnTripType").val() == "1" || $("#hdnTripType").val() == "3") {
                 if ($("#txtReturnDate").val() == "") {
@@ -111,7 +111,7 @@ app.controller('CarlistCntl2', ['$scope', '$http', '$sce', '$compile', function 
                 alert("Select Destination Address");
                 result = false;
                 return false;
-            }                     
+            }
 
         }
 
@@ -135,11 +135,10 @@ app.controller('CarlistCntl2', ['$scope', '$http', '$sce', '$compile', function 
         }
         if (result == true) $("#formTransfer").submit();
         //  return true;    
-}
+    }
 
 
-    $scope.GetList = function (from, to)
-    {
+    $scope.GetList = function (from, to) {
         document.getElementById("ddlSource").value = from;
         document.getElementById("ddlDestination").value = to;
         var todayDate = new Date();
@@ -150,8 +149,8 @@ app.controller('CarlistCntl2', ['$scope', '$http', '$sce', '$compile', function 
         document.getElementById("txtTime").value = "10:00 hrs";
         document.getElementById("formTransfer").submit();
     }
-    
-    $scope.redirectToListing=function(txtDate, ddlSource, ddlDestination, txtTime) {
+
+    $scope.redirectToListing = function (txtDate, ddlSource, ddlDestination, txtTime) {
         debugger;
         document.getElementById('ddlSource').value = ddlSource;
         document.getElementById('ddlDestination').value = ddlDestination;
@@ -160,9 +159,9 @@ app.controller('CarlistCntl2', ['$scope', '$http', '$sce', '$compile', function 
         $scope.outtimeChange();
         $scope.$apply();
         document.getElementById('txtTime').value = txtTime;
-     
-            $("#formTransfer").submit();
-       
+
+        $("#formTransfer").submit();
+
         // window.location.href = "/Transfer/GetTransferSearch?TripType=1&txtfromcity=" + ddlSource + "&txtdesticity=" + ddlDestination + "&txtDate=" + txtDate;
 
     }

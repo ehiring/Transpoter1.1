@@ -5,17 +5,16 @@ app.controller('LoginController', function ($scope, $http) {
     $scope.UserName = "";
     $scope.Password = "";
     $scope.UserAuthentication = function () {
-      
+
         $scope.UserName = document.getElementById('txtusername').value;
         $scope.Password = document.getElementById('userPassword').value;
 
         if ($scope.UserName == "") {
-            
+
             $("#alrtLoginEmail").fadeIn(1000);
             $("#alrtLoginEmail").fadeOut(4000);
         }
-        else if ($scope.Password == "")
-        {
+        else if ($scope.Password == "") {
             $("#alrtLoginPass").fadeIn(1000);
             $("#alrtLoginPass").fadeOut(4000);
 
@@ -32,11 +31,11 @@ app.controller('LoginController', function ($scope, $http) {
                 },
                 data: "{UserName_:'" + $scope.UserName + "',Password_:'" + $scope.Password + "'}",
             })
-             .success(function (httpData) {
-                 $scope.PrintUserDtl(httpData, 'Y');
-             })
-             .error(function (http, status, fnc, httpObj) {
-             });
+                .success(function (httpData) {
+                    $scope.PrintUserDtl(httpData, 'Y');
+                })
+                .error(function (http, status, fnc, httpObj) {
+                });
             return request;
 
         }
@@ -44,7 +43,7 @@ app.controller('LoginController', function ($scope, $http) {
     }
     $scope.PrintUserDtl = function (httpData, isErr_) {
         logindetails = httpData;
-      //  var hotelString = window.location.search.substring(1)
+        //  var hotelString = window.location.search.substring(1)
         //if (httpData != null && httpData.split('|').length > 1 && httpData.split('|')[1] != null && hotelString != null && hotelString.split('&').length > 0)
         //    Identify(hotelString.split('&')[0].split('=')[1], httpData.split('|')[1], '', hotelString.split('&')[0].split('=')[1]);
         //else
@@ -52,7 +51,7 @@ app.controller('LoginController', function ($scope, $http) {
         if (httpData != "" && httpData.split('|')[0].indexOf("not valid user") <= 0) {
 
             //document.getElementById('welcome-det-User').innerHTML = httpData.split('|')[1];
-            if (document.getElementById('welcome-det-User')!= null) {
+            if (document.getElementById('welcome-det-User') != null) {
                 document.getElementById('welcome-det-User').innerHTML = httpData.split('|')[1];
                 if (document.getElementById("txtEmailId") != null) {
                     document.getElementById('txtEmailId').value = httpData.split('|')[1];
@@ -61,14 +60,14 @@ app.controller('LoginController', function ($scope, $http) {
             }
             if (document.getElementById('divSignInPnl') != null) {
                 document.getElementById('divSignInPnl').style.display = 'none';
-            } 
+            }
             if (document.getElementById('spnLogoutPnl') != null) {
                 document.getElementById('spnLogoutPnl').style.display = 'block';
             }
-               
+
             if (document.getElementById('spnMyAcc') != null) {
                 document.getElementById('spnMyAcc').style.display = 'none';
-                }
+            }
             //if (document.getElementById('hid') != null) {
             //    document.getElementById('hid').style.display = 'none';
             //}
@@ -79,7 +78,7 @@ app.controller('LoginController', function ($scope, $http) {
                 document.getElementById('spnLgnWelcome').style.display = 'inline-block';
             }
 
-            
+
         }
         else {
             if (document.getElementById('welcome-det-User') != null) {
@@ -95,16 +94,16 @@ app.controller('LoginController', function ($scope, $http) {
                 document.getElementById('hid').style.display = 'none';
             }
             if (isErr_ == "Y" && document.getElementById('divWrngPass') != null) {
-                document.getElementById('divWrngPass').style.display = 'block';                
+                document.getElementById('divWrngPass').style.display = 'block';
             }
             if (isErr_ == "Y")
-            $("#alrtLogin").fadeIn(100);
+                $("#alrtLogin").fadeIn(100);
             $("#alrtLogin").fadeOut(8000);
         }
     }
 
     $scope.CheckAuthentication = function () {
-       
+
         var request = $http({
             method: "post",
             url: "/Login/CheckSignIn",
@@ -112,12 +111,12 @@ app.controller('LoginController', function ($scope, $http) {
                 'Content-Type': "application/json"
             }
         })
-         .success(function (httpData) {
-           //  alert(httpData)
-             $scope.PrintUserDtl(httpData, 'N');
-         })
-         .error(function (http, status, fnc, httpObj) {
-         });
+            .success(function (httpData) {
+                //  alert(httpData)
+                $scope.PrintUserDtl(httpData, 'N');
+            })
+            .error(function (http, status, fnc, httpObj) {
+            });
         return request;
     }
 
@@ -125,7 +124,7 @@ app.controller('LoginController', function ($scope, $http) {
 
     $scope.LogOut = function () {
         if (confirm("Do you want to logout !")) {
-           
+
             var request = $http({
                 method: "post",
                 url: "/Login/LogOut",
@@ -133,34 +132,34 @@ app.controller('LoginController', function ($scope, $http) {
                     'Content-Type': "application/json"
                 }
             })
-             .success(function (httpData) {
-                 alert("You have Sucessfully Logged out !");
-                 if (document.getElementById('welcome-det-User') != null) {
-                     document.getElementById('welcome-det-User').innerHTML = "";
-                 }
-                 if (document.getElementById('divSignInPnl') != null) {
-                     document.getElementById('divSignInPnl').style.display = 'inline-block';
-                 }
-                 if (document.getElementById('spnLogoutPnl') != null) {
-                     document.getElementById('spnLogoutPnl').style.display = 'none';
-                 }
-                 //if (document.getElementById('hid') != null) {
-                 //    document.getElementById('hid').style.display = 'none';
-                 //}
+                .success(function (httpData) {
+                    alert("You have Sucessfully Logged out !");
+                    if (document.getElementById('welcome-det-User') != null) {
+                        document.getElementById('welcome-det-User').innerHTML = "";
+                    }
+                    if (document.getElementById('divSignInPnl') != null) {
+                        document.getElementById('divSignInPnl').style.display = 'inline-block';
+                    }
+                    if (document.getElementById('spnLogoutPnl') != null) {
+                        document.getElementById('spnLogoutPnl').style.display = 'none';
+                    }
+                    //if (document.getElementById('hid') != null) {
+                    //    document.getElementById('hid').style.display = 'none';
+                    //}
 
-                 if (document.getElementById('spnMyAcc') != null) {
-                     document.getElementById('spnMyAcc').style.display = 'inline-block';
-                 }
+                    if (document.getElementById('spnMyAcc') != null) {
+                        document.getElementById('spnMyAcc').style.display = 'inline-block';
+                    }
 
-                 if (document.getElementById('spnLgnWelcome') != null) {
-                     document.getElementById('spnLgnWelcome').style.display = 'none';
-                 }
-                 
+                    if (document.getElementById('spnLgnWelcome') != null) {
+                        document.getElementById('spnLgnWelcome').style.display = 'none';
+                    }
 
-                 // window.location.href = "/Index/Index";
-             })
-             .error(function (http, status, fnc, httpObj) {
-             });
+
+                    // window.location.href = "/Index/Index";
+                })
+                .error(function (http, status, fnc, httpObj) {
+                });
             return request;
         }
     }
@@ -174,7 +173,7 @@ app.controller('LoginController', function ($scope, $http) {
             if ((isValidEmail(input) ? true : (isValidPhone(input)))) {
 
                 document.getElementById("regNumber").innerText = input;
-                
+
                 if (isValidEmail(input)) {
 
                     $scope.number = input;
@@ -184,7 +183,7 @@ app.controller('LoginController', function ($scope, $http) {
                     $("#dvRegister").slideUp();
                     $scope.PhoneEmail = "Email";
                 }
-               
+
                 else {
                     $scope.number = input;
                     localStorage.setItem('added-items', input);
@@ -192,71 +191,71 @@ app.controller('LoginController', function ($scope, $http) {
                     $("#dvRegister").slideUp();
                     $scope.PhoneEmail = "mobile number";
                 }
-                               
 
-                    $.ajax({
-                        type: "Post",
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "text",
-                        url: "/login/RegisterNewUser/",
-                        data: "{'emailph':'" + input + "'}",
-                        success: function (response) {
-                            // debugger;
-                            if (response != null) {
-                                $("#RegWait").hide();
-                                $("#txtEmail").val('');
-                                // $("#mailsent").fadeIn(500);
-                                //setTimeout(function () {
-                                //    $("#hid1").hide(500);
-                                //    $("#mailsent").hide();
-                                //    $("#txtEmail").val('');
-                                //}, 3000);
 
-                            }
-                            //else if (response != null && response != 'OK') {
-                            //    var resp = [];
-                            //    resp = response.split('|');
-                            //    if (resp[0].indexOf("Exist") > -1 && isValidPhone(input)== true && resp[4] != "False")
-                            //    {
-                            //        $("#RegWait").hide();
-                            //        $("#AlertRegister").fadeIn(500);
-                            //        $("#AlertRegister").fadeOut(8000);
-                            //    }
-                            //    else if (isValidPhone(input) == true && resp[4] == "False")
-                            //    {
-                            //        $("#RegWait").hide();
-                            //        $(".se-m1").slideDown();
-                            //        $(".se-m").slideUp();
-                            //        $("#txtEmail").val('');
-                            //    }
-                            //    else if(resp[0].indexOf("Exist")>-1 && isValidEmail(input)== true && resp[5] != "False")
-                            //    {
-                            //        $("#RegWait").hide();
-                            //        $("#AlertRegister").fadeIn(500);
-                            //        $("#AlertRegister").fadeOut(8000);
-                            //    }
-                            //    else if (isValidEmail(input) == true && resp[5] == "False")
-                            //    {
-                            //        $("#RegWait").hide();
-                            //        $(".se-m1").slideDown();
-                            //        $(".se-m").slideUp();
-                            //        $("#txtEmail").val('');
-                            //    }
-                            //    else
-                            //    {
-                            //        $("#RegWait").hide();
-                            //        $("#AlertRegister").fadeIn(500);
-                            //        $("#AlertRegister").fadeOut(8000);
-                            //    }
+                $.ajax({
+                    type: "Post",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "text",
+                    url: "/login/RegisterNewUser/",
+                    data: "{'emailph':'" + input + "'}",
+                    success: function (response) {
+                        // debugger;
+                        if (response != null) {
+                            $("#RegWait").hide();
+                            $("#txtEmail").val('');
+                            // $("#mailsent").fadeIn(500);
+                            //setTimeout(function () {
+                            //    $("#hid1").hide(500);
+                            //    $("#mailsent").hide();
+                            //    $("#txtEmail").val('');
+                            //}, 3000);
 
-                            // }
-                        },
-                        beforeSend: function (XMLHttpRequest) {
-                        },
-                        error: function (xmlHttpRequest, status, err) {
                         }
-                    });
-                
+                        //else if (response != null && response != 'OK') {
+                        //    var resp = [];
+                        //    resp = response.split('|');
+                        //    if (resp[0].indexOf("Exist") > -1 && isValidPhone(input)== true && resp[4] != "False")
+                        //    {
+                        //        $("#RegWait").hide();
+                        //        $("#AlertRegister").fadeIn(500);
+                        //        $("#AlertRegister").fadeOut(8000);
+                        //    }
+                        //    else if (isValidPhone(input) == true && resp[4] == "False")
+                        //    {
+                        //        $("#RegWait").hide();
+                        //        $(".se-m1").slideDown();
+                        //        $(".se-m").slideUp();
+                        //        $("#txtEmail").val('');
+                        //    }
+                        //    else if(resp[0].indexOf("Exist")>-1 && isValidEmail(input)== true && resp[5] != "False")
+                        //    {
+                        //        $("#RegWait").hide();
+                        //        $("#AlertRegister").fadeIn(500);
+                        //        $("#AlertRegister").fadeOut(8000);
+                        //    }
+                        //    else if (isValidEmail(input) == true && resp[5] == "False")
+                        //    {
+                        //        $("#RegWait").hide();
+                        //        $(".se-m1").slideDown();
+                        //        $(".se-m").slideUp();
+                        //        $("#txtEmail").val('');
+                        //    }
+                        //    else
+                        //    {
+                        //        $("#RegWait").hide();
+                        //        $("#AlertRegister").fadeIn(500);
+                        //        $("#AlertRegister").fadeOut(8000);
+                        //    }
+
+                        // }
+                    },
+                    beforeSend: function (XMLHttpRequest) {
+                    },
+                    error: function (xmlHttpRequest, status, err) {
+                    }
+                });
+
             }
             else {
                 $("#RegValid").fadeIn(1000);
@@ -273,7 +272,7 @@ app.controller('LoginController', function ($scope, $http) {
         }
 
     }
-    
+
 
 
 
@@ -435,7 +434,7 @@ function GoToMybookingSec() {
 //var app = angular.module('LoginApp', []);
 
 //app.controller('LoginControl', function ($scope, $http, $window, $location) {
-    
+
 //    $scope.username = null;
 //    $scope.passwrd = null;
 
@@ -449,7 +448,7 @@ function GoToMybookingSec() {
 //        var dataObj = {
 //            UserName_: user,
 //            Password_: pass
-            
+
 //            //model.Dlng = droplng;
 //        };
 //        var res = $http.post('../Login/SignIn', dataObj);
@@ -463,7 +462,7 @@ function GoToMybookingSec() {
 //        res.error(function (data, status, headers, config) {
 //            alert("failure message: " + JSON.stringify({ data: data }));
 //        });
-        
+
 //    }
 
 
@@ -494,7 +493,7 @@ $(document).ready(function () {
     $("#closeRegtab").click(function () {
         $("#dvOtp").slideUp();
         $("#dvRegister").slideDown();
-      //  document.getElementById("dvOtp").style.display = "none";
+        //  document.getElementById("dvOtp").style.display = "none";
 
 
     });

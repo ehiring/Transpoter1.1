@@ -237,11 +237,15 @@
     <Content Include="assets\images\search-icon-hp.png" />
     <Content Include="assets\images\swipe-icn.png" />
     <Content Include="assets\js\angular.min.js" />
+    <Content Include="assets\js\bootstrap-dropdownhover.min1c9b.js" />
     <Content Include="assets\js\bootstrap-hover-dropdown.min.js" />
     <Content Include="assets\js\bootstrap.min.js" />
+    <Content Include="assets\js\bootstrap.min1c9b.js" />
     <Content Include="assets\js\custom.js" />
+    <Content Include="assets\js\JavaScript.js" />
     <Content Include="assets\js\jquery-1.11.0.min.js" />
     <Content Include="assets\js\jquery-1.11.1.min.js" />
+    <Content Include="assets\js\jquery-3.3.1.min.js" />
     <Content Include="assets\js\jquery-ui-1.10.4.custom.min.js" />
     <Content Include="assets\js\jquery-ui.min.js" />
     <Content Include="assets\js\jquery.forms.js" />
@@ -259,6 +263,7 @@
     <Content Include="assets\js\routie.min.js" />
     <Content Include="assets\js\switch.js" />
     <Content Include="assets\js\waypoints.min.js" />
+    <Content Include="assets\js\wpfront-scroll-top.min.js" />
     <Content Include="assets\rs-plugin\css\prettyPhoto.css" />
     <Content Include="assets\rs-plugin\css\settings.css" />
     <Content Include="assets\rs-plugin\js\jquery.themepunch.revolution.min.js" />
@@ -266,6 +271,8 @@
     <Content Include="assets\css\css" />
     <Content Include="assets\css\css%281%29" />
     <Content Include="assets\css\css%282%29" />
+    <Content Include="assets\js\bootstrap.min1c9b.js.download" />
+    <Content Include="assets\js\bootstrap.min1c9b" />
     <None Include="Connected Services\ASPSMSX2\configuration91.svcinfo" />
     <None Include="Connected Services\ASPSMSX2\configuration.svcinfo" />
     <None Include="Connected Services\ASPSMSX2\Reference.svcmap">
