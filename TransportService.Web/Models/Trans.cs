@@ -77,7 +77,9 @@ namespace TransportService.Web.Models
         public int? DestinationID { get; set; }
         public int? VehicleID { get; set; }
         public string VehicleType { get; set; }
-
+        public string LoadType { get; set; }
+        public int? LoadID { get; set; }
+        public int? LoaderID { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? TripStartDate { get; set; }
@@ -90,8 +92,11 @@ namespace TransportService.Web.Models
         public string Destination { get; set; }
         public string Route_Details { get; set; }
         public string TripStatus { get; set; }
+        public bool Status { get; set; }
         public int? TotalRows { get; set; }
         public int AddedBy { get; set; }
+        public bool  IsTripRated { get; set; }
+        public decimal? Rating { get; set; }
         public IEnumerable<TripDetail> TripDetails { get; set; }
         public IEnumerable<RouteDetails> RouteList { get; set; }
         public StaticPagedList<Transpoter> TransDetails { get; set; }
@@ -123,7 +128,7 @@ namespace TransportService.Web.Models
         public DateTime? TripEndDate { get; set; }
         
         
-        public int Status { get; set; }
+        public bool Status { get; set; }
         
         public IEnumerable<TripDetail> TripDetails { get; set; }
         public IEnumerable<RouteDetails> RouteList { get; set; }

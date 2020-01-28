@@ -34,7 +34,7 @@ namespace TransportService.Web.Models.Activity
 
         public string LoadType { get; set; }
         public string SubService { get; set; }
-        public int? Status { get; set; }
+        public bool Status { get; set; }
         public string LoadStatus { get; set; }
         public int AddedBy { get; set; }
         public string ContactNo { get; set; }
@@ -44,6 +44,8 @@ namespace TransportService.Web.Models.Activity
         public decimal? PrimaryQuotaionValue { get; set; }
         
             public int? VehicleTypeID { get; set; }
+        
+            public bool IsLoadBooked { get; set; }
         public IEnumerable<LoadDetail> LoadDetails { get; set; }
         public IEnumerable<MaterialList> MaterialList { get; set; }
         public StaticPagedList<Loader> Loaders { get; set; }
@@ -61,12 +63,13 @@ namespace TransportService.Web.Models.Activity
         public DateTime? PickUpDate { get; set; }
         public string LoadType { get; set; }
         public string SubService { get; set; }
-        public int? Status { get; set; }
+        public bool Status { get; set; }
         public int? AddedBy { get; set; }
         public string ContactNo { get; set; }
         public string Email { get; set; }
         public string Address { get; set; }
         public int? VehicleTypeID { get; set; }
+        public decimal? PrimaryQuotaionValue { get; set; }
         public IEnumerable<LoadDetail> LoadDetails { get; set; }
     }
     public class MaterialList

@@ -22,26 +22,55 @@
                 <span class=" dateSpan">| @item1.TripStartDate To @item1.TripEndDate </span>
                 @if (Session[UserColumns.UserID] != null && Convert.ToInt32(Session[UserColumns.UserID]) == item1.AddedBy)
                 {
-                         <span class=" dateSpan">|</span> <span>@Html.ActionLink("Edit Trip", "EditTrip", new { TripID = item1.TripID }, new { @class = "linkDecoration" }) <br /></span>
+                    <span class=" dateSpan">|</span> <span>@Html.ActionLink("Edit Trip", "EditTrip", new { TripID = item1.TripID }, new { @class = "linkDecoration" }) <br /></span>
                 }
+               
             </p>
 
             <p>
                 <!-- <li class="avail">jhvond fYVOJz-->
-                <span class="avail" style="margin-right: 20px;"> <b>3 Ton</b> Available</span>
+                <span class="avail" style="margin-right: 20px;"> <b> 3 Ton</b> Available</span>
                 <span class="route"><b>Route : </b>@item1.Route_Details</span>
             </p>
 
             <ul class=" rating">
-                <p class="links">
-                    <span class=" ratingClr" high="true">
-                        <span class=" ratingFont">4.7</span>/5
-                    </span>
-                </p>
 
-                <li class=" subLinks">Policies</li>
-                <li class=" subLinks" data-toggle="collapse" href="#collapse1">Pickups &amp; Drops</li>
-                <li class=" subLinks">5 Photos</li>
+
+                @if (item1.IsTripRated == true)
+                {
+                    <p class="links">
+                        <span class=" ratingClr" high="true">
+                            <span class=" ratingFont">@item1.Rating</span>/ 5
+                        </span>
+                    </p>
+                }
+
+                else if (item1.Status == true && Session[UserColumns.UserID] == null)
+                {
+                    <li class=" subLinks">
+                        @Html.ActionLink("Rate Your Trip", "LoginUser", null, null)
+                    </li>
+                }
+                else
+                {
+                    if (item1.Status == true && Session[UserColumns.UserID] != null && item1.LoaderID == Convert.ToInt32(Session[UserColumns.UserID]))
+                    {
+                        <li class=" subLinks">
+                            @Html.ActionLink("Rate Your Trip", "RankTheTrip", new { TripID = item1.TripID, TransporteUserID = item1.AddedBy }, null)
+                        </li>
+                    }
+
+
+                }
+
+
+
+
+
+
+            <li class=" subLinks">Policies</li>
+            <li class=" subLinks" data-toggle="collapse" href="#collapse1">Pickups &amp; Drops</li>
+            <li class=" subLinks">5 Photos</li>
             </ul>
         </div>
 
@@ -56,24 +85,60 @@
             </div>
             <ul class="sc-kGXeez ">
                 <ul class=" BhRgU">
-                    <span class=" jhvond  gYzbWd"></span> Pending
+                    <span class=" jhvond  gYzbWd"></span> @item1.TripStatus
                 </ul>
             </ul>
             @*<a class=" drsecP">Select Seats</a>*@
-
-            @if (Session[UserColumns.UserID] == null)
+            @if ((item1.LoadID != null && item1.LoadType != constLoadType.FullTruckLoad) || (item1.LoadID == null))
             {
-                @Html.ActionLink("Book Now", "LoginUser", null, new { @Class = "drsecP" }) <br />
+                if (Session[UserColumns.UserID] == null)
+                {
+                    @Html.ActionLink("Book Now", "LoginUser", null, new { @Class = "drsecP" }) <br />
+
+                }
+                else
+                {
+                    if (Convert.ToInt32(Session[RoleColumns.RoleID]) == enumRole.Loader.GetHashCode())
+                    {
+                        @Html.ActionLink("Book Now", "AddSubTrip", new { Source = item1.SourceID, TripId = item1.TripID }, new { @Class = "drsecP" }) <br />
+                    }
+
+                }
 
             }
             else
             {
-                if (Convert.ToInt32(Session[RoleColumns.RoleID]) == enumRole.Loader.GetHashCode())
+
+                if((item1.LoadID != null && item1.LoadType == constLoadType.FullTruckLoad) && (item1.Status == false))
                 {
-                    @Html.ActionLink("Book Now", "AddSubTrip", new { Source = item1.SourceID, TripId = item1.TripID }, new { @Class = "drsecP" }) <br />
+                    <span class="BhRgU">Booked</span>
                 }
 
             }
+
+
+
+
+            @*@if (Session[UserColumns.UserID] == null)
+        {
+            @Html.ActionLink("Book Now", "LoginUser", null, new { @Class = "drsecP" }) <br />
+
+        }
+        else
+        {
+            if (Convert.ToInt32(Session[RoleColumns.RoleID]) == enumRole.Loader.GetHashCode())
+            {
+                @Html.ActionLink("Book Now", "AddSubTrip", new { Source = item1.SourceID, TripId = item1.TripID }, new { @Class = "drsecP" }) <br />
+            }
+
+        }*@
+
+
+
+
+
+
+
         </div>
 
     </div>

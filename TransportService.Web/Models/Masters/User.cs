@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TransportService.Web.Models.Masters
 {
-    public class User
+    public class User 
     {
         public int UserID { get; set; }
         public int? UserTypeID { get; set; }
@@ -39,6 +39,9 @@ namespace TransportService.Web.Models.Masters
         public Guid? ActivationCode { get; set; }
         public int? OTP { get; set; }
 
+        
+
+
     }
     public class LoginUser
     {
@@ -54,6 +57,7 @@ namespace TransportService.Web.Models.Masters
         public string Mobile { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public string FirstName { get; set; }
         public int ClientID { get; set; }
         public int ClientTypeID { get; set; }
         public int RoleID { get; set; }
@@ -70,6 +74,13 @@ namespace TransportService.Web.Models.Masters
         public int UserID { get; set; }
         
 
+    }
+
+    public class PersonDetail
+    {
+        public User user { get; set; }
+        public Company company { get; set; }
+        public UserDocuments userDocuments { get; set; }
     }
 
 

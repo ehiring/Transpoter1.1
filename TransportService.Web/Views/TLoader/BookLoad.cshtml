@@ -129,7 +129,7 @@
                                         <th>Weight(Tonn)</th>
                                         <th>Qty</th>
                                         <th>Price</th>
-                                        
+
 
                                     </tr>
                                 </thead>
@@ -148,7 +148,6 @@
                                             <td class="clsWeight">@item.Weight</td>
                                             <td class="clsQuantity">@item.Qty</td>
                                             <td class="clsMaterialValue">@item.MaterialValue</td>
-                                            
 
                                         </tr>
                                     }
@@ -157,29 +156,23 @@
                             </table>
                         </div>
                     </div>
+                    <div class="col-lg-8">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h5 class="panel-title">Loader's Budget </h5>
+                            </div>
+                            <div class="panel-body">
+                                <h1 style="color:blueviolet;text-align:center;" id="divDoorToDoor"> <label class="fa fa-inr sc-brqgnP bKUXLW" id="lblQuotation">@Model.PrimaryQuotaionValue</label></h1>
+                                @*<i class="fa fa-inr"></i>*@
 
-                    <div class="col-sm-6 form-group">
-                        <label>Add City Route</label>
-                        <div style="display:flex;">
-                            @Html.DropDownList("model.SourceID", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select City", new { @class = "form-control dropwidth", @id = "CityRootID", Title = "Add Cities To The Root" })
-                            <i class="fa fa-plus" id="addRoute" aria-hidden="true" style="margin-top: 10px;margin-left: 10px;margin-right:12px;"></i>
 
-                        </div>
-                    </div>
-                    <div class="col-sm-12 form-group">
-                        <label>Route Details</label>
-                        <div class="form-group">
-                            <div id="showrootdetails" style="margin-top: 12px;" SeqNo="0">
-                                <span class="Rootmgs" style="color:#939393;font-size:small;">Add Route From Source To Destination</span>
                             </div>
                         </div>
+                        <div class="text-info"><h3>For Negotiation, Contact : 8999321141</h3></div>
                     </div>
-                    <div class="row route">
-                        <div class="col-sm-12">
 
-                        </div>
 
-                    </div>
+
 
                 </div>
 
@@ -192,78 +185,133 @@
 <script>
     var routeArray = new Array();
     $(document).ready(function () {
-        $('#showrootdetails').find('span').remove();
-        routeArray = [];
-        var CityRootText = $("#SourceID option:selected").text();
-        var CityRootID = $("#SourceID option:selected").val();
-        var SeqNo = 1;
-        bindrow = '<span id=' + CityRootID + ' SeqNo=' + SeqNo + ' class="RootID"><i class="fa fa-times deleterootcity" aria-hidden="true" style="margin-right:3px;color: #f95555;"></i>' + CityRootText + '<i class="fa fa-arrow-right ArrowMargin" aria-hidden="true"></span>';
-        alert(bindrow);
-        $('#showrootdetails').attr('SeqNo', SeqNo);
-        $('#showrootdetails').append(bindrow);
-        routeArray.push(CityRootID);
+        
 
     });
-    $('#addRoute').on("click", function (e) {
-        $('.Rootmgs').remove();
-        var CityRootText = $("#CityRootID option:selected").text();
-        var CityRootID = $("#CityRootID option:selected").val();
-        var bindrow;
-        var SeqNo = parseInt($('#showrootdetails').attr('SeqNo'));
+   
 
 
-        if ($("#SourceID option:selected").val() == 0) {
-            alert("Please select Source");
-            return 0;
-        }
-        if (CityRootID == 0) {
-            alert("Please Select City for Route");
-            return 0;
-        }
-        //if (SeqNo == 0 && CityRootID != $("#SourceID option:selected").val()) {
-        //    alert("Please Select Source As First City in Route");
-        //    return 0;
-
-        //}
-        ;
-        //This code is for removing last arrow from root details
-        if (jQuery.inArray(CityRootID, routeArray) == -1) {
-            SeqNo = SeqNo + 1;
-
-            if (CityRootText == $("#DestinationID option:selected").text()) {
-                bindrow = '<span id=' + CityRootID + ' SeqNo=' + SeqNo + ' class="RootID"><i class="fa fa-times deleterootcity" aria-hidden="true" style="margin-right:3px;color: #f95555;"></i>' + CityRootText + '</span>';
-                $('#addRoute').hide();
-            }
-            else {
-                bindrow = '<span id=' + CityRootID + ' SeqNo=' + SeqNo + ' class="RootID"><i class="fa fa-times deleterootcity" aria-hidden="true" style="margin-right:3px;color: #f95555;"></i>' + CityRootText + '<i class="fa fa-arrow-right ArrowMargin" aria-hidden="true"></i></span>';
-            }
-            $('#showrootdetails').attr('SeqNo', SeqNo);
-            $('#showrootdetails').append(bindrow);
-            routeArray.push(CityRootID);
-        }
-        else {
-            alert(CityRootText + " is already in route");
-            return;
-        }
-
-    });
-
-
-    $(document).on('click', 'i.deleterootcity', function (e) {
+    
+    $(document).on('click', '#btnSubmit', function (e) {
         e.preventDefault();
-        var thisCityID = parseInt($(this).closest('span').attr('id'));
-        if (thisCityID != parseInt($("#SourceID option:selected").val())) {
-            $(this).closest('span').remove();
 
-            var SeqNo = parseInt($('#showrootdetails').attr('SeqNo'));
-            SeqNo = SeqNo - 1;
-            $('#showrootdetails').attr('SeqNo', SeqNo);
-            $('#addRoute').show();
+
+        var bflagValid = 1;
+        var idArrRoot = [];
+        $('.RootID').each(function (k, v) {
+            var tdVals = $(this).attr("id") + "~" + $(this).attr('SeqNo');
+            idArrRoot.push(tdVals);
+        });
+
+
+
+        if ($("#SourceID option:selected").val() == null || $("#SourceID option:selected").val() == "") {
+            bflagValid = 0;
+            $("#SourceID").addClass('borderValidation');
+
         }
-        else {
-            return;
+        if ($("#DestinationID option:selected").val() == null || $("#DestinationID option:selected").val() == "") {
+            bflagValid = 0;
+            $("#DestinationID").addClass('borderValidation');
+
         }
+        if ($("#StartDate").val() == null || $("#StartDate").val() == "") {
+            bflagValid = 0;
+            $("#StartDate").addClass('borderValidation');
+
+        }
+
+        if ($("#EndDate").val() == null || $("#EndDate").val() == "") {
+            bflagValid = 0;
+            $("#EndDate").addClass('borderValidation');
+
+        }
+
+
+        if ($("#VehicleID option:selected").val() == null || $("#VehicleID option:selected").val() == "") {
+            bflagValid = 0;
+            $("#VehicleID").addClass('borderValidation');
+        }
+
+
+       
 
         
+      
+        if (bflagValid == 0) {
+            return 0;
+
+        }
+
+       
+
+
+       
+
+        //adding Load Grid Details In Array
+        var idArrLoadDetails = [];
+        $('#tblGoodsDetail tbody tr').each(function (k, v) {
+            var trElement = $(this);
+
+            var tdVals = trElement.find('td.clsSrNo').text() + "~" +
+                trElement.find('td.clsMaterialID').text() + "~" +
+                trElement.find('td.clsConversionFactor').text() + "~" +
+                trElement.find('td.clsUnit').text() + "~" +
+                trElement.find('td.clsHeight').text() + "~" +
+                trElement.find('td.clsWidth').text() + "~" +
+                trElement.find('td.clslength').text() + "~" +
+                trElement.find('td.clsWeight').text() + "~" +
+                trElement.find('td.clsQuantity').text() + "~" +
+                trElement.find('td.clsMaterialValue').text();
+            idArrLoadDetails.push(tdVals);
+
+
+        });
+
+        var TripDetails = [];
+        for (var i = 0; i < idArrLoadDetails.length; i++) {
+            var arrElement = idArrLoadDetails[i].split("~");
+            item = {}
+            item["TripDetailID"] = arrElement[0];
+            item["MaterialID"] = arrElement[1];
+            item["ConversionFactor"] = arrElement[2];
+            item["UnitOfMeasure"] = arrElement[3];
+            item["Height"] = arrElement[4];
+            item["Width"] = arrElement[5];
+            item["Length"] = arrElement[6];
+            item["Weight"] = arrElement[7];
+            item["Qty"] = arrElement[8];
+            item["MaterialValue"] = arrElement[9];
+            TripDetails.push(item);
+        }
+
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: '/TLoader/SaveTrip',
+            data:
+            {
+                SourceID: $("#SourceID option:selected").val(),
+                DestinationID: $("#DestinationID option:selected").val(),
+                VehicleID: $("#VehicleID option:selected").val(),
+                TripEndDate: $("#EndDate").val(),
+                TripStartDate: $("#StartDate").val(),
+                TripStatus: $("#TripStatus option:selected").val(),
+                CityRootId: null,
+                LoadID:@Model.LoadID,
+                _tripDetails: TripDetails
+
+            },
+            success: function (da) {
+                alert(da);
+                $('#showrootdetails').attr('SeqNo', 0);
+                $('#btnAddGoods').val('Add Good Details');
+                window.location.href = "/TLoader/Index";
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("Error");
+            }
+        });
+
     });
 </script>

@@ -1,17 +1,18 @@
 ﻿@using TransportService.Web.Models.Masters
 @using TransportService.Web.Models
 @using System;
+@model TransportService.Web.Models.Masters.PersonDetail
 
 
-@using (Html.BeginForm("LoadPersonalDetail", "TLoader", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("PersonalDetail", "TLoader", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-
+    
     <div id="divPersonDetail" class="container" style="margin-top: 30px;">
         <div class="row job-card">
             <div class="col-md-12">
                 <div class="PageDesc">
-                    If you have already registered with us, please
-                    <a href="#" class="orange">Click Here</a>
+                    @*If you have already registered with us, please
+                    <a href="#" class="orange">Click Here</a>*@
                     <div class="gap-line"></div>
                 </div>
             </div>
@@ -39,7 +40,7 @@
                                 <span class="mandatory text-danger">*</span>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                    <input name="Fname" type="text" id="txtFirstName" class="form-control capital" placeholder="Enter First Name" value="@(((User)ViewData[ModelsNames.User]).FirstName)"/>
+                                    <input name="Fname" type="text" id="txtFirstName" class="form-control capital" placeholder="Enter First Name" value="@Model.user.FirstName" />
                                     <span id="ContentPlaceHolder1_rfvFname" class="validator" style="display:none;">Enter First Name</span>
                                 </div>
                             </div>
@@ -49,7 +50,7 @@
                                 <label>Enter Last Name</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                    <input name="ctl00$ContentPlaceHolder1$txtLname" type="text" id="txtLastName" class="form-control capital" placeholder="Enter Last Name" value="@(((User)ViewData[ModelsNames.User]).LastName)">
+                                    <input name="ctl00$ContentPlaceHolder1$txtLname" type="text" id="txtLastName" class="form-control capital" placeholder="Enter Last Name" value="@Model.user.LastName">
 
                                 </div>
                             </div>
@@ -65,7 +66,7 @@
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-mobile-alt"></i></span>
                                     @*<span class="mandatory" style="margin-left: 38px;">*</span>*@
-                                    <input name="ctl00$ContentPlaceHolder1$txtMobile" type="text" maxlength="10" id="txtMobile" disabled class="form-control capital" minlength="10" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" placeholder="Please Enter Mobile No" value="@(((User)ViewData[ModelsNames.User]).Mobile)">
+                                    <input name="ctl00$ContentPlaceHolder1$txtMobile" type="text" maxlength="10" id="txtMobile" disabled class="form-control capital" minlength="10" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" placeholder="Please Enter Mobile No" value="@Model.user.Mobile">
                                     <span id="ContentPlaceHolder1_RegularExpressionValidator2" class="validator" style="display:none;">Please Enter Valid Mobile Number</span>
                                     <span id="ContentPlaceHolder1_rfvMobile" class="validator" style="display:none;">Please Enter Mobile No</span>
                                 </div>
@@ -79,7 +80,7 @@
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
                                     @*<span class="mandatory" style="margin-left: 15px;">*</span>*@
-                                    <input name="ctl00$ContentPlaceHolder1$txtEmail" type="text" id="txtEmail" class="form-control capital" placeholder="Please Enter Email Id" value="@(((User)ViewData[ModelsNames.User]).Email)">
+                                    <input name="ctl00$ContentPlaceHolder1$txtEmail" type="text" id="txtEmail" class="form-control capital" placeholder="Please Enter Email Id" value="@Model.user.Email">
                                 </div>
                             </div>
                         </div>
@@ -91,7 +92,7 @@
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="far fa-id-card"></i></span>
                                     @*<span class="mandatory" style="margin-left: 15px;">*</span>*@
-                                    <input name="ctl00$ContentPlaceHolder1$txtRPassword" type="text" id="txtAdharCardNo" class="form-control capital" placeholder="Retype Password" value="@(((User)ViewData[ModelsNames.User]).AdharCardNo)">
+                                    <input name="ctl00$ContentPlaceHolder1$txtRPassword" type="text" id="txtAdharCardNo" class="form-control capital" placeholder="Enter Adhar No" value="@Model.user.AdharCardNo">
                                     <span id="ContentPlaceHolder1_RequiredFieldValidator2" class="validator" style="display:none;">Retype Password</span>
                                     <span id="ContentPlaceHolder1_CompareValidator1" class="validator" style="display:none;">Password Not Match</span>
                                 </div>
@@ -106,7 +107,7 @@
                                     <span class="input-group-addon"><i class="far fa-id-card"></i></span>
                                     @*<span class="mandatory" style="margin-left: 50px;margin-top: -30px;">*</span>*@
 
-                                    <input name="ctl00$ContentPlaceHolder1$txtpan" type="text" maxlength="10" id="txtPanNo" class="form-control capital" placeholder="PAN Card No." value="@(((User)ViewData[ModelsNames.User]).PanCardNo)">
+                                    <input name="ctl00$ContentPlaceHolder1$txtpan" type="text" maxlength="10" id="txtPanNo" class="form-control capital" placeholder="PAN Card No." value="@Model.user.PanCardNo">
                                     <span id="ContentPlaceHolder1_rfvPan" class="validator" style="display:none;">PAN Card No.</span>
                                 </div>
                             </div>
@@ -184,13 +185,13 @@
                                 <span class="mandatory">*</span>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-city"></i></span>
-                                    @*<span class="mandatory" style="margin-left: 50px;margin-top: -30px;">*</span>*@
+                                   
                                     @*<input type="text" id="txtDestinationRoute" name="txtCity" class="form-control capital" placeholder="Enter City" required="required" oninvalid=" " onchange=" " autocomplete="off">*@
-                                    
-                                        @*@Html.DropDownList("City", new SelectList((System.Collections.IEnumerable)ViewData[DDLListNames.CityList], "Value", "Text"), "Select City", new { @class = "form-control", @id = "ddlCity", Title = "Select City" })*@
-                                        @Html.DropDownList("City", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select City", new { @class = "form-control", @id = "ddlCity", Title = "Select City" })
 
                                     
+                                    @Html.DropDownList("City", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text", @Model.user.CityID), "Select City", new { @class = "form-control", @id = "ddlCity", Title = "Select City" })
+
+
 
                                 </div>
                             </div>
@@ -199,7 +200,7 @@
                             <div class="form-group">
                                 <label>Enter Pincode</label>
                                 <span class="mandatory">*</span>
-                                <input name="ctl00$ContentPlaceHolder1$txtpincode" type="text" maxlength="6" id="txtPincode" class="form-control capital" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" placeholder="Enter Pincode" value="@(((User)ViewData[ModelsNames.User]).PinCode)">
+                                <input name="ctl00$ContentPlaceHolder1$txtpincode" type="text" maxlength="6" id="txtPincode" class="form-control capital" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" placeholder="Enter Pincode" value="@Model.user.PinCode">
                                 <span id="ContentPlaceHolder1_rfvPincode" class="validator" style="display:none;">Enter Pincode</span>
 
                             </div>
@@ -212,7 +213,7 @@
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fas fa-address-card"></i></span>
                             <span id="ContentPlaceHolder1_rfvAddress" class="validator" style="display:none;">Please Enter Address</span>
-                            <textarea name="ctl00$ContentPlaceHolder1$txtaddress" rows="2" cols="20" id="txtaddress" class="form-control capital" placeholder="Please Enter Address" style="height:70px;"></textarea>
+                            <textarea name="ctl00$ContentPlaceHolder1$txtaddress" rows="2" cols="20" id="txtaddress" class="form-control capital" placeholder="Please Enter Address" style="height:70px;">@Model.user.Address1</textarea>
                         </div>
                     </div>
                 </div>
@@ -230,7 +231,7 @@
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="far fa-user"></i></span>
 
-                                <input name="ctl00$ContentPlaceHolder1$txtaperson" type="text" id="txtAlternatePerson" class="form-control capital" placeholder="Alternate Contact Person" value="@(((User)ViewData[ModelsNames.User]).AlternateContactPerson)">
+                                <input name="ctl00$ContentPlaceHolder1$txtaperson" type="text" id="txtAlternatePerson" class="form-control capital" placeholder="Alternate Contact Person" value="@Model.user.AlternateContactPerson">
                             </div>
                         </div>
                     </div>
@@ -240,7 +241,7 @@
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fas fa-mobile-alt"></i></span>
 
-                                <input name="ctl00$ContentPlaceHolder1$txtamobile" type="text" maxlength="10" id="txtAlternateMobile" class="form-control capital" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" placeholder="Alternate Mobile Number" value="@(((User)ViewData[ModelsNames.User]).AlternateMobileNo)">
+                                <input name="ctl00$ContentPlaceHolder1$txtamobile" type="text" maxlength="10" id="txtAlternateMobile" class="form-control capital" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" placeholder="Alternate Mobile Number" value="@Model.user.AlternateMobileNo">
                             </div>
                         </div>
                     </div>
@@ -251,13 +252,13 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>STD Code</label>
-                                    <input name="ctl00$ContentPlaceHolder1$txtstdcode" type="text" maxlength="3" id="txtStdCode" class="form-control capital" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" placeholder="STD Code" value="@(((User)ViewData[ModelsNames.User]).STD)">
+                                    <input name="ctl00$ContentPlaceHolder1$txtstdcode" type="text" maxlength="3" id="txtStdCode" class="form-control capital" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" placeholder="STD Code" value="@Model.user.STD">
                                 </div>
                             </div>
                             <div class="col-md-5">
                                 <div class="form-group">
                                     <label>Landine No.</label>
-                                    <input name="ctl00$ContentPlaceHolder1$txtlandline" type="text" maxlength="8" id="txtLandLine" class="form-control capital" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" placeholder="Landine No." value="@(((User)ViewData[ModelsNames.User]).LandlineNo)">
+                                    <input name="ctl00$ContentPlaceHolder1$txtlandline" type="text" maxlength="8" id="txtLandLine" class="form-control capital" onkeypress="return IsNumeric(event);" ondrop="return false;" onpaste="return false;" placeholder="Landine No." value="@Model.user.LandlineNo">
 
                                 </div>
                             </div>
@@ -271,7 +272,7 @@
 
                             </div>
                         </div>
-                     </div>
+                    </div>
 
                 </div>
 
@@ -290,16 +291,18 @@
                 <div id="ContentPlaceHolder1_ci2" class="row">
                     <div class="col-md-6">
                         <label style="color: #6E6C6C;">Company Name</label>
-                        <span id="ContentPlaceHolder1_rfvCname" class="validator" style="display:none;">Enter Company Name</span>
-                        <input name="ctl00$ContentPlaceHolder1$txtCname" type="text" id="txtCompanyName" class="form-control capital" placeholder="Enter Company Name" value="@(((Company)ViewData[ModelsNames.Company]).CompanyName)">
                         <span class="mandatory">*</span>
+                        <span id="ContentPlaceHolder1_rfvCname" class="validator" style="display:none;">Enter Company Name</span>
+                        <input name="ctl00$ContentPlaceHolder1$txtCname" type="text" id="txtCompanyName" class="form-control capital" placeholder="Enter Company Name" value="@Model.company.CompanyName">
+
 
                     </div>
                     <div class="col-md-6">
                         <label style="color: #6E6C6C;">Company Type</label>
-                        <span id="ContentPlaceHolder1_RequiredFieldValidator4" class="validator" style="display:none;">Company Type</span>
-                        @*@Html.DropDownList("Company Type", new SelectList((System.Collections.IEnumerable)ViewData[DDLListNames.CompanyTypeList], "Value", "Text"), "Select Comapny Type", new { @class = "form-control", @id = "ddlCompanyType", Title = "Company Type" })*@
                         <span class="mandatory">*</span>
+                        <span id="ContentPlaceHolder1_RequiredFieldValidator4" class="validator" style="display:none;">Company Type</span>
+                        @Html.DropDownList("Company Type", new SelectList((System.Collections.IEnumerable)ViewData[DDLListNames.CompanyTypeList], "Value", "Text", @Model.company.CompanyTypeID), "Select Comapny Type", new { @class = "form-control", @id = "ddlCompanyType", Title = "Company Type" })
+
                     </div>
                 </div>
 
@@ -307,17 +310,17 @@
                 <div id="ContentPlaceHolder1_ci2" class="row">
                     <div class="col-md-6">
                         <label style="color: #6E6C6C;">Service Tax No.</label>
-                        <input name="ctl00$ContentPlaceHolder1$txtSTax" type="text" id="txtServiceTax" class="form-control capital" placeholder="Service Tax No." value="@(((Company)ViewData[ModelsNames.Company]).ServiceTaxNo)">
+                        <input name="ctl00$ContentPlaceHolder1$txtSTax" type="text" id="txtServiceTax" class="form-control capital" placeholder="Service Tax No." value="@Model.company.ServiceTaxNo">
                     </div>
                     <div class="col-md-6">
                         <label style="color: #6E6C6C;">Company PAN No.</label>
-                        <input name="ctl00$ContentPlaceHolder1$txtCPan" type="text" maxlength="10" id="txtCompanyPan" class="form-control capital" placeholder="Company PAN No." value="@(((Company)ViewData[ModelsNames.Company]).CompanyPanNo)">
                         <span class="mandatory">*</span>
+                        <input name="ctl00$ContentPlaceHolder1$txtCPan" type="text" maxlength="10" id="txtCompanyPan" class="form-control capital" placeholder="Company PAN No." value="@Model.company.CompanyPanNo">
                         <span id="ContentPlaceHolder1_rfvCPan" class="validator" style="display:none;">Please Enter Company PAN Card Number</span>
                     </div>
                     <div class="col-md-6">
                         <label style="color: #6E6C6C;">Company Website</label>
-                        <input name="ctl00$ContentPlaceHolder1$txtCWebsite" type="text" id="txtCompanyWebsite" placeholder="Ex. www.example.com" class="form-control capital" value="@(((Company)ViewData[ModelsNames.Company]).CompanyWebsite)">
+                        <input name="ctl00$ContentPlaceHolder1$txtCWebsite" type="text" id="txtCompanyWebsite" placeholder="Ex. www.example.com" class="form-control capital" value="@Model.company.CompanyWebsite">
                     </div>
                 </div>
                 <div class="gap"></div>
@@ -341,7 +344,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <b>Upload Profile Image</b>
-                                <input type="file" name="upload_file[]" id="txtFileUploadControl" class="form-control" accept="image/*" style="padding:5px;" value="@(((UserDocuments)ViewData[ModelsNames.UserDocuments]).DocumentName)"/>
+                                <input type="file" name="upload_file[]" id="txtFileUploadControl" class="form-control" accept="image/*" style="padding:5px;" value="" />
 
                             </div>
                         </div>
@@ -391,34 +394,19 @@
 }
 
 
-    <script>
+<script>
     var bIsPasswordChange = 0;
     $(document).ready(function () {
 
-        $('#txtMobile').val(@Session[UserColumns.Mobile]);
-        $('#txtaddress').val('@(((User)ViewData[ModelsNames.User]).Address1)');
-        if (@(((User)ViewData[ModelsNames.User]).CityID) != null) {
-            $("#ddlCity option[value = '" + "@(((User)ViewData[ModelsNames.User]).CityID)" + "']").attr("selected", "selected");
-        }
-        
-
-        //$('#txtEmail').val(@Session[UserColumns.Email]);
-        @*if (@Session[ClientTypeColumns.ClientTypeID] == @enumDBClientTypeID.Loader.GetHashCode() || @Session[ClientTypeColumns.ClientTypeID] == @enumDBClientTypeID.Transporter.GetHashCode() ||@Session[ClientTypeColumns.ClientTypeID] == @enumDBClientTypeID.Corporater.GetHashCode()) {
-            $('#btnNext').removeClass('hidden');
-        }
-        else {
-            $('#btnPersonSubmit').removeClass('hidden');
-        }*@
+       
     });
     $(document).on('click', '#btnNext', function (e) {
         e.preventDefault();
-        alert('A');
         var bIsValid = 1;
         bIsValid = PersonValidation();
         if (bIsValid == 0) {
             return;
         }
-        alert('B');
         $('#divNext').removeClass('hidden');
         if (@Convert.ToInt32( @Session[ClientColumns.ClientTypeID]) == @enumDBClientTypeID.Loader.GetHashCode() ||@Convert.ToInt32( @Session[ClientColumns.ClientTypeID]) == @enumDBClientTypeID.Transporter.GetHashCode() || @Convert.ToInt32( @Session[ClientColumns.ClientTypeID]) == @enumDBClientTypeID.Corporater.GetHashCode() ) {
             $('#divCompany').removeClass('hidden');
@@ -426,7 +414,7 @@
         $('#divPersonDetail').addClass('hidden');
 
     });
-    
+
     $(document).on('click', '#btnCompanySubmit', function (e) {
         e.preventDefault();
         var bIsValid = 1;
@@ -437,7 +425,7 @@
                 $("#txtCompanyName").addClass('borderValidation');
             }
             if ($("#ddlCompanyType option:selected").val() == 0 || $("#ddlCompanyType option:selected").val() == "") {
-                bflagValid = 0;
+                bIsValid = 0;
                 $("#ddlCompanyType").addClass('borderValidation');
             }
             if ($("#txtCompanyPan").val() == null || $("#txtCompanyPan").val() == "") {
@@ -445,7 +433,7 @@
                 $("#txtCompanyPan").addClass('borderValidation');
             }
         }
-        if (bIsValid = 0) {
+        if (bIsValid == 0) {
             return;
         }
         var p;
@@ -483,7 +471,7 @@
         formData.append("ServiceTaxNo", $("#txtServiceTax").val());
         formData.append("CompanyPanNo", $("#txtCompanyPan").val());
         formData.append("CompanyWebsite", $("#txtCompanyWebsite").val());
-        
+
         $.ajax({
             type: "POST",
             url: '@Url.Action("PersonalDetail", "TLoader")',
@@ -493,16 +481,19 @@
             processData: false,
             success: function (response) {
                 alert(response);
-                if (@Convert.ToInt32(@Session[RoleColumns.RoleID]) == enumRole.Transporter.GetHashCode()) {
-                    window.location.href = "LoaderIndex";
+                if (@Convert.ToInt32(@Session[RoleColumns.RoleID]) == @enumRole.Transporter.GetHashCode()) {
+                   
+                    window.location.href = "/TLoader/LoaderIndex";
 
                 }
                 else {
+                    
                     window.location.href = "/TLoader/Index";
 
                 }
-
                 
+
+
             },
             error: function (error) {
                 alert('Error');
@@ -541,7 +532,6 @@
         }
 
         if ($("#txtPincode").val() == null || $("#txtPincode").val() == "") {
-
             bIsValid = 0;
             $("#txtPincode").addClass('borderValidation');
         }
@@ -589,4 +579,4 @@
         return bIsValid;
     }
 
-    </script>
+</script>

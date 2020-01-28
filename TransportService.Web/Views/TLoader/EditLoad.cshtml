@@ -1,5 +1,7 @@
 ﻿@model TransportService.Web.Models.Activity.LoaderEdit
+@using TransportService.Web.Models
 @{
+
     ViewBag.Title = "EditLoad";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -21,7 +23,7 @@
         <div class="row">
             <hr />
             <div class="col-lg-6">
-               
+
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h5 class="panel-title"><b>Edit Load</b> </h5>
@@ -61,9 +63,9 @@
                                 <span class="input-group-addon"><i class="fas fa-shopping-cart"></i></span>
                                 <select id="ddlLoadType" class="form-control">
                                     <option value="0"> Select Load Type </option>
-                                    <option value="Full Truck Load(Above 3000 Kg)"> Full Truck Load(Above 3000 Kg) </option>
-                                    <option value="Part Truck Load(500-3000 Kg)">Part Truck Load(500-3000 Kg) </option>
-                                    <option value="Parcel (Less than 500 Kg)">Parcel (Less than 500 Kg) </option>
+                                    <option value="@constLoadType.FullTruckLoad"> @constLoadType.FullTruckLoad </option>
+                                    <option value="@constLoadType.PartTruckLoad">@constLoadType.PartTruckLoad</option>
+                                    <option value="@constLoadType.Parcel">@constLoadType.Parcel </option>
                                 </select>
                             </div>
                         </div>
@@ -80,6 +82,33 @@
                                 </select>
                             </div>
                         </div>
+                        @*@Html.DropDownList("TruckType", new SelectList((System.Collections.IEnumerable)ViewData["VehicalTypeList"], "Value", "Text"), "Select Truck Type", new { @class = "form-control", @id = "VehicleTypeID", Title = "VehicleTypeID", disabled = "disabled" })*@
+
+                        @if (Model.VehicleTypeID != null)
+                        {
+                            <div class="col-sm-6 form-group">
+                                <label><i class="red">*</i> Truck Type: </label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-truck"></i></span>
+                                    @Html.DropDownList("TruckType", new SelectList((System.Collections.IEnumerable)ViewData["VehicalTypeList"], "Value", "Text", Model.VehicleTypeID), "Select Truck Type", new { @class = "form-control", @id = "VehicleTypeID", Title = "VehicleTypeID" })
+
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+
+                            <div class="col-sm-6 form-group">
+                                <label><i class="red">*</i> Truck Type: </label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-truck"></i></span>
+                                    @Html.DropDownList("TruckType", new SelectList((System.Collections.IEnumerable)ViewData["VehicalTypeList"], "Value", "Text"), "Select Truck Type", new { @class = "form-control", @id = "VehicleTypeID", Title = "VehicleTypeID", disabled = "disabled" })
+
+                                </div>
+                            </div>
+
+                        }
+
 
                         <div class="col-sm-6 form-group">
                             <label>Reciever Name:</label>
@@ -89,14 +118,11 @@
                             </div>
                         </div>
 
-                        
-                        
-
                         <div class="col-sm-6 form-group">
                             <label>Phone:</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                                <input id="txt_Phone" type="number" class="form-control"  value="@Model.ContactNo" placeholder="Phone" maxlength="10">
+                                <input id="txt_Phone" type="number" class="form-control" value="@Model.ContactNo" placeholder="Phone" maxlength="10">
                             </div>
                         </div>
 
@@ -105,11 +131,11 @@
                             <div class="input-group">
 
                                 <span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
-                                <input id="txt_Mail" type="email" class="form-control"  value="@Model.Email" placeholder="Email">
+                                <input id="txt_Mail" type="email" class="form-control" value="@Model.Email" placeholder="Email">
                             </div>
                         </div>
-                        
-                        
+
+
 
                         <div class="col-sm-12 form-group">
                             <label>Address:</label>
@@ -231,24 +257,24 @@
                                     <tbody>
                                         @foreach (var item in Model.LoadDetails)
                                         {
-                                        <tr>
-                                            <td class="clsSrNo">@item.LoadDetailID</td>
-                                            <td style="display:none" class="clsMaterialID"> @item.MaterialID</td>
-                                            <td class="clsMaterialName">@item.MaterialName</td>
-                                            <td style="display:none" class="clsConversionFactor"> @item.ConversionFactor</td>
-                                            <td class="clsUnitOfMeasure">@item.UnitOfMeasure </td>
-                                            <td class="clsHeight">@item.Height</td>
-                                            <td class="clsWidth">@item.Width</td>
-                                            <td class="clsLength">@item.Length</td>
-                                            <td class="clsWeight">@item.Weight</td>
-                                            <td class="clsQty">@item.Qty</td>
-                                            <td class="clsMaterialValue">@item.MaterialValue</td>
-                                            <td>
-                                                @Html.ActionLink("Edit", null, null, new { @class = "clsEditRow" }) |
-                                                @Html.ActionLink("Delete", null, null, new { @id = Model.LoadID }, new { @class = "clsDeleteRow" })
-                                            </td>
+                                            <tr>
+                                                <td class="clsSrNo">@item.LoadDetailID</td>
+                                                <td style="display:none" class="clsMaterialID"> @item.MaterialID</td>
+                                                <td class="clsMaterialName">@item.MaterialName</td>
+                                                <td style="display:none" class="clsConversionFactor"> @item.ConversionFactor</td>
+                                                <td class="clsUnitOfMeasure">@item.UnitOfMeasure </td>
+                                                <td class="clsHeight">@item.Height</td>
+                                                <td class="clsWidth">@item.Width</td>
+                                                <td class="clsLength">@item.Length</td>
+                                                <td class="clsWeight">@item.Weight</td>
+                                                <td class="clsQty">@item.Qty</td>
+                                                <td class="clsMaterialValue">@item.MaterialValue</td>
+                                                <td>
+                                                    @Html.ActionLink("Edit", null, null, new { @class = "clsEditRow" }) |
+                                                    @Html.ActionLink("Delete", null, null, new { @id = Model.LoadID }, new { @class = "clsDeleteRow" })
+                                                </td>
 
-                                        </tr>
+                                            </tr>
                                         }
 
                                     </tbody>
@@ -272,18 +298,33 @@
 <script>
     $(document).ready(function () {
     $("#ddlLoadType option[value = '" + "@Model.LoadType" + "']").attr("selected", "selected");
-    $("#ddlSubService option[value = '" + "@Model.SubService" + "']").attr("selected", "selected");
+        $("#ddlSubService option[value = '" + "@Model.SubService" + "']").attr("selected", "selected");
+
+        @*if (@Model.VehicleTypeID != null) {
+            $("#VehicleTypeID").prop('disabled', 'false');
+        }*@
+
         var lastSrNo =$ ('#tblGoodsDetail tr:last td:first').text();
         $('#idLastSrNo').val(lastSrNo);
 
     });
+    @*$(document).on('change', '#ddlLoadType', function (e) {
 
+            if ($("#ddlLoadType option:selected").val() == "@constLoadType.FullTruckLoad") {
+
+                $('#VehicleTypeID').prop('disabled', false);
+            }
+            else {
+                $('#VehicleTypeID').prop('disabled', true);
+            }
+
+        });*@
     $(document).on('click', '#btnAddGoods', function (e) {
         var htmlValidation = "";
         var operationType = $('#hdnOperationType').val();
         var SrNo = parseInt($("#idLastSrNo").val());
         alert($("#idLastSrNo").val());
-        
+
         if (operationType == 'I') {
             SrNo = SrNo + 1;
         }
@@ -333,8 +374,8 @@
                 '@Html.ActionLink("Edit",null, null, new { @class = "clsEditRow" }) | @Html.ActionLink("Delete", null, null, new { @class = "clsDeleteRow" })' +
                 '</td >' +
                 '</tr>';
-           
-            
+
+
             $('#tblGoodsDetail  tbody').append(bindRow);
             $("#idLastSrNo").val(SrNo);
         }
@@ -351,7 +392,7 @@
             $('#tblGoodsDetail tbody tr:eq(' + rowindex + ') ').children('td.clsWeight').text(weight);
             $('#tblGoodsDetail tbody tr:eq(' + rowindex + ') ').children('td.clsQty').text(quantity);
             $('#tblGoodsDetail tbody tr:eq(' + rowindex + ') ').children('td.clsMaterialValue').text(materialValue);
-            
+
             }
 
 
@@ -372,7 +413,7 @@
     });
     $(document).on('click', '.clsEditRow', function (e) {
         e.preventDefault();
-        
+
 
         var srNo = $(this).closest('tr').children('td.clsSrNo').text();
         var materialID = $(this).closest('tr').children('td.clsMaterialID').text();
@@ -384,8 +425,8 @@
         var weight = $(this).closest('tr').children('td.clsWeight').text();
         var quantity = $(this).closest('tr').children('td.clsQty').text();
         var materialValue = $(this).closest('tr').children('td.clsMaterialValue').text();
-        
-        
+
+
         $('#hdnOperationType').val('U');
         $('#hdnUpdateSrNo').val(srNo);
         $("#ddlMaterial option[value = '" + materialID + "']").attr("selected", "selected");
@@ -399,8 +440,8 @@
         $("#txt_MaterialValue").val(materialValue);
         var row = $(this).closest('tr').index();
         $('#hdnRowNo').val(row);
-        
-        
+
+
 
 
     });
@@ -471,11 +512,11 @@
                 trElement.find('td.clsWeight').text() + "~" +
                 trElement.find('td.clsQty').text() + "~" +
                 trElement.find('td.clsMaterialValue').text();
-            alert(tdVals);
+            
             idArrLoadDetails.push(tdVals);
 
         });
-        
+
         var LoadDetails = [];
         for (var i = 0; i < idArrLoadDetails.length; i++) {
             var arrElement = idArrLoadDetails[i].split("~");
@@ -483,7 +524,7 @@
             item["LoadDetailID"] = arrElement[0];
             item["MaterialID"] = arrElement[1];
             item["ConversionFactor"] = arrElement[2];
-            item["UnitOfMeasure"] = arrElement[3]; 
+            item["UnitOfMeasure"] = arrElement[3];
             item["Height"] = arrElement[4];
             item["Width"] = arrElement[5];
             item["Length"] = arrElement[6];
@@ -493,7 +534,13 @@
             LoadDetails.push(item);
         }
 
-
+        var VehicleTypeID;
+        if ($("#ddlLoadType option:selected").val() == "@constLoadType.FullTruckLoad") {
+            VehicleTypeID = $("#VehicleTypeID option:selected").val();
+        }
+        else {
+            VehicleTypeID = null;
+        }
 
 
         $.ajax({
@@ -512,12 +559,13 @@
                 ContactNo: $("#txt_Phone").val(),
                 Email: $("#txt_Mail").val(),
                 Address: $("#txt_Address").val(),
-                Status:0,
+                Status: 0,
+                VehicleTypeID : VehicleTypeID,
                 _loadDetails: LoadDetails
             },
             success: function (da) {
                 alert(da);
-                window.location.href = "/TLoader/New_LoaderIndex";
+                window.location.href = "/TLoader/LoaderIndex";
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("Error " + errorThrown);

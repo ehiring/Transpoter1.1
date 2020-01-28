@@ -87,14 +87,14 @@
                             <label>Heigth</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-up"></i></span>
-                                <input id="txt_Height" type="number" class="form-control" name="altr_name" value="" placeholder="Height" title="Enter Height">
+                                <input id="txt_Height" type="number" class="form-control" value="" placeholder="Height" title="Enter Height">
                             </div>
                         </div>
                         <div class="col-sm-6 form-group">
                             <label>Width</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-right"></i></span>
-                                <input id="txt_Width" type="number" class="form-control" name="altr_name" value="" placeholder="Width" title="Enter Width">
+                                <input id="txt_Width" type="number" class="form-control" value="" placeholder="Width" title="Enter Width">
                             </div>
                         </div>
 
@@ -102,24 +102,30 @@
                             <label>Length</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-down"></i></span>
-                                <input id="txt_Length" type="number" class="form-control" name="altr_name" value="" placeholder="Length" title="Enter Length">
+                                <input id="txt_Length" type="number" class="form-control" value="" placeholder="Length" title="Enter Length">
                             </div>
                         </div>
                         <div class="col-sm-6 form-group">
                             <label>Quantity</label>
                             <div class="input-group">
 
-                                <input id="txt_Quantity" type="number" class="form-control" name="altr_name" value="" placeholder="Quantity" title="Enter Quantity">
+                                <input id="txt_Quantity" type="number" class="form-control" value="" placeholder="Quantity" title="Enter Quantity">
                             </div>
                         </div>
                         <div class="col-sm-6 form-group">
                             <label>Total Weight(Tonn)</label>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-glass"></i></span>
-                                <input id="txt_Weight" type="number" class="form-control" name="altr_name" value="" placeholder="Weigtht" title="Enter Weight">
+                                <input id="txt_Weight" type="number" class="form-control" value="" placeholder="Weigtht" title="Enter Weight">
                             </div>
                         </div>
-
+                        <div class="col-sm-6 form-group">
+                            <label>Material Value(INR)</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-inr"></i></span>
+                                <input id="txt_MaterialValue" type="number" class="form-control" value="" placeholder="Material Value in INR">
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-sm-3">
                                 <div class="form-group">
@@ -146,6 +152,7 @@
                                             <th>Length</th>
                                             <th>Weight(Tonn)</th>
                                             <th>Quantity</th>
+                                            <th>Price</th>
                                             <th></th>
 
 
@@ -167,9 +174,7 @@
 <script>
      $(document).on('change', '#subSourceId', function (e) {
          e.preventDefault();
-         var TripID= $('#txtTripid').val();
-         var SourceID= $("#subSourceId option:selected").val();
-         alert("TripID :" + TripID + "  SourceID :" + SourceID);
+        
          
         $("#subDestinationId").empty();
         var ddlDestination = $("#subDestinationId");
@@ -222,7 +227,7 @@
     $(document).on('change', '#subDestinationId', function (e) {
         e.preventDefault();
         $('tblGoodsDetail tbody tr').empty();
-        alert("Hi");
+        
             $.ajax({
             url: "@Url.Action("GetAvailableSpace", "TLoader")",
             contentType: "application/json",
@@ -264,6 +269,7 @@
         var length = parseFloat($("#txt_Length").val());
         var weight = parseFloat($("#txt_Weight").val());
         var quantity = $("#txt_Quantity").val();
+        var materialValue = $("#txt_MaterialValue").val();
 
         if (materialID == 0) {
             bFlagValid = 0;
@@ -297,6 +303,10 @@
         if (quantity == null || quantity == "") {
             bFlagValid = 0;
             $("#txt_Quantity").addClass('borderValidation');
+        }
+        if (materialValue == null || materialValue == "") {
+            bFlagValid = 0;
+            $("#txt_MaterialValue").addClass('borderValidation');
         }
 
         if (bFlagValid == 0) {
@@ -349,6 +359,7 @@
             '<td class="clslength">' + length + '</td>' +
             '<td class="clsWeight">' + weight + '</td>' +
             '<td class="clsQuantity">' + quantity + '</td>' +
+            '<td class="clsMaterialValue">' + materialValue + '</td>' +
             '<td><i class="fa fa-times deleterow pull-right" id="mydel" aria-hidden="true" style="margin-top: 7px;"></i></td>' +
             '</tr>'
         $('#tblGoodsDetail  tbody').append(bindRow);
@@ -358,7 +369,8 @@
         $("#txt_Width").val('');
         $("#txt_Length").val('');
         $("#txt_Weight").val('');
-        $("#txt_Quantity").val('')
+        $("#txt_Quantity").val('');
+        $("#txt_MaterialValue").val('');
         $("#ddlMaterial").removeClass('borderValidation');
         $("#ddlUnit").removeClass('borderValidation');
         $("#txt_Height").removeClass('borderValidation');
@@ -366,6 +378,8 @@
         $("#txt_Length").removeClass('borderValidation');
         $("#txt_Weight").removeClass('borderValidation');
         $("#txt_Quantity").removeClass('borderValidation');
+        $("#txt_MaterialValue").removeClass('borderValidation');
+        
         $("#lblHeight").text(availableHeight);
         $("#lblWidth").text(availableWidth);
         $("#lblLength").text(availableLength);
@@ -442,7 +456,8 @@
                 trElement.find('td.clsWidth').text() + "~" +
                 trElement.find('td.clslength').text() + "~" +
                 trElement.find('td.clsWeight').text() + "~" +
-                trElement.find('td.clsQuantity').text();
+                trElement.find('td.clsQuantity').text()+ "~" +
+            trElement.find('td.clsMaterialValue').text(); 
             idArrLoadDetails.push(tdVals);
 
 
@@ -462,6 +477,7 @@
             item["Length"] = arrElement[6];
             item["Weight"] = arrElement[7];
             item["Qty"] = arrElement[8];
+            item["MaterialValue"] = arrElement[9];
             TripDetails.push(item);
         }
        

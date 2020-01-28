@@ -136,6 +136,20 @@ namespace TransportService.Web.BusinessLayer
                        Selected = r.Value.Equals(Convert.ToString(val))
                    }).ToList();
         }
+        public List<SelectListItem> GetVehicleWhereVehicleType (int ClientID , int VehicleTypeID)
+        {
+            return _jobDbContext.Database.SqlQuery<SelectListItem>("exec USP_SelectVehicleWhereVehicleType @ClientID,@VehicleTypeID",
+                    new SqlParameter("@ClientID", ClientID),
+                    new SqlParameter("@VehicleTypeID",VehicleTypeID))
+                   .ToList()
+                   .AsEnumerable()
+                   .Select(r => new SelectListItem
+                   {
+                       Text = r.Text.ToString(),
+                       Value = r.Value.ToString(),
+                       Selected = r.Value.Equals(Convert.ToString(0))
+                   }).ToList();
+        }
 
         public AvalableSpace GetVehicleSizeCapacityWhereID(int id)
         {

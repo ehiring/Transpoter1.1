@@ -26,6 +26,12 @@
     <script src="~/assets/js/NewTransfer.js"></script>
     <script src="~/assets/js/login.js"></script>
     <script src="https://kit.fontawesome.com/25f37ca790.js" crossorigin="anonymous"></script>
+   
+    
+    <script src="~/assets/js/bootstrap-dropdownhover.min1c9b.js"></script>
+    <script src="~/assets/js/wpfront-scroll-top.min.js"></script>
+    <script src="~/assets/js/bootstrap.min1c9b.js"></script>
+
     @*Scripts*@
 
     <!-- #region Styles -->
@@ -207,24 +213,15 @@
                     <div class="collapse navbar-collapse" id="main-navigation">
                         <ul class="nav navbar-nav navbar-right custom-nav">
                             <li> <a href="#home.html" class="">Home</a> </li>
-                            @*<li class="dropdown">
-            <a href="#Loader" class="dropdown-toggle " data-hover="dropdown" data-toggle="dropdown" data-animations="fadeInUp">Loader <span class="fa fa-angle-down"></span></a>
-            <ul class="dropdown-menu dropdownhover-bottom">
-                <li class=""> <a href="#" class="">Find Truck</a> </li>
-                <li class=""> <a href="#" class="">Post Load</a> </li>
-                <li class=""> <a href="#" class="">Get Quote</a> </li>
-                <li class=""> <a href="#" class="">Distance Calculator</a> </li>
-            </ul>
-        </li>*@
                             <li class="dropdown">
-                                <a href="#">Loader <span class="fa fa-angle-down"></span></a>
+                                <a href="#Loader" class="dropdown-toggle " data-hover="dropdown" data-toggle="dropdown" data-animations="fadeInUp">Loader <span class="fa fa-angle-down"></span></a>
                                 <ul class="dropdown-menu dropdownhover-bottom">
                                     <li class="">
-                                        @*<a href="#" class="">Find Truck</a>*@
                                         @Html.ActionLink("Find Truck", "Index", "TLoader")
+
                                     </li>
                                     <li class="">
-                                        @*<a href="#" class="">Post Load</a>*@
+
                                         @if (Session[UserColumns.UserID] == null)
                                         {
                                             @Html.ActionLink("Post Load", "AddLoad", "TLoader")
@@ -242,6 +239,7 @@
                                     <li class=""> <a href="#" class="">Distance Calculator</a> </li>
                                 </ul>
                             </li>
+
 
                             <li class="dropdown">
                                 <a href="#Trucker" class="dropdown-toggle" data-hover="dropdown" data-toggle="dropdown" data-animations="fadeInUp">Trucker <span class="fa fa-angle-down"></span></a>
@@ -292,11 +290,6 @@
                             </li>
                             <li> <a href="http://www.bhadaa.com/suppliers" class="">About Us </a> </li>
 
-                            @*Temparary added for testing purpose*@
-                            @*<li>@Html.ActionLink("Find Load", "LoaderIndex", "TLoader")</li>
-                            <li>@Html.ActionLink("Post Truck", "AddTrip", new { isBookLoad  =false})</li>*@
-                            @*Temparary added for testing purpose*@
-
 
                             <li class="">
                                 @*<a href="login.html" class=""><span style=" border:1px solid #8D9092 ; padding:5px; border-radius:2px">Log in</span></a>*@
@@ -307,35 +300,42 @@
                                 }
                                 else
                                 {
-                                    @Html.ActionLink("Log Out", "LogOut", null, new { @class = "btn-theme icon-left bg-navy-blue no-shadow d-none d-lg-inline-block align-self-center", @id = "btnSignIn" })
-                                }
-                            </li>
-                            @*<li class="">
-            @Html.ActionLink("My Vehicle", "AddTruck", new { isTripCall = 0 })
-        </li>*@
 
+                                <li class="dropdown">
+                                    <a href="#Loader" class="dropdown-toggle " data-hover="dropdown" data-toggle="dropdown" data-animations="fadeInUp">My Profile <span class="fa fa-angle-down"></span></a>
+                                    <ul class="dropdown-menu dropdownhover-bottom">
+                                        <li class="">
+                                            @Html.ActionLink("My Detail", "PersonalDetail", "TLoader")
 
-                            @if (Session[UserColumns.UserID] != null)
-                            {
-                                <li>
-                                    @Html.ActionLink("My Detail", "PersonalDetail", "TLoader", new { @class = "nav-link", @style = "width: 100px;" })
+                                        </li>
+                                        @if (Convert.ToInt32(Session[RoleColumns.RoleID]) == enumRole.Transporter.GetHashCode())
+                                        {
+                                        <li class="">
+                                            @Html.ActionLink("My Vehicle", "AddTruck", new { isTripCall = 0 })
+                                        </li>
+                                        }
+                                        <li class="">
+                                            @Html.ActionLink("Log Out", "LogOut", null, new { @class = "btn-theme icon-left bg-navy-blue no-shadow d-none d-lg-inline-block align-self-center", @id = "btnSignIn" })
+                                        </li>
+                                        
+                                    </ul>
                                 </li>
-                            }
+                                }
 
-                            <li class="hidden-xs">
-                                <a href="tel:+919881700017">
-                                    <span style="color:#f97316 !important; font-size:16px">
-                                        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="phone" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-                                             class="svg-inline--fa fa-phone fa-w-16 fa-spin fa-lg">
-                                            <path fill="currentColor"
-                                                  d="M493.4 24.6l-104-24c-11.3-2.6-22.9 3.3-27.5 13.9l-48 112c-4.2 9.8-1.4 21.3 6.9 28l60.6 49.6c-36 76.7-98.9 140.5-177.2 177.2l-49.6-60.6c-6.8-8.3-18.2-11.1-28-6.9l-112 48C3.9 366.5-2 378.1.6 389.4l24 104C27.1 504.2 36.7 512 48 512c256.1 0 464-207.5 464-464 0-11.2-7.7-20.9-18.6-23.4z"
-                                                  class="">
-                                            </path>
-                                        </svg>- 9881700017
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
+                                <li class="hidden-xs">
+                                    <a href="tel:+919881700017">
+                                        <span style="color:#f97316 !important; font-size:16px">
+                                            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="phone" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                                 class="svg-inline--fa fa-phone fa-w-16 fa-spin fa-lg">
+                                                <path fill="currentColor"
+                                                      d="M493.4 24.6l-104-24c-11.3-2.6-22.9 3.3-27.5 13.9l-48 112c-4.2 9.8-1.4 21.3 6.9 28l60.6 49.6c-36 76.7-98.9 140.5-177.2 177.2l-49.6-60.6c-6.8-8.3-18.2-11.1-28-6.9l-112 48C3.9 366.5-2 378.1.6 389.4l24 104C27.1 504.2 36.7 512 48 512c256.1 0 464-207.5 464-464 0-11.2-7.7-20.9-18.6-23.4z"
+                                                      class="">
+                                                </path>
+                                            </svg>- 9881700017
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
                     </div>
                 </div>
             </nav>

@@ -80,7 +80,7 @@ namespace TransportService.Web.Controllers
             // Adding Contact Person In DT
             if (CityRootId != null)
             {
-                if (CityRootId.Count > 0)
+                if (CityRootId.Count > 1)//null is also considered as single item
                 {
                     foreach (var item in CityRootId)
                     {
@@ -148,6 +148,7 @@ namespace TransportService.Web.Controllers
                  ,@TripEndDate 
                  ,@Status 
                  ,@AddedBy
+                 ,@LoadID
                  ,@RouteCityIDs
                  ,@UDTable_TripDetails",
           new SqlParameter("@SourceID", T.SourceID == null ? (object)DBNull.Value : T.SourceID),
@@ -157,6 +158,7 @@ namespace TransportService.Web.Controllers
           new SqlParameter("@TripEndDate", T.TripEndDate == null ? (object)DBNull.Value : T.TripEndDate),
           new SqlParameter("@Status", T.TripStatus),
           new SqlParameter("@AddedBy", Session[UserColumns.UserID]),
+          new SqlParameter("@LoadID", T.LoadID==null ?(object) DBNull.Value : T.LoadID),
           tvpParamCityRoot,
           tvpParamTripDetails);
             return Json("Trip Posted Sucessfull");
@@ -352,6 +354,7 @@ namespace TransportService.Web.Controllers
             dtTripDetail.Columns.Add("Weight", typeof(decimal));
             dtTripDetail.Columns.Add("Qty", typeof(int));
             dtTripDetail.Columns.Add("ConversionFactor", typeof(decimal));
+            dtTripDetail.Columns.Add("MaterialValue", typeof(decimal));
 
 
             if (_tripDetails != null)
@@ -370,6 +373,7 @@ namespace TransportService.Web.Controllers
                         dr_LoadDetail["Length"] = item.Length;
                         dr_LoadDetail["Weight"] = item.Weight;
                         dr_LoadDetail["Qty"] = item.Qty;
+                        dr_LoadDetail["MaterialValue"] = item.MaterialValue;
                         dtTripDetail.Rows.Add(dr_LoadDetail);
                     }
                 }
@@ -532,6 +536,7 @@ namespace TransportService.Web.Controllers
             ViewData["CityList"] = _tripBusinessLayer.GetDropDownData("CityList", 0);
             ViewData["MaterialList"] = _tripBusinessLayer.GetDropDownData("MaterialList", 0);
             ViewData["UOMList"] = _tripBusinessLayer.GetDropDownData("UOMList", 0);
+            ViewData["VehicalTypeList"] = _tripBusinessLayer.GetDropDownData("VehicalTypeList");
 
             LoaderEdit loaderEdit = new LoaderEdit();
             loaderEdit = _tripBusinessLayer.GetLoaderByID(LoadID);
@@ -613,23 +618,23 @@ namespace TransportService.Web.Controllers
           new SqlParameter("@ContactNo", _loader.ContactNo),
           new SqlParameter("@Email", _loader.Email),
           new SqlParameter("@Address", _loader.Address),
-           new SqlParameter("@Status", _loader.Status == null ? 0:_loader.Status),
+          new SqlParameter("@Status", _loader.Status),
           new SqlParameter("@AddedBy", Session[UserColumns.UserID]),/*.....UserID 1 is Loader*/
           new SqlParameter("@Receiver", _loader.Receiver),
-          new SqlParameter("@VehicleTypeID", _loader.VehicleTypeID),
+          new SqlParameter("@VehicleTypeID", _loader.VehicleTypeID == null ? (object)DBNull.Value : _loader.VehicleTypeID),
           tvpParamLoadDetails);
             return Json("Load Updated Sucessfully");
 
         }
 
-        public ActionResult BookLoad(int LoadID,string LoadType)
+        public ActionResult BookLoad(int LoadID,string LoadType,int VehicleTypeID)
         {
             if (Session[UserColumns.UserID] != null)
             {
                 ViewData["CityList"] = _tripBusinessLayer.GetDropDownData("CityList", 0);
                 if (LoadType == constLoadType.FullTruckLoad)
                 {
-
+                        ViewData["VehicleList"] = _tripBusinessLayer.GetVehicleWhereVehicleType(Convert.ToInt32(Session[ClientColumns.ClientID]), VehicleTypeID); //pass @val= ownerID i.e. Login ClientID
                 }
                 else
                 {
@@ -845,6 +850,7 @@ namespace TransportService.Web.Controllers
                     Session[UserColumns.ClientID] = result.ClientID;
                     Session[UserColumns.ClientTypeID] = result.ClientTypeID;
                     Session[RoleColumns.RoleID] = result.RoleID;
+                    Session[UserColumns.FirstName] = result.FirstName;
 
                     if (result.RoleID == enumRole.Transporter.GetHashCode())
                     {
@@ -886,19 +892,7 @@ namespace TransportService.Web.Controllers
             ViewData["CityList"] = _tripBusinessLayer.GetDropDownData("CityList", 0);
             ViewData[DDLListNames.CompanyTypeList] = _tripBusinessLayer.GetDropDownData(DDLListNames.CompanyTypeList, 0);
 
-            using (JobDbContext jobDbContext = new JobDbContext())
-            {
-                User user = jobDbContext.Database.SqlQuery<User>("exec USP_SelectAllFromUserWhereID @UserID",
-                                                                                    new SqlParameter("@UserID", Session[UserColumns.UserID])).FirstOrDefault<User>();
-                ViewData[ModelsNames.User] = user;
-                Company company = jobDbContext.Database.SqlQuery<Company>("exec USP_SelectAllFromCompanyWhereClientID @ClientID",
-                                                                                        new SqlParameter("@ClientID", Session[ClientColumns.ClientID])).FirstOrDefault<Company>();
-                ViewData[ModelsNames.Company] = company;
-                UserDocuments userDocuments = jobDbContext.Database.SqlQuery<UserDocuments>("exec USP_SelectAllFromUserDocumentsWhereUserID @UserID",
-                                                                                        new SqlParameter("@UserID", Session[ClientColumns.ClientID])).FirstOrDefault<UserDocuments>();
-                ViewData[ModelsNames.UserDocuments] = userDocuments;
-
-            }
+            
 
              
 
@@ -907,9 +901,43 @@ namespace TransportService.Web.Controllers
 
         public ActionResult PersonalDetail()
         {
+
             ViewData[DDLListNames.CityList] = _tripBusinessLayer.GetDropDownData(DDLListNames.CityList, 0);
             ViewData[DDLListNames.CompanyTypeList] = _tripBusinessLayer.GetDropDownData(DDLListNames.CompanyTypeList, 0);
-            return View();
+            if (Session[UserColumns.FirstName] != null || Convert.ToString(Session[UserColumns.FirstName]) != "")
+            {
+
+
+
+                using (JobDbContext jobDbContext = new JobDbContext())
+                {
+                    PersonDetail personDetail = new PersonDetail();
+
+
+                    personDetail.user = jobDbContext.Database.SqlQuery<User>("exec USP_SelectAllFromUserWhereID @UserID",
+                                                                                        new SqlParameter("@UserID", Session[UserColumns.UserID])).FirstOrDefault<User>();
+                    
+                    personDetail.company = jobDbContext.Database.SqlQuery<Company>("exec USP_SelectAllFromCompanyWhereClientID @ClientID",
+                                                                                            new SqlParameter("@ClientID", Session[ClientColumns.ClientID])).FirstOrDefault<Company>();
+                    
+                    //personDetail.userDocuments = jobDbContext.Database.SqlQuery<UserDocuments>("exec USP_SelectAllFromUserDocumentsWhereUserID @UserID",
+                    //                                                                        new SqlParameter("@UserID", Session[ClientColumns.ClientID])).FirstOrDefault<UserDocuments>();
+
+                    return View("LoadPersonalDetail",personDetail);
+                }
+
+
+
+                
+            }
+            else
+            {
+                
+                return View();
+            }
+
+
+            
         }
 
 
@@ -989,10 +1017,11 @@ namespace TransportService.Web.Controllers
         #endregion
 
         #region "Other"
-        public ActionResult RankTheTrip()
+        public ActionResult RankTheTrip(int TripID, int TransporteUserID)
         {
-           
-                using (JobDbContext jobDbContext = new JobDbContext())
+            ViewData["TripID"] = TripID;
+            ViewData["TransporteUserID"] = TransporteUserID;
+            using (JobDbContext jobDbContext = new JobDbContext())
                 {
                 List<RankingCriteria> rankingCriterias = jobDbContext.DBRankingCriterias.SqlQuery("USP_SelectAllFromRankingCriteria").ToList<RankingCriteria>();
                 return View(rankingCriterias);
@@ -1001,7 +1030,7 @@ namespace TransportService.Web.Controllers
 
         }
         [HttpPost]
-        public ActionResult RankTheTrip(int TripID,List<TripRankingDetail> tripRankingDetails)
+        public ActionResult RankTheTrip(int TripID,int TransporteUserID,List<TripRankingDetail> tripRankingDetails)
         {
             DataTable dtTripRankingDetails = new DataTable();
             dtTripRankingDetails.Columns.Add("SerialNo", typeof(int));
@@ -1038,11 +1067,14 @@ namespace TransportService.Web.Controllers
                                                                             @TripID ,
                                                                             @SubTripID ,
                                                                             @LoaderID ,
+                                                                            @LoaderUserID  ,
+                                                                            @TransporterUserID  ,
                                                                             @UDTable_TripRankingDetail ",
                                                                             new SqlParameter("@TripID",TripID),
                                                                             new SqlParameter("@SubTripID",DBNull.Value),
-                                                                            //new SqlParameter("@TransporterID",4),//ClientID of AddedBy of Trip
-                                                                            new SqlParameter("@LoaderID",1),//
+                                                                            new SqlParameter("@LoaderID",Session[ClientColumns.ClientID]),
+                                                                            new SqlParameter("@LoaderUserID", Session[UserColumns.UserID]),
+                                                                            new SqlParameter("@TransporterUserID", TransporteUserID),
                                                                             tvpParamRankingDetails);
 
                 return Json("Your Rating is done Succesfully");

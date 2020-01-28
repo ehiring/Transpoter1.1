@@ -21,7 +21,6 @@
         </div>
     </div>
 
-
     <div class="row">
         <div class="col-lg-6">
             <hr />
@@ -182,7 +181,6 @@
                     </div>
 
 
-
                     <div class="col-sm-6 form-group">
                         <label>Quantity</label>
                         <div class="input-group">
@@ -190,7 +188,6 @@
                             <input id="txt_Quantity" type="number" class="form-control" value="" placeholder="Quantity">
                         </div>
                     </div>
-
                     <div class="col-sm-6 form-group">
                         <label>Weight(Tonn)</label>
                         <div class="input-group">
@@ -198,7 +195,6 @@
                             <input id="txt_Weight" type="number" class="form-control" value="" placeholder="Weigtht">
                         </div>
                     </div>
-
                     <div class="col-sm-6 form-group">
                         <label>Material Value(INR)</label>
                         <div class="input-group">
@@ -206,9 +202,6 @@
                             <input id="txt_MaterialValue" type="number" class="form-control" value="" placeholder="Material Value in INR">
                         </div>
                     </div>
-
-
-
                     <div class="row">
                         <div class="col-sm-3">
                             <div class="form-group">
@@ -295,6 +288,7 @@
 
         
     </div>
+
     <div class="row ">
         <div class="col-lg-8">
             <div class="panel panel-default">
@@ -338,7 +332,7 @@
                     
                 },
                 success: function (da) {
-                    alert(da);
+                    
                     $('#lblDistance').text(da);
                     
                 },
@@ -348,9 +342,9 @@
             });
         });
         $(document).on('change', '#ddlLoadType', function (e) {
-            alert("OutSide");
+            
             if ($("#ddlLoadType option:selected").val() == "@constLoadType.FullTruckLoad") {
-                alert("Hi");
+            
                 $('#VehicleTypeID').prop('disabled', false);
             }
             else {
