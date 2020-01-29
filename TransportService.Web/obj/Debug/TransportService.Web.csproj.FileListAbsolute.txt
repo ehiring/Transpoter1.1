@@ -423,3 +423,6 @@ E:\raghu\TranspoterGit\TransportService.Web\obj\Debug\TransportService.Web.cspro
 E:\raghu\TranspoterGit\TransportService.Web\obj\Debug\TransportService.Web.dll
 E:\raghu\TranspoterGit\TransportService.Web\obj\Debug\TransportService.Web.pdb
 E:\raghu\TranspoterGit\TransportService.Web\obj\Debug\TransportService.Web.csprojAssemblyReference.cache
+E:\raghu\TranspoterGit\TransportService.Web\bin\CaptchaMvc.dll
+E:\raghu\TranspoterGit\TransportService.Web\bin\CaptchaMvc.pdb
+E:\raghu\TranspoterGit\TransportService.Web\bin\CaptchaMvc.xml

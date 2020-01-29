@@ -9,6 +9,7 @@ using TransportService.Web.BusinessLayer;
 using System.Data.SqlClient;
 using System.Data;
 using TransportService.Web.Models.Activity;
+using CaptchaMvc.HtmlHelpers;
 namespace TransportService.Web.Controllers
 {
     public class HomeController : Controller
@@ -100,7 +101,7 @@ namespace TransportService.Web.Controllers
 
         public ActionResult Test()
         {
-
+               
             return View();
         }
         public ActionResult Index(int? page)

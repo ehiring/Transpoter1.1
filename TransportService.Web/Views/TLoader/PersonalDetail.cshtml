@@ -354,12 +354,15 @@
                                 <div class="form-group">
                                     <label>Enter Below Captcha Verification Code</label>
                                     <input name="ctl00$ContentPlaceHolder1$txtcap" type="text" id="txtCaptcha" class="form-control" placeholder="Enter Below Captcha Verification Code">
+                                    
                                 </div>
                                 <table>
                                     <tbody>
                                         <tr>
                                             <td style="height: 50px; width: 100px;">
-                                                <img id="ContentPlaceHolder1_imgCaptcha" src="#">
+                                                @*<img src="~/assets/images/captcha.jpg" />
+                                                <img id="ContentPlaceHolder1_imgCaptcha" src="#">*@
+                                                <div id="divGenerateRandomValues"></div>
                                             </td>
                                             <td valign="middle">
                                                 <input type="submit" name="ctl00$ContentPlaceHolder1$btnRefresh" value="Submit" id="btnCompanySubmit" class="captcharefresh">
@@ -385,10 +388,11 @@
 }
 <script>
     var bIsPasswordChange = 0;
+    var iCaptchaNumber = 0;
     $(document).ready(function () {
 
         $('#txtMobile').val(@Session[UserColumns.Mobile]);
-
+        GenerateCaptcha();
 
 
         //$('#txtEmail').val(@Session[UserColumns.Email]);
@@ -420,6 +424,8 @@
         e.preventDefault();
         var bIsValid = 1;
         bIsValid = PersonValidation();
+        bIsValid = VerifyCapcha();
+        
         if (@Convert.ToInt32( @Session[ClientColumns.ClientTypeID]) == @enumDBClientTypeID.Loader.GetHashCode() ||@Convert.ToInt32( @Session[ClientColumns.ClientTypeID]) == @enumDBClientTypeID.Transporter.GetHashCode() || @Convert.ToInt32( @Session[ClientColumns.ClientTypeID]) == @enumDBClientTypeID.Corporater.GetHashCode() ) {
             if ($("#txtCompanyName").val() == null || $("#txtCompanyName").val() == "") {
                 bIsValid = 0;
@@ -576,6 +582,25 @@
 
         }
         return bIsValid;
+    }
+    function GenerateCaptcha() {
+        iCaptchaNumber = Math.floor(Math.random() * 10000);
+        $("#divGenerateRandomValues").css({ "background-image": 'url(../images/captcha.jpg)', 'width': '100px', 'height': '50px' });
+        $("#divGenerateRandomValues").html("<input id='txtNewInput'></input>");
+        $("#txtNewInput").css({ 'background': 'transparent', 'font-family': 'Chiller', 'font-style': 'bold', 'font-size': '40px' });
+        $("#txtNewInput").css({ 'width': '100px', 'border': 'none', 'color': 'black' });
+        $("#txtNewInput").val(iCaptchaNumber);
+        $("#txtNewInput").prop('disabled', true);
+    }
+    function VerifyCapcha() {
+        if ($("#txtCaptcha").val() != iNumber) {
+            alert("Wrong Input!");
+            return 0;
+        }
+        else {
+            alert("Correct Input!!!");
+            return 1;
+        }
     }
 
 </script>

@@ -207,7 +207,12 @@
                                     <input id="enter_Password" type="text" class="validate">
                                     <label for="enter_Password">Forget</label>
                                 </div>
-                                <a id="btnShowPassword" class="passwordOrOTP" data-PassOTP="Password">Forgot password</a>
+                                <div class="text-danger">
+                                    @ViewBag.Error 
+                                </div>
+                                @*<a id="btnShowPassword" class="passwordOrOTP" data-PassOTP="Password">Forgot password</a>*@
+                                @Html.ActionLink("Forgot password", "ForgotPassword", "TLoader",null,new { @class= "passwordOrOTP" })
+
                                 <!-- <p>You can join us now by<br />
                                 <a href="#createAccountNow" class="createAccountNow">Creating a account</a></p> -->
                                 <p class="dropdown1">
@@ -231,7 +236,9 @@
                                 <!-- <a href="#bhadaa.html" class="loginNextBtn waves-effect waves-light btn">Get OTP</a> -->
                                 <button type="submit" id="btnLogin"
                                         class="loginBtn waves-effect waves-light btn show" style="float:right !important;">
-                                    <a href="#loginNow" class="loginNow" style="color: #fff;">LOG IN</a>
+                                    @*<a href="#loginNow" class="loginNow" style="color: #fff;">LOG IN</a>*@
+                                    @Html.ActionLink("LOG IN", "LoginUser", "TLoader", null, new { @class = "loginNow",@style= "color:#fff;" })
+
                                 </button>
                             </div>
 

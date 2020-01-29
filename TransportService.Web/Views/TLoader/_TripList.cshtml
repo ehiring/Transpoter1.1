@@ -1,7 +1,6 @@
 ﻿@model  TransportService.Web.Models.Transpoter
 @using TransportService.Web.Models.Masters
 @using TransportService.Web.Models
-
 @using PagedList;
 @using PagedList.Mvc;
 @using GridMvc.Html
@@ -9,7 +8,7 @@
 @foreach (var item1 in Model.TransDetails)
 {
 
-    <div class=" mainList">
+    <div class="mainList">
         <div class=" fromTo">
             <span class=" fromPlace">@item1.Source&nbsp;</span>
             <span class=" totalTime"> 15h 58m</span>
@@ -29,7 +28,7 @@
 
             <p>
                 <!-- <li class="avail">jhvond fYVOJz-->
-                <span class="avail" style="margin-right: 20px;"> <b> 3 Ton</b> Available</span>
+                @*<span class="avail" style="margin-right: 20px;"> <b> 3 Ton</b> Available</span>*@
                 <span class="route"><b>Route : </b>@item1.Route_Details</span>
             </p>
 
@@ -60,24 +59,56 @@
                         </li>
                     }
 
-
                 }
 
+                <li class=" subLinks">Policies</li>
+                <li class=" subLinks" data-toggle="collapse" href="#collapse1">Pickups &amp; Drops</li>
 
+                <div id="collapse1" class="panel-collapse collapse" class="sc-gPEVay iURMXd"
+                     style="background-color: #fff;">
+                    <span class="upArrow policies">&nbsp;</span>
+                    <a class="btnClose latoBold font12 deepskyBlueText" href="javascript:void(0);">Close</a>
+                    <div class="sc-jlyJG hZYYwk">
+                        <div class="policiesLeft">
+                            <p class="cancellaton latoBold font12 capText darkGreyText makeFlex spaceBetween appendBottom5">
+                                <span>
+                                    <span class="sprite cancellationIcon"></span> Sub Route Trips
+                                </span>
+                                <span>Type</span>
+                            </p>
+                            <div class="cancellationCharges">
+                                <p class="makeFlex spaceBetween latoRegular font12 darkGreyText">
+                                    <span class="sprite activePolicy"></span>
+                                    <span>Pune to Nashik Phata</span>
+                                    <span>Boxes </span>
+                                </p>
+                                <p class="makeFlex spaceBetween latoRegular font12 darkGreyText">
+                                    <span class="sprite activePolicy"></span>
+                                    <span>Nashik Phata to Rajguru Nagar</span>
+                                    <span>Cotton</span>
+                                </p>
 
+                            </div>
+                        </div>
+                        <div class="policiesRight pushRight">
+                            <p class="latoBold font12 capText darkGreyText appendBottom10">OTHER CONDITIONS</p>
+                            <p class="latoRegular font12 darkGreyText txtTnc">
+                                * The penalty is calculated based on total seat
+                                worth 799
+                            </p>
 
+                        </div>
+                    </div>
+                </div>
 
-
-            <li class=" subLinks">Policies</li>
-            <li class=" subLinks" data-toggle="collapse" href="#collapse1">Pickups &amp; Drops</li>
-            <li class=" subLinks">5 Photos</li>
+                <li class=" subLinks">5 Photos</li>
             </ul>
         </div>
 
         <div class=" priceDiv">
             <div>
                 <div>
-                    <span data-placeholder="true" class=" price">&#2352;. 1285</span>
+                    @*<span data-placeholder="true" class=" price">&#2352;. 1285</span>*@
                 </div>
                 <p class=" dKyclB">
                     <span class=" gnTLhn  kvMNaU"></span>

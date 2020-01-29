@@ -13,6 +13,8 @@ using TransportService.Web.Models.Masters;
 using TransportService.Web.Models.Transaction;
 using System.Web.Helpers;
 using System.IO;
+using System.Net.Mail;
+using System.Net;
 
 namespace TransportService.Web.Controllers
 {
@@ -838,7 +840,7 @@ namespace TransportService.Web.Controllers
                 
                 if (result == null)
                 {
-                    ViewBag.error = "Please enter valid user Name password";
+                    ViewBag.Error = "Please Enter Valid User Name Password";
                 }
                 else
                 {
@@ -994,6 +996,78 @@ namespace TransportService.Web.Controllers
 
             
         }
+
+
+        [HttpGet]
+        public ActionResult ForgotPassword()
+        {           
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ForgotPassword(string EmailID)
+        {
+            //Verify Email ID
+            //Generate Reset password link 
+            //Send Email 
+            string message = "";
+            bool status = false;
+
+            using (JobDbContext jobDbContext = new JobDbContext())
+            {
+                //var account = dc.Users.Where(a => a.EmailID == EmailID).FirstOrDefault();
+                var account = jobDbContext.Database.SqlQuery<int>(@"exec USP_SelectUserIDWhereEmail @Email", new SqlParameter("@Email", EmailID)).SingleOrDefault<int>();
+                if (account != 0)
+                {
+                    //Send email for reset password
+                    string resetCode = Guid.NewGuid().ToString();
+                    SendVerificationLinkEmail(EmailID, resetCode, "ResetPassword");
+                    var result = jobDbContext.Database.ExecuteSqlCommand(@"USP_UpdateResetCodeWhereEmail @UserID,@ResetPasswordCode", new SqlParameter("@UserID", account), new SqlParameter("@ResetCode", resetCode));
+                    
+                    message = "Reset password link has been sent to your email id.";
+                }
+                else
+                {
+                    message = "Account not found";
+                }
+            }
+            ViewBag.Message = message;
+            return View();
+        }
+
+        public ActionResult ResetPassword()
+        {
+            //Verify the reset password link
+            //Find account associated with this link
+            //redirect to reset password page
+            //if (string.IsNullOrWhiteSpace(id))
+            //{
+            //    return HttpNotFound();
+            //}
+
+            //using (JobDbContext jobDbContext = new JobDbContext())
+            //{
+            //    //var user = dc.Users.Where(a => a.ResetPasswordCode == id).FirstOrDefault();
+            //    var user = jobDbContext.Database.SqlQuery<User>(@"exec USP_SelectUserWhereResetPasswordCode @ResetPasswordCode", new SqlParameter("@ResetPasswordCode", id)).FirstOrDefault<User>();
+            //    if (user != null)
+            //    {
+            //        ResetPasswordModel model = new ResetPasswordModel();
+            //        model.ResetCode = id;
+            //        return View(model);
+            //    }
+            //    else
+            //    {
+            //        return HttpNotFound();
+            //    }
+            //}
+            return View();
+        }
+
+
+
+
+
+
+
         public int GetUserIDWhereUserAndPassword(string UserName, string Password)
         {                                        
             JobDbContext jobDbContext = new JobDbContext();
@@ -1002,17 +1076,52 @@ namespace TransportService.Web.Controllers
         }
 
 
-        public ActionResult NewLogin()
+        [NonAction]
+        public void SendVerificationLinkEmail(string emailID, string activationCode, string emailFor = "VerifyAccount")
         {
-            return View();
+            var verifyUrl = "/User/" + emailFor + "/" + activationCode;
+            var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyUrl);
 
+            var fromEmail = new MailAddress("bhadaaindia@gmail.com", "Bhadaa.com Team");
+            var toEmail = new MailAddress(emailID);
+            var fromEmailPassword = "harishmn"; // Replace with actual password
+
+            string subject = "";
+            string body = "";
+            if (emailFor == "VerifyAccount")
+            {
+                subject = "Your account is successfully created!";
+                body = "<br/><br/>We are excited to tell you that your Dotnet Awesome account is" +
+                    " successfully created. Please click on the below link to verify your account" +
+                    " <br/><br/><a href='" + link + "'>" + link + "</a> ";
+            }
+            else if (emailFor == "ResetPassword")
+            {
+                subject = "Reset Password";
+                body = "Hi,<br/>br/>We got request for reset your account password. Please click on the below link to reset your password" +
+                    "<br/><br/><a href=" + link + ">Reset Password link</a>";
+            }
+
+
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                //UseDefaultCredentials = false,
+                UseDefaultCredentials = true,
+                Credentials = new NetworkCredential(fromEmail.Address, fromEmailPassword)
+            };
+
+            using (var message = new MailMessage(fromEmail, toEmail)
+            {
+                Subject = subject,
+                Body = body,
+                IsBodyHtml = true
+            })
+                smtp.Send(message);
         }
-        public ActionResult NewRegister()
-        {
-            return View();
-
-        }
-
 
         #endregion
 

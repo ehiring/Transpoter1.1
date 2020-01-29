@@ -6,13 +6,13 @@
 
 @using (Html.BeginForm("PersonalDetail", "TLoader", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    
+
     <div id="divPersonDetail" class="container" style="margin-top: 30px;">
         <div class="row job-card">
             <div class="col-md-12">
                 <div class="PageDesc">
                     @*If you have already registered with us, please
-                    <a href="#" class="orange">Click Here</a>*@
+                        <a href="#" class="orange">Click Here</a>*@
                     <div class="gap-line"></div>
                 </div>
             </div>
@@ -185,10 +185,10 @@
                                 <span class="mandatory">*</span>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fas fa-city"></i></span>
-                                   
+
                                     @*<input type="text" id="txtDestinationRoute" name="txtCity" class="form-control capital" placeholder="Enter City" required="required" oninvalid=" " onchange=" " autocomplete="off">*@
 
-                                    
+
                                     @Html.DropDownList("City", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text", @Model.user.CityID), "Select City", new { @class = "form-control", @id = "ddlCity", Title = "Select City" })
 
 
@@ -360,15 +360,19 @@
                     <div class="col-md-8">
                         <div class="PageDesc">
                             <div id="ContentPlaceHolder1_UP1" style="padding-top: 35px;">
-                                <div class="form-group">
-                                    <label>Enter Below Captcha Verification Code</label>
-                                    <input name="ctl00$ContentPlaceHolder1$txtcap" type="text" id="txtCaptcha" class="form-control" placeholder="Enter Below Captcha Verification Code">
-                                </div>
+                               
                                 <table>
                                     <tbody>
                                         <tr>
                                             <td style="height: 50px; width: 100px;">
-                                                <img id="ContentPlaceHolder1_imgCaptcha" src="#">
+                                                @*<img id="ContentPlaceHolder1_imgCaptcha" src="#">*@
+                                                <div id="divGenerateRandomValues" style="background-image:url(../../assets/images/captcha.jpg);"></div>
+                                            </td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <label>Enter Captcha </label>
+                                                    <input name="ctl00$ContentPlaceHolder1$txtcap" type="text" id="txtCaptcha" class="form-control" placeholder="Enter Verification Code">
+                                                </div>
                                             </td>
                                             <td valign="middle">
                                                 <input type="submit" name="ctl00$ContentPlaceHolder1$btnRefresh" value="Submit" id="btnCompanySubmit" class="captcharefresh">
@@ -393,12 +397,14 @@
 
 }
 
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
 
 <script>
     var bIsPasswordChange = 0;
+    
     $(document).ready(function () {
+        GenerateCaptcha();
 
-       
     });
     $(document).on('click', '#btnNext', function (e) {
         e.preventDefault();
@@ -419,6 +425,7 @@
         e.preventDefault();
         var bIsValid = 1;
         bIsValid = PersonValidation();
+        bIsValid = VerifyCapcha();
         if (@Convert.ToInt32( @Session[ClientColumns.ClientTypeID]) == @enumDBClientTypeID.Loader.GetHashCode() ||@Convert.ToInt32( @Session[ClientColumns.ClientTypeID]) == @enumDBClientTypeID.Transporter.GetHashCode() || @Convert.ToInt32( @Session[ClientColumns.ClientTypeID]) == @enumDBClientTypeID.Corporater.GetHashCode() ) {
             if ($("#txtCompanyName").val() == null || $("#txtCompanyName").val() == "") {
                 bIsValid = 0;
@@ -482,16 +489,16 @@
             success: function (response) {
                 alert(response);
                 if (@Convert.ToInt32(@Session[RoleColumns.RoleID]) == @enumRole.Transporter.GetHashCode()) {
-                   
+
                     window.location.href = "/TLoader/LoaderIndex";
 
                 }
                 else {
-                    
+
                     window.location.href = "/TLoader/Index";
 
                 }
-                
+
 
 
             },
@@ -577,6 +584,28 @@
 
         }
         return bIsValid;
+    }
+    function GenerateCaptcha() {
+        var iCaptchaNumber = Math.floor(Math.random() * 10000);
+        $("#divGenerateRandomValues").css({  'width': '100px', 'height': '50px', 'border': 'thick' });
+        $("#divGenerateRandomValues").html("<input id='txtNewInput'></input>");
+        $("#txtNewInput").css({ 'background': 'transparent', 'font-family': 'Chiller', 'font-style': 'bold', 'font-size': '40px' });
+        $("#txtNewInput").css({ 'width': '100px', 'border': 'none', 'color': 'black', 'border': 'thick' });
+        $("#txtNewInput").val(iCaptchaNumber);
+        $("#txtNewInput").prop('disabled', true);
+    }
+    function VerifyCapcha() {
+        alert('Hi');
+        alert($("#txtCaptcha").val()); 
+        
+        if ($("#txtCaptcha").val() != $("#txtNewInput").val()) {
+            alert("Wrong Input!");
+            return 0;
+        }
+        else {
+            alert("Correct Input!!!");
+            return 1;
+        }
     }
 
 </script>
