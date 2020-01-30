@@ -390,6 +390,7 @@
     <Content Include="Views\Temp\Old_LoginUser.cshtml" />
     <Content Include="Views\TLoader\ForgotPassword.cshtml" />
     <Content Include="Views\TLoader\ResetPassword.cshtml" />
+    <Content Include="Views\Temp\Old_RankTheTrip.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
