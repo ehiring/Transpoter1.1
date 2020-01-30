@@ -52,41 +52,55 @@
                     </div>
 
                     @*<div class="col-sm-6 form-group">
-                        <label><i class="red">*</i> Truck Capacity </label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
-                            @Html.DropDownList("Capacity", new SelectList((System.Collections.IEnumerable)ViewData["TruckCapacityList"], "Value", "Text"), "Select Capacity", new { @class = "form-control", @id = "CapacityID", Title = "CapacityID" })
-                        </div>
-                    </div>*@
+            <label><i class="red">*</i> Truck Capacity </label>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+                @Html.DropDownList("Capacity", new SelectList((System.Collections.IEnumerable)ViewData["TruckCapacityList"], "Value", "Text"), "Select Capacity", new { @class = "form-control", @id = "CapacityID", Title = "CapacityID" })
+            </div>
+        </div>*@
 
                     @*<div class="col-sm-6 form-group">
-                        <label>Length:</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-arrows-v"></i></span>
-                            <input id="truck_length" type="text" class="form-control" name="truck_length" value="" placeholder="Length" onkeypress="return isAlphaNumeric(event,this.value);">
-                        </div>
-                    </div>*@
+            <label>Length:</label>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-arrows-v"></i></span>
+                <input id="truck_length" type="text" class="form-control" name="truck_length" value="" placeholder="Length" onkeypress="return isAlphaNumeric(event,this.value);">
+            </div>
+        </div>*@
 
                     @*<div class="col-sm-6 form-group">
-                        <label>Height:</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-arrows-h"></i></span>
-                            <input id="truck_height" type="text" class="form-control" name="truck_height" value="" placeholder="Height" onkeypress="return isAlphaNumeric(event,this.value);">
-                        </div>
-                    </div>*@
+            <label>Height:</label>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-arrows-h"></i></span>
+                <input id="truck_height" type="text" class="form-control" name="truck_height" value="" placeholder="Height" onkeypress="return isAlphaNumeric(event,this.value);">
+            </div>
+        </div>*@
                     @*<div class="col-sm-6 form-group">
-                        <label>Width:</label>
+            <label>Width:</label>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-arrows-h"></i></span>
+                <input id="truck_width" type="text" class="form-control" name="truck_width" value="" placeholder="Width" onkeypress="return isAlphaNumeric(event,this.value);">
+            </div>
+        </div>*@
+                    <div class="col-sm-6 form-group">
+                        <label>Phone:</label>
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-arrows-h"></i></span>
-                            <input id="truck_width" type="text" class="form-control" name="truck_width" value="" placeholder="Width" onkeypress="return isAlphaNumeric(event,this.value);">
+                            <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                            <input id="truck_phone" type="text" class="form-control" name="truck_phone" value="" placeholder="Phone" onkeypress="return isNumberKey(event);">
                         </div>
-                    </div>*@
+                    </div>
 
+                    <div class="col-sm-6 form-group">
+                        <label>Contact Name:</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                            <input id="altr_name" type="text" class="form-control" name="altr_name" value="" placeholder="Contact Name" onkeypress="return isAlphaNumeric(event,this.value);">
+                        </div>
+                    </div>
                     <div class="col-sm-10 form-group">
                         <label>Description</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-file-text-o"></i></span>
-                            <textarea id="truck_description" class="form-control" name="truck_description" placeholder="Description" ></textarea>
+                            <textarea id="truck_description" cols="150" class="form-control" name="truck_description" placeholder="Description"></textarea>
                         </div>
                     </div>
                 </div>
@@ -114,7 +128,7 @@
                         <label>Insurance Start Date:</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                            <input type="date" id="StartDate" class="form-control dropwidth" placeholder="YYYY-MM-DD" />
+                            <input type="date" id="StartDate" class="form-control dropwidth" placeholder="YYYY-MM-DD" style="height:52px;"/>
                             @*<input type="text" id="dp2" data-date-format="yyyy-mm-dd" placeholder="YYYY-MM-DD" class="form-control select_date" name="truck_insurestartdate" value="" autocomplete="off" onkeypress="return checkdate(event);">*@
                         </div>
                     </div>
@@ -123,7 +137,7 @@
                         <label>Insurance Exp. Date:</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                            <input type="date" id="EndDate" class="form-control dropwidth" placeholder="YYYY-MM-DD" />
+                            <input type="date" id="EndDate" class="form-control dropwidth" placeholder="YYYY-MM-DD" style="height:52px;"/>
                             @*<input type="text" id="dp23" data-date-format="yyyy-mm-dd" placeholder="YYYY-MM-DD" class="form-control select_date" name="truck_insureexpdate" value="" autocomplete="off" onkeypress="return checkdate(event);">*@
                         </div>
                     </div>
@@ -138,29 +152,17 @@
 
                         </div>
                     </div>
-                    <div class="col-sm-6 form-group">
-                        <label>Phone:</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                            <input id="truck_phone" type="text" class="form-control" name="truck_phone" value="" placeholder="Phone" onkeypress="return isNumberKey(event);">
-                        </div>
-                    </div>
-                    <div class="col-sm-6 form-group">
-                        <label>Contact Name:</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-phone"></i></span>
-                            <input id="altr_name" type="text" class="form-control" name="altr_name" value="" placeholder="Contact Name" onkeypress="return isAlphaNumeric(event,this.value);">
-                        </div>
-                    </div>
+                   
 
 
-                    <div class="col-sm-12 form-group">
+                    <div class="col-sm-12 ">
                         <div id="formerrorsuploadfile"></div>
-                        <label>Upload Your Documents (only image formats (.png/.jpg/.jpeg/.gif))</label>
-                        <span class="btn btn-primary attachMoreTruckDocs"><i class="fa fa-plus"></i></span>
+                        <label>Upload Your Documents(only image formats(.png/.jpg/.jpeg/.gif))</label>
+                        <span class="btn btn-primary attachMoreTruckDocs" style="display:none"><i class="fa fa-plus"></i></span>
                         <input type="hidden" name="proofuserrole" id="proofuserrole" value="9">
                     </div>
                     <div class="col-sm-6">
+
                         <label>Select Proof Types</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-eye"></i></span>

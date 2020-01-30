@@ -239,6 +239,7 @@
     <Content Include="assets\images\captcha.jpg" />
     <Content Include="assets\images\Captch1.jpg" />
     <Content Include="assets\images\google-play-a%281%29.png" />
+    <Content Include="assets\images\NotFound.png" />
     <Content Include="assets\images\search-icon-hp.png" />
     <Content Include="assets\images\swipe-icn.png" />
     <Content Include="assets\js\angular.min.js" />
@@ -391,6 +392,7 @@
     <Content Include="Views\TLoader\ForgotPassword.cshtml" />
     <Content Include="Views\TLoader\ResetPassword.cshtml" />
     <Content Include="Views\Temp\Old_RankTheTrip.cshtml" />
+    <Content Include="Views\TLoader\NotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

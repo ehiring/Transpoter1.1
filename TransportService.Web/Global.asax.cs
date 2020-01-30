@@ -17,11 +17,16 @@ namespace TransportService.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
-        protected void Application_Error(object sender, EventArgs e)
+        
+        protected void Application_Error()
         {
-            Exception exception = Server.GetLastError();
-            Server.ClearError();
-            Response.Redirect("/Shared/Error");
+
+            var error = Server.GetLastError();
+            if ((error as HttpException)?.GetHttpCode() == 404)
+            {
+                Server.ClearError();
+                Response.StatusCode = 404;
+            }
         }
     }
 }

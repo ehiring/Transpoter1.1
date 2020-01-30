@@ -388,6 +388,7 @@ E:\raghu\TranspoterGit\TransportService.Web\bin\roslyn\vbc.rsp
 E:\raghu\TranspoterGit\TransportService.Web\bin\roslyn\VBCSCompiler.exe
 E:\raghu\TranspoterGit\TransportService.Web\bin\roslyn\VBCSCompiler.exe.config
 E:\raghu\TranspoterGit\TransportService.Web\bin\Antlr3.Runtime.dll
+E:\raghu\TranspoterGit\TransportService.Web\bin\CaptchaMvc.dll
 E:\raghu\TranspoterGit\TransportService.Web\bin\EntityFramework.dll
 E:\raghu\TranspoterGit\TransportService.Web\bin\EntityFramework.SqlServer.dll
 E:\raghu\TranspoterGit\TransportService.Web\bin\GridMvc.dll
@@ -404,6 +405,8 @@ E:\raghu\TranspoterGit\TransportService.Web\bin\System.Web.WebPages.Deployment.d
 E:\raghu\TranspoterGit\TransportService.Web\bin\System.Web.WebPages.dll
 E:\raghu\TranspoterGit\TransportService.Web\bin\System.Web.WebPages.Razor.dll
 E:\raghu\TranspoterGit\TransportService.Web\bin\WebGrease.dll
+E:\raghu\TranspoterGit\TransportService.Web\bin\CaptchaMvc.pdb
+E:\raghu\TranspoterGit\TransportService.Web\bin\CaptchaMvc.xml
 E:\raghu\TranspoterGit\TransportService.Web\bin\EntityFramework.xml
 E:\raghu\TranspoterGit\TransportService.Web\bin\EntityFramework.SqlServer.xml
 E:\raghu\TranspoterGit\TransportService.Web\bin\PagedList.xml
@@ -418,11 +421,8 @@ E:\raghu\TranspoterGit\TransportService.Web\bin\System.Web.WebPages.Razor.xml
 E:\raghu\TranspoterGit\TransportService.Web\bin\Newtonsoft.Json.xml
 E:\raghu\TranspoterGit\TransportService.Web\bin\Antlr3.Runtime.pdb
 E:\raghu\TranspoterGit\TransportService.Web\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+E:\raghu\TranspoterGit\TransportService.Web\obj\Debug\TransportService.Web.csprojAssemblyReference.cache
 E:\raghu\TranspoterGit\TransportService.Web\obj\Debug\TransportService.Web.csproj.CoreCompileInputs.cache
 E:\raghu\TranspoterGit\TransportService.Web\obj\Debug\TransportService.Web.csproj.CopyComplete
 E:\raghu\TranspoterGit\TransportService.Web\obj\Debug\TransportService.Web.dll
 E:\raghu\TranspoterGit\TransportService.Web\obj\Debug\TransportService.Web.pdb
-E:\raghu\TranspoterGit\TransportService.Web\obj\Debug\TransportService.Web.csprojAssemblyReference.cache
-E:\raghu\TranspoterGit\TransportService.Web\bin\CaptchaMvc.dll
-E:\raghu\TranspoterGit\TransportService.Web\bin\CaptchaMvc.pdb
-E:\raghu\TranspoterGit\TransportService.Web\bin\CaptchaMvc.xml

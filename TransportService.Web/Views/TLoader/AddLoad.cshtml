@@ -8,6 +8,15 @@
 
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+<style>
+    .widthMD{
+        height:5px !important;
+
+    }
+</style>
+
+
+
 
 @using (Html.BeginForm())
 {
@@ -31,12 +40,13 @@
                 </div>
 
                 <div class="panel-body">
-                    <div class="col-sm-6 form-group">
+                    <div class="col-sm-6 form-group ">
                         <label><i class="red">*</i> Source  </label>
-                        <div class="input-group">
+                        
+                        <div class="input-group " style="width:50% !important">
                             <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
-                            @Html.DropDownList("Source", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select Source", new { @class = "form-control", @id = "SourceID", Title = "Select Source" })
-
+                            @Html.DropDownList("Source", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select Source", new { @class = "", @id = "SourceID", Title = "Select Source" })
+                            
                         </div>
 
                     </div>
@@ -55,7 +65,7 @@
                         <label>Pick Up Date:</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                            <input type="date" id="PickUpDate" class="form-control dropwidth" placeholder="YYYY-MM-DD" title="Select Pick Up Date" />
+                            <input type="date" id="PickUpDate" class="form-control dropwidth" placeholder="YYYY-MM-DD" title="Select Pick Up Date" style="height:40px"/>
 
                         </div>
                     </div>

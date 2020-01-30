@@ -1236,6 +1236,13 @@ namespace TransportService.Web.Controllers
         #endregion
 
 
+        #region "HttpErrors"
+        public ActionResult NotFound()
+        {
+            Response.StatusCode = 404;
 
+            return View();
+        }
+        #endregion
     }
 }
