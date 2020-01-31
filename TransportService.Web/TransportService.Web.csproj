@@ -185,6 +185,7 @@
     <Compile Include="Models\Masters\UserType.cs" />
     <Compile Include="Models\Masters\Vehicle.cs" />
     <Compile Include="Models\Masters\VehicleType.cs" />
+    <Compile Include="Models\Other\aadharcard.cs" />
     <Compile Include="Models\Trans.cs" />
     <Compile Include="Models\Transaction\Quoatation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -316,7 +317,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Views\TLoader\login.html" />
+    <Content Include="Views\Temp\dd.html" />
+    <Content Include="Views\Temp\login.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -338,13 +340,12 @@
     <Content Include="Views\Home\_HomeLoadGrid.cshtml" />
     <Content Include="Views\Home\HomeAddTrip.cshtml" />
     <Content Include="Views\Shared\NoPageFound.cshtml" />
-    <Content Include="Views\TLoader\OldIndex.cshtml" />
-    <Content Include="Views\TLoader\_OldTripList.cshtml" />
-    <Content Include="Views\TLoader\OldLoaderIndex.cshtml" />
-    <Content Include="Views\TLoader\_OldLoadList.cshtml" />
+    <Content Include="Views\Temp\OldIndex.cshtml" />
+    <Content Include="Views\Temp\_OldTripList.cshtml" />
+    <Content Include="Views\Temp\OldLoaderIndex.cshtml" />
+    <Content Include="Views\Temp\_OldLoadList.cshtml" />
     <Content Include="Views\Shared\_Layout2.cshtml" />
     <Content Include="Views\TLoader\EditLoad.cshtml" />
-    <Content Include="Views\TLoader\Old_TRegisterUser.cshtml" />
     <Content Include="Views\TLoader\AddLoad.cshtml" />
     <Content Include="Views\Home\Test.cshtml" />
     <Content Include="Views\Home\TestNew.cshtml" />
@@ -371,7 +372,6 @@
     <Content Include="Views\Register\RaghuLogin.cshtml" />
     <Content Include="Views\TLoader\ContactPerson.cshtml" />
     <Content Include="Views\TLoader\LoadPersonalDetail.cshtml" />
-    <Content Include="Views\TLoader\Old_LoginUser.cshtml" />
     <Content Include="Views\BingMap\Index.cshtml" />
     <Content Include="Views\GoogleMap1\Distance.cshtml" />
     <Content Include="Views\TLoader\LoginUser.cshtml" />
@@ -393,6 +393,7 @@
     <Content Include="Views\TLoader\ResetPassword.cshtml" />
     <Content Include="Views\Temp\Old_RankTheTrip.cshtml" />
     <Content Include="Views\TLoader\NotFound.cshtml" />
+    <Content Include="Views\TLoader\Rating.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

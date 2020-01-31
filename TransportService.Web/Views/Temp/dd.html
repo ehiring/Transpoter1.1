@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
+    <script src="jquery-1.11.1.min.js"></script>
+    <link rel="stylesheet" id="bootstrap-css-css" href="bootstrap.css" type="text/css" media="all">
+
+
+<style>
+    .rating {
+  display: inline-block;
+  position: relative;
+  height: 50px;
+  line-height: 50px;
+  font-size: 50px;
+}
+
+.rating label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  cursor: pointer;
+}
+
+.rating label:last-child {
+  position: static;
+}
+
+.rating label:nth-child(1) {
+  z-index: 5;
+}
+
+.rating label:nth-child(2) {
+  z-index: 4;
+}
+
+.rating label:nth-child(3) {
+  z-index: 3;
+}
+
+.rating label:nth-child(4) {
+  z-index: 2;
+}
+
+.rating label:nth-child(5) {
+  z-index: 1;
+}
+
+.rating label input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.rating label .icon {
+  float: left;
+  color: transparent;
+}
+
+.rating label:last-child .icon {
+  color: #000;
+}
+
+.rating:not(:hover) label input:checked ~ .icon,
+.rating:hover label:hover input ~ .icon {
+  color: #09f;
+}
+
+.rating label input:focus:not(:checked) ~ .icon:last-child {
+  color: #000;
+  text-shadow: 0 0 5px #09f;
+}
+.fontli{
+    font-size: 18px;
+    list-style-type: none;
+    padding-left: 10px;
+    font-family: 'Open Sans', sans-serif, Tahoma, Arial;
+}
+.form-line{
+    font-size: 16px;
+    list-style-type: none;
+    padding-left: 10px;
+    font-family: 'Open Sans', sans-serif, Tahoma, Arial;
+}
+.formHead{
+    background-color: #ef6614;
+    width: 700px;
+    position: relative;
+    padding: 15px 120px 5px;
+    color: #fff;
+}
+.icon{
+   
+    float: right;
+    font-size: 25px !important;
+    margin-top: 5px;
+}
+.waves-effect {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    vertical-align: middle;
+    z-index: 1;
+    -webkit-transition: .3s ease-out;
+    transition: .3s ease-out;
+}
+.btn, .btn-large, .btn-small {
+    text-decoration: none;
+    color: #fff;
+    background-color: #CE5B0D;
+    text-align: center;
+    letter-spacing: .5px;
+    -webkit-transition: background-color .2s ease-out;
+    transition: background-color .2s ease-out;
+    cursor: pointer;
+    font-size: 14px;
+    outline: 0;
+    border: none;
+    border-radius: 2px;
+    display: inline-block;
+    height: 36px;
+    line-height: 36px;
+    padding: 0 16px;
+    text-transform: uppercase;
+    vertical-align: middle;
+    -webkit-tap-highlight-color: transparent;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+}
+button, input, optgroup, select, textarea {
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+}
+.btn:hover{
+    background-color: rgb(30, 30, 32);
+    color:#fff;
+   
+}
+        
+
+    </style>
+</head>
+
+<body>
+  
+    <div role="main" style="margin:0 auto;background-color: #F4F4F4;width:700px;height: 350px;">
+        <h2 class="formHead">Tell Us What You Think</h2>
+            <div class="formPage" style="width:700px;margin-top: 5px;">
+               
+                    <div class="row" style="width:700px;margin-left: 0;height: 45px;">
+                        <div class="col-md-6" >
+                            <h1 class="fontli">Pick up on time ?</h1>        
+                        </div>
+                        <div class="col-md-6" style="padding-left: 85px;">
+                          <form class="rating">
+                            <label title="Very Poor">
+                              <input type="radio" name="stars" value="1" />
+                              <span class="icon">★</span>
+                            </label>
+                            <label title="Could be better">
+                              <input type="radio" name="stars" value="2" />
+                              <span class="icon">★</span>
+                              <span class="icon">★</span>
+                            </label>
+                            <label title="OK">
+                              <input type="radio" name="stars" value="3" />
+                              <span class="icon">★</span>
+                              <span class="icon">★</span>
+                              <span class="icon">★</span>   
+                            </label>
+                            <label title="Very Good">
+                              <input type="radio" name="stars" value="4" />
+                              <span class="icon">★</span>
+                              <span class="icon">★</span>
+                              <span class="icon">★</span>
+                              <span class="icon">★</span>
+                            </label>
+                            <label title="Excellent">
+                              <input type="radio" name="stars" value="5" />
+                              <span class="icon">★</span>
+                              <span class="icon">★</span>
+                              <span class="icon">★</span>
+                              <span class="icon">★</span>
+                              <span class="icon">★</span>
+                            </label>
+                          </form>        
+                        </div>
+                      
+                    </div>
+
+                    <!-- <div class="row" style="width:700px;margin-left: 0;height: 45px;">
+                        <div class="col-md-6" style="margin-top: -17px;">
+                            <h1 class="fontli">Handling Material ?</h1>        
+                        </div>
+                        <div class="col-md-6" style="margin-top: -16px;padding-left: 85px;">
+                            <form class="rating" >
+                                <label for="star1" title="Very Poor">
+                                <input type="radio" id="star1" name="rating" value="1" />
+                                <span class="icon">★</span>
+                                </label>
+                                <label for="star1" title="Could be better">
+                                <input type="radio" id="star2" name="rating" value="2" />
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                </label>
+                                <label for="star1" title="OK">
+                                <input type="radio" id="star3" name="rating" value="3" />
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>   
+                                </label>
+                                <label for="star1" title="Very Good">
+                                <input type="radio" id="star4" name="rating" value="4" />
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                </label>
+                                <label for="star1" title="Excellent">
+                                <input type="radio" id="star5" name="rating" value="5" />
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                <span class="icon">★</span>
+                                </label>
+                            </form>        
+                        </div>
+                      
+                    </div> -->
+                    <div class="row" style="width:700px;margin-left: 0;height: 45px;">
+                        <div class="col-md-6" style="margin-top: -15px;">
+                            <h1 class="fontli">Likely to use Bhadaa.com again?</h1>        
+                        </div>  
+                        <div class="col-md-6" class="input-type" style="padding-left: 100px;font-size: 16px !important;">
+                            <input type="radio" name="chk_type" value="Yes" checked="checked"> Yes <span class="checkmark"></span>
+                            <input type="radio" name="chk_type" value="No"> No <span class="checkmark"></span>
+                        </div>
+                    </div>
+
+                    <div class="row" style="width:700px;margin-left: 0;height: 45px;">
+                        <div class="col-md-6" style="margin-top: -15px;">
+                            <h1 class="fontli">Anything else? Please let us know here.</h1>        
+                        </div>  
+                        <div class="col-md-6" class="input-type" style="padding-left: 100px;font-size: 16px !important;">
+                            <textarea cols="25" rows="2"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row" style="float: right;margin-right:170px;height: 45px;">
+                      <div style="text-align:center" class="form-buttons-wrapper ">
+                        <button type="submit" class="form-submit-button form-submit-button-Book loginBtn waves-effect waves-light btn " onclick="myFunction()" data-component="button" data-content="">
+                          Submit
+                        </button>
+                      </div>
+                  </div>
+                    
+                
+            </div>
+        
+    </div>
+      <script>
+        $(':radio').change(function() {
+  console.log('New star rating: ' + this.value);
+});
+          </script>
+
+      <script>
+        function myFunction() {
+          location.replace("fm3.html")
+        }
+        </script>
+  
+</body>
+    </html>

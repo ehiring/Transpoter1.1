@@ -19,6 +19,8 @@ namespace TransportService.Web.Models.Masters
         public decimal Answer3Value { get; set; }
         public string Answer4 { get; set; }
         public decimal Answer4Value  { get; set; }
+        public string Answer5 { get; set; }
+        public decimal Answer5Value { get; set; }
         public decimal TotalValue { get; set; }
 
     }

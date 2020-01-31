@@ -1,6 +1,8 @@
 ﻿@using TransportService.Web.Models.Masters
+@using TransportService.Web.Models.Other
 @using TransportService.Web.Models
 @using System;
+@using System.Text;
 @using (Html.BeginForm("PersonalDetail", "TLoader", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
 
@@ -9,7 +11,7 @@
             <div class="col-md-12">
                 <div class="PageDesc">
                     @*If you have already registered with us, please
-                    <a href="#" class="orange">Click Here</a>*@
+                        <a href="#" class="orange">Click Here</a>*@
                     <div class="gap-line"></div>
                 </div>
             </div>
@@ -82,16 +84,21 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Aadhar Card No</label>
                                 <span class="mandatory">*</span>
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="far fa-id-card"></i></span>
-                                    @*<span class="mandatory" style="margin-left: 15px;">*</span>*@
-                                    <input name="ctl00$ContentPlaceHolder1$txtRPassword" type="text" id="txtAdharCardNo" class="form-control capital" placeholder="Retype Password" />
-                                    <span id="ContentPlaceHolder1_RequiredFieldValidator2" class="validator" style="display:none;">Retype Password</span>
-                                    <span id="ContentPlaceHolder1_CompareValidator1" class="validator" style="display:none;">Password Not Match</span>
+                                    @*<span class="input-group-addon"><i class="far fa-id-card"></i></span>*@
+
+                                    @*<input name="ctl00$ContentPlaceHolder1$txtRPassword" type="text" id="txtAdharCardNo" class="form-control capital" placeholder="Retype Password" />
+                                        <span id="ContentPlaceHolder1_RequiredFieldValidator2" class="validator" style="display:none;">Retype Password</span>
+                                        <span id="ContentPlaceHolder1_CompareValidator1" class="validator" style="display:none;">Password Not Match</span>*@
+
+                                    <input type="text" id="txt_Adhar1" maxlength="4" class="input-inline-field" style="width:75px;text-align:start;" />
+                                    <input type="text" id="txt_Adhar2" maxlength="4" class="input-inline-field" style="width:75px;text-align:start;margin-left:15px" />
+                                    <input type="text" id="txt_Adhar3" maxlength="4" class="input-inline-field" style="width:75px;text-align:start;margin-left:15px" />
+                                    <input type="button" id="btnVerifyAdhaar" value="verify " />
                                 </div>
                             </div>
                         </div>
@@ -272,7 +279,6 @@
             </div>
         </div>
 
-
     </div>
     <div id="divNext" class="hidden">
 
@@ -354,14 +360,14 @@
                                 <div class="form-group">
                                     <label>Enter Below Captcha Verification Code</label>
                                     <input name="ctl00$ContentPlaceHolder1$txtcap" type="text" id="txtCaptcha" class="form-control" placeholder="Enter Below Captcha Verification Code">
-                                    
+
                                 </div>
                                 <table>
                                     <tbody>
                                         <tr>
                                             <td style="height: 50px; width: 100px;">
                                                 @*<img src="~/assets/images/captcha.jpg" />
-                                                <img id="ContentPlaceHolder1_imgCaptcha" src="#">*@
+                                                    <img id="ContentPlaceHolder1_imgCaptcha" src="#">*@
                                                 <div id="divGenerateRandomValues"></div>
                                             </td>
                                             <td valign="middle">
@@ -395,23 +401,85 @@
         GenerateCaptcha();
 
 
-        //$('#txtEmail').val(@Session[UserColumns.Email]);
-        @*if (@Session[ClientTypeColumns.ClientTypeID] == @enumDBClientTypeID.Loader.GetHashCode() || @Session[ClientTypeColumns.ClientTypeID] == @enumDBClientTypeID.Transporter.GetHashCode() ||@Session[ClientTypeColumns.ClientTypeID] == @enumDBClientTypeID.Corporater.GetHashCode()) {
-            $('#btnNext').removeClass('hidden');
-        }
-        else {
-            $('#btnPersonSubmit').removeClass('hidden');
-        }*@
+        
+       
     });
+    $("#txt_Adhar1").keyup(function () {
+
+        if ($("#txt_Adhar1").val().length  == 4) {
+            $("#txt_Adhar2").focus();
+        }
+    });
+    $("#txt_Adhar2").keyup(function () {
+
+        if ($("#txt_Adhar2").val().length == 4) {
+            $("#txt_Adhar3").focus();
+        }
+        if ($("#txt_Adhar2").val().length == 0) {
+            $("#txt_Adhar1").focus();
+        }
+
+    });
+
+    $("#txt_Adhar3").keyup(function () {
+
+        if ($("#txt_Adhar3").val().length == 0) {
+            $("#txt_Adhar2").focus();
+        }
+    });
+
+
+    $("#btnVerifyAdhaar").click(function () {
+        
+
+        var sAdhaar = $("#txt_Adhar1").val() + $("#txt_Adhar2").val() + $("#txt_Adhar3").val();
+        alert(sAdhaar.length);
+        if (sAdhaar.length != 12) {
+            alert("Enter adhar no");
+            return;
+
+        }
+
+
+            $.ajax({
+                type: 'post',
+                dataType: 'text',
+                url: '/TLoader/VerifyAdhaar',
+                data:
+                {
+                    AadharNo:sAdhaar
+                },
+                success: function (response) {
+                   alert(response)
+                    
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Error " + errorThrown);
+                }
+            });
+            
+        
+        
+        
+    });
+
+
+
+
+
     $(document).on('click', '#btnNext', function (e) {
         e.preventDefault();
         alert('A');
         var bIsValid = 1;
         bIsValid = PersonValidation();
+
+
+
+
         if (bIsValid == 0) {
             return;
         }
-        alert('B');
+        
         $('#divNext').removeClass('hidden');
         if (@Convert.ToInt32( @Session[ClientColumns.ClientTypeID]) == @enumDBClientTypeID.Loader.GetHashCode() ||@Convert.ToInt32( @Session[ClientColumns.ClientTypeID]) == @enumDBClientTypeID.Transporter.GetHashCode() || @Convert.ToInt32( @Session[ClientColumns.ClientTypeID]) == @enumDBClientTypeID.Corporater.GetHashCode() ) {
             $('#divCompany').removeClass('hidden');
@@ -425,7 +493,7 @@
         var bIsValid = 1;
         bIsValid = PersonValidation();
         bIsValid = VerifyCapcha();
-        
+
         if (@Convert.ToInt32( @Session[ClientColumns.ClientTypeID]) == @enumDBClientTypeID.Loader.GetHashCode() ||@Convert.ToInt32( @Session[ClientColumns.ClientTypeID]) == @enumDBClientTypeID.Transporter.GetHashCode() || @Convert.ToInt32( @Session[ClientColumns.ClientTypeID]) == @enumDBClientTypeID.Corporater.GetHashCode() ) {
             if ($("#txtCompanyName").val() == null || $("#txtCompanyName").val() == "") {
                 bIsValid = 0;

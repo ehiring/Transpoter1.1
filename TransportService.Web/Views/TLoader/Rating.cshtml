@@ -148,8 +148,6 @@
     }
 </style>
 
-<div class="container">
-
 
 
     <div role="main" style="margin:0 auto;background-color: #F4F4F4;width:700px;">
@@ -167,13 +165,11 @@
                             SrNo = SrNo + 1;
                             groupName = groupName + item.CriteriaQuestionID.ToString();
                             <tr>
-                                <td class="clsSrNo ">
-                                    
-                                    <input type="hidden" value="@SrNo" />
+                                <td class="clsSrNo hidden">
+                                    @SrNo
                                 </td>
-                                <td class="clsCriteriaQuestionID " >
-                                    <input type="hidden"  value="@item.CriteriaQuestionID"/>
-                                    
+                                <td class="clsCriteriaQuestionID hidden">
+                                    @item.CriteriaQuestionID
                                 </td>
                                 <td>
                                     <div class="row" style="width:700px;margin-left: 0;height: 45px;">
@@ -304,7 +300,7 @@
         </div>
 
     </div>
-</div>
+
 
 
 
@@ -320,98 +316,9 @@
 </script>
 
 <script>
-    var GroupList = [];
-    $(document).on("click", "#btnSubmit", function (e) {
-        //var value = $("input[name='rdbGroup']:checked").val();
-        //var text = $("input[name='rdbGroup']:checked").attr('Text');
-        alert("Hi");
-        var ArrRankingCriteriaDetails = [];
-
-        $('#tblQuestion tbody tr').each(function (k, v) {
-            var groupName = "Group";
-            var trElement = $(this);
-            //groupName = groupName + trElement.find('td.clsCriteriaQuestionID').text();
-            groupName = groupName + trElement.find('td.clsCriteriaQuestionID').find("input:hidden").val(); 
-            var AnswerValue = $("input[name='" + groupName + "']:checked").val();
-            var Answer = $("input[name='" + groupName + "']:checked").attr('Text');
-            
-            alert(groupName);
-            //var tdGroupVal = trElement.index() + "~" + groupName;
-            GroupList.push(groupName);
-
-            var tdVals = trElement.find('td.clsSrNo').find("input:hidden").val() + "~" +
-                trElement.find('td.clsCriteriaQuestionID').find("input:hidden").val() + "~" +
-                Answer + "~" +
-                AnswerValue + "~";
-            ArrRankingCriteriaDetails.push(tdVals);
-
-
-        });
-        var isValid = 1;
-        for (var i = 0; i < GroupList.length; i++) {
-            if (!$("input[name='" + GroupList[i] + "']:checked").val()) {
-                //alert(GroupList[i]);
-                //alert ( $("input[name='" + GroupList[i] + "']:checked").val());
-                isValid = 0;
-                break;
-            }
-        }
-
-        if (isValid == 0) {
-            alert("Answer all the Questions");
-            return;
-
-        }
-
-
-
-
-        var tripRankingDetails = [];
-        for (var i = 0; i < ArrRankingCriteriaDetails.length; i++) {
-            var arrElement = ArrRankingCriteriaDetails[i].split("~");
-            item = {}
-            item["SerialNo"] = arrElement[0];
-            item["CriteriaQuestionID"] = arrElement[1];
-            item["Answer"] = arrElement[2];
-            item["AnswerValue"] = arrElement[3];
-
-            tripRankingDetails.push(item);
-        }
-
-
-        $.ajax({
-            type: 'POST',
-            dataType: 'json',
-            url: '/TLoader/RankTheTrip',
-            data:
-            {
-
-                TripID :@ViewData["TripID"] ,
-                TransporteUserID : @ViewData["TransporteUserID"] ,
-                tripRankingDetails: tripRankingDetails
-
-            },
-            success: function (da) {
-                alert(da);
-                ClearData();
-                window.location.href = "/TLoader/Index";
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("Error");
-            }
-        });
-
-
+    $("#btnSubmit").click(function () {
+        var AnswerValue = $("input[name='stars']:checked").val();
+        alert(AnswerValue);
     });
-    function ClearData() {
 
-        for (var i = 0; i < GroupList.length; i++)
-        {
-            //var arrElement = GroupList[i].split("~");
-            //var groupName = arrElement[1];
-            var groupName = GroupList[i];
-            $("input:radio[name='"+groupName+"']").each(function () { $(this).prop('checked', false); });
-
-        }
-    }
 </script>

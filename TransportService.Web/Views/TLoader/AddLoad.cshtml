@@ -43,9 +43,9 @@
                     <div class="col-sm-6 form-group ">
                         <label><i class="red">*</i> Source  </label>
                         
-                        <div class="input-group " style="width:50% !important">
+                        <div class="input-group " >
                             <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
-                            @Html.DropDownList("Source", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select Source", new { @class = "", @id = "SourceID", Title = "Select Source" })
+                            @Html.DropDownList("Source", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select Source", new { @class = "form-control", @id = "SourceID", Title = "Select Source" })
                             
                         </div>
 
@@ -276,7 +276,7 @@
                     <h5 class="panel-title">Final Fare(Rs.) </h5>
                 </div>
                 <div class="panel-body">
-                    <h1 style="color:blueviolet;text-align:center;" id="divDoorToDoor"> <label class="sc-brqgnP bKUXLW" id="lblQuotation"></label></h1>
+                    <h1 style="color:blueviolet;text-align:center;" id="divDoorToDoor"> <label class="fa fa-inr sc-brqgnP bKUXLW" id="lblQuotation"></label></h1>
                     @*<i class="fa fa-inr"></i>*@
                 </div>
             </div>
@@ -621,7 +621,7 @@
                     alert(da);
                     $('#tblGoodsDetail').empty();
                     $("#RowCount").val(0);
-                    window.location.href = "/TLoader/New_LoaderIndex";
+                    window.location.href = "/TLoader/LoaderIndex";
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                     alert("Error " + errorThrown);

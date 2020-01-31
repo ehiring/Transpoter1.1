@@ -190,7 +190,7 @@
                                 </div>
                                 <div class="input-field">
                                     <input id="hdnMobileExist" type="hidden" value="0">
-                                    <input id="txt_MobileNumber" type="text" class="validate">
+                                    <input id="txt_MobileNumber" type="text" class="validate" maxlength="10">
                                     <label for="txt_MobileNumber">Mobile No</label>
                                     <div id="divMobileValidation" class="form-group text-danger hidden">
                                         That Mobile No already exist. Try again.
@@ -233,16 +233,16 @@
 
                                 <div style="display: block;">
                                     <label class="input-field col-sm-4 container1" style="padding: 0px;float: left;margin-right: 3px;">
-                                        <input type="radio" name="chk_type" value="Trucker" checked="checked"> Trucker
+                                        <input type="radio" name="chk_type" value="@enumRole.Transporter.GetHashCode()" checked="checked"> @enumRole.Transporter.ToString()
                                         <span class="checkmark"></span>
                                     </label>
 
                                     <label class="input-field col-sm-4 container1" style="padding: 0px;float: left;margin-right: 3px !important;">
-                                        <input type="radio" name="chk_type" value="Loader"> Loader
+                                        <input type="radio" name="chk_type" value="@enumRole.Loader.GetHashCode()"> @enumRole.Loader.ToString()
                                         <span class="checkmark"></span>
                                     </label>
                                     <label class="input-field col-sm-4 container1" style="padding: 0px;float:right;margin-top:-30px !important;">
-                                        <input type="radio" name="chk_type" value="Broker"> Broker
+                                        <input type="radio" name="chk_type" value="@enumRole.Broker.GetHashCode()"> @enumRole.Broker.ToString()
                                         <span class="checkmark"></span>
                                     </label>
 
@@ -255,7 +255,7 @@
                             </div>
 
                             <div class="input-fields-div autoMargin right-align">
-                                <button type="submit" onclick="register()"
+                                <button type="submit" id="btnSubmit"
                                         class="registerBtn waves-effect waves-light btn">
                                     Register
                                 </button>
@@ -359,7 +359,8 @@
       alert('B');
 
       var IsComapny = @ViewBag.IsCompany;
-      var ClientTypeID = $("#ddlType option:selected").val();
+      //var ClientTypeID = $("#ddlType option:selected").val();
+      var ClientTypeID = $("input[name='chk_type']:checked").val();
         var DBClientTypeID;
         if (ClientTypeID == @enumRole.Transporter.GetHashCode() && IsComapny == @enumIsCompany.Company.GetHashCode()) {
             DBClientTypeID = @enumDBClientTypeID.Transporter.GetHashCode();

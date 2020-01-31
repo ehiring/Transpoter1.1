@@ -15,6 +15,7 @@ using System.Web.Helpers;
 using System.IO;
 using System.Net.Mail;
 using System.Net;
+using TransportService.Web.Models.Other;
 
 namespace TransportService.Web.Controllers
 {
@@ -1171,6 +1172,7 @@ namespace TransportService.Web.Controllers
         #region "Other"
         public ActionResult RankTheTrip(int TripID, int TransporteUserID)
         {
+            
             ViewData["TripID"] = TripID;
             ViewData["TransporteUserID"] = TransporteUserID;
             using (JobDbContext jobDbContext = new JobDbContext())
@@ -1181,6 +1183,22 @@ namespace TransportService.Web.Controllers
             
 
         }
+
+        public ActionResult Rating()
+        {
+            using (JobDbContext jobDbContext = new JobDbContext())
+            {
+                List<RankingCriteria> rankingCriterias = jobDbContext.DBRankingCriterias.SqlQuery("USP_SelectAllFromRankingCriteria").ToList<RankingCriteria>();
+                return View(rankingCriterias);
+            }
+           
+        }
+
+
+
+
+
+
         [HttpPost]
         public ActionResult RankTheTrip(int TripID,int TransporteUserID,List<TripRankingDetail> tripRankingDetails)
         {
@@ -1230,6 +1248,22 @@ namespace TransportService.Web.Controllers
                                                                             tvpParamRankingDetails);
 
                 return Json("Your Rating is done Succesfully");
+            }
+
+        }
+
+
+        public ActionResult VerifyAdhaar(string AadharNo)
+        {
+            bool isValidnumber = aadharcard.validateVerhoeff(AadharNo);
+            if (isValidnumber)
+            {
+                return Json("Aadhaar Validation Success");
+            }
+            else
+            {
+
+                return Json("Invalid Aadhaar Number");
             }
 
         }
