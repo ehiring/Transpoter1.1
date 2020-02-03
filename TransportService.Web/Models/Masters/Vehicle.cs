@@ -26,7 +26,7 @@ namespace TransportService.Web.Models.Masters
         public string ContactName { get; set; }
         public string DocumentPath { get; set; }
         public int? IsActive { get; set; }
-        public int? ProofTypeID { get; set; }
+        
     }
     
 }

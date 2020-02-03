@@ -697,7 +697,7 @@ namespace TransportService.Web.Controllers
             
         }
         [HttpPost]
-        public ActionResult AddTruck1(Vehicle _vehicle, HttpPostedFileBase postedFile)
+        public ActionResult AddTruck1(Vehicle _vehicle,int? ProofTypeID, HttpPostedFileBase postedFile)
         {
 
             byte[] bytes;
@@ -731,7 +731,7 @@ namespace TransportService.Web.Controllers
                                                                                        new SqlParameter("@GPSStatus", _vehicle.GPSStatus == null ? (object)DBNull.Value : _vehicle.GPSStatus),
                                                                                        new SqlParameter("@Phone", _vehicle.Phone == null ? (object)DBNull.Value : _vehicle.Phone),
                                                                                        new SqlParameter("@ContactName", _vehicle.ContactName ?? (object)DBNull.Value),
-                                                                                        new SqlParameter("@ProofTypeID", _vehicle.ProofTypeID ?? (object)DBNull.Value),
+                                                                                        new SqlParameter("@ProofTypeID", ProofTypeID ?? (object)DBNull.Value),
                                                                                         new SqlParameter("@DocumentName", Path.GetFileName(postedFile.FileName)),
                                                                                         new SqlParameter("@ContentType", postedFile.ContentType),
                                                                                         new SqlParameter("@Data", bytes));
@@ -746,6 +746,34 @@ namespace TransportService.Web.Controllers
             return Request.IsAjaxRequest() ? (ActionResult)PartialView("_VehiclTypeDimension", vehicleType) : View("_VehiclTypeDimension", vehicleType);
         }
 
+
+
+        public ActionResult AddVehicleType()
+        {
+
+                return View();
+        }
+        [HttpPost]
+        public ActionResult AddVehicleType(VehicleType vehicleType)
+        {
+            using (JobDbContext jobDbContext = new JobDbContext())
+            {
+                var result = jobDbContext.Database.ExecuteSqlCommand(@"exec USP_InsertVehicleType @VehicleTypeName,
+                                                                                         @Height,
+                                                                                         @Width,
+                                                                                         @Length,
+                                                                                         @Capacity,
+                                                                                         @AddedBy",
+                                                                                         new SqlParameter("@VehicleTypeName", vehicleType.VehicleTypeName),
+                                                                                         new SqlParameter("@Height", vehicleType.Height),
+                                                                                         new SqlParameter("@Width", vehicleType.Width),
+                                                                                         new SqlParameter("@Length", vehicleType.Length),
+                                                                                         new SqlParameter("@Capacity", vehicleType.Capacity),
+                                                                                         new SqlParameter("@AddedBy",Convert.ToInt32( Session[UserColumns.UserID])));
+                return Json("Truck Type Added Succesfully");
+            }
+            
+        }
         #endregion
 
         #region "LoginRegister"
@@ -824,7 +852,6 @@ namespace TransportService.Web.Controllers
             return result;
         }
 
-
         public ActionResult LoginUser()
         {
             return View();
@@ -902,7 +929,6 @@ namespace TransportService.Web.Controllers
 
             return View();
         }
-
         public ActionResult PersonalDetail()
         {
 
@@ -943,8 +969,6 @@ namespace TransportService.Web.Controllers
 
             
         }
-
-
 
         [HttpPost]
         public ActionResult PersonalDetail(User user,Client client,Company company,HttpPostedFileBase postedFile)
@@ -998,7 +1022,6 @@ namespace TransportService.Web.Controllers
 
             
         }
-
 
         [HttpGet]
         public ActionResult ForgotPassword()
@@ -1107,18 +1130,12 @@ namespace TransportService.Web.Controllers
             return View(model);
         }
 
-
-
-
-
-
         public int GetUserIDWhereUserAndPassword(string UserName, string Password)
         {                                        
             JobDbContext jobDbContext = new JobDbContext();
             var result = jobDbContext.Database.SqlQuery<int>(@"exec USP_SelectUserIDDWhereUserAndPassword @UserName, @Password", new SqlParameter("@UserName", UserName), new SqlParameter("@Password", Password)).SingleOrDefault<int>();
             return result;
         }
-
 
         [NonAction]
         public void SendVerificationLinkEmail(string emailID, string activationCode, string emailFor = "VerifyAccount")
@@ -1184,15 +1201,7 @@ namespace TransportService.Web.Controllers
 
         }
 
-        public ActionResult Rating()
-        {
-            using (JobDbContext jobDbContext = new JobDbContext())
-            {
-                List<RankingCriteria> rankingCriterias = jobDbContext.DBRankingCriterias.SqlQuery("USP_SelectAllFromRankingCriteria").ToList<RankingCriteria>();
-                return View(rankingCriterias);
-            }
-           
-        }
+       
 
 
 
@@ -1200,7 +1209,7 @@ namespace TransportService.Web.Controllers
 
 
         [HttpPost]
-        public ActionResult RankTheTrip(int TripID,int TransporteUserID,List<TripRankingDetail> tripRankingDetails)
+        public ActionResult RankTheTrip(TripRankingSummary tripRankingSummary, List<TripRankingDetail> tripRankingDetails)
         {
             DataTable dtTripRankingDetails = new DataTable();
             dtTripRankingDetails.Columns.Add("SerialNo", typeof(int));
@@ -1239,12 +1248,16 @@ namespace TransportService.Web.Controllers
                                                                             @LoaderID ,
                                                                             @LoaderUserID  ,
                                                                             @TransporterUserID  ,
+                                                                            @LikeToUseBhada ,
+                                                                            @AnyOtherQuestion ,
                                                                             @UDTable_TripRankingDetail ",
-                                                                            new SqlParameter("@TripID",TripID),
+                                                                            new SqlParameter("@TripID", tripRankingSummary.TripID),
                                                                             new SqlParameter("@SubTripID",DBNull.Value),
                                                                             new SqlParameter("@LoaderID",Session[ClientColumns.ClientID]),
                                                                             new SqlParameter("@LoaderUserID", Session[UserColumns.UserID]),
-                                                                            new SqlParameter("@TransporterUserID", TransporteUserID),
+                                                                            new SqlParameter("@TransporterUserID", tripRankingSummary.TransporterUserID),
+                                                                            new SqlParameter("@LikeToUseBhada", tripRankingSummary.LikeToUseBhada),
+                                                                            new SqlParameter("@AnyOtherQuestion", tripRankingSummary.AnyOtherQuestion),
                                                                             tvpParamRankingDetails);
 
                 return Json("Your Rating is done Succesfully");
@@ -1274,8 +1287,26 @@ namespace TransportService.Web.Controllers
         public ActionResult NotFound()
         {
             Response.StatusCode = 404;
-
             return View();
+        }
+
+        public ActionResult EditTruck()
+        {
+            using (JobDbContext jobDbContext = new JobDbContext())
+            {
+                List<Vehicle> vehicles = jobDbContext.Vehicles.SqlQuery(@"exec USP_SelectAllFromVehicle").ToList<Vehicle>();
+                return View(vehicles);
+            }
+            
+        }
+        public ActionResult TruckTypeList()
+        {
+            using (JobDbContext jobDbContext = new JobDbContext())
+            {
+                List<VehicleType> vehicles = jobDbContext.VehicleTypes.SqlQuery(@"exec USP_SelectAllFromVehicleType").ToList<VehicleType>();
+                return View(vehicles);
+            }
+
         }
         #endregion
     }

@@ -18,6 +18,15 @@ namespace TransportService.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult Distance1()
+        {
+            return View();
+        }
+        public ActionResult Distance3()
+        {
+            return View();
+        }
         public ActionResult ShowMap()
         {
             return View();

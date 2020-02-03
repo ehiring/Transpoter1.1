@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "Distance1";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<!DOCTYPE HTML>
+<html>
+<head>
+</head>
+<body>
+    <h3>Find Distance Between Two Points</h3>
+    <p><h4>General Formula :</h4></p>
+    <img src="http://www.moomoomath.com/distance.jpg" width=200px alt="Image Not Available" />
+    <p>Enter points x1,x2 and y1,y2</p>
+    <label>Point X1 :</label>
+    <br>
+    <input id="p1" type="number" placeholder="Enter x1">
+    <br>
+    <label>Point X2 :</label>
+    <br>
+    <input id="p2" type="number" placeholder="Enter x2">
+    <br>
+    <label>Point Y1 :</label>
+    <br>
+    <input id="p3" type="number" placeholder="Enter y1">
+    <br>
+    <label>Point Y2 :</label>
+    <br>
+    <input id="p4" type="number" placeholder="Enter y2">
+    <br>
+    <br>
+    <button onclick="calc();">DISTANCE :</button>
+    <br>
+    <br>
+    <div id="output"></div>
+</body>
+</html>
+
+<script>
+    function calc() {
+        var a = document.getElementById("p1").value;
+        var b = document.getElementById("p2").value;
+        var c = document.getElementById("p3").value;
+        var d = document.getElementById("p4").value;
+        a = parseInt(a);
+        b = parseInt(b);
+        c = parseInt(c);
+        d = parseInt(d);
+        var e = Math.sqrt(Math.pow(b - a, 2) + Math.pow(d - c, 2));
+        var output = document.getElementById("output");
+        output.innerHTML = e + " Units";
+    }
+</script>

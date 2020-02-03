@@ -147,15 +147,10 @@
         color: #fff;
     }
 </style>
-
 <div class="container">
-
-
-
     <div role="main" style="margin:0 auto;background-color: #F4F4F4;width:700px;">
         <h2 class="formHead">Tell Us What You Think</h2>
         <div class="formPage" style="width:700px;margin-top: 5px;">
-
 
             <table id="tblQuestion">
                 <tbody>
@@ -220,14 +215,6 @@
                             </tr>
                         }
 
-
-
-
-
-
-
-
-
                     }
                 </tbody>
 
@@ -278,8 +265,8 @@
                     <h1 class="fontli">Likely to use Bhadaa.com again?</h1>
                 </div>
                 <div class="col-md-6" class="input-type" style="padding-left: 100px;font-size: 16px !important;">
-                    <input type="radio" name="chk_type" value="Yes" checked="checked"> Yes <span class="checkmark"></span>
-                    <input type="radio" name="chk_type" value="No"> No <span class="checkmark"></span>
+                    <input type="radio" name="chk_type" value="true" checked="checked"> Yes <span class="checkmark"></span>
+                    <input type="radio" name="chk_type" value="false"> No <span class="checkmark"></span>
                 </div>
             </div>
 
@@ -288,7 +275,7 @@
                     <h1 class="fontli">Anything else? Please let us know here.</h1>
                 </div>
                 <div class="col-md-6" class="input-type" style="padding-left: 100px;font-size: 16px !important;">
-                    <textarea cols="25" rows="2"></textarea>
+                    <textarea id="txtOtherQuestion" cols="25" rows="2"></textarea>
                 </div>
             </div>
 
@@ -299,15 +286,10 @@
                     </button>
                 </div>
             </div>
-
-
         </div>
 
     </div>
 </div>
-
-
-
 <script>
     $(':radio').change(function () {
         console.log('New star rating: ' + this.value);
@@ -318,13 +300,11 @@
         location.replace("fm3.html")
     }
 </script>
-
 <script>
     var GroupList = [];
     $(document).on("click", "#btnSubmit", function (e) {
-        //var value = $("input[name='rdbGroup']:checked").val();
-        //var text = $("input[name='rdbGroup']:checked").attr('Text');
-        alert("Hi");
+        
+        
         var ArrRankingCriteriaDetails = [];
 
         $('#tblQuestion tbody tr').each(function (k, v) {
@@ -363,9 +343,6 @@
 
         }
 
-
-
-
         var tripRankingDetails = [];
         for (var i = 0; i < ArrRankingCriteriaDetails.length; i++) {
             var arrElement = ArrRankingCriteriaDetails[i].split("~");
@@ -388,7 +365,9 @@
 
                 TripID :@ViewData["TripID"] ,
                 TransporteUserID : @ViewData["TransporteUserID"] ,
-                tripRankingDetails: tripRankingDetails
+                tripRankingDetails: tripRankingDetails,
+                LikeToUseBhada: $("input[name='chk_type']:checked").val(),
+                AnyOtherQuestion: $('#txtOtherQuestion').val(),
 
             },
             success: function (da) {

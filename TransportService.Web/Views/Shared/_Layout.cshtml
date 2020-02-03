@@ -309,18 +309,26 @@
                                     <ul class="dropdown-menu dropdownhover-bottom">
                                         <li class="">
                                             @Html.ActionLink("My Detail", "PersonalDetail", "TLoader")
-
                                         </li>
                                         @if (Convert.ToInt32(Session[RoleColumns.RoleID]) == enumRole.Transporter.GetHashCode())
                                         {
-                                        <li class="">
-                                            @Html.ActionLink("My Vehicle", "AddTruck", new { isTripCall = 0 })
-                                        </li>
+                                            <li class="">
+                                                @Html.ActionLink("My Vehicle", "AddTruck", new { isTripCall = 0 })
+                                            </li>
                                         }
+                                        @if (Convert.ToInt32(Session[RoleColumns.RoleID]) == enumRole.Admin.GetHashCode())
+                                        {
+                                            <li class="">
+                                                @Html.ActionLink("Add Truck Type", "AddVehicleType")
+                                            </li>
+                                        }
+
+
+
                                         <li class="">
                                             @Html.ActionLink("Log Out", "LogOut", null, new { @class = "btn-theme icon-left bg-navy-blue no-shadow d-none d-lg-inline-block align-self-center", @id = "btnSignIn" })
                                         </li>
-                                        
+
                                     </ul>
                                 </li>
                                 }

@@ -32,6 +32,9 @@ namespace TransportService.Web.BusinessLayer
         public DbSet<CityArray> DBCityArray { get; set; }
         public DbSet<TruckDocuments> DBTruckDocuments { get; set; }
         public DbSet<VehicleType> VehicleTypes { get; set; }
+
         public DbSet<RankingCriteria> DBRankingCriterias { get; set; }
+
+        public System.Data.Entity.DbSet<TransportService.Web.Models.Masters.Vehicle> Vehicles { get; set; }
     }
 }

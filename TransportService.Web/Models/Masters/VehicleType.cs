@@ -14,5 +14,6 @@ namespace TransportService.Web.Models.Masters
         public decimal Length { get; set; }
         public decimal Capacity { get; set; }
         public int IsActive { get; set; }
+        public int AddedBy { get; set; }
     }
 }

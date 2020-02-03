@@ -169,6 +169,7 @@
     <Compile Include="Models\Activity\TripAndSubTripDetails.cs" />
     <Compile Include="Models\Activity\TripDetail.cs" />
     <Compile Include="Models\Activity\TripRankingDetail.cs" />
+    <Compile Include="Models\Activity\TripRankingSummary.cs" />
     <Compile Include="Models\DBStructs.cs" />
     <Compile Include="Models\ErrorHandler.cs" />
     <Compile Include="Models\Masters\CargoType.cs" />
@@ -394,6 +395,11 @@
     <Content Include="Views\Temp\Old_RankTheTrip.cshtml" />
     <Content Include="Views\TLoader\NotFound.cshtml" />
     <Content Include="Views\TLoader\Rating.cshtml" />
+    <Content Include="Views\TLoader\AddVehicleType.cshtml" />
+    <Content Include="Views\TLoader\EditTruck.cshtml" />
+    <Content Include="Views\TLoader\TruckTypeList.cshtml" />
+    <Content Include="Views\GoogleMap1\Distance1.cshtml" />
+    <Content Include="Views\GoogleMap1\Distance3.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
