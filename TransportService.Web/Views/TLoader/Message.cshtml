@@ -1,0 +1,22 @@
+﻿@model TransportService.Web.Models.Other.StatusMessage
+@{
+    ViewBag.Title = "Message";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="container-fluid" style="height:200px">
+
+    <h2>@Model.Message</h2>
+
+    @if (!string.IsNullOrEmpty(Model.RedirectViewLabel))
+    {
+        @Html.ActionLink(Model.RedirectViewLabel, Model.RedirectViewName, new { @class = "linkDecoration" })
+    }
+    
+
+
+
+</div>
+

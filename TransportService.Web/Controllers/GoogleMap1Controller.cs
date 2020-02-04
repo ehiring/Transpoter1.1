@@ -27,6 +27,10 @@ namespace TransportService.Web.Controllers
         {
             return View();
         }
+        public ActionResult Distance4()
+        {
+            return View();
+        }
         public ActionResult ShowMap()
         {
             return View();

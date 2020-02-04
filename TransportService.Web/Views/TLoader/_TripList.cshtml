@@ -10,9 +10,19 @@
 
     <div class="mainList">
         <div class=" fromTo">
+            @if ( !string.IsNullOrEmpty(item1.MapSource) && !string.IsNullOrEmpty(item1.MapDestination))
+            {
+                <span class=" fromPlace">@item1.MapSource&nbsp;</span>
+            <span class=" totalTime"> 15h 58m</span>
+            <span class="toPlace">@item1.MapDestination&nbsp;</span>
+            }
+
+            else{ 
+
             <span class=" fromPlace">@item1.Source&nbsp;</span>
             <span class=" totalTime"> 15h 58m</span>
             <span class="toPlace">@item1.Destination&nbsp;</span>
+            }
         </div>
 
         <div class=" dateDiv">

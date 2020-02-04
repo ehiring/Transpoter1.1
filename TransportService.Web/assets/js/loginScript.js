@@ -18,11 +18,11 @@ $(document).ready(function () {
 
         'hasPassword': function () {
             showProgress()
-            $("#passwordDiv").addClass("pulse").removeClass("scale-out")
+            $("#passwordDiv").addClass("hide")
             $("#enterOTPDiv").addClass("scale-out")
             $("#ForgetPswdDiv").addClass("scale-out")
-            $(".passwordOrOTP").html("Forget Password").attr("data-PassOTP", "psw").attr("href", "#enterOTP")
-            // $(".passwordOrOTP").html("Enter OTP11").attr("data-PassOTP","OTP").attr("href", "#enterOTP")
+            $(".passwordOrOTP").html("Get New Password").attr("data-PassOTP", "psw").attr("href", "#enterPWD")
+            //  $(".passwordOrOTP").html("Get OTP").attr("data-PassOTP","OTP").attr("href", "#enterOTP")
             $(".loginNextBtn").addClass("hide")
             $(".loginBtn").removeClass("hide")
         },
@@ -37,6 +37,21 @@ $(document).ready(function () {
             $("#passwordDiv").addClass("scale-out")
             $("#enterOTPDiv").addClass("pulse").removeClass("scale-out")
             $(".passwordOrOTP").html("Enter Password").attr("data-PassOTP", "Password").attr("href", "#hasPassword")
+            $(".loginNextBtn").addClass("hide")
+            $(".loginBtn").removeClass("hide")
+
+        },
+
+        'enterPWD': function () {
+            showProgress()
+
+            setTimeout(function () {
+                M.toast({ html: 'PW Sent!', classes: 'rounded' })
+            }, 600)
+
+            $("#ForgetPswdDiv").addClass("scale-out").removeClass("scale-out")
+            $("#enterOTPDiv").addClass("pulse")
+            $(".passwordOrOTP").html("Enter OTP").attr("data-PassOTP", "Password").attr("href", "#hasPassword").addClass("hide")
             $(".loginNextBtn").addClass("hide")
             $(".loginBtn").removeClass("hide")
 
@@ -84,6 +99,4 @@ function showPassword() {
         $(ele).attr("type", input_type);
     })
 }
-
-
 

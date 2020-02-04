@@ -90,6 +90,8 @@ namespace TransportService.Web.Models
 
         public string Source { get; set; }
         public string Destination { get; set; }
+        public string MapSource { get; set; }
+        public string MapDestination { get; set; }
         public string Route_Details { get; set; }
         public string TripStatus { get; set; }
         public bool Status { get; set; }
@@ -139,7 +141,8 @@ namespace TransportService.Web.Models
     public class CityArray
     {
         [Key]
-        public int CityID { get; set; }
+        //public int CityID { get; set; }
+        public string MapCity { get; set; }
         public int SequenceNo { get; set; }
         public string CityName { get; set; }
 

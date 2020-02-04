@@ -187,6 +187,7 @@
     <Compile Include="Models\Masters\Vehicle.cs" />
     <Compile Include="Models\Masters\VehicleType.cs" />
     <Compile Include="Models\Other\aadharcard.cs" />
+    <Compile Include="Models\Other\StatusMessage.cs" />
     <Compile Include="Models\Trans.cs" />
     <Compile Include="Models\Transaction\Quoatation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -400,6 +401,8 @@
     <Content Include="Views\TLoader\TruckTypeList.cshtml" />
     <Content Include="Views\GoogleMap1\Distance1.cshtml" />
     <Content Include="Views\GoogleMap1\Distance3.cshtml" />
+    <Content Include="Views\TLoader\Message.cshtml" />
+    <Content Include="Views\GoogleMap1\Distance4.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

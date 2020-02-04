@@ -77,7 +77,7 @@ namespace TransportService.Web.Controllers
         {
             DataTable dtCityRoot = new DataTable();
 
-            dtCityRoot.Columns.Add("CityID", typeof(int));
+            dtCityRoot.Columns.Add("MapCity", typeof(string));
             dtCityRoot.Columns.Add("SequenceNo", typeof(int));
 
             // Adding Contact Person In DT
@@ -88,7 +88,7 @@ namespace TransportService.Web.Controllers
                     foreach (var item in CityRootId)
                     {
                         DataRow dr_CityRoot = dtCityRoot.NewRow();
-                        dr_CityRoot["CityID"] = item.CityID;
+                        dr_CityRoot["MapCity"] = item.MapCity;
                         dr_CityRoot["SequenceNo"] = item.SequenceNo;
                         dtCityRoot.Rows.Add(dr_CityRoot);
                     }
@@ -144,8 +144,8 @@ namespace TransportService.Web.Controllers
 
             JobDbContext _jobDbContext = new JobDbContext();
             var result = _jobDbContext.Database.ExecuteSqlCommand(@"exec USP_SaveTrip
-                  @SourceID 
-                 ,@DestinationID 
+                  @MapSource
+                 ,@MapDestination
                  ,@VehicleID 
                  ,@TripStartDate
                  ,@TripEndDate 
@@ -154,8 +154,8 @@ namespace TransportService.Web.Controllers
                  ,@LoadID
                  ,@RouteCityIDs
                  ,@UDTable_TripDetails",
-          new SqlParameter("@SourceID", T.SourceID == null ? (object)DBNull.Value : T.SourceID),
-          new SqlParameter("@DestinationID", T.DestinationID == null ? (object)DBNull.Value : T.DestinationID),
+          new SqlParameter("@MapSource", T.MapSource == null ? (object)DBNull.Value : T.MapSource),
+          new SqlParameter("@MapDestination", T.MapDestination == null ? (object)DBNull.Value : T.MapDestination),
           new SqlParameter("@VehicleID", T.VehicleID == null ? (object)DBNull.Value : T.VehicleID),
           new SqlParameter("@TripStartDate", T.TripStartDate == null ? (object)DBNull.Value : T.TripStartDate),
           new SqlParameter("@TripEndDate", T.TripEndDate == null ? (object)DBNull.Value : T.TripEndDate),
@@ -189,7 +189,7 @@ namespace TransportService.Web.Controllers
         {
             DataTable dtCityRoot = new DataTable();
 
-            dtCityRoot.Columns.Add("CityID", typeof(int));
+            dtCityRoot.Columns.Add("MapCity", typeof(int));
             dtCityRoot.Columns.Add("SequenceNo", typeof(int));
 
             // Adding Contact Person In DT
@@ -200,7 +200,7 @@ namespace TransportService.Web.Controllers
                     foreach (var item in CityRootId)
                     {
                         DataRow dr_CityRoot = dtCityRoot.NewRow();
-                        dr_CityRoot["CityID"] = item.CityID;
+                        dr_CityRoot["MapCity"] = item.MapCity;
                         dr_CityRoot["SequenceNo"] = item.SequenceNo;
                         dtCityRoot.Rows.Add(dr_CityRoot);
                     }
@@ -1037,27 +1037,41 @@ namespace TransportService.Web.Controllers
             string message = "";
             //bool status = false;
 
-            using (JobDbContext jobDbContext = new JobDbContext())
+            if (!string.IsNullOrEmpty(EmailID))
             {
-                //var account = dc.Users.Where(a => a.EmailID == EmailID).FirstOrDefault();
-                var account = jobDbContext.Database.SqlQuery<int>(@"exec USP_SelectUserIDWhereEmail @Email", new SqlParameter("@Email", EmailID)).SingleOrDefault<int>();
-                if (account != 0)
+                using (JobDbContext jobDbContext = new JobDbContext())
                 {
-                    //Send email for reset password
-                    string resetCode = Guid.NewGuid().ToString();
-                    SendVerificationLinkEmail(EmailID, resetCode, "ResetPassword");
-                    var result = jobDbContext.Database.ExecuteSqlCommand(@"USP_UpdateResetCodeWhereEmail @UserID,@ResetPasswordCode", new SqlParameter("@UserID", account), new SqlParameter("@ResetPasswordCode", resetCode));
-                    
-                    message = "Reset password link has been sent to your email id.";
-                }
-                else
-                {
-                    message = "Account not found";
+                    //var account = dc.Users.Where(a => a.EmailID == EmailID).FirstOrDefault();
+                    var account = jobDbContext.Database.SqlQuery<int>(@"exec USP_SelectUserIDWhereEmail @Email", new SqlParameter("@Email", EmailID)).SingleOrDefault<int>();
+                    if (account != 0)
+                    {
+                        //Send email for reset password
+                        string resetCode = Guid.NewGuid().ToString();
+                        SendVerificationLinkEmail(EmailID, resetCode, "ResetPassword");
+                        var result = jobDbContext.Database.ExecuteSqlCommand(@"USP_UpdateResetCodeWhereEmail @UserID,@ResetPasswordCode", new SqlParameter("@UserID", account), new SqlParameter("@ResetPasswordCode", resetCode));
+
+                        StatusMessage statusMessage = new StatusMessage();
+                        statusMessage.Message = "Reset password link has been sent to your email id.";
+                        return View("Message", statusMessage);
+                    }
+                    else
+                    {
+                        message = "Account not found";
+                    }
                 }
             }
+            else
+            {
+                message = "Enter Your Email";
+            }
+
+            
             ViewBag.Message = message;
             return View();
         }
+
+        
+       
 
         public ActionResult ResetPassword(string id)
         {
@@ -1087,6 +1101,12 @@ namespace TransportService.Web.Controllers
             }
             
         }
+
+
+
+       
+
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -1118,7 +1138,11 @@ namespace TransportService.Web.Controllers
 
 
 
-                    return Json("Password change succesfully");
+                    StatusMessage statusMessage = new StatusMessage();
+                    statusMessage.Message = "Password changed successfully";
+                    statusMessage.RedirectViewName = "LoginUser";
+                    statusMessage.RedirectViewLabel = "Login Now";
+                    return View("Message", statusMessage);
 
                 }
             }

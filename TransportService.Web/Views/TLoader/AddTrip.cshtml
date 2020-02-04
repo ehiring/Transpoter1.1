@@ -1,240 +1,272 @@
 ﻿
 @{
-                /**/
+    /**/
 
-                ViewBag.Title = "AddTrip";
-                Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "AddTrip";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 @using (Html.BeginForm())
 {
 
-<div class="container-fluid">
-    <hr />
-    <div class="row">
-        <div class="col-sm-12 pull-left">
-            @*<input id="btnSubmit" type="submit" class="btn btn-primary" name="regform" value="Create Truck">*@
-            <input type="button" id="btnSubmit" class="btn btn-primary" name="regform" value="Add Trip">
-        </div>
-    </div>
-
-    <div class="row">
+    <div class="container-fluid">
         <hr />
-        <div class="col-lg-6">
-            
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h5 class="panel-title"><b>Trip Details</b></h5>
-                </div>
-                <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-12 pull-left">
+                @*<input id="btnSubmit" type="submit" class="btn btn-primary" name="regform" value="Create Truck">*@
+                <input type="button" id="btnSubmit" class="btn btn-primary" name="regform" value="Add Trip">
+            </div>
+        </div>
 
-                    <div class="col-sm-6 form-group">
-                        <label><i class="red">*</i> Source</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
-                            @Html.DropDownList("Source", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select Source", new { @class = "form-control", @id = "SourceID", Title = "Select Source" })
+        <div class="row">
+            <hr />
+            <div class="col-lg-6">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h5 class="panel-title"><b>Trip Details</b></h5>
+                    </div>
+                    <div class="panel-body">
+
+                        @*<div class="col-sm-6 form-group">
+                                <label><i class="red">*</i> Source</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+                                    @Html.DropDownList("Source", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select Source", new { @class = "form-control", @id = "SourceID", Title = "Select Source" })
+
+                                </div>
+
+                            </div>*@
+
+                        @*<div class="col-sm-6 form-group">
+                                <label><i class="red">*</i> Destination </label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+                                    @Html.DropDownList("Destination", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select Destination", new { @class = "form-control", @id = "DestinationID", Title = "Select Destination" })
+
+                                </div>
+                            </div>*@
+
+                        <div class="col-sm-6 form-group">
+                            <label><i class="red">*</i> Source</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+                                <input type="text" id="txt_MapSource" class="form-control" />
+                            </div>
 
                         </div>
 
-                    </div>
+                        <div class="col-sm-6 form-group">
+                            <label><i class="red">*</i> Destination</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+                                <input type="text" id="txt_MapDestination" class="form-control" />
 
-                    <div class="col-sm-6 form-group">
-                        <label><i class="red">*</i> Destination </label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
-                            @Html.DropDownList("Destination", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select Destination", new { @class = "form-control", @id = "DestinationID", Title = "Select Destination" })
-
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 form-group">
-                        <label>Start Date</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                            <input type="date" id="StartDate" class="form-control dropwidth" placeholder="YYYY-MM-DD" title="Select Start Date" />
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 form-group">
-                        <label>End Date</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                            <input type="date" id="EndDate" class="form-control dropwidth" placeholder="YYYY-MM-DD" title="Select End Date" />
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 form-group">
-                        <label><i class="red">*</i>Trip Status </label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fas fa-shopping-cart"></i></span>
-                            <select id="TripStatus" class="form-control" title="Select Load Type">
-                                <option value="0">In Process</option>
-                                <option value="1">Complted</option>
-                            </select>
-                        </div>
-                    </div>
-
-
-                    <div class="col-sm-6 form-group">
-                        <label><i class="red">*</i>Vehicle </label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
-                            @Html.DropDownList("model.VehicleID", new SelectList((System.Collections.IEnumerable)ViewData["VehicleList"], "Value", "Text"), "Select Source", new { @class = "form-control dropwidth", @id = "VehicleID", Title = "Select VehicleType" })
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 form-group">
-                        <label>Add City Route</label>
-                        <div style="display:flex;">
-                            @Html.DropDownList("model.SourceID", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select City", new { @class = "form-control dropwidth", @id = "CityRootID", Title = "Add Cities To The Root" })
-                            <i class="fa fa-plus" id="addRoute" aria-hidden="true" style="margin-top: 10px;margin-left: 10px;margin-right:12px;"></i>
+                            </div>
 
                         </div>
-                    </div>
-
-                    <div class="col-sm-6 form-group">
-                        <span>@Html.ActionLink("Add Vehicle", "AddTruck", new { isTripCall=1 }, new { @class = "linkDecoration" }) <br /></span>
                         
-                    </div>
-                    <div id="divVehicleCapcity" class="col-sm-6 form-group">
-
-
-                    </div>
-                    <label id="lblTest"></label>
-                    <div class="col-sm-12 form-group">
-                        <label>Route Details</label>
-                        <div class="form-group">
-                            <div id="showrootdetails" style="margin-top: 12px;" SeqNo="0">
-                                <span class="Rootmgs" style="color:#939393;font-size:small;">Add Route From Source To Destination</span>
+                        <div class="col-sm-6 form-group">
+                            <label>Start Date</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                <input type="date" id="StartDate" class="form-control dropwidth" placeholder="YYYY-MM-DD" title="Select Start Date" />
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row route">
-                        <div class="col-sm-12">
-
+                        <div class="col-sm-6 form-group">
+                            <label>End Date</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                <input type="date" id="EndDate" class="form-control dropwidth" placeholder="YYYY-MM-DD" title="Select End Date" />
+                            </div>
                         </div>
 
-                    </div>
-
-
-                </div>
-            </div>
-
-        </div>
-
-        <div class="col-lg-6">
-           
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h5 class="panel-title"><b>Good Details</b> </h5>
-                </div>
-
-                <div class="panel-body">
-                    <div class="col-sm-6 form-group">
-                        <label><i class="red">*</i> Material</label>
-                        <div>
-                            @Html.DropDownList("Material", new SelectList((System.Collections.IEnumerable)ViewData["MaterialList"], "Value", "Text"), "Select Material", new { @class = "form-control", @id = "ddlMaterial", Title = "Select Material" })
+                        <div class="col-sm-6 form-group">
+                            <label><i class="red">*</i>Trip Status </label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fas fa-shopping-cart"></i></span>
+                                <select id="TripStatus" class="form-control" title="Select Load Type">
+                                    <option value="0">In Process</option>
+                                    <option value="1">Complted</option>
+                                </select>
+                            </div>
                         </div>
 
-                    </div>
 
-                    <div class="col-sm-6 form-group">
-                        <label><i class="red">*</i> Unit</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-balance-scale" aria-hidden="true"></i></span>
-                            @Html.DropDownList("Unit", new SelectList((System.Collections.IEnumerable)ViewData["UOMList"], "Value", "Text"), "Select Unit", new { @class = "form-control", @id = "ddlUnit", Title = "Select Unit" })
+                        <div class="col-sm-6 form-group">
+                            <label><i class="red">*</i>Vehicle </label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-hand-o-right"></i></span>
+                                @Html.DropDownList("model.VehicleID", new SelectList((System.Collections.IEnumerable)ViewData["VehicleList"], "Value", "Text"), "Select Source", new { @class = "form-control dropwidth", @id = "VehicleID", Title = "Select VehicleType" })
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 form-group">
+                            <label>Add City Route</label>
+                            <div style="display:flex;">
+                                @*@Html.DropDownList("model.SourceID", new SelectList((System.Collections.IEnumerable)ViewData["CityList"], "Value", "Text"), "Select City", new { @class = "form-control dropwidth", @id = "CityRootID", Title = "Add Cities To The Root" })*@
+                                <input type="text" id="txt_MapCity" class="form-control" />
+                                <i class="fa fa-plus" id="addRoute" aria-hidden="true" style="margin-top: 10px;margin-left: 10px;margin-right:12px;"></i>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 form-group">
+                            <span>@Html.ActionLink("Add Vehicle", "AddTruck", new { isTripCall = 1 }, new { @class = "linkDecoration" }) <br /></span>
 
                         </div>
-                    </div>
-                    <div class="col-sm-6 form-group">
-                        <label>Heigth</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-up"></i></span>
-                            <input id="txt_Height" type="number" class="form-control" value="" placeholder="Height" title="Enter Height">
-                        </div>
-                    </div>
-                    <div class="col-sm-6 form-group">
-                        <label>Width</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-right"></i></span>
-                            <input id="txt_Width" type="number" class="form-control" value="" placeholder="Width" title="Enter Width">
-                        </div>
-                    </div>
+                        <div id="divVehicleCapcity" class="col-sm-6 form-group">
+                            
 
-                    <div class="col-sm-6 form-group">
-                        <label>Length</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-down"></i></span>
-                            <input id="txt_Length" type="number" class="form-control" value="" placeholder="Length" title="Enter Length">
                         </div>
-                    </div>
-                    <div class="col-sm-6 form-group">
-                        <label>Quantity</label>
-                        <div class="input-group">
-
-                            <input id="txt_Quantity" type="number" class="form-control" value="" placeholder="Quantity" title="Enter Quantity">
-                        </div>
-                    </div>
-                    <div class="col-sm-6 form-group">
-                        <label>Total Weight(Tonn)</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-glass"></i></span>
-                            <input id="txt_Weight" type="number" class="form-control"  value="" placeholder="Weigtht" title="Enter Weight">
-                        </div>
-                    </div>
-                    <div class="col-sm-6 form-group">
-                        <label>Material Value(INR)</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-inr"></i></span>
-                            <input id="txt_MaterialValue" type="number" class="form-control" value="" placeholder="Material Value in INR">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-3">
+                        <label id="lblTest"></label>
+                        <div class="col-sm-12 form-group">
+                            <label>Route Details</label>
                             <div class="form-group">
-                                <div>
-                                    <button type="button" id="btnAddGoods" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Add Good Details</button>
+                                <div id="showrootdetails" style="margin-top: 12px;" SeqNo="0">
+                                    <span class="Rootmgs" style="color:#939393;font-size:small;">Add Route From Source To Destination</span>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <input type="hidden" id="RowCount" name="RowCount" value="0">
 
-                        <div>
-                            <table class="table table-bordered" id="tblGoodsDetail" title="Enter Good Details">
-                                <thead>
-                                    <tr>
-                                        <th>Sr.</th>
-                                        <th style="display:none"></th>
-                                        <th>Material</th>
-                                        <th style="display:none"></th>
-                                        <th>Unit</th>
-                                        <th>Height</th>
-                                        <th>Width</th>
-                                        <th>Length</th>
-                                        <th>Weight(Tonn)</th>
-                                        <th>Qty</th>
-                                        <th>Price</th>
-                                        <th></th>
+                        <div class="row route">
+                            <div class="col-sm-12">
 
+                            </div>
 
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
                         </div>
-                    </div>
 
+
+                    </div>
                 </div>
 
+            </div>
 
+            <div class="col-lg-6">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h5 class="panel-title"><b>Good Details</b> </h5>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="col-sm-6 form-group">
+                            <label><i class="red">*</i> Material</label>
+                            <div>
+                                @Html.DropDownList("Material", new SelectList((System.Collections.IEnumerable)ViewData["MaterialList"], "Value", "Text"), "Select Material", new { @class = "form-control", @id = "ddlMaterial", Title = "Select Material" })
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-6 form-group">
+                            <label><i class="red">*</i> Unit</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-balance-scale" aria-hidden="true"></i></span>
+                                @Html.DropDownList("Unit", new SelectList((System.Collections.IEnumerable)ViewData["UOMList"], "Value", "Text"), "Select Unit", new { @class = "form-control", @id = "ddlUnit", Title = "Select Unit" })
+
+                            </div>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <label>Heigth</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-up"></i></span>
+                                <input id="txt_Height" type="number" class="form-control" value="" placeholder="Height" title="Enter Height">
+                            </div>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <label>Width</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-right"></i></span>
+                                <input id="txt_Width" type="number" class="form-control" value="" placeholder="Width" title="Enter Width">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 form-group">
+                            <label>Length</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-arrow-down"></i></span>
+                                <input id="txt_Length" type="number" class="form-control" value="" placeholder="Length" title="Enter Length">
+                            </div>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <label>Quantity</label>
+                            <div class="input-group">
+
+                                <input id="txt_Quantity" type="number" class="form-control" value="" placeholder="Quantity" title="Enter Quantity">
+                            </div>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <label>Total Weight(Tonn)</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-glass"></i></span>
+                                <input id="txt_Weight" type="number" class="form-control" value="" placeholder="Weigtht" title="Enter Weight">
+                            </div>
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <label>Material Value(INR)</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-inr"></i></span>
+                                <input id="txt_MaterialValue" type="number" class="form-control" value="" placeholder="Material Value in INR">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <div>
+                                        <button type="button" id="btnAddGoods" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Add Good Details</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" id="RowCount" name="RowCount" value="0">
+
+                            <div>
+                                <table class="table table-bordered" id="tblGoodsDetail" title="Enter Good Details">
+                                    <thead>
+                                        <tr>
+                                            <th>Sr.</th>
+                                            <th style="display:none"></th>
+                                            <th>Material</th>
+                                            <th style="display:none"></th>
+                                            <th>Unit</th>
+                                            <th>Height</th>
+                                            <th>Width</th>
+                                            <th>Length</th>
+                                            <th>Weight(Tonn)</th>
+                                            <th>Qty</th>
+                                            <th>Price</th>
+                                            <th></th>
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
             </div>
         </div>
     </div>
-</div>
 }
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&key=AIzaSyArwhz5TAdjdUPyo-ZgqG2zYEELxTsUeuY"></script>
+
+
+
+<script type="text/javascript">
+    google.maps.event.addDomListener(window, 'load', function () {
+        new google.maps.places.SearchBox(document.getElementById('txt_MapSource'));
+        new google.maps.places.SearchBox(document.getElementById('txt_MapDestination'));
+        new google.maps.places.SearchBox(document.getElementById('txt_MapCity'));
+
+    });
+</script>
+
 <script>
     var routeArray = new Array();
     $(document).on('change', '#SourceID', function (e) {
@@ -244,19 +276,32 @@
         var CityRootText = $("#SourceID option:selected").text();
         var CityRootID = $("#SourceID option:selected").val();
         var SeqNo = 1;
-        bindrow = '<span id=' + CityRootID + ' SeqNo=' + SeqNo + ' class="RootID"><i class="fa fa-times deleterootcity" aria-hidden="true" style="margin-right:3px;color: #f95555;"></i>' + CityRootText + '<i class="fa fa-arrow-right ArrowMargin" aria-hidden="true"></span>';
+        bindrow = "<span id='" + CityRootID + "' SeqNo='" + SeqNo + "' class='RootID'><i class='fa fa-times deleterootcity' aria-hidden='true' style='margin-right:3px;color: #f95555;'></i>" + CityRootText + "<i class='fa fa-arrow-right ArrowMargin' aria-hidden='true'></span>";
         $('#showrootdetails').attr('SeqNo', SeqNo);
         $('#showrootdetails').append(bindrow);
         routeArray.push(CityRootID);
-       
+
     });
+
+    $('#txt_MapSource').focusout(function (e) {
+        alert('focus out');
+        $('#showrootdetails').find('span').remove();
+        var CityRootText = $("#txt_MapSource").val();
+        var SeqNo = 1;
+        bindrow = "<span id='" + CityRootText + "' SeqNo='" + SeqNo + "' class='RootID'>" + CityRootText + "<i class='fa fa-arrow-right ArrowMargin' aria-hidden='true'></span>";
+        $('#showrootdetails').attr('SeqNo', SeqNo);
+        $('#showrootdetails').append(bindrow);
+        routeArray.push(CityRootText);
+    });
+
+
 
     $(document).on('change', '#VehicleID', function (e) {
         e.preventDefault();
         $('#tblGoodsDetail tbody').empty();
         var VehicleID = $("#VehicleID option:selected").val();
-        
-        
+
+
             $.ajax({
             url: "@Url.Action("GetVehicleSizeCapacityWhereID", "TLoader")",
             contentType: "application/json",
@@ -269,7 +314,7 @@
                 success: function (data) {
                     $('#divVehicleCapcity').html(data);
 
-                   
+
             },
                 error: function (xhr, errorType, exception) {
                     alert("Error");
@@ -284,27 +329,29 @@
 
 
     });
+
+
     $('#ShowRoute').on("click", function (e) {
         $('.route').show();
     });
 
 
 
-    
+
 
     $('#addRoute').on("click", function (e) {
         $('.Rootmgs').remove();
-        var CityRootText = $("#CityRootID option:selected").text();
-        var CityRootID = $("#CityRootID option:selected").val();
+        var CityRootText = $("#txt_MapCity").val();
+        
         var bindrow;
         var SeqNo = parseInt($('#showrootdetails').attr('SeqNo'));
 
 
-        if ($("#SourceID option:selected").val() == 0) {
-            alert("Please select Source");
+        if ($("#txt_MapSource").val() == "") {
+            alert("Please Enter Source");
             return 0;
         }
-        if (CityRootID == 0) {
+        if (CityRootText == "") {
             alert("Please Select City for Route");
             return 0;
         }
@@ -315,24 +362,25 @@
         //}
         ;
         //This code is for removing last arrow from root details
-        if (jQuery.inArray(CityRootID,routeArray) == -1) {
+        if (jQuery.inArray(CityRootText,routeArray) == -1) {
             SeqNo = SeqNo + 1;
 
-        if (CityRootText == $("#DestinationID option:selected").text()) {
-            bindrow = '<span id=' + CityRootID + ' SeqNo=' + SeqNo + ' class="RootID"><i class="fa fa-times deleterootcity" aria-hidden="true" style="margin-right:3px;color: #f95555;"></i>' + CityRootText + '</span>';
+            if (CityRootText == $("#txt_MapDestination").val()) {
+                bindrow = "<span id='" + CityRootText + "' SeqNo='" + SeqNo + "' class='RootID'><i class='fa fa-times deleterootcity' aria-hidden='true' style='margin-right:3px;color: #f95555;'></i>" + CityRootText + "</span>";
             $('#addRoute').hide();
         }
         else {
-            bindrow = '<span id=' + CityRootID + ' SeqNo=' + SeqNo + ' class="RootID"><i class="fa fa-times deleterootcity" aria-hidden="true" style="margin-right:3px;color: #f95555;"></i>' + CityRootText + '<i class="fa fa-arrow-right ArrowMargin" aria-hidden="true"></i></span>';
+                bindrow = "<span id='" + CityRootText + "' SeqNo='" + SeqNo + "' class='RootID'><i class='fa fa-times deleterootcity' aria-hidden='true' style='margin-right:3px;color: #f95555;'></i>" + CityRootText + "<i class='fa fa-arrow-right ArrowMargin' aria-hidden='true'></i></span>";
         }
         $('#showrootdetails').attr('SeqNo', SeqNo);
         $('#showrootdetails').append(bindrow);
-            routeArray.push(CityRootID);
+            routeArray.push(CityRootText);
         }
         else {
             alert(CityRootText + " is already in route");
             return;
         }
+        $("#txt_MapCity").val('');
 
     });
 
@@ -351,7 +399,7 @@
         }
     });
     $(document).on('click', '#btnAddGoods', function (e) {
-        
+
         var bFlagValid = 1;
         var rowCount = parseInt($("#RowCount").val());
         if (rowCount == "0") {
@@ -412,7 +460,7 @@
         }
 
         if (bFlagValid == 0) {
-            
+
             return;
         }
 
@@ -442,7 +490,7 @@
         }
 
 
-        
+
 
 
         var bindRow = '<tr>' +
@@ -518,7 +566,7 @@
         $("#lblWidth").text(availableWidth);
         $("#lblLength").text(availableLength);
         $("#lblCapacity").text(availableWeight);
-          
+
         $(this).parents('tr').remove();
         var rowCount = parseInt($("#RowCount").val());
         rowCount = rowCount - 1;
@@ -529,40 +577,48 @@
     });
     $(document).on('click', '#btnSubmit', function (e) {
         e.preventDefault();
-        
-        
-        var bflagValid = 1;
-        var idArrRoot = [];
-        $('.RootID').each(function (k, v) {
-            var tdVals = $(this).attr("id") + "~" + $(this).attr('SeqNo');
-            idArrRoot.push(tdVals);
-        });
-
+        try {
 
         
-        if ($("#SourceID option:selected").val() == null || $("#SourceID option:selected").val() == "") {
-            bflagValid = 0;
-            $("#SourceID").addClass('borderValidation');
-        
-        }
-        if ($("#DestinationID option:selected").val() == null || $("#DestinationID option:selected").val() == "") {
-            bflagValid = 0;
-            $("#DestinationID").addClass('borderValidation');
             
+        var bflagValid = 1;
+            var idArrRoot = [];
+            
+        $('.RootID').each(function (k, v) {
+            var tdVals = $(this).attr('id') + "~" + $(this).attr('SeqNo');
+            idArrRoot.push(tdVals);
+            });
+            
+
+
+
+        if ($("#txt_MapSource").val() == null || $("#txt_MapSource").val() == "") {
+            bflagValid = 0;
+            $("#txt_MapSource").addClass('borderValidation');
+
+            }
+        
+        
+
+
+        if ($("#txt_MapDestination").val() == null || $("#txt_MapDestination").val() == "") {
+            bflagValid = 0;
+            $("#txt_MapDestination").addClass('borderValidation');
+
         }
         if ($("#StartDate").val() == null || $("#StartDate").val() == "") {
             bflagValid = 0;
             $("#StartDate").addClass('borderValidation');
-           
+
         }
 
         if ($("#EndDate").val() == null || $("#EndDate").val() == "") {
             bflagValid = 0;
             $("#EndDate").addClass('borderValidation');
-            
+
         }
-        
-        
+
+
         if ($("#VehicleID option:selected").val() == null || $("#VehicleID option:selected").val() == "") {
             bflagValid = 0;
             $("#VehicleID").addClass('borderValidation');
@@ -573,30 +629,30 @@
         if (idArrRoot.length <= 1) {
             bflagValid = 0;
             $("#CityRootID").addClass('borderValidation');
-            
+
         }
         if ($('#tblGoodsDetail >tbody>tr').length == 0) {
             bflagValid = 0;
             $("#tblGoodsDetail").addClass('borderValidation');
-            
+
         }
         if (bflagValid == 0) {
             return 0;
-            
+
         }
-        
+
         // Adding City Root into array
-        
-        
+
+
         var SaveRoot = [];
         for (var i = 0; i < idArrRoot.length; i++) {
             var arrElement = idArrRoot[i].split("~");
             item = {}
-            item["CityID"] = arrElement[0];
+            item["MapCity"] = arrElement[0];
             item["SequenceNo"] = arrElement[1];
             SaveRoot.push(item);
         }
-        
+
         //adding Load Grid Details In Array
         var idArrLoadDetails = [];
         $('#tblGoodsDetail tbody tr').each(function (k, v) {
@@ -611,12 +667,12 @@
                 trElement.find('td.clslength').text() + "~" +
                 trElement.find('td.clsWeight').text() + "~" +
                 trElement.find('td.clsQuantity').text() + "~" +
-                trElement.find('td.clsMaterialValue').text(); 
+                trElement.find('td.clsMaterialValue').text();
             idArrLoadDetails.push(tdVals);
 
 
         });
-        
+
         var TripDetails = [];
         for (var i = 0; i < idArrLoadDetails.length; i++) {
             var arrElement = idArrLoadDetails[i].split("~");
@@ -633,15 +689,15 @@
             item["MaterialValue"] = arrElement[9];
             TripDetails.push(item);
         }
-        
+
         $.ajax({
             type: 'POST',
             dataType: 'json',
             url: '/TLoader/SaveTrip',
             data:
             {
-                SourceID: $("#SourceID option:selected").val(),
-                DestinationID: $("#DestinationID option:selected").val(),
+                MapSource: $("#txt_MapSource").val(),
+                MapDestination: $("#txt_MapDestination").val(),
                 VehicleID: $("#VehicleID option:selected").val(),
                 TripEndDate: $("#EndDate").val(),
                 TripStartDate: $("#StartDate").val(),
@@ -661,5 +717,9 @@
             }
         });
 
+
+        } catch (e) {
+            alert(e.exception);
+        }
     });
 </script>
